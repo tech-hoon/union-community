@@ -1,9 +1,11 @@
+import Routes from 'Routes';
+
 interface Props {}
 
 const App = (props: Props) => {
   return (
     <>
-      <div>Hello</div>
+      <Routes />
     </>
   );
 };
