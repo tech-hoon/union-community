@@ -14,7 +14,7 @@ const Avatar = (props: Props) => {
 const Wrapper = styled.div``;
 
 const Img = styled.img`
-  width: 38px;
+  width: 30px;
 `;
 
 export default Avatar;

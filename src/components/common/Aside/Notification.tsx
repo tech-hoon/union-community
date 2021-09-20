@@ -6,7 +6,7 @@ interface Props {}
 const Notification = (props: Props) => {
   return (
     <>
-      <Bell size='30' />
+      <Bell size='26' />
     </>
   );
 };

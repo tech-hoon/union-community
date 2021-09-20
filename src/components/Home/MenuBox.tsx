@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { MOCK_MENU_LIST } from 'assets/mock_data';
 
 interface Props {}
 
 const MenuBox = (props: Props) => {
   return (
     <Wrapper>
-      {MENU_LIST.map(({ kor }) => (
+      {MOCK_MENU_LIST.map(({ kor }) => (
         <Menu>{kor}</Menu>
       ))}
     </Wrapper>
@@ -39,26 +40,3 @@ const Menu = styled.button`
 `;
 
 export default MenuBox;
-
-const MENU_LIST = [
-  {
-    eng: 'free',
-    kor: '자유 ',
-  },
-  {
-    eng: 'advertise',
-    kor: '홍보',
-  },
-  {
-    eng: 'club',
-    kor: '동아리',
-  },
-  {
-    eng: 'study',
-    kor: '스터디',
-  },
-  {
-    eng: 'info',
-    kor: '정보',
-  },
-];

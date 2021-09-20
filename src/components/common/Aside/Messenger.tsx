@@ -5,7 +5,7 @@ interface Props {}
 const Messenger = (props: Props) => {
   return (
     <>
-      <MessengerIcon size='30' />
+      <MessengerIcon size='26' />
     </>
   );
 };

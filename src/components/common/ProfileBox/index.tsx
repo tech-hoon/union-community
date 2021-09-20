@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 
 const Name = styled.h3`
   font-family: 'Spoqa Medium';
-  font-size: 1.2em;
+  font-size: 1em;
 `;
 
 export default ProfileBox;

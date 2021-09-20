@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 5% 2.5%;
+  padding: 4% 2.5%;
 `;
 const Box = styled.div`
   display: flex;
