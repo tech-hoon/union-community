@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body{
     font-family: "Spoqa Regular";
+    background-color: #f8f9fa;
   }
 `;
 
