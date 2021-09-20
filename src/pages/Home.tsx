@@ -1,4 +1,5 @@
 import Navbar from 'components/common/Navbar';
+import CardBox from 'components/Home/CardBox';
 import MenuBox from 'components/Home/MenuBox';
 import OrderBox from 'components/Home/OrderBox';
 import styled from 'styled-components';
@@ -12,6 +13,7 @@ const Home = (props: Props) => {
         <Navbar />
         <MenuBox />
         <OrderBox />
+        <CardBox />
       </NavbarWrapper>
     </Wrapper>
   );
