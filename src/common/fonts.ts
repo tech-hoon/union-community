@@ -5,7 +5,7 @@ import {
   SpoqaHanSansNeoMedium,
   SpoqaHanSansNeoThin,
   SpoqaHanSansNeoLight,
-} from 'styles/fonts';
+} from 'assets/fonts';
 
 export default createGlobalStyle`
     @font-face{
