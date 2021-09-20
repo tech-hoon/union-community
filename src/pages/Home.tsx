@@ -1,4 +1,6 @@
 import Navbar from 'components/common/Navbar';
+import MenuBox from 'components/Home/MenuBox';
+import OrderBox from 'components/Home/OrderBox';
 import styled from 'styled-components';
 
 interface Props {}
@@ -6,15 +8,17 @@ interface Props {}
 const Home = (props: Props) => {
   return (
     <Wrapper>
-      <Navbar />
-      {/* <Back>&#xE001; 뒤로가기</Back> */}
+      <NavbarWrapper>
+        <Navbar />
+        <MenuBox />
+        <OrderBox />
+      </NavbarWrapper>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  height: 100vh;
-  background-color: #f8f9fa;
-`;
+const Wrapper = styled.div``;
+
+const NavbarWrapper = styled.div``;
 
 export default Home;

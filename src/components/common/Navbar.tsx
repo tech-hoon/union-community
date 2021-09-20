@@ -32,6 +32,10 @@ const LogoTitle = styled.h1`
   font-size: 1.5em;
   line-height: 40px;
   letter-spacing: -0.04em;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    display: none;
+  }
 `;
 
 const Wrapper = styled.nav`
