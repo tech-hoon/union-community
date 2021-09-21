@@ -1,17 +1,19 @@
 import styled from 'styled-components';
 import logoImg from 'assets/images/logo-image.png';
-import Aside from './Aside';
+import Aside from '../Home/Aside';
 
-interface Props {}
+interface Props {
+  page: string;
+}
 
-const Navbar = (props: Props) => {
+const Navbar = ({ page }: Props) => {
   return (
     <Wrapper>
       <LogoContainer>
         <Logo src={logoImg} />
         <LogoTitle>대학생 연합기숙사 커뮤니티</LogoTitle>
       </LogoContainer>
-      <Aside />
+      <Aside page={page} />
     </Wrapper>
   );
 };
@@ -20,6 +22,7 @@ const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 3;
+  cursor: pointer;
 `;
 
 const Logo = styled.img`
@@ -33,8 +36,8 @@ const LogoTitle = styled.h1`
   line-height: 40px;
   letter-spacing: -0.04em;
 
-  @media ${({ theme }) => theme.size.mobile} {
-    display: none;
+  @media (max-width: 568px) {
+    font-size: 1.2em;
   }
 `;
 

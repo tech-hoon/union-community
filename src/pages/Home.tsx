@@ -10,7 +10,7 @@ const Home = (props: Props) => {
   return (
     <Wrapper>
       <NavbarWrapper>
-        <Navbar />
+        <Navbar page='Home' />
         <MenuBox />
         <OrderBox />
         <CardBox />

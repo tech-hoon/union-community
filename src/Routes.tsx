@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home, Login, Main } from 'pages';
+import { Home, Login, About } from 'pages';
 
 const Routes = () => (
   <Router>
@@ -11,8 +11,8 @@ const Routes = () => (
       <Route exact path='/login'>
         <Login />
       </Route>
-      <Route exact path='/main'>
-        <Main />
+      <Route exact path='/about'>
+        <About />
       </Route>
     </Switch>
   </Router>
