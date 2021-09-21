@@ -8,11 +8,11 @@ const OrderBox = (props: Props) => {
   return (
     <Wrapper>
       <Box>
-        <Fire size='24' />
+        <FireIcon size={24} />
         <Title>인기순</Title>
       </Box>
       <Box>
-        <CalendarCheck size='24' />
+        <CalendarIcon size={24} />
         <Title>최신순</Title>
       </Box>
     </Wrapper>
@@ -23,15 +23,42 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 4% 2.5%;
+  padding: 0 5% 3%;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    padding: 2% 5% 3%;
+  }
 `;
 const Box = styled.div`
   display: flex;
+  align-items: center;
   gap: 4px;
+
+  &:hover {
+    transform: scale(105%);
+  }
+
+  cursor: pointer;
 `;
+
+const FireIcon = styled(Fire)`
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 20px;
+  }
+`;
+const CalendarIcon = styled(CalendarCheck)`
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 20px;
+  }
+`;
+
 const Title = styled.div`
   font-family: 'Spoqa Bold';
   font-size: 24px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 20px;
+  }
 `;
 
 export default OrderBox;

@@ -15,12 +15,10 @@ const MenuBox = (props: Props) => {
 };
 
 const Wrapper = styled.div`
-  width: 95%;
+  width: 90%;
   display: flex;
-  margin: 0 auto;
   gap: 1%;
-
-  margin-top: 3%;
+  margin: 3% auto;
 `;
 
 const Menu = styled.button`

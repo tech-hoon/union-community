@@ -40,6 +40,10 @@ const Wrapper = styled.section`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
   margin: 0 auto;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 const Card = styled.div`
   width: 100%;
@@ -47,6 +51,11 @@ const Card = styled.div`
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(105%);
+  }
 `;
 const Title = styled.h2`
   font-family: 'Spoqa Bold';
@@ -67,6 +76,10 @@ const Creator = styled.span`
   color: ${({ theme }) => theme.color.BLUE};
   flex: 1;
   font-size: 16px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 14px;
+  }
 `;
 
 const CountBox = styled.span`
@@ -77,6 +90,10 @@ const CountBox = styled.span`
 const Count = styled.span`
   font-size: 14px;
   padding: 0 2px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 12px;
+  }
 `;
 
 export default CardBox;
