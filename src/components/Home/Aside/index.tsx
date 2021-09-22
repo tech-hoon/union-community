@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ProfileBox from '../../common/ProfileBox';
+import LoginButton from './LoginButton';
 import Messenger from './Messenger';
 import Notification from './Notification';
 
@@ -18,7 +19,7 @@ const Aside = ({ page }: Props) => {
         </>
       ) : (
         <>
-          <Login>로그인</Login>
+          <LoginButton />
         </>
       )}
     </Wrapper>
@@ -30,7 +31,5 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 10px;
 `;
-
-const Login = styled.button``;
 
 export default Aside;
