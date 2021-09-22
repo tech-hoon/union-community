@@ -1,7 +1,10 @@
 import Navbar from 'components/common/Navbar';
+import firebase from 'service/firebase';
 import styled from 'styled-components';
 
 interface Props {}
+
+// console.log(firebase);
 
 const About = (props: Props) => {
   return (

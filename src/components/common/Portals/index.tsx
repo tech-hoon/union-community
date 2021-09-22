@@ -1,7 +1,7 @@
-import { FC, useState, useEffect, memo } from 'react';
+import { FC, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-const Portal: FC = memo(({ children }) => {
+const Portal: FC = ({ children }) => {
   const [container] = useState(() => {
     const el = document.createElement('div');
     el.classList.add('portal');
@@ -16,6 +16,6 @@ const Portal: FC = memo(({ children }) => {
   }, [container]);
 
   return ReactDOM.createPortal(children, container);
-});
+};
 
 export default Portal;
