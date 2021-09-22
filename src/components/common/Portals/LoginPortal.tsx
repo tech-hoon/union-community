@@ -1,8 +1,8 @@
 import { useCallback, useRef, useEffect } from 'react';
+import { CloseOutline } from '@styled-icons/evaicons-outline';
 import styled from 'styled-components';
 import Portal from '.';
 import LogoImg from '../LogoBox/LogoImg';
-import { CloseOutline } from '@styled-icons/evaicons-outline';
 
 interface Props {
   onClose: () => void;

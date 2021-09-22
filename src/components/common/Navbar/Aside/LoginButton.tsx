@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import LoginPortal from 'components/common/Portal/LoginPortal';
+import LoginPortal from 'components/common/Portals/LoginPortal';
 import { useState } from 'react';
 
 interface Props {}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Aside from '../Home/Aside';
-import LogoBox from './LogoBox';
+import Aside from './Aside';
+import LogoBox from '../LogoBox';
 
 interface Props {
   page: string;

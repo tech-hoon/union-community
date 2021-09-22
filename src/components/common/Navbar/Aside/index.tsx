@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ProfileBox from '../../common/ProfileBox';
+import ProfileBox from '../../ProfileBox';
 import LoginButton from './LoginButton';
 import Messenger from './Messenger';
 import Notification from './Notification';
