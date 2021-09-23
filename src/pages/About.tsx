@@ -4,8 +4,6 @@ import styled from 'styled-components';
 
 interface Props {}
 
-// console.log(firebase);
-
 const About = (props: Props) => {
   return (
     <Wrapper>
