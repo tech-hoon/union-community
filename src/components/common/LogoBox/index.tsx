@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import LogoImg from './LogoImg';
+import { useHistory } from 'react-router-dom';
 
 interface Props {}
 
 const LogoBox = (props: Props) => {
+  const history = useHistory();
+
   return (
-    <Wrapper>
+    <Wrapper onClick={() => history.push(`/`)}>
       <LogoImg />
       <LogoTitle>대학생 연합기숙사 커뮤니티</LogoTitle>
     </Wrapper>

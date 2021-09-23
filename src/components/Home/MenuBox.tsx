@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   width: 90%;
   display: flex;
   gap: 1%;
-  margin: 3% auto;
+  margin: 5% auto;
 `;
 
 const Menu = styled.button`
@@ -29,9 +29,8 @@ const Menu = styled.button`
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 
   font-size: 1em;
-  font-family: 'Spoqa Light';
+  font-family: 'Spoqa Medium';
   &:hover {
-    font-family: 'Spoqa Medium';
     color: white;
     background-color: ${({ theme }) => theme.color.BUTTON_CLICKED};
   }

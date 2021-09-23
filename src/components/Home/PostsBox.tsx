@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 import { ChatDots, SuitHeartFill, Eye } from '@styled-icons/bootstrap';
 import { CardType } from 'types';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
   cards: CardType[];
 }
 
-const CardBox = ({ cards }: Props) => {
+const PostsBox = ({ cards }: Props) => {
+  const history = useHistory();
+
   return (
     <Wrapper>
       {cards.map(({ id, name, body }) => (
-        <Card key={id}>
+        <Card key={id} onClick={() => history.push(`post/${id}`)}>
           <Title>{name}</Title>
           <Content>{body}</Content>
           <CardBottom>
@@ -96,4 +99,4 @@ const Count = styled.span`
   }
 `;
 
-export default CardBox;
+export default PostsBox;
