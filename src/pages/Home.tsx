@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
-import CardBox from 'components/Home/CardBox';
+import PostsBox from 'components/Home/PostsBox';
 import MenuBox from 'components/Home/MenuBox';
 import OrderBox from 'components/Home/OrderBox';
-import { fetchCards } from 'api/fetchCards';
+import { fetchPosts } from 'api/Post';
 import { useState, useEffect, useRef } from 'react';
 import { DEFAULT_PAGE, CARD_AMOUNT } from 'utils/config';
 import { CardType } from 'types';
@@ -22,7 +22,7 @@ const Home = (props: Props) => {
 
   useEffect(() => {
     const getCards = async () => {
-      const newCards = await fetchCards(page, CARD_AMOUNT);
+      const newCards = await fetchPosts(page, CARD_AMOUNT);
       newCards.length > 0 && setCards((prevCards: CardType[]) => [...prevCards, ...newCards]);
     };
 
@@ -31,12 +31,10 @@ const Home = (props: Props) => {
 
   return (
     <Wrapper>
-      <NavbarWrapper>
-        <Navbar page='Home' />
-      </NavbarWrapper>
+      <Navbar page='Home' />
       <MenuBox />
       <OrderBox />
-      <CardBox cards={cards} />
+      <PostsBox cards={cards} />
       <Observer ref={ioRef} />
       <Footer />
     </Wrapper>
@@ -44,8 +42,6 @@ const Home = (props: Props) => {
 };
 
 const Wrapper = styled.div``;
-
-const NavbarWrapper = styled.div``;
 
 const Observer = styled.div`
   bottom: 0;
