@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import PostCardBox from 'components/Home/PostCardBox';
@@ -9,23 +11,30 @@ import { DEFAULT_PAGE, CARD_AMOUNT } from 'utils/config';
 import { PostType } from 'types';
 import useIntersectionObserver from 'hooks/useIntersectionObserver';
 import Footer from 'components/common/Footer';
+import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 
 interface Props {}
 
 const Home = (props: Props) => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [page, setPage] = useState<number>(DEFAULT_PAGE);
+  const [initialLoading, setInitialLoading] = useState(false);
   const ioRef = useRef<HTMLDivElement | null>(null);
   const handlePageNext = () => setPage((page) => page + 1);
   const entry = useIntersectionObserver(ioRef, {}, handlePageNext);
-  const isLoading = entry?.isIntersecting;
+
+  const getCards = async () => {
+    const newPosts = await fetchPosts(page, CARD_AMOUNT);
+    newPosts.length > 0 && setPosts((prevPosts: PostType[]) => [...prevPosts, ...newPosts]);
+    setInitialLoading(false);
+  };
 
   useEffect(() => {
-    const getCards = async () => {
-      const newPosts = await fetchPosts(page, CARD_AMOUNT);
-      newPosts.length > 0 && setPosts((prevPosts: PostType[]) => [...prevPosts, ...newPosts]);
-    };
+    setInitialLoading(true);
+    getCards();
+  }, []);
 
+  useEffect(() => {
     getCards();
   }, [page]);
 
@@ -34,7 +43,7 @@ const Home = (props: Props) => {
       <Navbar page='Home' />
       <MenuBox />
       <OrderBox />
-      <PostCardBox posts={posts} />
+      {initialLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
       <Observer ref={ioRef} />
       <Footer />
     </Wrapper>

@@ -13,11 +13,11 @@ const PostCardBox = ({ posts }: Props) => {
 
   return (
     <Wrapper>
-      {posts.map(({ id, name, body }) => (
-        <Post key={id} onClick={() => history.push(`post/${id}`)}>
+      {posts.map(({ id, name, body }, i) => (
+        <PostCard key={i} onClick={() => history.push(`post/${id}`)}>
           <Title>{name}</Title>
           <Content>{body}</Content>
-          <PostBottom>
+          <CardBottom>
             <CreatorBox>
               <Avatar size='20px' />
               <Creator>홍길동</Creator>
@@ -36,8 +36,8 @@ const PostCardBox = ({ posts }: Props) => {
                 <Count>10</Count>
               </CountBox>
             </CountSection>
-          </PostBottom>
-        </Post>
+          </CardBottom>
+        </PostCard>
       ))}
     </Wrapper>
   );
@@ -54,7 +54,7 @@ const Wrapper = styled.ul`
     grid-template-columns: 1fr 1fr;
   }
 `;
-const Post = styled.li`
+const PostCard = styled.li`
   width: 100%;
   padding: 24px;
   background: #ffffff;
@@ -76,7 +76,7 @@ const Content = styled.p`
   padding-bottom: 24px;
 `;
 
-const PostBottom = styled.div`
+const CardBottom = styled.div`
   width: 80%;
   display: flex;
   align-items: center;
