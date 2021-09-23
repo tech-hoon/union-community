@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import img from 'assets/images/profile-image.png';
 
-interface Props {}
+interface Props {
+  size?: string;
+}
 
-const Avatar = (props: Props) => {
+const Avatar = ({ size }: Props) => {
   return (
     <Wrapper>
-      <Img src={img} />
+      <Img src={img} sizes={size} />
     </Wrapper>
   );
 };
@@ -15,7 +17,7 @@ const Wrapper = styled.div``;
 
 const Img = styled.img`
   padding-top: 2px;
-  width: 33px;
+  width: ${(props) => props.sizes || `33px`};
 `;
 
 export default Avatar;
