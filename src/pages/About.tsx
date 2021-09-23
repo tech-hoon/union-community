@@ -1,5 +1,5 @@
 import Navbar from 'components/common/Navbar';
-import firebase from 'service/firebase';
+// import firebase from 'service/firebase';
 import styled from 'styled-components';
 
 interface Props {}
