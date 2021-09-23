@@ -1,35 +1,35 @@
 import styled from 'styled-components';
-import { MOCK_CARD_LIST } from 'assets/mock_data';
 import { ChatDots, SuitHeartFill, Eye } from '@styled-icons/bootstrap';
+import { CardType } from 'types';
 
-interface Props {}
+interface Props {
+  cards: CardType[];
+}
 
-const CardBox = (props: Props) => {
+const CardBox = ({ cards }: Props) => {
   return (
     <Wrapper>
-      {MOCK_CARD_LIST.map(
-        ({ id, title, content, creator, reply_count, view_count, like_count }) => (
-          <Card>
-            <Title>{title}</Title>
-            <Content>{content}</Content>
-            <CardBottom>
-              <Creator>{creator}</Creator>
-              <CountBox>
-                <ChatDots size='14' />
-                <Count>{reply_count}</Count>
-              </CountBox>
-              <CountBox>
-                <Eye size='14' />
-                <Count>{view_count}</Count>
-              </CountBox>
-              <CountBox>
-                <SuitHeartFill size='14' color='red' />
-                <Count>{like_count}</Count>
-              </CountBox>
-            </CardBottom>
-          </Card>
-        )
-      )}
+      {cards.map(({ id, name, body }) => (
+        <Card key={id}>
+          <Title>{name}</Title>
+          <Content>{body}</Content>
+          <CardBottom>
+            <Creator>홍길동</Creator>
+            <CountBox>
+              <ChatDots size='14' />
+              <Count>4</Count>
+            </CountBox>
+            <CountBox>
+              <Eye size='14' />
+              <Count>120</Count>
+            </CountBox>
+            <CountBox>
+              <SuitHeartFill size='14' color='red' />
+              <Count>10</Count>
+            </CountBox>
+          </CardBottom>
+        </Card>
+      ))}
     </Wrapper>
   );
 };

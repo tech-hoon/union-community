@@ -7,8 +7,8 @@ interface Props {}
 const MenuBox = (props: Props) => {
   return (
     <Wrapper>
-      {MOCK_MENU_LIST.map(({ kor }) => (
-        <Menu>{kor}</Menu>
+      {MOCK_MENU_LIST.map(({ kor }, id) => (
+        <Menu key={id}>{kor}</Menu>
       ))}
     </Wrapper>
   );
