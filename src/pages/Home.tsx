@@ -8,7 +8,7 @@ import OrderBox from 'components/Home/OrderBox';
 import { fetchPosts } from 'api/Post';
 import { useState, useEffect, useRef } from 'react';
 import { DEFAULT_PAGE, CARD_AMOUNT } from 'utils/config';
-import { PostType } from 'types';
+import { MockPostType } from 'types';
 import useIntersectionObserver from 'hooks/useIntersectionObserver';
 import Footer from 'components/common/Footer';
 import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
@@ -16,7 +16,7 @@ import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 interface Props {}
 
 const Home = (props: Props) => {
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const [posts, setPosts] = useState<MockPostType[]>([]);
   const [page, setPage] = useState<number>(DEFAULT_PAGE);
   const [initialLoading, setInitialLoading] = useState(true);
   const ioRef = useRef<HTMLDivElement | null>(null);
@@ -25,7 +25,7 @@ const Home = (props: Props) => {
 
   const getCards = async () => {
     const newPosts = await fetchPosts(page, CARD_AMOUNT);
-    newPosts.length > 0 && setPosts((prevPosts: PostType[]) => [...prevPosts, ...newPosts]);
+    newPosts.length > 0 && setPosts((prevPosts: MockPostType[]) => [...prevPosts, ...newPosts]);
     setInitialLoading(false);
   };
 

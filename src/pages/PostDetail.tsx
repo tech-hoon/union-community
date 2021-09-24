@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { fetchPost } from 'api/Post';
 import { useLocation, useHistory } from 'react-router-dom';
-import { PostType } from 'types';
+import { MockPostType } from 'types';
 import Avatar from 'components/common/ProfileBox/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 
 interface Props {}
 
 const PostDetail = (props: Props) => {
-  const [post, setPost] = useState<PostType>();
+  const [post, setPost] = useState<MockPostType>();
   const [initialLoading, setInitialLoading] = useState(true);
 
   const location = useLocation();
