@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const Name = styled.h3`
-  font-family: 'Spoqa Medium';
+  font-family: 'Spoqa Bold';
   font-size: 1em;
 `;
 

@@ -28,7 +28,7 @@ const PostDetail = (props: Props) => {
 
   return (
     <Wrapper>
-      <Navbar page='Home' />
+      <Navbar isLoggedIn={true} />
       {initialLoading ? (
         <PostSkeleton />
       ) : (

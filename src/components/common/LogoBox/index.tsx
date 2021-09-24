@@ -9,7 +9,9 @@ const LogoBox = (props: Props) => {
 
   return (
     <Wrapper onClick={() => history.push(`/`)}>
-      <LogoImg />
+      <LogoImgWrapper>
+        <LogoImg />
+      </LogoImgWrapper>
       <LogoTitle>대학생 연합기숙사 커뮤니티</LogoTitle>
     </Wrapper>
   );
@@ -22,7 +24,17 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 
+const LogoImgWrapper = styled.div`
+  @media (max-width: 568px) {
+    display: none;
+  }
+
+  @media (max-width: 440px) {
+    display: inline;
+  }
+`;
 const LogoTitle = styled.h1`
+  display: inline;
   font-family: 'Spoqa Bold';
   font-size: 1.5em;
   line-height: 40px;
@@ -30,6 +42,10 @@ const LogoTitle = styled.h1`
 
   @media (max-width: 568px) {
     font-size: 1.2em;
+  }
+
+  @media (max-width: 440px) {
+    display: none;
   }
 `;
 

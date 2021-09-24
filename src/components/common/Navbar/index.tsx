@@ -3,21 +3,21 @@ import Aside from './Aside';
 import LogoBox from '../LogoBox';
 
 interface Props {
-  page: string;
+  isLoggedIn: boolean;
 }
 
-const Navbar = ({ page }: Props) => {
+const Navbar = ({ isLoggedIn }: Props) => {
   return (
     <Wrapper>
       <LogoBox />
-      <Aside page={page} />
+      <Aside isLoggedIn={isLoggedIn} />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.nav`
   display: flex;
-  padding: 10px;
+  padding: 24px;
 `;
 
 export default Navbar;

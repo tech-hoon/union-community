@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { ChatDots, SuitHeartFill, Eye } from '@styled-icons/bootstrap';
 import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/ProfileBox/Avatar';
+import CountBox from './CountBox';
 
 interface Props {
   posts: PostType[];
@@ -19,23 +19,12 @@ const PostCardBox = ({ posts }: Props) => {
           <Content>{body}</Content>
           <CardBottom>
             <CreatorBox>
-              <Avatar size='20px' />
+              <AvatarWrapper>
+                <Avatar size='20px' />
+              </AvatarWrapper>
               <Creator>홍길동</Creator>
             </CreatorBox>
-            <CountSection>
-              <CountBox>
-                <ChatDots size='14' />
-                <Count>4</Count>
-              </CountBox>
-              <CountBox>
-                <Eye size='14' />
-                <Count>120</Count>
-              </CountBox>
-              <CountBox>
-                <SuitHeartFill size='14' color='red' />
-                <Count>10</Count>
-              </CountBox>
-            </CountSection>
+            <CountBox />
           </CardBottom>
         </PostCard>
       ))}
@@ -48,10 +37,12 @@ const Wrapper = styled.ul`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 32px;
-  margin: 0 auto;
+  margin: 8px auto;
+  padding-bottom: 48px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    width: 70%;
   }
 `;
 const PostCard = styled.li`
@@ -77,7 +68,7 @@ const Content = styled.p`
 `;
 
 const CardBottom = styled.div`
-  width: 80%;
+  width: 85%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -92,6 +83,12 @@ const CreatorBox = styled.div`
   gap: 4px;
 `;
 
+const AvatarWrapper = styled.div`
+  @media ${({ theme }) => theme.size.tablet} {
+    display: none;
+  }
+`;
+
 const Creator = styled.span`
   font-family: 'Spoqa Medium';
   color: ${({ theme }) => theme.color.BLUE};
@@ -99,23 +96,6 @@ const Creator = styled.span`
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 14px;
-  }
-`;
-
-const CountSection = styled.section`
-  display: flex;
-  align-items: center;
-`;
-
-const CountBox = styled.div`
-  padding: 0 2px;
-`;
-const Count = styled.span`
-  font-size: 14px;
-  padding: 0 2px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 12px;
   }
 `;
 

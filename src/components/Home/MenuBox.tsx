@@ -18,12 +18,12 @@ const Wrapper = styled.div`
   width: 90%;
   display: flex;
   gap: 1%;
-  margin: 5% auto;
+  margin: 24px auto 36px;
 `;
 
 const Menu = styled.button`
   width: 100%;
-  height: 48px;
+  height: 36px;
   border-radius: 20px;
   background: #ffffff;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
@@ -33,6 +33,10 @@ const Menu = styled.button`
   &:hover {
     color: white;
     background-color: ${({ theme }) => theme.color.BUTTON_CLICKED};
+  }
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.8em;
   }
 `;
 

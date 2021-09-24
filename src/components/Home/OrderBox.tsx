@@ -23,11 +23,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 0 5% 3%;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    padding: 2% 5% 3%;
-  }
+  padding: 0 5% 20px;
 `;
 const Box = styled.div`
   display: flex;

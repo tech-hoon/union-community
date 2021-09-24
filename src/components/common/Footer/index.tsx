@@ -18,7 +18,7 @@ const Footer = (props: Props) => {
 
 const Wrapper = styled.footer`
   width: 100%;
-  padding: 20px 0;
+  padding: 40px 0;
 `;
 
 const Title = styled.p`

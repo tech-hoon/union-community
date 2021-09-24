@@ -35,7 +35,7 @@ const Home = (props: Props) => {
 
   return (
     <Wrapper>
-      <Navbar page='Home' />
+      <Navbar isLoggedIn={true} />
       <MenuBox />
       <OrderBox />
       {initialLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}

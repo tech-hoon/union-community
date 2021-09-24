@@ -1,13 +1,13 @@
 import Navbar from 'components/common/Navbar';
-// import firebase from 'service/firebase';
 import styled from 'styled-components';
+// import firebase from 'service/firebase';
 
 interface Props {}
 
 const About = (props: Props) => {
   return (
     <Wrapper>
-      <Navbar page='About' />
+      <Navbar isLoggedIn={false} />
       <Content>
         대학생 연합기숙사 입주생들을 위한 커뮤니티입니다.
         <br />

@@ -21,15 +21,16 @@ const CardSkeleton = (props: Props) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.ul`
   width: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 32px;
-  margin: 0 auto;
+  margin: 20px auto;
 
   @media ${({ theme }) => theme.size.mobile} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    width: 70%;
   }
 `;
 
