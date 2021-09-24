@@ -1,6 +1,5 @@
-import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home, Login, About, PostDetail } from 'pages';
+import { Home, Login, About, PostDetail, NewPost } from 'pages';
 
 const Routes = () => (
   <Router>
@@ -19,6 +18,10 @@ const Routes = () => (
 
       <Route exact path='/post/:id'>
         <PostDetail />
+      </Route>
+
+      <Route exact path='/new'>
+        <NewPost />
       </Route>
     </Switch>
   </Router>

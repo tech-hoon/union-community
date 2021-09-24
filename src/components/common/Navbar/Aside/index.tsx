@@ -1,20 +1,22 @@
 import styled from 'styled-components';
 import ProfileBox from '../../ProfileBox';
 import LoginButton from './LoginButton';
-import Messenger from './Messenger';
-import Notification from './Notification';
+import NewPostButton from './NewPostButton';
+// import Messenger from './Messenger';
+// import Notification from './Notification';
 
 interface Props {
-  page: string;
+  isLoggedIn: boolean;
 }
 
-const Aside = ({ page }: Props) => {
+const Aside = ({ isLoggedIn }: Props) => {
   return (
     <Wrapper>
-      {page === 'Home' ? (
+      {isLoggedIn ? (
         <>
-          <Notification />
-          <Messenger />
+          {/* <Notification /> */}
+          {/* <Messenger /> */}
+          <NewPostButton />
           <ProfileBox />
         </>
       ) : (
