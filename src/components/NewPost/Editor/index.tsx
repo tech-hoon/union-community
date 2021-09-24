@@ -1,13 +1,9 @@
 import ReactQuill from 'react-quill';
+import { memo, forwardRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import './Editor.css';
+import './editor.css';
 
-interface Props {
-  content: string;
-  onChange: (value: string) => void;
-}
-
-const Editor = ({ content, onChange }: Props) => {
+const Editor = forwardRef((_, contentRef: any) => {
   const modules = {
     toolbar: [['link', 'image']],
   };
@@ -16,14 +12,14 @@ const Editor = ({ content, onChange }: Props) => {
 
   return (
     <ReactQuill
+      ref={contentRef}
       theme='snow'
       style={{ height: '400px' }}
       modules={modules}
       formats={formats}
-      value={content || ' '}
-      onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
+      value=''
     />
   );
-};
+});
 
-export default Editor;
+export default memo(Editor);

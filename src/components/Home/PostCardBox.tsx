@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { PostType } from 'types';
+import { MockPostType } from 'types';
 import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/ProfileBox/Avatar';
 import CountBox from './CountBox';
 
 interface Props {
-  posts: PostType[];
+  posts: MockPostType[];
 }
 
 const PostCardBox = ({ posts }: Props) => {

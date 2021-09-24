@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Aside from './Aside';
 import LogoBox from '../LogoBox';
+import { memo } from 'react';
 
 interface Props {
   isLoggedIn: boolean;
@@ -20,4 +21,4 @@ const Wrapper = styled.nav`
   padding: 24px;
 `;
 
-export default Navbar;
+export default memo(Navbar);

@@ -1,55 +1,41 @@
 import Navbar from 'components/common/Navbar';
 import Editor from 'components/NewPost/Editor';
+import usePostForm from 'hooks/usePostForm';
 import styled from 'styled-components';
-import { ChangeEventHandler, useState } from 'react';
-import { useHistory } from 'react-router';
-import { checkValidation } from 'utils/validation';
+import ReactQuill from 'react-quill';
+import { useRef } from 'react';
 
 interface Props {}
 
 const NewPost = (props: Props) => {
-  const history = useHistory();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [category, setCategory] = useState('');
-  const onTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => setTitle(e.target.value);
-  const onEditorChange = (_val: string) => setContent(_val);
-  const onEditorCancle = () => window.confirm('글 작성을 취소하시겠습니까?') && history.push('/');
-  const onCategoryChange: ChangeEventHandler<HTMLSelectElement> = (e) =>
-    setCategory(e.target.value);
-  const onSubmit = () => {
-    if (checkValidation(title, category, content)) {
-      console.log(title, category, content);
-    } else {
-      //TODO: API submit
-      console.log('다 입력해주세여!');
-    }
-  };
+  const titleRef = useRef<HTMLInputElement | null>(null);
+  const categoryRef = useRef<HTMLSelectElement | null>(null);
+  const contentRef = useRef<ReactQuill | null>(null);
+  const { post, onEditorCancle, onSubmit } = usePostForm({ titleRef, categoryRef, contentRef });
+
+  console.log(post);
 
   return (
     <Wrapper>
       <Navbar isLoggedIn={true} />
-      <PostContainer>
-        <TitleInput placeholder='제목을 입력하세요' onChange={onTitleChange} />
+      <PostContainer onSubmit={onSubmit}>
+        <TitleInput ref={titleRef} placeholder='제목을 입력하세요' />
         <HR />
 
         <CategoryBox>
           <Label>카테고리: </Label>
-          <Select name='카테고리' value={category} onChange={onCategoryChange}>
-            <Option disabled value=''>
-              선택해주세요
-            </Option>
+          <Select ref={categoryRef} name='카테고리' defaultValue='자유'>
             <Option value='자유'>자유</Option>
             <Option value='홍보'>홍보</Option>
             <Option value='동아리'>동아리</Option>
           </Select>
         </CategoryBox>
 
-        <Editor content={content} onChange={onEditorChange} />
+        <Editor ref={contentRef} />
 
         <ButtonBox>
           <CancleBtn onClick={onEditorCancle}>취소하기</CancleBtn>
-          <SubmitBtn onClick={onSubmit}>등록하기</SubmitBtn>
+          <SubmitBtn type='submit'>등록하기</SubmitBtn>
         </ButtonBox>
       </PostContainer>
     </Wrapper>
@@ -58,7 +44,7 @@ const NewPost = (props: Props) => {
 
 const Wrapper = styled.div``;
 
-const PostContainer = styled.div`
+const PostContainer = styled.form`
   width: 95%;
   margin: 20px auto;
 `;
