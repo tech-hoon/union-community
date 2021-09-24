@@ -26,8 +26,12 @@ const Home = (props: Props) => {
   const getCards = async () => {
     const newPosts = await fetchPosts(page, CARD_AMOUNT);
     newPosts.length > 0 && setPosts((prevPosts: PostType[]) => [...prevPosts, ...newPosts]);
-    setInitialLoading(false);
+    // setInitialLoading(false);
   };
+
+  setTimeout(() => {
+    setInitialLoading(false);
+  }, 2500);
 
   useEffect(() => {
     setInitialLoading(true);

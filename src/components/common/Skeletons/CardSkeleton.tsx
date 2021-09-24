@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import SkeletonBar from './components/SkeletonBar';
 
 interface Props {}
 
@@ -8,11 +9,11 @@ const CardSkeleton = (props: Props) => {
     <Wrapper>
       {new Array(6).fill('').map((_, i) => (
         <Card key={i}>
-          <Bar />
+          <Title />
           <Content />
           <Bottom>
             <Circle />
-            <Bar />
+            <Title />
           </Bottom>
         </Card>
       ))}
@@ -46,37 +47,11 @@ const Card = styled.div`
   overflow: hidden;
 `;
 
-const Bar = styled.div`
-  width: 100%;
+const Title = styled(SkeletonBar)`
   height: 30px;
-  background-color: #f2f2f2;
-  position: relative;
-  overflow: hidden;
-
-  @keyframes loading {
-    0% {
-      transform: translateX(0);
-    }
-    50%,
-    100% {
-      transform: translateX(460px);
-    }
-  }
-
-  &:before {
-    content: '';
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;
-    height: 90%;
-    background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
-    animation: loading 1.5s infinite linear;
-  }
 `;
 
-const Content = styled(Bar)`
+const Content = styled(SkeletonBar)`
   height: 100px;
 `;
 
@@ -84,35 +59,14 @@ const Bottom = styled.div`
   display: flex;
   gap: 12px;
 `;
-const Circle = styled.div`
-  width: 30px;
+
+const Circle = styled(SkeletonBar)`
+  width: 35px;
   height: 30px;
   border-radius: 50%;
   background-color: #f2f2f2;
   position: relative;
   overflow: hidden;
-
-  @keyframes loading {
-    0% {
-      transform: translateX(0);
-    }
-    50%,
-    100% {
-      transform: translateX(460px);
-    }
-  }
-
-  &:before {
-    content: '';
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;
-    height: 100%;
-    background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
-    animation: loading 1.5s infinite linear;
-  }
 `;
 
 export default CardSkeleton;

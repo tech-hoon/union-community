@@ -64,7 +64,7 @@ const PostCard = styled.li`
   position: relative;
 
   &:hover {
-    transform: scale(105%);
+    transform: scale(103%);
   }
 `;
 const Title = styled.h2`
