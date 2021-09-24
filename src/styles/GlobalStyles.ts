@@ -22,6 +22,12 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Spoqa Regular";
     background-color: #f8f9fa;
   }
+
+  input{
+    border:none;
+    outline:none;
+    background:none;
+  }
 `;
 
 export default GlobalStyle;
