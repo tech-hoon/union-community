@@ -6,40 +6,50 @@ import { fetchPost } from 'api/Post';
 import { useLocation, useHistory } from 'react-router-dom';
 import { PostType } from 'types';
 import Avatar from 'components/common/ProfileBox/Avatar';
+import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 
 interface Props {}
 
 const PostDetail = (props: Props) => {
   const [post, setPost] = useState<PostType>();
+  const [initialLoading, setInitialLoading] = useState(true);
+
   const location = useLocation();
   const history = useHistory();
   const id = Number(location.pathname.split('/')[2]);
 
+  setTimeout(() => {
+    setInitialLoading(false);
+  }, 2000);
+
   useEffect(() => {
     const getPost = async () => setPost(await fetchPost(id));
-
     getPost();
   }, [id]);
 
   return (
     <Wrapper>
       <Navbar page='Home' />
-      <PostContainer>
-        <BackButton onClick={() => history.goBack()}>&#xE000;</BackButton>
-        <Title>{post?.name}</Title>
-        <ROW_1>
-          <ProfileBox>
-            <Avatar />
-            <Creator>{`홍길동`}</Creator>
-          </ProfileBox>
-          <CreatedAt>{new Date().toLocaleDateString()}</CreatedAt>
-        </ROW_1>
-        <ROW_2>
-          카테고리 <Category>{`자유`}</Category>
-        </ROW_2>
-        <HR />
-        <Body>{post?.body}</Body>
-      </PostContainer>
+      {initialLoading ? (
+        <PostSkeleton />
+      ) : (
+        <PostContainer>
+          <BackButton onClick={() => history.goBack()}>&#xE000;</BackButton>
+          <Title>{post?.name}</Title>
+          <ROW_1>
+            <ProfileBox>
+              <Avatar />
+              <Creator>{`홍길동`}</Creator>
+            </ProfileBox>
+            <CreatedAt>{new Date().toLocaleDateString()}</CreatedAt>
+          </ROW_1>
+          <ROW_2>
+            카테고리 <Category>{`자유`}</Category>
+          </ROW_2>
+          <HR />
+          <Body>{post?.body}</Body>
+        </PostContainer>
+      )}
       <Footer />
     </Wrapper>
   );
