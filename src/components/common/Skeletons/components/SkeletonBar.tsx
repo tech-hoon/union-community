@@ -8,28 +8,28 @@ const SkeletonBar = styled.div`
   overflow: hidden;
   border-radius: 4px;
 
-  @keyframes loading {
+  @keyframes skeleton-gradient {
     0% {
-      transform: translateX(0);
+      background-color: rgba(165, 165, 165, 0.1);
     }
-    50%,
+
+    50% {
+      background-color: rgba(165, 165, 165, 0.3);
+    }
+
     100% {
-      transform: translateX(1024px);
+      background-color: rgba(165, 165, 165, 0.1);
     }
   }
 
   &:before {
     content: '';
-    content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 24px;
+    width: 100%;
     height: 100%;
-
-    background-color: #e2e5e7;
-    background-image: linear-gradient(90deg, rgba(#fff, 0), rgba(#fff, 0.5), rgba(#fff, 0));
-    animation: loading 1s infinite ease-in;
+    animation: skeleton-gradient 1.5s infinite ease-in-out;
   }
 `;
 

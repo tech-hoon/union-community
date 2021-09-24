@@ -18,12 +18,11 @@ const PostDetail = (props: Props) => {
   const history = useHistory();
   const id = Number(location.pathname.split('/')[2]);
 
-  setTimeout(() => {
-    setInitialLoading(false);
-  }, 2000);
-
   useEffect(() => {
-    const getPost = async () => setPost(await fetchPost(id));
+    const getPost = async () => {
+      setPost(await fetchPost(id));
+      setInitialLoading(false);
+    };
     getPost();
   }, [id]);
 

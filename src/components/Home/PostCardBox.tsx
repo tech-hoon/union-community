@@ -47,7 +47,7 @@ const Wrapper = styled.ul`
   width: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+  gap: 32px;
   margin: 0 auto;
 
   @media ${({ theme }) => theme.size.mobile} {

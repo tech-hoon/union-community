@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   width: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+  gap: 32px;
   margin: 0 auto;
 
   @media ${({ theme }) => theme.size.mobile} {
@@ -47,9 +47,7 @@ const Card = styled.div`
   overflow: hidden;
 `;
 
-const Title = styled(SkeletonBar)`
-  height: 30px;
-`;
+const Title = styled(SkeletonBar)``;
 
 const Content = styled(SkeletonBar)`
   height: 100px;
