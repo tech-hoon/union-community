@@ -1,7 +1,7 @@
 import ReactQuill from 'react-quill';
 import { memo, forwardRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import './editor.css';
+// import './editor.css';
 
 const Editor = forwardRef((_, contentRef: any) => {
   const modules = {
