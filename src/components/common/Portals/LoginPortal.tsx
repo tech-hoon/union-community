@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Portal from '.';
 import LogoImg from '../LogoBox/LogoImg';
 
+import GoogleLogin from '../SocialLogin/GoogleLogin';
+
 interface Props {
   onClose: () => void;
 }
@@ -34,9 +36,7 @@ const LoginPortal = ({ onClose }: Props) => {
           </Top>
           <Title>환영합니다!</Title>
           <Body>
-            <SNSLogin />
-            <SNSLogin />
-            <SNSLogin />
+            <GoogleLogin />
           </Body>
         </LoginContainer>
       </Wrapper>
@@ -68,12 +68,6 @@ const LoginContainer = styled.div`
 
 const Body = styled.div`
   margin: 20% 0;
-`;
-
-const SNSLogin = styled.button`
-  width: 100px;
-  height: 100px;
-  border: 0.3px solid gray;
 `;
 
 const Top = styled.div`
