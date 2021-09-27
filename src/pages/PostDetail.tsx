@@ -125,7 +125,6 @@ const CreatedAt = styled.span`
 
 const Body = styled.section`
   margin: 40px 0;
-  font-family: 'Spoqa Ligth';
   font-size: 20px;
   line-height: 200%;
 `;
