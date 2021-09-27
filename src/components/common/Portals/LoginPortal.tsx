@@ -3,8 +3,7 @@ import { CloseOutline } from '@styled-icons/evaicons-outline';
 import styled from 'styled-components';
 import Portal from '.';
 import LogoImg from '../LogoBox/LogoImg';
-
-import GoogleLogin from '../SocialLogin/GoogleLogin';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 interface Props {
   onClose: () => void;
@@ -36,7 +35,8 @@ const LoginPortal = ({ onClose }: Props) => {
           </Top>
           <Title>환영합니다!</Title>
           <Body>
-            <GoogleLogin />
+            <SocialLogin name='google' />
+            <SocialLogin name='facebook' />
           </Body>
         </LoginContainer>
       </Wrapper>
@@ -67,7 +67,9 @@ const LoginContainer = styled.div`
 `;
 
 const Body = styled.div`
-  margin: 20% 0;
+  /* margin: 20% 0; */
+  display: flex;
+  justify-content: space-around;
 `;
 
 const Top = styled.div`

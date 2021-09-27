@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Home, Login, About, PostDetail, NewPost } from 'pages';
 
-const Routes = () => (
+interface Props {
+  isLoggedIn: boolean;
+}
+
+const Routes = ({ isLoggedIn }: Props) => (
   <Router>
     <Switch>
       <Route exact path='/'>
-        <Home />
+        {isLoggedIn ? <Home /> : <About />}
       </Route>
 
       <Route exact path='/login'>
         <Login />
-      </Route>
-
-      <Route exact path='/about'>
-        <About />
       </Route>
 
       <Route exact path='/post/:id'>
