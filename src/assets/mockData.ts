@@ -1,0 +1,102 @@
+export const MOCK_CARD_LIST = [
+  {
+    id: 0,
+    title: '기타 동아리 하실 분',
+    content: '통기타 좋아하시는 분~ 주 1회 정도 모여서 같이 연습해요',
+    creator: '기타짱',
+    reply_count: 5,
+    view_count: 120,
+    like_count: 12,
+  },
+  {
+    id: 1,
+    title: '기타 동아리 하실 분',
+    content: '통기타 좋아하시는 분~ 주 1회 정도 모여서 같이 연습해요',
+    creator: '기타짱',
+    reply_count: 5,
+    view_count: 120,
+    like_count: 12,
+  },
+  {
+    id: 2,
+    title: '기타 동아리 하실 분',
+    content: '통기타 좋아하시는 분~ 주 1회 정도 모여서 같이 연습해요',
+    creator: '기타짱',
+    reply_count: 5,
+    view_count: 120,
+    like_count: 12,
+  },
+  {
+    id: 3,
+    title: '기타 동아리 하실 분',
+    content: '통기타 좋아하시는 분~ 주 1회 정도 모여서 같이 연습해요',
+    creator: '기타짱',
+    reply_count: 5,
+    view_count: 120,
+    like_count: 12,
+  },
+  {
+    id: 4,
+    title: '기타 동아리 하실 분',
+    content: '통기타 좋아하시는 분~ 주 1회 정도 모여서 같이 연습해요',
+    creator: '기타짱',
+    reply_count: 5,
+    view_count: 120,
+    like_count: 12,
+  },
+  {
+    id: 5,
+    title: '기타 동아리 하실 분',
+    content: '통기타 좋아하시는 분~ 주 1회 정도 모여서 같이 연습해요',
+    creator: '기타짱',
+    reply_count: 5,
+    view_count: 120,
+    like_count: 12,
+  },
+];
+
+export const MOCK_MENU_LIST = [
+  { eng: 'free', kor: '자유 ' },
+  { eng: 'advertise', kor: '홍보' },
+  { eng: 'club', kor: '동아리' },
+  { eng: 'study', kor: '스터디' },
+  { eng: 'info', kor: '정보' },
+];
+
+export const MOCK_COMMENT_LIST = [
+  {
+    id: 0,
+    avatar_img: 'http://localhost:3001/static/media/profile-image.e4806df9.png',
+    user_id: '후니',
+    content: '댓글 테스트1',
+    like_count: 4,
+  },
+  {
+    id: 1,
+    avatar_img: 'http://localhost:3001/static/media/profile-image.e4806df9.png',
+    user_id: '후니',
+    content: '댓글 테스트2',
+    like_count: 4,
+  },
+  {
+    id: 2,
+    avatar_img: 'http://localhost:3001/static/media/profile-image.e4806df9.png',
+    user_id: '후니',
+    content: '댓글 테스트3',
+    like_count: 4,
+  },
+  {
+    id: 3,
+    avatar_img: 'http://localhost:3001/static/media/profile-image.e4806df9.png',
+    user_id: '후니',
+    content: '댓글 테스트4',
+    like_count: 4,
+  },
+  {
+    id: 4,
+    avatar_img: 'http://localhost:3001/static/media/profile-image.e4806df9.png',
+    user_id: '후니',
+    content: '댓글 테스트5',
+    like_count: 4,
+  },
+];
