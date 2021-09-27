@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { MockPostType } from 'types';
 import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/ProfileBox/Avatar';
-import CountBox from './CountBox';
+import CountBox from '../common/CountBox';
 
 interface Props {
   posts: MockPostType[];

@@ -7,7 +7,8 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { MockPostType } from 'types';
 import Avatar from 'components/common/ProfileBox/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
-import CountBox from 'components/Home/CountBox';
+import CountBox from 'components/common/CountBox';
+import CommentBox from 'components/PostDetail/CommentBox';
 
 interface Props {}
 
@@ -49,9 +50,7 @@ const PostDetail = (props: Props) => {
           <HR />
           <Body>{post?.body}</Body>
           <CountBox size='20px' />
-          <CommentWrite placeholder='댓글을 입력해주세요.' />
-          <SubmitBtn>등록하기</SubmitBtn>
-          <CommentList />
+          <CommentBox />
         </PostContainer>
       )}
       <Footer />
@@ -62,7 +61,7 @@ const PostDetail = (props: Props) => {
 const Wrapper = styled.div``;
 
 const PostContainer = styled.section`
-  width: 80vw;
+  width: 70vw;
   margin: 8% auto;
 `;
 
@@ -121,7 +120,7 @@ const Creator = styled.span`
 const CreatedAt = styled.span`
   font-family: 'Spoqa Medium';
   font-size: 1.5em;
-  color: #999999;
+  color: #999;
 `;
 
 const Body = styled.section`
@@ -130,31 +129,5 @@ const Body = styled.section`
   font-size: 20px;
   line-height: 200%;
 `;
-
-const CommentWrite = styled.textarea`
-  font-family: 'Spoqa Regular';
-  margin: 20px 0;
-  padding: 10px;
-  height: 100px;
-  width: 100%;
-`;
-
-const Button = styled.button`
-  font-family: 'Spoqa Medium';
-  font-size: 1em;
-  padding: 12px;
-  border: 0.3px solid #eee;
-  border-radius: 4px;
-`;
-
-const SubmitBtn = styled(Button)`
-  float: right;
-  background-color: skyblue;
-  color: white;
-`;
-
-//TODO
-const CommentList = styled.ul``;
-const Comment = styled.li``;
 
 export default PostDetail;

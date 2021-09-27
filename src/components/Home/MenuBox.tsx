@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MOCK_MENU_LIST } from 'assets/mock_data';
+import { MOCK_MENU_LIST } from 'assets/mockData';
 
 interface Props {}
 
