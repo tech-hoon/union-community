@@ -1,15 +1,35 @@
 import { useCallback, useRef, useEffect } from 'react';
 import { CloseOutline } from '@styled-icons/evaicons-outline';
 import styled from 'styled-components';
-import Portal from '.';
-import LogoImg from '../LogoBox/LogoImg';
-import SocialLogin from '../SocialLogin/SocialLogin';
+import Portal from '..';
+import LogoImg from '../../LogoBox/LogoImg';
+import LoginContainer from './LoginContainer';
+import AuthContainer from './AuthContainer';
+import NicknameContainer from './NicknameContainer';
 
 interface Props {
   onClose: () => void;
 }
 
 const LoginPortal = ({ onClose }: Props) => {
+  let step = 0;
+  const onStepNext = () => {};
+  const onStepPrev = () => {};
+  // TODO: step & recoil 연동
+
+  const CurrentContainer = () => {
+    switch (step) {
+      case 0:
+        return <LoginContainer onStepNext={onStepNext} />;
+      case 1:
+        return <AuthContainer onStepPrev={onStepPrev} onStepNext={onStepNext} />;
+      case 2:
+        return <NicknameContainer />;
+      default:
+        return null;
+    }
+  };
+
   const portalRef = useRef<HTMLDivElement>(null);
   const portalClose = useCallback(
     (e) => {
@@ -27,24 +47,20 @@ const LoginPortal = ({ onClose }: Props) => {
 
   return (
     <Portal>
-      <Wrapper>
-        <LoginContainer ref={portalRef}>
-          <Top>
+      <Background>
+        <Wrapper ref={portalRef}>
+          <Header>
             <LogoImg />
             <CloseBtn onClick={onClose} size='24' color='gray' />
-          </Top>
-          <Title>환영합니다!</Title>
-          <Body>
-            <SocialLogin name='google' />
-            <SocialLogin name='facebook' />
-          </Body>
-        </LoginContainer>
-      </Wrapper>
+          </Header>
+          <CurrentContainer />
+        </Wrapper>
+      </Background>
     </Portal>
   );
 };
 
-const Wrapper = styled.div`
+const Background = styled.div`
   position: fixed;
   z-index: 1000;
   text-align: center;
@@ -55,7 +71,7 @@ const Wrapper = styled.div`
   bottom: 0;
 `;
 
-const LoginContainer = styled.div`
+const Wrapper = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -66,13 +82,7 @@ const LoginContainer = styled.div`
   border-radius: 8px;
 `;
 
-const Body = styled.div`
-  /* margin: 20% 0; */
-  display: flex;
-  justify-content: space-around;
-`;
-
-const Top = styled.div`
+const Header = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: #f8f9fa;
@@ -82,12 +92,6 @@ const Top = styled.div`
 
 const CloseBtn = styled(CloseOutline)`
   cursor: pointer;
-`;
-
-const Title = styled.h1`
-  margin-top: 5%;
-  font-family: 'Spoqa Bold';
-  font-size: 30px;
 `;
 
 export default LoginPortal;
