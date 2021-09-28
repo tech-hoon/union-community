@@ -1,18 +1,44 @@
-import { CaretDown } from '@styled-icons/boxicons-regular';
+import { useHistory } from 'react-router';
+import { authService } from 'service/firebase';
 import styled from 'styled-components';
+import React from 'react';
+
 interface Props {}
 
 const MypageDropdown = (props: Props) => {
+  const history = useHistory();
+
+  const onLogoutClick = () => {
+    authService.signOut();
+    history.push('/');
+  };
+
   return (
     <Wrapper>
-      <CaretDown size='20' />
+      <MyPosts>내 작성글</MyPosts>
+      <MyLikes>내 관심글</MyLikes>
+      <Settings>설정</Settings>
+      <Logout onClick={onLogoutClick}>로그아웃</Logout>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  margin-bottom: 4px;
-  padding-right: 4px;
+const Wrapper = styled.ul`
+  position: absolute;
+  z-index: 2000;
+  background-color: #f8f9fa;
+  padding: 4px;
+  border: 0.1px solid #eee;
+  width: 140px;
 `;
 
-export default MypageDropdown;
+const DropdownItem = styled.li`
+  margin: 8px 4px;
+`;
+
+const MyPosts = styled(DropdownItem)``;
+const MyLikes = styled(DropdownItem)``;
+const Settings = styled(DropdownItem)``;
+const Logout = styled(DropdownItem)``;
+
+export default React.memo(MypageDropdown);
