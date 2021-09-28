@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import img from 'assets/images/profile-image.png';
+import img from 'assets/images/avatar/profile-image.png';
+import React from 'react';
 
 interface Props {
   size?: string;
@@ -20,4 +21,4 @@ const Img = styled.img`
   width: ${({ sizes }) => sizes || `33px`};
 `;
 
-export default Avatar;
+export default React.memo(Avatar);

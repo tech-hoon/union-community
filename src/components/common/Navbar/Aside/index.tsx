@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ProfileBox from '../../ProfileBox';
-import LoginButton from './LoginButton';
+// import LoginButton from './LoginButton';
 import NewPostButton from './NewPostButton';
 
 interface Props {
@@ -10,14 +10,10 @@ interface Props {
 const Aside = ({ isLoggedIn }: Props) => {
   return (
     <Wrapper>
-      {isLoggedIn ? (
+      {isLoggedIn && (
         <>
           <NewPostButton />
           <ProfileBox />
-        </>
-      ) : (
-        <>
-          <LoginButton />
         </>
       )}
     </Wrapper>
