@@ -1,16 +1,16 @@
+import useLoginStep from 'hooks/useLoginStep';
 import React from 'react';
 import styled from 'styled-components';
 
-interface Props {
-  onStepPrev: () => void;
-  onStepNext: () => void;
-}
+interface Props {}
 
-const AuthContainer = ({ onStepPrev, onStepNext }: Props) => {
+const AuthContainer = (props: Props) => {
+  const { onStepNext } = useLoginStep();
+
   return (
     <Wrapper>
       <Title>생활관 거주 인증을 해주세요!</Title>
-      <Body>HELLO</Body>
+      <Body>인증하기</Body>
       <Button onClick={onStepNext}>다음</Button>
     </Wrapper>
   );
@@ -21,15 +21,15 @@ const Wrapper = styled.div`
 `;
 
 const Body = styled.div`
-  /* margin: 20% 0; */
-  display: flex;
-  justify-content: space-around;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  margin: 5% auto;
 `;
 
 const Title = styled.h1`
-  margin-top: 5%;
   font-family: 'Spoqa Bold';
-  font-size: 30px;
+  font-size: 2em;
 `;
 
 const Button = styled.div`

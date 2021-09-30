@@ -6,23 +6,21 @@ import LogoImg from '../../LogoBox/LogoImg';
 import LoginContainer from './LoginContainer';
 import AuthContainer from './AuthContainer';
 import NicknameContainer from './NicknameContainer';
+import useLoginStep from 'hooks/useLoginStep';
 
 interface Props {
   onClose: () => void;
 }
 
 const LoginPortal = ({ onClose }: Props) => {
-  let step = 0;
-  const onStepNext = () => {};
-  const onStepPrev = () => {};
-  // TODO: step & recoil 연동
+  const { loginStep, onStepPrev, onStepReset } = useLoginStep();
 
   const CurrentContainer = () => {
-    switch (step) {
+    switch (loginStep) {
       case 0:
-        return <LoginContainer onStepNext={onStepNext} />;
+        return <LoginContainer />;
       case 1:
-        return <AuthContainer onStepPrev={onStepPrev} onStepNext={onStepNext} />;
+        return <AuthContainer />;
       case 2:
         return <NicknameContainer />;
       default:
@@ -34,10 +32,11 @@ const LoginPortal = ({ onClose }: Props) => {
   const portalClose = useCallback(
     (e) => {
       if (portalRef.current && !portalRef.current.contains(e.target)) {
+        onStepReset();
         onClose();
       }
     },
-    [onClose]
+    [onClose, onStepReset]
   );
 
   useEffect(() => {
@@ -53,6 +52,7 @@ const LoginPortal = ({ onClose }: Props) => {
             <LogoImg />
             <CloseBtn onClick={onClose} size='24' color='gray' />
           </Header>
+          <Nav>{loginStep !== 0 && <BackButton onClick={onStepPrev}>&#xE000;</BackButton>}</Nav>
           <CurrentContainer />
         </Wrapper>
       </Background>
@@ -76,18 +76,36 @@ const Wrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 70%;
+  height: 80vh;
   margin: auto;
   background-color: white;
   border-radius: 8px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 100%;
+    height: 100vh;
+  }
 `;
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: #f8f9fa;
-  padding: 6px;
+  padding: 10px 16px;
   border-radius: 8px 8px 0 0;
+`;
+
+const Nav = styled.div`
+  height: 10%;
+`;
+
+const BackButton = styled.button`
+  font-family: 'Spoqa Bold';
+  font-size: 32px;
+  padding: 16px;
+  margin-right: 90%;
+  color: gray;
 `;
 
 const CloseBtn = styled(CloseOutline)`
