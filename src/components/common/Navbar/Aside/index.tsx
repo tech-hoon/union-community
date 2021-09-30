@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import ProfileBox from '../../ProfileBox';
-// import LoginButton from './LoginButton';
 import NewPostButton from './NewPostButton';
 
 interface Props {
