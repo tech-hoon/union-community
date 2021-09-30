@@ -3,15 +3,18 @@ import Avatar from './Avatar';
 import { CaretDown } from '@styled-icons/boxicons-regular';
 import React, { useState } from 'react';
 import MypageDropdown from './MypageDropdown';
+import { useRecoilState } from 'recoil';
+import { loginUserState } from 'store/loginUser';
 
 const ProfileBox = () => {
+  const [loginUser] = useRecoilState(loginUserState);
   const [toggleOpened, setToggleOpened] = useState(false);
   const onToggleClick = () => setToggleOpened(!toggleOpened);
 
   return (
     <Wrapper>
       <Top>
-        <Name>후니</Name>
+        <Name>{loginUser.displayName}</Name>
         <Avatar />
         <CaretDown size='20' onClick={onToggleClick} />
       </Top>
