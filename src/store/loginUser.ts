@@ -2,15 +2,12 @@ import { atom, selector } from 'recoil';
 
 interface loginUserType {
   displayName?: string | null;
-  uid: string;
+  uid?: string;
 }
 
 export const loginUserState = atom<loginUserType>({
   key: 'login_user',
-  default: {
-    displayName: '',
-    uid: '',
-  },
+  default: {},
 });
 
 export const loginState = selector({

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import googleImg from 'assets/images/logo/google-logo.png';
 import facebookImg from 'assets/images/logo/facebook-logo.png';
 import useLoginStep from 'hooks/useLoginStep';
+import { loginUserState } from 'store/loginUser';
+import { useRecoilState } from 'recoil';
 import { firebaseApp, authService } from 'service/firebase';
 
 interface SocialLoginProps {
@@ -11,6 +13,8 @@ interface SocialLoginProps {
 
 const SocialLogin = ({ name }: SocialLoginProps) => {
   const { onStepNext } = useLoginStep();
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+
   /* TODO:
     가입 안 되어 있으면, 바로 로그인 X
     가입 되어 있으면 바로 로그인 & login step reset
@@ -30,8 +34,15 @@ const SocialLogin = ({ name }: SocialLoginProps) => {
           : new firebaseApp.auth.FacebookAuthProvider();
 
       const data = await authService.signInWithPopup(provider);
-      console.log(data);
-      onStepNext();
+
+      if (data.additionalUserInfo?.isNewUser) {
+        onStepNext();
+      } else {
+        setLoginUser({
+          displayName: data.user?.displayName,
+          uid: data.user?.uid,
+        });
+      }
     } catch (error) {
       console.log(error);
     }

@@ -2,15 +2,17 @@ import { useHistory } from 'react-router';
 import { authService } from 'service/firebase';
 import styled from 'styled-components';
 import React from 'react';
+import { useRecoilState } from 'recoil';
+import { loginUserState } from 'store/loginUser';
 
 interface Props {}
 
 const MypageDropdown = (props: Props) => {
-  const history = useHistory();
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
 
   const onLogoutClick = () => {
     authService.signOut();
-    history.push('/');
+    setLoginUser({});
   };
 
   return (
