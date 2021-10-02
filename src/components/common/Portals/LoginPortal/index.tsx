@@ -17,11 +17,11 @@ const LoginPortal = ({ onClose }: Props) => {
 
   const CurrentContainer = () => {
     switch (loginStep) {
-      case 0:
-        return <LoginContainer />;
       case 1:
-        return <AuthContainer />;
+        return <LoginContainer />;
       case 2:
+        return <AuthContainer />;
+      case 3:
         return <NicknameContainer />;
       default:
         return null;

@@ -4,9 +4,9 @@ import SocialLogin from '../../SocialLogin/SocialLogin';
 
 interface Props {}
 
-const SNS_LOGIN_STEP = 0;
-const AUTH_STEP = 1;
-const NICKNAME_STEP = 2;
+const SNS_LOGIN_STEP = 1;
+const AUTH_STEP = 2;
+const NICKNAME_STEP = 3;
 
 const LoginContainer = (prop: Props) => {
   const { loginStep, onStepNext } = useLoginStep();
