@@ -1,17 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import PostCardBox from 'components/Home/PostCardBox';
 import MenuBox from 'components/Home/MenuBox';
 import OrderBox from 'components/Home/OrderBox';
+import Footer from 'components/common/Footer';
+import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
+import useIntersectionObserver from 'hooks/useIntersectionObserver';
 import { fetchPosts } from 'api/Post';
 import { useState, useEffect, useRef } from 'react';
 import { DEFAULT_PAGE, CARD_AMOUNT } from 'utils/config';
 import { MockPostType } from 'types';
-import useIntersectionObserver from 'hooks/useIntersectionObserver';
-import Footer from 'components/common/Footer';
-import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 
 interface Props {}
 
