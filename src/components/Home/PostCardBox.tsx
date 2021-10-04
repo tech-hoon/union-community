@@ -33,12 +33,17 @@ const PostCardBox = ({ posts }: Props) => {
 };
 
 const Wrapper = styled.ul`
-  width: 90%;
+  width: 70%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 32px;
-  margin: 8px auto;
+  margin: 40px auto;
   padding-bottom: 48px;
+
+  @media ${({ theme }) => theme.size.tablet} {
+    grid-template-columns: 1fr 1fr;
+    width: 70%;
+  }
 
   @media ${({ theme }) => theme.size.mobile} {
     grid-template-columns: 1fr;
@@ -46,7 +51,6 @@ const Wrapper = styled.ul`
   }
 `;
 const PostCard = styled.li`
-  width: 100%;
   padding: 24px;
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

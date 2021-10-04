@@ -15,7 +15,7 @@ const MenuBox = (props: Props) => {
 };
 
 const Wrapper = styled.div`
-  width: 90%;
+  width: 70%;
   display: flex;
   gap: 1%;
   margin: 24px auto 36px;
