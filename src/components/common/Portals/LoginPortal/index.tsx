@@ -31,7 +31,7 @@ const LoginPortal = ({ onClose }: Props) => {
   const portalRef = useRef<HTMLDivElement>(null);
   const portalClose = useCallback(
     (e) => {
-      if (portalRef.current && !portalRef.current.contains(e.target)) {
+      if ((portalRef.current && !portalRef.current.contains(e.target)) || e.key === 'Escape') {
         onStepReset();
         onClose();
       }
@@ -41,7 +41,12 @@ const LoginPortal = ({ onClose }: Props) => {
 
   useEffect(() => {
     window.addEventListener('click', portalClose);
-    return () => window.removeEventListener('click', portalClose);
+    window.addEventListener('keydown', portalClose);
+
+    return () => {
+      window.removeEventListener('click', portalClose);
+      window.removeEventListener('keydown', portalClose);
+    };
   });
 
   return (
