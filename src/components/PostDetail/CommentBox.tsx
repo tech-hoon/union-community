@@ -11,8 +11,8 @@ const CommentBox = (props: Props) => {
       <CommentWrite placeholder='댓글을 입력해주세요.' />
       <SubmitBtn>등록하기</SubmitBtn>
       <CommentList>
-        {MOCK_COMMENT_LIST.map(({ user_id, avatar_img, content, like_count }) => (
-          <Comment>
+        {MOCK_COMMENT_LIST.map(({ user_id, avatar_img, content, like_count }, key) => (
+          <Comment key={key}>
             <ROW1>
               <COL1>
                 <Avatar src={avatar_img} />
