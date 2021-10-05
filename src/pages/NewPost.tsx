@@ -28,7 +28,9 @@ const NewPost = (props: Props) => {
             <Option value='동아리'>동아리</Option>
           </Select>
         </CategoryBox>
+
         <Editor ref={contentRef} />
+
         <ButtonBox>
           <CancleBtn onClick={onEditorCancle}>취소하기</CancleBtn>
           <SubmitBtn type='submit'>등록하기</SubmitBtn>

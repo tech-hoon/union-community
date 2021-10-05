@@ -3,22 +3,25 @@ import { ChatDots, SuitHeartFill, Eye } from '@styled-icons/bootstrap';
 
 interface Props {
   size?: string;
+  viewCount: number;
+  likeCount: number;
+  commentCount: number;
 }
 
-const CountBox = ({ size }: Props) => {
+const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
   return (
     <CountSection>
       <Box>
         <ChatDots size={size || `14px`} />
-        <Count size={size || `14px`}>4</Count>
+        <Count size={size || `14px`}>{commentCount}</Count>
       </Box>
       <Box>
         <Eye size={size || `14px`} />
-        <Count size={size || `14px`}>120</Count>
+        <Count size={size || `14px`}>{viewCount}</Count>
       </Box>
       <Box>
         <SuitHeartFill size={size || `14px`} color='red' />
-        <Count size={size || `14px`}>10</Count>
+        <Count size={size || `14px`}>{likeCount}</Count>
       </Box>
     </CountSection>
   );
