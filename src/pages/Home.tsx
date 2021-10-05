@@ -6,37 +6,28 @@ import OrderBox from 'components/Home/OrderBox';
 import Footer from 'components/common/Footer';
 import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 import useIntersectionObserver from 'hooks/useIntersectionObserver';
-import { fetchPosts } from 'api/Post';
 import { useState, useEffect, useRef } from 'react';
-import { DEFAULT_PAGE, CARD_AMOUNT } from 'utils/config';
-import { MockPostType } from 'types';
+import { FIRST_INDEX, CARD_AMOUNT } from 'utils/config';
+import { PostType } from 'types';
+import useGetPosts from 'hooks/useGetPosts';
 
 interface Props {}
 
 const Home = (props: Props) => {
-  const [posts, setPosts] = useState<MockPostType[]>([]);
-  const [page, setPage] = useState<number>(DEFAULT_PAGE);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [lastIndex, setLastIndex] = useState(FIRST_INDEX);
+  const { posts } = useGetPosts({ lastIndex, callback: () => setInitialLoading(false) });
+
   const ioRef = useRef<HTMLDivElement | null>(null);
-  const handlePageNext = () => setPage((page) => page + 1);
-  const entry = useIntersectionObserver(ioRef, {}, handlePageNext);
-
-  const getCards = async () => {
-    const newPosts = await fetchPosts(page, CARD_AMOUNT);
-    newPosts.length > 0 && setPosts((prevPosts: MockPostType[]) => [...prevPosts, ...newPosts]);
-    setInitialLoading(false);
-  };
-
-  useEffect(() => {
-    getCards();
-  }, [page]);
+  const handleIndexIncrease = () => setLastIndex((lastIndex) => lastIndex + CARD_AMOUNT);
+  const entry = useIntersectionObserver(ioRef, {}, handleIndexIncrease);
 
   return (
     <Wrapper>
       <Navbar isLoggedIn={true} />
       <MenuBox />
       <OrderBox />
-      {initialLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
+      {initialLoading ? <CardSkeleton /> : <PostCardBox posts={posts || []} />}
       <Observer ref={ioRef} />
       <Footer />
     </Wrapper>
@@ -46,7 +37,10 @@ const Home = (props: Props) => {
 const Wrapper = styled.div``;
 
 const Observer = styled.div`
+  /* position: fixed; */
   bottom: 0;
+  height: 20px;
+  background-color: red;
 `;
 
 export default Home;
