@@ -1,15 +1,19 @@
-import React from 'react';
-
-export interface MockPostType {
-  id: number;
-  name: string;
-  body: string;
+export interface CommentType {
+  id: string;
+  content: string;
+  createdAt: string;
 }
 
 export interface PostType {
-  title: string;
+  id?: string;
   category: string;
+  title: string;
   content: string;
+  creator: { uid?: string; displayName?: string };
+  view_count: number;
+  like_count: number;
+  created_at: number;
+  comment_list: CommentType[] | [];
 }
 
 export interface PostFormType {

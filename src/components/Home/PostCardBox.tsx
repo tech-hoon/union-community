@@ -1,11 +1,12 @@
+import { memo } from 'react';
 import styled from 'styled-components';
-import { MockPostType } from 'types';
+import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/ProfileBox/Avatar';
 import CountBox from '../common/CountBox';
 
 interface Props {
-  posts: MockPostType[];
+  posts: PostType[] | [];
 }
 
 const PostCardBox = ({ posts }: Props) => {
@@ -13,21 +14,43 @@ const PostCardBox = ({ posts }: Props) => {
 
   return (
     <Wrapper>
-      {posts.map(({ id, name, body }, i) => (
-        <PostCard key={i} onClick={() => history.push(`post/${id}`)}>
-          <Title>{name}</Title>
-          <Content>{body}</Content>
-          <CardBottom>
-            <CreatorBox>
-              <AvatarWrapper>
-                <Avatar size='20px' />
-              </AvatarWrapper>
-              <Creator>홍길동</Creator>
-            </CreatorBox>
-            <CountBox />
-          </CardBottom>
-        </PostCard>
-      ))}
+      {posts.map(
+        (
+          {
+            id,
+            category,
+            title,
+            content,
+            creator,
+            view_count,
+            like_count,
+            created_at,
+            comment_list,
+          },
+          key
+        ) => {
+          return (
+            <PostCard key={key} onClick={() => history.push(`post/${id}`)}>
+              <Title>{title}</Title>
+              <Content>{content}</Content>
+              <CardBottom>
+                <CreatorBox>
+                  <AvatarWrapper>
+                    <Avatar size='20px' />
+                  </AvatarWrapper>
+                  <Creator>{creator.displayName}</Creator>
+                </CreatorBox>
+                {new Date(created_at).toLocaleDateString()}
+                <CountBox
+                  viewCount={view_count}
+                  likeCount={like_count}
+                  commentCount={comment_list.length}
+                />
+              </CardBottom>
+            </PostCard>
+          );
+        }
+      )}
     </Wrapper>
   );
 };
@@ -38,7 +61,6 @@ const Wrapper = styled.ul`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 32px;
   margin: 40px auto;
-  padding-bottom: 48px;
 
   @media ${({ theme }) => theme.size.tablet} {
     grid-template-columns: 1fr 1fr;
@@ -103,4 +125,4 @@ const Creator = styled.span`
   }
 `;
 
-export default PostCardBox;
+export default memo(PostCardBox);

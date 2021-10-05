@@ -2,31 +2,37 @@ import Footer from 'components/common/Footer';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { fetchPost } from 'api/Post';
+import { PostType } from 'types';
 import { useLocation, useHistory } from 'react-router-dom';
-import { MockPostType } from 'types';
 import Avatar from 'components/common/ProfileBox/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CountBox from 'components/common/CountBox';
 import CommentBox from 'components/PostDetail/CommentBox';
+import { dbService } from 'service/firebase';
 
 interface Props {}
 
 const PostDetail = (props: Props) => {
-  const [post, setPost] = useState<MockPostType>();
+  const [post, setPost] = useState<PostType>();
   const [initialLoading, setInitialLoading] = useState(true);
 
   const location = useLocation();
   const history = useHistory();
-  const id = Number(location.pathname.split('/')[2]);
+  const id = location.pathname.split('/')[2];
 
   useEffect(() => {
-    const getPost = async () => {
-      setPost(await fetchPost(id));
-      setInitialLoading(false);
-    };
-    getPost();
+    dbService
+      .collection('posts')
+      .get()
+      .then((snapshot) => {
+        const _post: any = snapshot.docs.filter((doc) => doc.id === id)[0].data();
+        setPost(_post);
+      });
   }, [id]);
+
+  useEffect(() => {
+    post && setInitialLoading(false);
+  }, [post]);
 
   return (
     <Wrapper>
@@ -36,20 +42,25 @@ const PostDetail = (props: Props) => {
       ) : (
         <PostContainer>
           <BackButton onClick={() => history.goBack()}>&#xE000;</BackButton>
-          <Title>{post?.name}</Title>
+          <Title>{post?.title}</Title>
           <ROW_1>
             <ProfileBox>
               <Avatar />
-              <Creator>{`홍길동`}</Creator>
+              <Creator>{post?.creator?.displayName}</Creator>
             </ProfileBox>
-            <CreatedAt>{new Date().toLocaleDateString()}</CreatedAt>
+            <CreatedAt>{new Date(post?.created_at!!).toLocaleDateString()}</CreatedAt>
           </ROW_1>
           <ROW_2>
-            카테고리 <Category>{`자유`}</Category>
+            카테고리 <Category>{post?.category}</Category>
           </ROW_2>
           <HR />
-          <Body>{post?.body}</Body>
-          <CountBox size='20px' />
+          <Content>{post?.content}</Content>
+          <CountBox
+            size='20px'
+            viewCount={post?.view_count!!}
+            likeCount={post?.like_count!!}
+            commentCount={post?.comment_list.length!!}
+          />
           <CommentBox />
         </PostContainer>
       )}
@@ -123,7 +134,7 @@ const CreatedAt = styled.span`
   color: #999;
 `;
 
-const Body = styled.section`
+const Content = styled.section`
   margin: 40px 0;
   font-size: 20px;
   line-height: 200%;
