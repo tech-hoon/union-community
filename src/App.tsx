@@ -12,7 +12,7 @@ const App = (props: Props) => {
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
-      setLoginUser(user ? { displayName: user.displayName, uid: user.uid } : {});
+      setLoginUser(user ? { displayName: user?.displayName!!, uid: user?.uid!! } : {});
       setIsLoggedIn(Boolean(user));
     });
   }, []);
