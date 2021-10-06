@@ -4,27 +4,42 @@ import { PostType } from 'types';
 
 interface Props {
   lastIndex: number;
+  category?: string;
   callback: () => void;
 }
 
-const useGetPosts = ({ lastIndex, callback }: Props) => {
+const useGetPosts = ({ lastIndex, category, callback }: Props) => {
   const [posts, setPosts] = useState<PostType[]>();
 
   useEffect(() => {
-    const unsubscribe = dbService
-      .collection('posts')
-      .orderBy('created_at', 'desc')
-      .limit(lastIndex)
-      .onSnapshot((snapshot) => {
-        const newPosts: any = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setPosts(newPosts);
-        callback(); // loading done
-      });
-
-    return () => unsubscribe();
+    category
+      ? dbService
+          .collection('posts')
+          .orderBy('created_at', 'desc')
+          .where('category', '==', category)
+          .limit(lastIndex)
+          .get()
+          .then((snapshot) => {
+            const newPosts: any = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setPosts(newPosts);
+            callback(); // loading done
+          })
+      : dbService
+          .collection('posts')
+          .orderBy('created_at', 'desc')
+          .limit(lastIndex)
+          .get()
+          .then((snapshot) => {
+            const newPosts: any = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setPosts(newPosts);
+            callback(); // loading done
+          });
   }, [lastIndex]);
 
   return { posts };
