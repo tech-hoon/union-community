@@ -6,9 +6,8 @@ import OrderBox from 'components/Home/OrderBox';
 import Footer from 'components/common/Footer';
 import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 import useIntersectionObserver from 'hooks/useIntersectionObserver';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { FIRST_INDEX, CARD_AMOUNT } from 'utils/config';
-import { PostType } from 'types';
 import useGetPosts from 'hooks/useGetPosts';
 
 interface Props {}
@@ -19,8 +18,8 @@ const Home = (props: Props) => {
   const { posts } = useGetPosts({ lastIndex, callback: () => setInitialLoading(false) });
 
   const ioRef = useRef<HTMLDivElement | null>(null);
-  const handleIndexIncrease = () => setLastIndex((lastIndex) => lastIndex + CARD_AMOUNT);
-  const entry = useIntersectionObserver(ioRef, {}, handleIndexIncrease);
+  const onIndexIncrease = () => setLastIndex((lastIndex) => lastIndex + CARD_AMOUNT);
+  const entry = useIntersectionObserver(ioRef, {}, onIndexIncrease);
 
   return (
     <Wrapper>
@@ -37,10 +36,8 @@ const Home = (props: Props) => {
 const Wrapper = styled.div``;
 
 const Observer = styled.div`
-  /* position: fixed; */
   bottom: 0;
   height: 20px;
-  background-color: red;
 `;
 
 export default Home;
