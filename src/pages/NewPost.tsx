@@ -4,6 +4,7 @@ import usePostForm from 'hooks/usePostForm';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import { useRef } from 'react';
+import { MENU_LIST } from 'utils/config';
 
 interface Props {}
 
@@ -23,9 +24,11 @@ const NewPost = (props: Props) => {
         <CategoryBox>
           <Label>카테고리: </Label>
           <Select ref={categoryRef} name='카테고리' defaultValue='자유'>
-            <Option value='자유'>자유</Option>
-            <Option value='홍보'>홍보</Option>
-            <Option value='동아리'>동아리</Option>
+            {MENU_LIST.map(({ kor }, id) => (
+              <Option value={kor} key={id}>
+                {kor}
+              </Option>
+            ))}
           </Select>
         </CategoryBox>
 

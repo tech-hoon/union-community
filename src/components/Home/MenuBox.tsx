@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MOCK_MENU_LIST } from 'assets/mockData';
+import { MENU_LIST } from 'utils/config';
 
 interface Props {}
 
 const MenuBox = (props: Props) => {
+  const onMenuClick = (value: string) => {};
+
   return (
     <Wrapper>
-      {MOCK_MENU_LIST.map(({ kor }, id) => (
-        <Menu key={id}>{kor}</Menu>
+      {MENU_LIST.map(({ kor }, id) => (
+        <Menu onClick={() => onMenuClick(kor)} key={id} value={kor}>
+          {kor}
+        </Menu>
       ))}
     </Wrapper>
   );
