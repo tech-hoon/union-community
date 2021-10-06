@@ -4,6 +4,7 @@ import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/ProfileBox/Avatar';
 import CountBox from '../common/CountBox';
+import { tagEliminatingRegex } from 'utils/regex';
 
 interface Props {
   posts: PostType[] | [];
@@ -32,7 +33,7 @@ const PostCardBox = ({ posts }: Props) => {
           return (
             <PostCard key={key} onClick={() => history.push(`post/${id}`)}>
               <Title>{title}</Title>
-              <Content>{content}</Content>
+              <Content>{tagEliminatingRegex(content)}</Content>
               <CardBottom>
                 <CreatorBox>
                   <AvatarWrapper>
