@@ -17,7 +17,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef }: Props) => {
   const [post, setPost] = useState<PostType>();
   const loginUser = useRecoilValue(loginUserState);
   const onEditorCancle = () => window.confirm('글 작성을 취소하시겠습니까?') && history.push('/');
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     const postInput = {
       title: titleRef.current?.value!!,
       category: categoryRef.current?.value!!,
@@ -26,14 +26,19 @@ const usePostForm = ({ titleRef, categoryRef, contentRef }: Props) => {
 
     e.preventDefault();
     if (checkPostValidation(postInput)) {
-      dbService.collection('posts').add({
-        ...postInput,
-        creator: loginUser,
-        view_count: 0,
-        like_count: 0,
-        created_at: new Date().getTime(),
-        comment_list: [],
-      });
+      dbService
+        .collection('posts')
+        .add({
+          ...postInput,
+          creator: loginUser,
+          view_count: 0,
+          like_count: 0,
+          created_at: new Date().getTime(),
+          comment_list: [],
+        })
+        .then(({ id }) => {
+          history.push(`/post/${id}`);
+        });
     } else {
       window.alert('내용을 모두 작성해 주세요.');
     }
