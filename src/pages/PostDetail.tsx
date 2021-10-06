@@ -1,7 +1,7 @@
 import Footer from 'components/common/Footer';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createElement } from 'react';
 import { PostType } from 'types';
 import { useLocation, useHistory } from 'react-router-dom';
 import Avatar from 'components/common/ProfileBox/Avatar';
@@ -15,6 +15,7 @@ interface Props {}
 const PostDetail = (props: Props) => {
   const [post, setPost] = useState<PostType>();
   const [initialLoading, setInitialLoading] = useState(true);
+  const [contentMarkup, setContentMarkup] = useState({ __html: '' });
 
   const location = useLocation();
   const history = useHistory();
@@ -27,11 +28,18 @@ const PostDetail = (props: Props) => {
       .then((snapshot) => {
         const _post: any = snapshot.docs.filter((doc) => doc.id === id)[0].data();
         setPost(_post);
+      })
+      .catch((error) => {
+        console.log(error);
+        history.push('/');
       });
   }, [id]);
 
   useEffect(() => {
-    post && setInitialLoading(false);
+    if (post) {
+      setInitialLoading(false);
+      setContentMarkup({ __html: post.content });
+    }
   }, [post]);
 
   return (
@@ -54,7 +62,7 @@ const PostDetail = (props: Props) => {
             카테고리 <Category>{post?.category}</Category>
           </ROW_2>
           <HR />
-          <Content>{post?.content}</Content>
+          <Content dangerouslySetInnerHTML={contentMarkup} />
           <CountBox
             size='20px'
             viewCount={post?.view_count!!}
