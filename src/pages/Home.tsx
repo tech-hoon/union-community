@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import PostCardBox from 'components/Home/PostCardBox';
-import MenuBox from 'components/Home/MenuBox';
+import CategoryBox from 'components/Home/CategoryBox';
 import OrderBox from 'components/Home/OrderBox';
 import Footer from 'components/common/Footer';
 import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
@@ -17,14 +17,14 @@ const Home = (props: Props) => {
   const [lastIndex, setLastIndex] = useState(FIRST_INDEX);
   const { posts } = useGetPosts({ lastIndex, callback: () => setInitialLoading(false) });
 
-  const ioRef = useRef<HTMLDivElement | null>(null);
   const onIndexIncrease = () => setLastIndex((lastIndex) => lastIndex + CARD_AMOUNT);
+  const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, {}, onIndexIncrease);
 
   return (
     <Wrapper>
       <Navbar isLoggedIn={true} />
-      <MenuBox />
+      <CategoryBox />
       <OrderBox />
       {initialLoading ? <CardSkeleton /> : <PostCardBox posts={posts || []} />}
       <Observer ref={ioRef} />
