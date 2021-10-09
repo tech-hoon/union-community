@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { memo } from 'react';
 import { ChatDots, SuitHeartFill, Eye } from '@styled-icons/bootstrap';
 
 interface Props {
@@ -45,4 +46,4 @@ const Count = styled.span<ICount>`
   padding: 0 2px;
 `;
 
-export default CountBox;
+export default memo(CountBox);
