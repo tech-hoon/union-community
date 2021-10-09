@@ -3,7 +3,7 @@ export const FIRST_INDEX = 6;
 export const CARD_AMOUNT = 6;
 
 export const MENU_LIST = [
-  { eng: 'free', kor: '자유 ' },
+  { eng: 'free', kor: '자유' },
   { eng: 'advertise', kor: '홍보' },
   { eng: 'club', kor: '동아리' },
   { eng: 'study', kor: '스터디' },
