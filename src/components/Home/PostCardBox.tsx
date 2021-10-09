@@ -41,7 +41,8 @@ const PostCardBox = ({ posts }: Props) => {
                   </AvatarWrapper>
                   <Creator>{creator.displayName}</Creator>
                 </CreatorBox>
-                {new Date(created_at).toLocaleDateString()}
+                {category}
+                {/* {new Date(created_at).toLocaleDateString()} */}
                 <CountBox
                   viewCount={view_count}
                   likeCount={like_count}
