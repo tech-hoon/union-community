@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { useState } from 'react';
-import { postsCategoryState } from 'store/posts';
+import { postsCategoryState } from 'store/post';
 import styled from 'styled-components';
 import { MENU_LIST } from 'utils/config';
 
