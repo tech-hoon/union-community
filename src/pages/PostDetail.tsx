@@ -9,31 +9,20 @@ import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CountBox from 'components/common/CountBox';
 import CommentBox from 'components/PostDetail/CommentBox';
 import { dbService } from 'service/firebase';
+import { useGetPostDetail } from 'hooks/usePost';
 
 interface Props {}
 
 const PostDetail = (props: Props) => {
-  const [post, setPost] = useState<PostType>();
-  const [initialLoading, setInitialLoading] = useState(true);
-  const [contentMarkup, setContentMarkup] = useState({ __html: '' });
-
   const location = useLocation();
   const history = useHistory();
   const id = location.pathname.split('/')[2];
 
-  useEffect(() => {
-    dbService
-      .collection('posts')
-      .get()
-      .then((snapshot) => {
-        const _post: any = snapshot.docs.filter((doc) => doc.id === id)[0].data();
-        setPost(_post);
-      })
-      .catch((error) => {
-        console.log(error);
-        history.push('/');
-      });
-  }, [id]);
+  const { post } = useGetPostDetail({ id });
+
+  console.log(post);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [contentMarkup, setContentMarkup] = useState({ __html: '' });
 
   useEffect(() => {
     if (post) {
