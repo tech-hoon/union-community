@@ -1,7 +1,8 @@
 export interface CommentType {
   id: string;
   content: string;
-  createdAt: string;
+  created_at: string;
+  like_count: string;
 }
 
 export interface PostType {

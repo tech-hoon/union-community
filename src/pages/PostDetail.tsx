@@ -6,7 +6,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import Avatar from 'components/common/ProfileBox/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CountBox from 'components/common/CountBox';
-import CommentBox from 'components/PostDetail/CommentBox';
+import CommentList from 'components/PostDetail/CommentList';
 import { useGetPostDetail } from 'hooks/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
@@ -82,7 +82,9 @@ const PostDetail = (props: Props) => {
             likeCount={post.like_count!!}
             commentCount={post.comment_list?.length!!}
           />
-          <CommentBox />
+          <CommentWrite placeholder='댓글을 입력해주세요.' />
+          <SubmitBtn>등록하기</SubmitBtn>
+          <CommentList commentList={post.comment_list} />
         </PostContainer>
       ) : (
         <PostSkeleton />
@@ -175,6 +177,29 @@ const Content = styled.section`
   margin: 40px 0;
   font-size: 20px;
   line-height: 200%;
+`;
+
+const Button = styled.button`
+  font-family: 'Spoqa Medium';
+  font-size: 1em;
+  padding: 12px;
+  border: 0.3px solid #eee;
+  border-radius: 4px;
+`;
+
+const CommentWrite = styled.textarea`
+  font-family: 'Spoqa Regular';
+  margin: 20px 0;
+  padding: 10px;
+  height: 100px;
+  width: 100%;
+`;
+
+const SubmitBtn = styled(Button)`
+  width: 100px;
+  margin-bottom: 40px;
+  background-color: skyblue;
+  color: white;
 `;
 
 export default PostDetail;
