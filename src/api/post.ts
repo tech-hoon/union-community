@@ -3,6 +3,7 @@ import { dbService } from 'service/firebase';
 interface IgetPostParams {
   lastIndex: number;
   category?: string;
+  orderBy: string;
 }
 
 interface IaddPostParams {
@@ -30,13 +31,9 @@ interface IupdatePostParams {
   };
 }
 
-export const getAllPosts = async ({ lastIndex }: IgetPostParams) => {
+export const getAllPosts = async ({ lastIndex, orderBy }: IgetPostParams) => {
   try {
-    const res = await dbService
-      .collection('posts')
-      .orderBy('created_at', 'desc')
-      .limit(lastIndex)
-      .get();
+    const res = await dbService.collection('posts').orderBy(orderBy, 'desc').limit(lastIndex).get();
 
     return res.docs.map((doc) => ({
       id: doc.id,
@@ -48,11 +45,11 @@ export const getAllPosts = async ({ lastIndex }: IgetPostParams) => {
   }
 };
 
-export const getPostsByCategory = async ({ lastIndex, category }: IgetPostParams) => {
+export const getPostsByCategory = async ({ lastIndex, category, orderBy }: IgetPostParams) => {
   try {
     const res = await dbService
       .collection('posts')
-      .orderBy('created_at', 'desc')
+      .orderBy(orderBy, 'desc')
       .where('category', '==', category)
       .limit(lastIndex)
       .get();
@@ -67,10 +64,10 @@ export const getPostsByCategory = async ({ lastIndex, category }: IgetPostParams
   }
 };
 
-export const getPostDetail = async (id: string) => {
+export const getPostDetail = async (postId: string) => {
   try {
-    const res = await dbService.collection('posts').get();
-    return res.docs.filter((doc) => doc.id === id)[0].data();
+    const res = await dbService.doc(`posts/${postId}`).get();
+    return res.data();
   } catch (error) {
     console.log(error);
     return;
@@ -108,8 +105,10 @@ export const updatePost = async ({ postId, postInput, creator }: IupdatePostPara
   }
 };
 
-export const deletePost = async (id: string) => {
+export const deletePost = async (postId: string) => {
   try {
-    const res = await dbService.collection('posts').doc();
-  } catch (error) {}
+    await dbService.doc(`posts/${postId}`).delete();
+  } catch (error) {
+    console.log(error);
+  }
 };

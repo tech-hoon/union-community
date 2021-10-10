@@ -1,6 +1,6 @@
+import { getPostDetail, getPostsByCategory, getAllPosts } from 'api/post';
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { dbService } from 'service/firebase';
 import { postsCategoryState, postsOrderByState } from 'store/post';
 import { PostType } from 'types';
 
@@ -14,30 +14,14 @@ export const useGetPosts = ({ lastIndex }: Props) => {
   const orderBy = useRecoilValue(postsOrderByState);
 
   useEffect(() => {
-    category
-      ? dbService
-          .collection('posts')
-          .orderBy(orderBy, 'desc')
-          .limit(lastIndex)
-          .where('category', '==', category)
-          .onSnapshot((snapshot) => {
-            const newPosts: any = snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }));
-            setPosts(newPosts);
-          })
-      : dbService
-          .collection('posts')
-          .orderBy(orderBy, 'desc')
-          .limit(lastIndex)
-          .onSnapshot((snapshot) => {
-            const newPosts: any = snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }));
-            setPosts(newPosts);
-          });
+    const fetchPosts = async () => {
+      const _posts: any = category
+        ? await getPostsByCategory({ lastIndex, category, orderBy })
+        : await getAllPosts({ lastIndex, orderBy });
+      setPosts(_posts);
+    };
+
+    fetchPosts();
   }, [category, orderBy, lastIndex]);
 
   return {
@@ -50,13 +34,12 @@ export const useGetPostDetail = (id: string) => {
   const category = useRecoilValue(postsCategoryState);
 
   useEffect(() => {
-    dbService
-      .collection('posts')
-      .get()
-      .then((snapshot) => {
-        const _post: any = snapshot.docs.filter((doc) => doc.id === id)[0].data();
-        setPost(_post);
-      });
+    const fetchPostDetail = async () => {
+      const _post: any = await getPostDetail(id);
+      setPost(_post);
+    };
+
+    fetchPostDetail();
   }, [category]);
 
   return {
