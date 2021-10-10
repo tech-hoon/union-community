@@ -31,7 +31,16 @@ const PostDetail = (props: Props) => {
   };
 
   const onUpdateClick = () => {
-    history.push({ pathname: '/update', state: id });
+    post &&
+      history.push({
+        pathname: '/update',
+        state: {
+          id: id,
+          title: post.title,
+          content: post.content,
+          category: post.category,
+        },
+      });
   };
 
   useEffect(() => {
@@ -47,7 +56,7 @@ const PostDetail = (props: Props) => {
       <Navbar isLoggedIn={true} />
       {!!post ? (
         <PostContainer>
-          <BackButton onClick={() => history.goBack()}>&#xE000;</BackButton>
+          <BackButton onClick={() => history.push('/')}>&#xE000;</BackButton>
           <Title>{post.title}</Title>
           <ROW_1>
             <ProfileBox>

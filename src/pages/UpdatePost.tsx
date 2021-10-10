@@ -7,14 +7,19 @@ import { useRef } from 'react';
 import { MENU_LIST } from 'utils/config';
 import { useLocation } from 'react-router';
 
-interface Props {}
+interface ILocationState {
+  id: string;
+  title: string;
+  category: string;
+  content: string;
+}
 
-const UpdatePost = (props: Props) => {
+const UpdatePost = () => {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const categoryRef = useRef<HTMLSelectElement | null>(null);
   const contentRef = useRef<ReactQuill | null>(null);
   const location = useLocation();
-  const id = location.state;
+  const { title, category, content, id } = location.state as ILocationState;
 
   const { post, onEditorCancle, onSubmit } = usePostForm({
     titleRef,
@@ -28,12 +33,12 @@ const UpdatePost = (props: Props) => {
     <Wrapper>
       <Navbar isLoggedIn={true} />
       <PostContainer onSubmit={onSubmit}>
-        <TitleInput ref={titleRef} placeholder='제목을 입력하세요' />
+        <TitleInput ref={titleRef} placeholder='제목을 입력하세요' defaultValue={title} />
         <HR />
 
         <CategoryBox>
           <Label>카테고리: </Label>
-          <Select ref={categoryRef} name='카테고리' defaultValue='자유'>
+          <Select ref={categoryRef} name='카테고리' defaultValue={category}>
             {MENU_LIST.map(({ kor }, id) => (
               <Option value={kor} key={id}>
                 {kor}
@@ -42,7 +47,7 @@ const UpdatePost = (props: Props) => {
           </Select>
         </CategoryBox>
 
-        <Editor ref={contentRef} />
+        <Editor ref={contentRef} value={content} />
 
         <ButtonBox>
           <CancleBtn onClick={onEditorCancle}>취소하기</CancleBtn>
