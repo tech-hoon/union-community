@@ -23,23 +23,23 @@ export const postsOrderByState = atom<string>({
   default: 'created_at',
 });
 
-export const postsSelector = selectorFamily<any, any>({
-  key: 'postsSelector',
-  get:
-    ({ category, lastIndex }: IgetPostsParams) =>
-    async () =>
-      category ? await getPostsByCategory({ lastIndex, category }) : getAllPosts({ lastIndex }),
-});
+// export const postsSelector = selectorFamily<any, any>({
+//   key: 'postsSelector',
+//   get:
+//     ({ category, lastIndex }: IgetPostsParams) =>
+//     async () =>
+//       category ? await getPostsByCategory({ lastIndex, category }) : getAllPosts({ lastIndex }),
+// });
 
-export const postState = atom<any>({
-  key: 'post/detail',
-  default: {},
-});
+// export const postState = atom<any>({
+//   key: 'post/detail',
+//   default: {},
+// });
 
-export const postDetailSelector = selectorFamily<any, any>({
-  key: 'postSelector',
-  get:
-    ({ id }: any) =>
-    async () =>
-      await getPostDetail(id),
-});
+// export const postDetailSelector = selectorFamily<any, any>({
+//   key: 'postSelector',
+//   get:
+//     ({ id }: any) =>
+//     async () =>
+//       await getPostDetail(id),
+// });
