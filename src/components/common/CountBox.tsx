@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { memo } from 'react';
-import { ChatDots, SuitHeartFill, Eye } from '@styled-icons/bootstrap';
+import { Chat, Eye } from '@styled-icons/bootstrap';
+import { Like } from '@styled-icons/boxicons-regular';
 
 interface Props {
   size?: string;
@@ -13,7 +14,7 @@ const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
   return (
     <CountSection>
       <Box>
-        <ChatDots size={size || `14px`} />
+        <Chat size={size || `14px`} color='#0ca5af' />
         <Count size={size || `14px`}>{commentCount}</Count>
       </Box>
       <Box>
@@ -21,7 +22,7 @@ const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
         <Count size={size || `14px`}>{viewCount}</Count>
       </Box>
       <Box>
-        <SuitHeartFill size={size || `14px`} color='red' />
+        <Like size={size || `14px`} color='red' />
         <Count size={size || `14px`}>{likeCount}</Count>
       </Box>
     </CountSection>
@@ -34,7 +35,7 @@ const CountSection = styled.section`
 `;
 
 const Box = styled.div`
-  padding: 0 2px;
+  padding: 0 3px;
 `;
 
 interface ICount {

@@ -40,7 +40,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 0 15% 20px;
+  padding: 0 15% 0px;
 `;
 const Button = styled.button`
   display: flex;

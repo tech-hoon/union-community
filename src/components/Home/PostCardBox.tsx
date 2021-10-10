@@ -41,7 +41,6 @@ const PostCardBox = ({ posts }: Props) => {
                   </AvatarWrapper>
                   <Creator>{creator.displayName}</Creator>
                 </CreatorBox>
-                {category}
                 {/* {new Date(created_at).toLocaleDateString()} */}
                 <CountBox
                   viewCount={view_count}
@@ -92,7 +91,7 @@ const Title = styled.h2`
   margin-bottom: 24px;
 `;
 const Content = styled.p`
-  padding-bottom: 24px;
+  padding-bottom: 36px;
 `;
 
 const CardBottom = styled.div`
