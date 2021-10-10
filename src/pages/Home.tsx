@@ -8,7 +8,7 @@ import useIntersectionObserver from 'hooks/useIntersectionObserver';
 import { useState, useRef, useEffect } from 'react';
 import { FIRST_INDEX, CARD_AMOUNT } from 'utils/config';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
-import { useGetPosts } from 'hooks/usePosts';
+import { useGetPosts } from 'hooks/useGetPosts';
 import { ArrowCircleDown } from '@styled-icons/fa-solid';
 
 interface Props {}
