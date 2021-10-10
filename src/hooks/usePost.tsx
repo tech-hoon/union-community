@@ -18,7 +18,7 @@ interface IGetPost {
 }
 
 export const useGetPosts = ({ lastIndex }: IGetPosts) => {
-  const [posts, setPosts] = useRecoilState<PostType[]>(postsState);
+  const [posts, setPosts] = useRecoilState<any[]>(postsState);
   const category = useRecoilValue(postsCategoryState);
   const postsLoadable = useRecoilValueLoadable(postsSelector({ category, lastIndex }));
 
