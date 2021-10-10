@@ -5,18 +5,23 @@ import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import { useRef } from 'react';
 import { MENU_LIST } from 'utils/config';
+import { useLocation } from 'react-router';
 
 interface Props {}
 
-const NewPost = (props: Props) => {
+const UpdatePost = (props: Props) => {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const categoryRef = useRef<HTMLSelectElement | null>(null);
   const contentRef = useRef<ReactQuill | null>(null);
+  const location = useLocation();
+  const id = location.state;
+
   const { post, onEditorCancle, onSubmit } = usePostForm({
     titleRef,
     categoryRef,
     contentRef,
-    mode: 'add',
+    mode: 'update',
+    postId: id,
   });
 
   return (
@@ -41,7 +46,7 @@ const NewPost = (props: Props) => {
 
         <ButtonBox>
           <CancleBtn onClick={onEditorCancle}>취소하기</CancleBtn>
-          <SubmitBtn type='submit'>등록하기</SubmitBtn>
+          <SubmitBtn type='submit'>수정하기</SubmitBtn>
         </ButtonBox>
       </PostContainer>
     </Wrapper>
@@ -105,4 +110,4 @@ const SubmitBtn = styled(Button)`
   color: white;
 `;
 
-export default NewPost;
+export default UpdatePost;

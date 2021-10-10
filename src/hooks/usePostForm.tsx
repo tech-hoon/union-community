@@ -1,4 +1,4 @@
-import { addPost } from 'api/post';
+import { addPost, updatePost } from 'api/post';
 import { useState, RefObject } from 'react';
 import { useHistory } from 'react-router';
 import { useRecoilValue } from 'recoil';
@@ -10,9 +10,11 @@ interface Props {
   titleRef: RefObject<HTMLInputElement | null>;
   categoryRef: RefObject<HTMLSelectElement | null>;
   contentRef: RefObject<any>;
+  mode: string;
+  postId?: any;
 }
 
-const usePostForm = ({ titleRef, categoryRef, contentRef }: Props) => {
+const usePostForm = ({ titleRef, categoryRef, contentRef, mode, postId }: Props) => {
   const history = useHistory();
   const [post, setPost] = useState<PostType>();
   const loginUser = useRecoilValue(loginUserState);
@@ -27,8 +29,16 @@ const usePostForm = ({ titleRef, categoryRef, contentRef }: Props) => {
     };
 
     if (checkPostValidation(postInput)) {
-      const postId = await addPost({ postInput, creator: loginUser });
-      history.push(`/post/${postId}`);
+      if (mode === 'add') {
+        const postId = await addPost({ postInput, creator: loginUser });
+        history.push(`/post/${postId}`);
+        return;
+      }
+
+      if (mode === 'update') {
+        postId && (await updatePost({ postInput, creator: loginUser, postId }));
+        history.push(`/post/${postId}`);
+      }
     } else {
       window.alert('내용을 모두 작성해 주세요.');
     }

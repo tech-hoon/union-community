@@ -17,6 +17,19 @@ interface IaddPostParams {
   };
 }
 
+interface IupdatePostParams {
+  postId: string;
+  postInput: {
+    title: string;
+    category: string;
+    content: string;
+  };
+  creator: {
+    displayName: string;
+    uid: string;
+  };
+}
+
 export const getAllPosts = async ({ lastIndex }: IgetPostParams) => {
   try {
     const res = await dbService
@@ -75,6 +88,21 @@ export const addPost = async ({ postInput, creator }: IaddPostParams) => {
       comment_list: [],
     });
     return res.id;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePost = async ({ postId, postInput, creator }: IupdatePostParams) => {
+  try {
+    await dbService.doc(`posts/${postId}`).update({
+      ...postInput,
+      creator,
+      view_count: 0,
+      like_count: 0,
+      created_at: new Date().getTime(),
+      comment_list: [],
+    });
   } catch (error) {
     console.log(error);
   }

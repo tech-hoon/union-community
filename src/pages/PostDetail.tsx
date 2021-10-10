@@ -7,7 +7,7 @@ import Avatar from 'components/common/ProfileBox/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CountBox from 'components/common/CountBox';
 import CommentBox from 'components/PostDetail/CommentBox';
-import { useGetPostDetail } from 'hooks/usePosts';
+import { useGetPostDetail } from 'hooks/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
 import { deletePost } from 'api/post';
@@ -28,6 +28,10 @@ const PostDetail = (props: Props) => {
   const onDeleteClick = async () => {
     const ok = window.confirm('정말 삭제하시겠습니까?');
     ok && deletePost(id) && history.push('/');
+  };
+
+  const onUpdateClick = () => {
+    history.push({ pathname: '/update', state: id });
   };
 
   useEffect(() => {
@@ -56,7 +60,7 @@ const PostDetail = (props: Props) => {
             카테고리 <Category>{post.category}</Category>
             {isCreator && (
               <EditBox>
-                <EditBtn>수정하기</EditBtn>
+                <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
                 <DeleteBtn onClick={onDeleteClick}>삭제하기</DeleteBtn>
               </EditBox>
             )}
@@ -148,7 +152,7 @@ const EditBox = styled.div`
 
 const Btn = styled.button``;
 
-const EditBtn = styled(Btn)``;
+const UpdateBtn = styled(Btn)``;
 
 const DeleteBtn = styled(Btn)``;
 
