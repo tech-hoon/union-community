@@ -1,15 +1,16 @@
 import Footer from 'components/common/Footer';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
-import { useState, useEffect, createElement } from 'react';
-import { PostType } from 'types';
+import { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import Avatar from 'components/common/ProfileBox/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CountBox from 'components/common/CountBox';
 import CommentBox from 'components/PostDetail/CommentBox';
-import { dbService } from 'service/firebase';
-import { useGetPostDetail } from 'hooks/usePost';
+import { useGetPostDetail } from 'hooks/usePosts';
+import { loginUserState } from 'store/loginUser';
+import { useRecoilValue } from 'recoil';
+import { deletePost } from 'api/post';
 
 interface Props {}
 
@@ -18,15 +19,21 @@ const PostDetail = (props: Props) => {
   const history = useHistory();
   const id = location.pathname.split('/')[2];
 
-  const { post } = useGetPostDetail({ id });
+  const loginUser = useRecoilValue(loginUserState);
 
-  console.log(post);
-  const [initialLoading, setInitialLoading] = useState(true);
+  const { post } = useGetPostDetail(id);
+  const [isCreator, setIsCreator] = useState<boolean>();
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
+
+  const onDeleteClick = async () => {
+    const ok = window.confirm('정말 삭제하시겠습니까?');
+    ok && deletePost(id) && history.push('/');
+  };
 
   useEffect(() => {
     if (post) {
-      setInitialLoading(false);
+      !!loginUser && !!post.creator && setIsCreator(loginUser.uid === post.creator.uid);
+
       setContentMarkup({ __html: post.content });
     }
   }, [post]);
@@ -34,32 +41,38 @@ const PostDetail = (props: Props) => {
   return (
     <Wrapper>
       <Navbar isLoggedIn={true} />
-      {initialLoading ? (
-        <PostSkeleton />
-      ) : (
+      {!!post ? (
         <PostContainer>
           <BackButton onClick={() => history.goBack()}>&#xE000;</BackButton>
-          <Title>{post?.title}</Title>
+          <Title>{post.title}</Title>
           <ROW_1>
             <ProfileBox>
               <Avatar />
-              <Creator>{post?.creator?.displayName}</Creator>
+              <Creator>{post.creator?.displayName}</Creator>
             </ProfileBox>
-            <CreatedAt>{new Date(post?.created_at!!).toLocaleDateString()}</CreatedAt>
+            <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
           </ROW_1>
           <ROW_2>
-            카테고리 <Category>{post?.category}</Category>
+            카테고리 <Category>{post.category}</Category>
+            {isCreator && (
+              <EditBox>
+                <EditBtn>수정하기</EditBtn>
+                <DeleteBtn onClick={onDeleteClick}>삭제하기</DeleteBtn>
+              </EditBox>
+            )}
           </ROW_2>
           <HR />
           <Content dangerouslySetInnerHTML={contentMarkup} />
           <CountBox
             size='20px'
-            viewCount={post?.view_count!!}
-            likeCount={post?.like_count!!}
-            commentCount={post?.comment_list.length!!}
+            viewCount={post.view_count!!}
+            likeCount={post.like_count!!}
+            commentCount={post.comment_list?.length!!}
           />
           <CommentBox />
         </PostContainer>
+      ) : (
+        <PostSkeleton />
       )}
       <Footer />
     </Wrapper>
@@ -94,6 +107,8 @@ const ROW_1 = styled.div`
 `;
 
 const ROW_2 = styled.div`
+  display: flex;
+  align-items: center;
   font-family: 'Spoqa Medium';
   font-size: 1.3em;
 `;
@@ -124,6 +139,18 @@ const Creator = styled.span`
   font-size: 1.5em;
   color: #999999;
 `;
+
+const EditBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+`;
+
+const Btn = styled.button``;
+
+const EditBtn = styled(Btn)``;
+
+const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
   font-family: 'Spoqa Medium';
