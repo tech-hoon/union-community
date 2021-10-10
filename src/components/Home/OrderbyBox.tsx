@@ -1,20 +1,26 @@
 import styled from 'styled-components';
 import { Fire } from '@styled-icons/icomoon';
 import { CalendarCheck } from '@styled-icons/bootstrap';
+import { useSetRecoilState } from 'recoil';
+import { postsOrderByState } from 'store/post';
 
-interface Props {}
+interface IButton {}
 
-const OrderBox = (props: Props) => {
+const OrderbyBox = () => {
+  const setOrderBy = useSetRecoilState(postsOrderByState);
+
+  const onButtonClick = (event: any) => setOrderBy(event.currentTarget.value);
+
   return (
     <Wrapper>
-      <Box>
+      <Button onClick={onButtonClick} value='like_count'>
         <FireIcon size={20} />
         <Title>인기순</Title>
-      </Box>
-      <Box>
+      </Button>
+      <Button onClick={onButtonClick} value='created_at'>
         <CalendarIcon size={20} />
         <Title>최신순</Title>
-      </Box>
+      </Button>
     </Wrapper>
   );
 };
@@ -25,7 +31,7 @@ const Wrapper = styled.div`
   gap: 20px;
   padding: 0 15% 20px;
 `;
-const Box = styled.div`
+const Button = styled.button<IButton>`
   display: flex;
   align-items: center;
   gap: 4px;
@@ -33,8 +39,6 @@ const Box = styled.div`
   &:hover {
     transform: scale(105%);
   }
-
-  cursor: pointer;
 `;
 
 const FireIcon = styled(Fire)``;
@@ -45,4 +49,4 @@ const Title = styled.div`
   font-size: 20px;
 `;
 
-export default OrderBox;
+export default OrderbyBox;

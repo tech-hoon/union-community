@@ -18,6 +18,11 @@ export const postsCategoryState = atom<string>({
   default: '',
 });
 
+export const postsOrderByState = atom<string>({
+  key: 'posts/orderBy',
+  default: 'created_at',
+});
+
 export const postsSelector = selectorFamily<any, any>({
   key: 'postsSelector',
   get:

@@ -2,23 +2,21 @@ import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import PostCardBox from 'components/Home/PostCardBox';
 import CategoryBox from 'components/Home/CategoryBox';
-import OrderBox from 'components/Home/OrderBox';
+import OrderbyBox from 'components/Home/OrderbyBox';
 import Footer from 'components/common/Footer';
-import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 import useIntersectionObserver from 'hooks/useIntersectionObserver';
 import { useState, useRef, useEffect } from 'react';
 import { FIRST_INDEX, CARD_AMOUNT } from 'utils/config';
-import { useGetPosts } from 'hooks/usePost';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
+import { useGetPosts } from 'hooks/usePosts';
+import { ArrowCircleDown } from '@styled-icons/fa-solid';
 
 interface Props {}
 
 const Home = (props: Props) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [lastIndex, setLastIndex] = useState(FIRST_INDEX);
-  const { posts } = useGetPosts({
-    lastIndex,
-  });
+  const { posts } = useGetPosts({ lastIndex });
 
   const onIndexIncrease = () => setLastIndex((lastIndex) => lastIndex + CARD_AMOUNT);
 
@@ -33,7 +31,7 @@ const Home = (props: Props) => {
     <Wrapper>
       <Navbar isLoggedIn={true} />
       <CategoryBox />
-      <OrderBox />
+      <OrderbyBox />
       {initialLoading ? <PostSkeleton /> : <PostCardBox posts={posts || []} />}
 
       {/* <Observer ref={ioRef} /> */}
@@ -50,8 +48,15 @@ const Observer = styled.div`
   height: 20px;
 `;
 
-const PageNextButton = styled.button`
-  margin: 0 auto;
+const PageNextButton = styled(ArrowCircleDown)`
+  width: 24px;
+  color: gray;
+  margin-left: 50%;
+
+  &:hover {
+    align-self: center;
+    transform: scale(1.2);
+  }
 `;
 
 export default Home;
