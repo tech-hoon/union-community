@@ -39,8 +39,9 @@ const SocialLogin = ({ name }: SocialLoginProps) => {
         onStepNext();
       } else {
         setLoginUser({
+          isLoggedIn: true,
           displayName: data.user?.displayName!!,
-          uid: data.user?.uid,
+          uid: data.user?.uid!!,
         });
       }
     } catch (error) {

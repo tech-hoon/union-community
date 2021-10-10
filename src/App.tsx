@@ -2,20 +2,26 @@ import { useState, useEffect } from 'react';
 import { authService } from 'service/firebase';
 import Routes from 'Routes';
 import { loginUserState } from 'store/loginUser';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 interface Props {}
 
 const App = (props: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [, setLoginUser] = useRecoilState(loginUserState);
+  const loginUser = useRecoilValue(loginUserState);
 
   useEffect(() => {
-    authService.onAuthStateChanged((user) => {
-      setLoginUser(user ? { displayName: user?.displayName!!, uid: user?.uid!! } : {});
-      setIsLoggedIn(Boolean(user));
-    });
-  }, []);
+    setIsLoggedIn(!!loginUser.isLoggedIn);
+  }, [loginUser]);
+
+  // useEffect(() => {
+  //   authService.onAuthStateChanged((user) => {
+  //     setLoginUser(
+  //       user ? { displayName: user?.displayName!!, uid: user?.uid!! } : { displayName: '', uid: '' }
+  //     );
+  //     setIsLoggedIn(Boolean(user));
+  //   });
+  // }, []);
 
   return (
     <>

@@ -12,7 +12,7 @@ const MypageDropdown = (props: Props) => {
 
   const onLogoutClick = () => {
     authService.signOut();
-    setLoginUser({});
+    setLoginUser({ displayName: '', uid: '', isLoggedIn: false });
   };
 
   return (

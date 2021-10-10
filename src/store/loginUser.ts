@@ -1,8 +1,9 @@
 import { atom, selector } from 'recoil';
 
 interface loginUserType {
-  displayName?: string;
-  uid?: string;
+  displayName: string;
+  uid: string;
+  isLoggedIn: boolean;
 }
 
 export const loginUserState = atom<loginUserType>({
@@ -10,6 +11,7 @@ export const loginUserState = atom<loginUserType>({
   default: {
     displayName: '',
     uid: '',
+    isLoggedIn: false,
   },
 });
 
