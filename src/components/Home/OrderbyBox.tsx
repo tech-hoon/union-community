@@ -1,25 +1,36 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Fire } from '@styled-icons/icomoon';
 import { CalendarCheck } from '@styled-icons/bootstrap';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { postsOrderByState } from 'store/post';
 
-interface IButton {}
-
 const OrderbyBox = () => {
-  const setOrderBy = useSetRecoilState(postsOrderByState);
+  const [orderby, setOrderby] = useRecoilState(postsOrderByState);
+  const [clickedOrderby, setClickedOrderby] = useState<string>(orderby);
 
-  const onButtonClick = (event: any) => setOrderBy(event.currentTarget.value);
+  const onButtonClick: React.MouseEventHandler = (event) => {
+    setOrderby(event.currentTarget.id);
+    setClickedOrderby(event.currentTarget.id);
+  };
 
   return (
     <Wrapper>
-      <Button onClick={onButtonClick} value='like_count'>
-        <FireIcon size={20} />
-        <Title>인기순</Title>
-      </Button>
-      <Button onClick={onButtonClick} value='created_at'>
+      <Button
+        onClick={onButtonClick}
+        id='created_at'
+        color={clickedOrderby === 'created_at' ? 'black' : '#868e96'}
+      >
         <CalendarIcon size={20} />
         <Title>최신순</Title>
+      </Button>
+      <Button
+        onClick={onButtonClick}
+        id='like_count'
+        color={clickedOrderby === 'like_count' ? 'black' : '#868e96'}
+      >
+        <FireIcon size={20} />
+        <Title>인기순</Title>
       </Button>
     </Wrapper>
   );
@@ -31,13 +42,15 @@ const Wrapper = styled.div`
   gap: 20px;
   padding: 0 15% 20px;
 `;
-const Button = styled.button<IButton>`
+const Button = styled.button`
   display: flex;
   align-items: center;
   gap: 4px;
+  color: ${(props) => props.color};
 
   &:hover {
     transform: scale(105%);
+    transition: 0.3s;
   }
 `;
 
