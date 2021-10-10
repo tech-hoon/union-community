@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useState } from 'react';
 import { postsCategoryState } from 'store/post';
 import styled from 'styled-components';
@@ -7,7 +7,7 @@ import { MENU_LIST } from 'utils/config';
 interface Props {}
 
 const CategoryBox = (props: Props) => {
-  const [, setCategory] = useRecoilState(postsCategoryState);
+  const setCategory = useSetRecoilState(postsCategoryState);
   const [clickedMenu, setClickedMenu] = useState<string>();
 
   const onMenuClick = (value: string) => {
