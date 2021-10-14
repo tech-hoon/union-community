@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import LogoImg from './LogoImg';
 import { useHistory } from 'react-router-dom';
 
 interface Props {}
@@ -10,7 +9,7 @@ const LogoBox = (props: Props) => {
   return (
     <Wrapper onClick={() => history.push(`/`)}>
       <LogoImgWrapper>
-        <LogoTitle>커뮤니티</LogoTitle>
+        <LogoTitle>WOORI</LogoTitle>
       </LogoImgWrapper>
     </Wrapper>
   );
@@ -23,16 +22,18 @@ const Wrapper = styled.div`
 `;
 
 const LogoImgWrapper = styled.div`
+  display: flex;
+  align-items: center;
   cursor: pointer;
 `;
 
 const LogoTitle = styled.h1`
   display: inline;
   font-family: 'Spoqa Bold';
-  font-size: 1.5em;
+  font-size: 2em;
   line-height: 40px;
   letter-spacing: -0.04em;
-
+  color: #18a0fb;
   @media (max-width: 568px) {
     font-size: 1.2em;
   }

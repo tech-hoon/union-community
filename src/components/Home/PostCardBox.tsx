@@ -33,13 +33,13 @@ const PostCardBox = ({ posts }: Props) => {
           return (
             <PostCard key={key} onClick={() => history.push(`post/${id}`)}>
               <Title>{title}</Title>
-              <Content>{tagEliminatingRegex(content)}</Content>
+              <Content>{tagEliminatingRegex(content).substring(0, 100)}...</Content>
               <CardBottom>
                 <CreatorBox>
                   <AvatarWrapper>
-                    <Avatar size='20px' />
+                    <Avatar avatarId={creator.avatarId} />
                   </AvatarWrapper>
-                  <Creator>{creator.displayName}</Creator>
+                  <Creator>{creator.nickname}</Creator>
                 </CreatorBox>
                 {/* {new Date(created_at).toLocaleDateString()} */}
                 <CountBox
@@ -112,7 +112,7 @@ const CreatorBox = styled.div`
 
 const AvatarWrapper = styled.div`
   @media ${({ theme }) => theme.size.tablet} {
-    display: none;
+    /* display: none; */
   }
 `;
 

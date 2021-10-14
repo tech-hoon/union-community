@@ -1,13 +1,15 @@
 import styled from 'styled-components';
-import logoImg from 'assets/images/logo/site-logo.png';
+// import { Chat } from '@styled-icons/bootstrap';
+import { Chatbubble } from '@styled-icons/ionicons-solid';
 
 const LogoImg = () => {
-  return <Img src={logoImg} />;
+  return <Img color='#18A0FB' />;
 };
 
-const Img = styled.img`
-  width: 2.5em;
+const Img = styled(Chatbubble)`
+  width: 1.8em;
   margin-right: 4px;
+  transform: scaleX(-1);
 `;
 
 export default LogoImg;
