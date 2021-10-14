@@ -2,25 +2,26 @@ import { useCallback, useRef, useEffect } from 'react';
 import { CloseOutline } from '@styled-icons/evaicons-outline';
 import styled from 'styled-components';
 import Portal from '..';
-import LogoImg from '../../LogoBox/LogoImg';
 import LoginContainer from './LoginContainer';
-import AuthContainer from './AuthContainer';
+import ResidentAuthContainer from './ResidentAuthContainer';
 import NicknameContainer from './NicknameContainer';
 import useLoginStep from 'hooks/useLoginStep';
+import LogoBox from 'components/common/LogoBox';
+import { authService } from 'service/firebase';
 
 interface Props {
   onClose: () => void;
 }
 
 const LoginPortal = ({ onClose }: Props) => {
-  const { loginStep, onStepPrev, onStepReset } = useLoginStep();
+  const { loginStep, onLoginStepPrev, onLoginStepNext, onLoginStepReset } = useLoginStep();
 
   const CurrentContainer = () => {
     switch (loginStep) {
       case 1:
         return <LoginContainer />;
       case 2:
-        return <AuthContainer />;
+        return <ResidentAuthContainer />;
       case 3:
         return <NicknameContainer />;
       default:
@@ -32,11 +33,10 @@ const LoginPortal = ({ onClose }: Props) => {
   const portalClose = useCallback(
     (e) => {
       if ((portalRef.current && !portalRef.current.contains(e.target)) || e.key === 'Escape') {
-        onStepReset();
         onClose();
       }
     },
-    [onClose, onStepReset]
+    [onClose, onLoginStepReset]
   );
 
   useEffect(() => {
@@ -54,10 +54,12 @@ const LoginPortal = ({ onClose }: Props) => {
       <Background>
         <Wrapper ref={portalRef}>
           <Header>
-            <LogoImg />
+            <LogoBox />
             <CloseBtn onClick={onClose} size='24' color='gray' />
           </Header>
-          <Nav>{loginStep !== 0 && <BackButton onClick={onStepPrev}>&#xE000;</BackButton>}</Nav>
+          <Nav>
+            {loginStep !== 1 && <BackButton onClick={onLoginStepPrev}>&#xE000;</BackButton>}
+          </Nav>
           <CurrentContainer />
         </Wrapper>
       </Background>

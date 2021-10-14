@@ -1,22 +1,30 @@
 import { atom, selector } from 'recoil';
-
-interface loginUserType {
-  displayName: string;
-  uid: string;
-  isLoggedIn: boolean;
-}
+import { loginUserType } from 'types';
 
 export const loginUserState = atom<loginUserType>({
   key: 'login_user',
   default: {
-    displayName: '',
+    name: '',
+    nickname: '',
+    email: '',
     uid: '',
-    isLoggedIn: false,
+    avatarId: 1,
+    residentAuthenticated: false,
+    registerDone: false,
   },
 });
 
-export const loginState = selector({
-  key: 'is_logged_in',
-  get: ({ get }) =>
-    !(Object.keys(get(loginUserState)).length === 0 && get(loginUserState).constructor === Object),
+export const registerStatus = selector({
+  key: 'isLoggedIn',
+  get: ({ get }) => isValidated(get(loginUserState)),
 });
+
+interface IParams {
+  residentAuthenticated: boolean;
+  nickname: string;
+  registerDone: boolean;
+}
+
+const isValidated = ({ residentAuthenticated, nickname }: IParams) => {
+  return residentAuthenticated && !!nickname;
+};

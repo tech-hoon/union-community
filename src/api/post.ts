@@ -13,8 +13,9 @@ interface IaddPostParams {
     content: string;
   };
   creator: {
-    displayName: string;
+    nickname: string;
     uid: string;
+    avatarId: number;
   };
 }
 
@@ -26,8 +27,9 @@ interface IupdatePostParams {
     content: string;
   };
   creator: {
-    displayName: string;
+    nickname: string;
     uid: string;
+    avatarId: number;
   };
 }
 
@@ -97,7 +99,6 @@ export const updatePost = async ({ postId, postInput, creator }: IupdatePostPara
       creator,
       view_count: 0,
       like_count: 0,
-      created_at: new Date().getTime(),
       comment_list: [],
     });
   } catch (error) {

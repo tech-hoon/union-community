@@ -60,8 +60,8 @@ const PostDetail = (props: Props) => {
           <Title>{post.title}</Title>
           <ROW_1>
             <ProfileBox>
-              <Avatar />
-              <Creator>{post.creator?.displayName}</Creator>
+              <Avatar avatarId={post.creator.avatarId} />
+              <Creator>{post.creator?.nickname}</Creator>
             </ProfileBox>
             <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
           </ROW_1>
