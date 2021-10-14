@@ -1,18 +1,18 @@
-import { useHistory } from 'react-router';
 import { authService } from 'service/firebase';
 import styled from 'styled-components';
-import React from 'react';
-import { useRecoilState } from 'recoil';
+import { memo } from 'react';
+import { useResetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
+import useLoginStep from 'hooks/useLoginStep';
 
-interface Props {}
-
-const MypageDropdown = (props: Props) => {
-  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+const MypageDropdown = () => {
+  const resetLoginUser = useResetRecoilState(loginUserState);
+  const { onLoginStepReset } = useLoginStep();
 
   const onLogoutClick = () => {
+    resetLoginUser();
+    onLoginStepReset();
     authService.signOut();
-    setLoginUser({ displayName: '', uid: '', isLoggedIn: false });
   };
 
   return (
@@ -32,6 +32,7 @@ const Wrapper = styled.ul`
   padding: 4px;
   border: 0.1px solid #eee;
   width: 140px;
+  user-select: none;
 `;
 
 const DropdownItem = styled.li`
@@ -43,4 +44,4 @@ const MyLikes = styled(DropdownItem)``;
 const Settings = styled(DropdownItem)``;
 const Logout = styled(DropdownItem)``;
 
-export default React.memo(MypageDropdown);
+export default memo(MypageDropdown);
