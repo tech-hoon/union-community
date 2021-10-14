@@ -17,7 +17,7 @@ const LoginButton = (props: Props) => {
 };
 
 const Button = styled.button`
-  font-family: 'Spoqa medium';
+  font-weight: 500;
   font-size: 1.4em;
 
   padding: 12px 40px;

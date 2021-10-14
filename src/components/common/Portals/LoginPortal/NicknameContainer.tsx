@@ -61,7 +61,7 @@ const Wrapper = styled.form`
 `;
 
 const Title = styled.h1`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 2em;
   line-height: 150%;
 `;
@@ -75,7 +75,7 @@ const AvatarWrapper = styled.div``;
 const NicknameWrapper = styled.div``;
 
 const Label = styled.label`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 1.5em;
   margin-right: 8px;
 `;
@@ -88,7 +88,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  font-family: 'Spoqa medium';
+  font-weight: 500;
   font-size: 1em;
 
   padding: 12px 28px;

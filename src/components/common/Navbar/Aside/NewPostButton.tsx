@@ -16,7 +16,7 @@ const NewPostButton = (props: Props) => {
 const Wrapper = styled.div``;
 
 const Button = styled.button`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 1em;
 `;
 

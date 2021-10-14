@@ -36,7 +36,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.p`
-  font-family: 'Spoqa Light';
+  font-weight: 200;
   font-size: 2em;
   line-height: 180%;
   letter-spacing: -0.05em;
@@ -54,7 +54,7 @@ const Content = styled.p`
 `;
 
 const Strong = styled.strong`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
 `;
 const ButtonWrapper = styled.div`
   @media ${({ theme }) => theme.size.mobile} {

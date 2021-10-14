@@ -65,14 +65,14 @@ const PostContainer = styled.form`
   margin: 20px auto;
 `;
 const TitleInput = styled.input`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 2em;
 `;
 const HR = styled.hr`
   margin: 20px 0;
 `;
 const Label = styled.label`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 1em;
 `;
 
@@ -99,7 +99,7 @@ const ButtonBox = styled.div`
 `;
 
 const Button = styled.button`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 1em;
   padding: 12px;
   border: 0.3px solid #eee;

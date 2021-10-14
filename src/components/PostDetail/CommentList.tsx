@@ -65,7 +65,7 @@ const CreatedAt = styled.p`
   color: gray;
 `;
 const Nickname = styled.p`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 20px;
 `;
 const Content = styled.div`

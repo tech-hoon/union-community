@@ -58,7 +58,7 @@ const FireIcon = styled(Fire)``;
 const CalendarIcon = styled(CalendarCheck)``;
 
 const Title = styled.div`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 20px;
 `;
 

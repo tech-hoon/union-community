@@ -102,15 +102,14 @@ const PostContainer = styled.section`
 `;
 
 const BackButton = styled.span`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 2em;
   cursor: pointer;
 `;
 
 const Title = styled.h1`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 2.5em;
-  text-transform: uppercase;
   margin-top: 24px;
 `;
 
@@ -124,7 +123,7 @@ const ROW_1 = styled.div`
 const ROW_2 = styled.div`
   display: flex;
   align-items: center;
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 1.3em;
 `;
 
@@ -150,7 +149,7 @@ const ProfileBox = styled.div`
 `;
 
 const Creator = styled.span`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 1.5em;
   color: #999999;
 `;
@@ -168,7 +167,7 @@ const UpdateBtn = styled(Btn)``;
 const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 1.5em;
   color: #999;
 `;
@@ -180,7 +179,7 @@ const Content = styled.section`
 `;
 
 const Button = styled.button`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 1em;
   padding: 12px;
   border: 0.3px solid #eee;
@@ -188,7 +187,7 @@ const Button = styled.button`
 `;
 
 const CommentWrite = styled.textarea`
-  font-family: 'Spoqa Regular';
+  font-weight: 300;
   margin: 20px 0;
   padding: 10px;
   height: 100px;

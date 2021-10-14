@@ -62,7 +62,7 @@ const Logo = styled.img<SocialLoginProps>`
 `;
 
 const Title = styled.span`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 20px;
 `;
 

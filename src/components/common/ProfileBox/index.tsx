@@ -35,7 +35,7 @@ const Top = styled.div`
 const Bottom = styled.div``;
 
 const Name = styled.h3`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 1em;
 `;
 

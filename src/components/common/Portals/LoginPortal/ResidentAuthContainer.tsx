@@ -45,7 +45,7 @@ const Body = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 2em;
 `;
 

@@ -53,7 +53,7 @@ const Menu = styled.button<IMenu>`
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 
   font-size: 1em;
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   &:hover {
     color: white;
     background-color: ${({ theme }) => theme.color.BUTTON_CLICKED};

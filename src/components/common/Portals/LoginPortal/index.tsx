@@ -108,7 +108,7 @@ const Nav = styled.div`
 `;
 
 const BackButton = styled.button`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 32px;
   padding: 16px;
   margin-right: 90%;

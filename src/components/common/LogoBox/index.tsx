@@ -29,7 +29,7 @@ const LogoImgWrapper = styled.div`
 
 const LogoTitle = styled.h1`
   display: inline;
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 2em;
   line-height: 40px;
   letter-spacing: -0.04em;

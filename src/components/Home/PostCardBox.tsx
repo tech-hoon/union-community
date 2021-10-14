@@ -86,7 +86,7 @@ const PostCard = styled.li`
   }
 `;
 const Title = styled.h2`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 20px;
   margin-bottom: 24px;
 `;
@@ -117,7 +117,7 @@ const AvatarWrapper = styled.div`
 `;
 
 const Creator = styled.span`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   color: ${({ theme }) => theme.color.BLUE};
   font-size: 16px;
 

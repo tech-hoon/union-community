@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     cursor:pointer;
   }
   body{
-    font-family: "Spoqa Regular";
+    font-family: "Spoqa Han Sans Neo";
     background-color: #f8f9fa;
   }
 
