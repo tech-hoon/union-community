@@ -1,15 +1,12 @@
 import useLoginStep from 'hooks/useLoginStep';
 import styled from 'styled-components';
 import SocialLogin from '../../SocialLogin/SocialLogin';
+import { RESIDENT_AUTH_STEP, NICKNAME_STEP } from 'utils/config';
 
 interface Props {}
 
-const SNS_LOGIN_STEP = 1;
-const AUTH_STEP = 2;
-const NICKNAME_STEP = 3;
-
 const LoginContainer = (prop: Props) => {
-  const { loginStep, onStepNext } = useLoginStep();
+  const { loginStep, onLoginStepNext } = useLoginStep();
 
   return (
     <Wrapper>
@@ -18,8 +15,8 @@ const LoginContainer = (prop: Props) => {
         <SocialLogin name='google' />
         <SocialLogin name='facebook' />
       </Body>
-      {(loginStep === AUTH_STEP || loginStep === NICKNAME_STEP) && (
-        <Button onClick={onStepNext}>다음</Button>
+      {(loginStep === RESIDENT_AUTH_STEP || loginStep === NICKNAME_STEP) && (
+        <Button onClick={onLoginStepNext}>다음</Button>
       )}
     </Wrapper>
   );
