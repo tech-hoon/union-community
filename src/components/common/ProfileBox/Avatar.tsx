@@ -1,24 +1,25 @@
 import styled from 'styled-components';
-import img from 'assets/images/avatar/profile-image.png';
-import React from 'react';
+import { memo } from 'react';
+import CurrentAvatar from '../Avatar/CurrentAvatar';
 
 interface Props {
-  size?: string;
+  avatarId: number;
 }
 
-const Avatar = ({ size }: Props) => {
+const Avatar = ({ avatarId }: Props) => {
   return (
     <Wrapper>
-      <Img src={img} sizes={size} />
+      <CurrentAvatar avatarId={avatarId} />
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div``;
-
-const Img = styled.img`
-  padding-top: 2px;
-  width: ${({ sizes }) => sizes || `33px`};
+const Wrapper = styled.div`
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border: 0.3px solid #666;
+  overflow: hidden;
 `;
 
-export default React.memo(Avatar);
+export default memo(Avatar);
