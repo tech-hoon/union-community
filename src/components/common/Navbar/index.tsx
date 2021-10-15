@@ -19,6 +19,7 @@ const Navbar = ({ isLoggedIn }: Props) => {
 const Wrapper = styled.nav`
   display: flex;
   padding: 24px;
+  user-select: none;
 `;
 
 export default memo(Navbar);

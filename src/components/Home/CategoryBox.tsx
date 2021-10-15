@@ -37,6 +37,14 @@ const Wrapper = styled.div`
   display: flex;
   gap: 1%;
   margin: 24px auto 36px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 95%;
+    margin: 12px auto 30px;
+    font-size: 1em;
+  }
+
+  user-select: none;
 `;
 
 interface IMenu {

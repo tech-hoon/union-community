@@ -160,7 +160,11 @@ const EditBox = styled.div`
   margin-left: auto;
 `;
 
-const Btn = styled.button``;
+const Btn = styled.button`
+  font-size: 1em;
+  font-weight: 500;
+  color: #999;
+`;
 
 const UpdateBtn = styled(Btn)``;
 

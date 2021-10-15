@@ -39,8 +39,12 @@ const OrderbyBox = () => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 0 15% 0px;
+  gap: 12px;
+  user-select: none;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    gap: 4px;
+  }
 `;
 const Button = styled.button`
   display: flex;
@@ -54,12 +58,24 @@ const Button = styled.button`
   }
 `;
 
-const FireIcon = styled(Fire)``;
-const CalendarIcon = styled(CalendarCheck)``;
+const FireIcon = styled(Fire)`
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1.2em;
+  }
+`;
+const CalendarIcon = styled(CalendarCheck)`
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1.2em;
+  }
+`;
 
 const Title = styled.div`
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.5em;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1.2em;
+  }
 `;
 
 export default OrderbyBox;

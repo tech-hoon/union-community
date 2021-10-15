@@ -91,16 +91,19 @@ const Title = styled.h2`
   margin-bottom: 24px;
 `;
 const Content = styled.p`
-  padding-bottom: 36px;
+  font-weight: 300;
+  padding-left: 8px;
+  padding-bottom: 40px;
+  line-height: 1.8em;
 `;
 
 const CardBottom = styled.div`
-  width: 85%;
+  width: 88%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  bottom: 1rem;
+  bottom: 0.9rem;
   margin: 0 auto;
 `;
 

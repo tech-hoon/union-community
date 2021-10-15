@@ -75,7 +75,7 @@ const Content = styled.div`
 `;
 const LikeButton = styled(Like)`
   width: 24px;
-  color: red;
+  color: #c62917;
   cursor: pointer;
 `;
 const LikeCount = styled.div``;
