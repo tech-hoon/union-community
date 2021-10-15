@@ -1,7 +1,6 @@
 import { atom, AtomOptions, selector, selectorFamily } from 'recoil';
 import { PostType } from 'types';
-
-import { getAllPosts, getPostsByCategory, getPostDetail } from 'api/post';
+import { FIRST_INDEX } from 'utils/config';
 
 interface IgetPostsParams {
   lastIndex: number;
@@ -11,6 +10,11 @@ interface IgetPostsParams {
 export const postsState = atom<PostType[]>({
   key: 'posts',
   default: [],
+});
+
+export const postsLastIndex = atom<number>({
+  key: 'posts/lastIndex',
+  default: FIRST_INDEX,
 });
 
 export const postsCategoryState = atom<string>({

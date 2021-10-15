@@ -1,23 +1,28 @@
 import { getPostDetail, getPostsByCategory, getAllPosts } from 'api/post';
 import { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { postsCategoryState, postsOrderByState } from 'store/post';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { postsCategoryState, postsOrderByState, postsLastIndex, postsState } from 'store/post';
 import { PostType } from 'types';
 
-interface Props {
-  lastIndex: number;
-}
-
-export const useGetPosts = ({ lastIndex }: Props) => {
-  const [posts, setPosts] = useState<PostType[]>();
+export const useGetPosts = () => {
+  const [posts, setPosts] = useRecoilState(postsState);
+  const [isLastPost, setIsLastPost] = useState<boolean>();
   const category = useRecoilValue(postsCategoryState);
   const orderBy = useRecoilValue(postsOrderByState);
+  const lastIndex = useRecoilValue(postsLastIndex);
 
   useEffect(() => {
     const fetchPosts = async () => {
       const _posts: any = category
         ? await getPostsByCategory({ lastIndex, category, orderBy })
         : await getAllPosts({ lastIndex, orderBy });
+
+      //더 이상 불러 올 게 없을 시
+      if (_posts.length === posts?.length) {
+        setIsLastPost(true);
+        return;
+      }
+
       setPosts(_posts);
     };
 
@@ -26,6 +31,8 @@ export const useGetPosts = ({ lastIndex }: Props) => {
 
   return {
     posts,
+    setPosts,
+    isLastPost,
   };
 };
 
