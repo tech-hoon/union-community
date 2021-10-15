@@ -76,6 +76,22 @@ export const getPostDetail = async (postId: string) => {
   }
 };
 
+export const getPostBySearch = async (searchBy: string, value: string) => {
+  console.log(value);
+
+  try {
+    const res =
+      searchBy === 'content'
+        ? await dbService.collection(`posts`).where('content', 'in', value).get()
+        : await dbService.collection(`posts`).where('creator.nickname', '==', value).get();
+
+    return res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+};
+
 export const addPost = async ({ postInput, creator }: IaddPostParams) => {
   try {
     const res = await dbService.collection('posts').add({
