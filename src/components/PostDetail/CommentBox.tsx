@@ -1,28 +1,31 @@
 import styled from 'styled-components';
-import { Like } from '@styled-icons/boxicons-regular';
-
-import { MOCK_COMMENT_LIST } from 'assets/mockData';
+import { HandThumbsUp, HandThumbsUpFill } from '@styled-icons/bootstrap';
 import { CommentType } from 'types';
+import Avatar from 'components/common/Avatar';
 
 interface Props {
   commentList: CommentType[];
 }
 
-const CommentList = ({ commentList }: Props) => {
+const CommentBox = ({ commentList }: Props) => {
+  //TODO: 좋아요 아이콘 처리(liker_list)
+
   return (
     <List>
-      {MOCK_COMMENT_LIST.map(({ user_id, avatar_img, content, like_count }, key) => (
+      {commentList.map(({ creator: { nickname, avatarId }, content, like_count }, key) => (
         <Comment key={key}>
           <ROW1>
             <COL1>
-              <Avatar src={avatar_img} />
+              <Avatar avatarId={avatarId} />
             </COL1>
             <COL2>
-              <Nickname>{user_id}</Nickname>
+              <Nickname>{nickname}</Nickname>
               <CreatedAt>{new Date().toLocaleDateString()}</CreatedAt>
             </COL2>
             <COL3>
-              <LikeButton />
+              <Button>
+                <LikeButton />
+              </Button>
               <LikeCount>{like_count}</LikeCount>
             </COL3>
           </ROW1>
@@ -58,9 +61,7 @@ const COL3 = styled.div`
   margin-left: 16px;
   gap: 8px;
 `;
-const Avatar = styled.img`
-  width: 32px;
-`;
+
 const CreatedAt = styled.p`
   color: gray;
 `;
@@ -73,11 +74,15 @@ const Content = styled.div`
   padding: 20px 0 40px;
   border-bottom: solid 2px #e9ecef;
 `;
-const LikeButton = styled(Like)`
-  width: 24px;
+const Button = styled.div`
+  width: 20px;
   color: #c62917;
   cursor: pointer;
 `;
+
+const LikeButton = styled(HandThumbsUp)``;
+const UnlikeButton = styled(HandThumbsUpFill)``;
+
 const LikeCount = styled.div``;
 
-export default CommentList;
+export default CommentBox;

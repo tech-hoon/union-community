@@ -1,29 +1,33 @@
 import Footer from 'components/common/Footer';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import Avatar from 'components/common/ProfileBox/Avatar';
+import Avatar from 'components/common/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CountBox from 'components/common/CountBox';
-import CommentList from 'components/PostDetail/CommentList';
+import CommentBox from 'components/PostDetail/CommentBox';
 import { useGetPostDetail } from 'hooks/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
 import { deletePost } from 'api/post';
+import { CommentType } from 'types';
+import { addComment, getComments } from 'api/comment';
 
 interface Props {}
 
+// TODO: Comment 모듈화
 const PostDetail = (props: Props) => {
   const location = useLocation();
   const history = useHistory();
   const id = location.pathname.split('/')[2];
-
   const loginUser = useRecoilValue(loginUserState);
 
   const { post } = useGetPostDetail(id);
   const [isCreator, setIsCreator] = useState<boolean>();
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
+  const [comments, setComments] = useState<CommentType[]>([]);
+  const commentRef = useRef<any>(null);
 
   const onDeleteClick = async () => {
     const ok = window.confirm('정말 삭제하시겠습니까?');
@@ -43,13 +47,33 @@ const PostDetail = (props: Props) => {
       });
   };
 
+  const onSubmitComment: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+    const commentId = await addComment({
+      post_id: id,
+      creator: loginUser,
+      content: commentRef.current.value,
+    });
+    commentRef.current.value = '';
+
+    fetchComments(id);
+  };
+
+  const fetchComments = async (id: string) => {
+    const _comments: any = await getComments(id);
+    setComments(_comments);
+  };
+
   useEffect(() => {
     if (post) {
       !!loginUser && !!post.creator && setIsCreator(loginUser.uid === post.creator.uid);
-
       setContentMarkup({ __html: post.content });
     }
-  }, [post]);
+  }, [post, comments]);
+
+  useEffect(() => {
+    fetchComments(id);
+  }, []);
 
   return (
     <Wrapper>
@@ -80,11 +104,11 @@ const PostDetail = (props: Props) => {
             size='20px'
             viewCount={post.view_count!!}
             likeCount={post.like_count!!}
-            commentCount={post.comment_list?.length!!}
+            commentCount={comments?.length!!}
           />
-          <CommentWrite placeholder='댓글을 입력해주세요.' />
-          <SubmitBtn>등록하기</SubmitBtn>
-          <CommentList commentList={post.comment_list} />
+          <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
+          <SubmitBtn onClick={onSubmitComment}>등록하기</SubmitBtn>
+          <CommentBox commentList={comments} />
         </PostContainer>
       ) : (
         <PostSkeleton />
