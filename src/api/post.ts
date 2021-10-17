@@ -100,7 +100,6 @@ export const addPost = async ({ postInput, creator }: IaddPostParams) => {
       view_count: 0,
       like_count: 0,
       created_at: new Date().getTime(),
-      comment_list: [],
     });
     return res.id;
   } catch (error) {
@@ -115,7 +114,6 @@ export const updatePost = async ({ postId, postInput, creator }: IupdatePostPara
       creator,
       view_count: 0,
       like_count: 0,
-      comment_list: [],
     });
   } catch (error) {
     console.log(error);

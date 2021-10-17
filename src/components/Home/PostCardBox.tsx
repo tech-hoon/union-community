@@ -2,7 +2,7 @@ import { memo } from 'react';
 import styled from 'styled-components';
 import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
-import Avatar from 'components/common/ProfileBox/Avatar';
+import Avatar from 'components/common/Avatar';
 import CountBox from '../common/CountBox';
 import { tagEliminatingRegex } from 'utils/regex';
 
@@ -16,20 +16,7 @@ const PostCardBox = ({ posts }: Props) => {
   return (
     <Wrapper>
       {posts.map(
-        (
-          {
-            id,
-            category,
-            title,
-            content,
-            creator,
-            view_count,
-            like_count,
-            created_at,
-            comment_list,
-          },
-          key
-        ) => {
+        ({ id, category, title, content, creator, view_count, like_count, created_at }, key) => {
           return (
             <PostCard key={key} onClick={() => history.push(`post/${id}`)}>
               <Title>{title}</Title>
@@ -42,11 +29,11 @@ const PostCardBox = ({ posts }: Props) => {
                   <Creator>{creator.nickname}</Creator>
                 </CreatorBox>
                 {/* {new Date(created_at).toLocaleDateString()} */}
-                <CountBox
+                {/* <CountBox
                   viewCount={view_count}
                   likeCount={like_count}
                   commentCount={comment_list.length}
-                />
+                /> */}
               </CardBottom>
             </PostCard>
           );

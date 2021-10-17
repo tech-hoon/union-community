@@ -1,20 +1,28 @@
 export interface CommentType {
-  id: string;
+  id?: string;
   content: string;
-  created_at: string;
-  like_count: string;
+  creator: CreatorType;
+  created_at: number;
+  like_count: number;
+  liker_list: [];
 }
+
+export type CreatorType = {
+  uid: string;
+  nickname: string;
+  avatarId: number;
+};
 
 export interface PostType {
   id?: string;
   category: string;
   title: string;
   content: string;
-  creator: { uid: string; nickname: string; avatarId: number };
+  creator: CreatorType;
+
   view_count: number;
   like_count: number;
   created_at: number;
-  comment_list: CommentType[] | [];
 }
 
 export interface PostFormType {
