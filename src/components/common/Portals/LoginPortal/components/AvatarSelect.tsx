@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CaretLeftFill, CaretRightFill } from '@styled-icons/bootstrap';
-import CurrentAvatar from 'components/common/Avatar/CurrentAvatar';
+import Avatar from 'components/common/Avatar';
 
 interface Props {
   avatarId: number;
@@ -20,7 +20,7 @@ const AvatarSelect = ({ avatarId, onClickPrev, onClickNext }: Props) => {
       <Box>
         <PrevBtn onClick={onClickPrev} />
         <AvatarWrapper>
-          <CurrentAvatar avatarId={avatarId} />
+          <Avatar avatarId={avatarId} size={128} />
         </AvatarWrapper>
 
         <NextBtn onClick={onClickNext} />
@@ -46,6 +46,7 @@ const AvatarWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 28px 0;
 `;
 
 const Pagination = styled.div`
@@ -68,9 +69,11 @@ const Dot = styled.div<IDot>`
 
 const PrevBtn = styled(CaretLeftFill)`
   width: 24px;
+  cursor: pointer;
 `;
 const NextBtn = styled(CaretRightFill)`
   width: 24px;
+  cursor: pointer;
 `;
 
 export default React.memo(AvatarSelect);
