@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { authService, dbService } from 'service/firebase';
+import { authService } from 'service/firebase';
 import Routes from 'Routes';
 import { registerStatus, loginUserState } from 'store/loginUser';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { getUserData } from 'api/user';
 import useLoginStep from 'hooks/useLoginStep';
 import { loginUserType } from 'types';
@@ -12,13 +12,14 @@ interface Props {}
 const App = (props: Props) => {
   const [userData, setUserData] = useState<loginUserType>();
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+  const resetLoginUser = useResetRecoilState(loginUserState);
   const isRegistered = useRecoilValue(registerStatus);
   const { onLoginStepReset, onLoginStepNext } = useLoginStep();
 
   useEffect(() => {
     const fetchUser = async (uid: string) => {
       const _userData: any = await getUserData(uid);
-      setUserData((prev) => ({ ...prev, ..._userData }));
+      setUserData({ ..._userData });
     };
 
     authService.onAuthStateChanged((user) => {
@@ -30,12 +31,11 @@ const App = (props: Props) => {
           email: user.email!!,
           uid: user.uid,
         }));
-      }
+      } else resetLoginUser();
     });
 
     return () => {
       onLoginStepReset();
-      authService.signOut();
     };
   }, []);
 
