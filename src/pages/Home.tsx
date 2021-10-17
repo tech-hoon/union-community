@@ -27,7 +27,7 @@ const Home = (props: Props) => {
   const entry = useIntersectionObserver(ioRef, {}, onIndexIncrease);
 
   useEffect(() => {
-    setInitialLoading(false);
+    posts && setInitialLoading(false);
   }, [posts]);
 
   return (
@@ -42,7 +42,7 @@ const Home = (props: Props) => {
 
       {/* <Observer ref={ioRef} /> */}
       {isLastPost ? (
-        <Last>더 이상 글이 없습니다.</Last>
+        <Last>글이 없습니다.</Last>
       ) : (
         <PageNextButton onClick={onIndexIncrease}>다음</PageNextButton>
       )}

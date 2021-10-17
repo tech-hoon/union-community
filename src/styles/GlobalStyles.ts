@@ -3,7 +3,7 @@ import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-  * {
+  *  {
     box-sizing: border-box;
   }
   a {
@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
     outline:none;
     background: none;
     cursor:pointer;
+    font-family: "Spoqa Han Sans Neo";
   }
   body{
     font-family: "Spoqa Han Sans Neo";
