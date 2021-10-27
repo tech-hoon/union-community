@@ -9,22 +9,14 @@ export const loginUserState = atom<loginUserType>({
     email: '',
     uid: '',
     avatarId: 1,
-    residentAuthenticated: false,
-    registerDone: false,
   },
 });
 
 export const registerStatus = selector({
   key: 'isLoggedIn',
-  get: ({ get }) => isValidated(get(loginUserState)),
+  get: ({ get }) => isEmpty(get(loginUserState)),
 });
 
-interface IParams {
-  residentAuthenticated: boolean;
-  nickname: string;
-  registerDone: boolean;
-}
-
-const isValidated = ({ residentAuthenticated, nickname }: IParams) => {
-  return residentAuthenticated && !!nickname;
+const isEmpty = ({ name, nickname, email, uid, avatarId }: loginUserType) => {
+  return !!(name && nickname && email && uid && avatarId);
 };

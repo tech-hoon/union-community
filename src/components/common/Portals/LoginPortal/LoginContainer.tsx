@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import useLoginStep from 'hooks/useLoginStep';
 import styled from 'styled-components';
 import SocialLogin from '../../SocialLogin/SocialLogin';
@@ -44,4 +45,4 @@ const Button = styled.div`
   margin: 0 auto;
 `;
 
-export default LoginContainer;
+export default memo(LoginContainer);

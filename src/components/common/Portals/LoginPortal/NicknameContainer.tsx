@@ -1,16 +1,17 @@
 import { FormEventHandler, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { dbService } from 'service/firebase';
-import { loginUserState } from 'store/loginUser';
-import { loginUserType } from 'types';
 import styled from 'styled-components';
 import AvatarSelect from './components/AvatarSelect';
+import { addUser } from 'api/user';
+import { authService } from 'service/firebase';
+import { loginUserType } from 'types';
+import { useSetRecoilState } from 'recoil';
+import { loginUserState } from 'store/loginUser';
 
 interface Props {}
 
 const NicknameContainer = (prop: Props) => {
+  const setLoginUser = useSetRecoilState(loginUserState);
   const [avatarId, setAvatarId] = useState(1);
-  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
   const inputRef = useRef<any>(null);
 
   const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 10 - prev : prev - 1));
@@ -20,16 +21,19 @@ const NicknameContainer = (prop: Props) => {
   const onClickSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     //TODO: 닉네임 유효성 검사
-    const newUserData: loginUserType = {
-      ...loginUser,
-      avatarId: avatarId,
-      nickname: inputRef.current?.value,
-    };
-
-    setLoginUser(newUserData);
 
     try {
-      dbService.doc(`users/${newUserData.uid}`).update(newUserData);
+      const { displayName, email, uid }: any = authService.currentUser;
+      const userData: loginUserType = {
+        name: displayName,
+        email,
+        uid,
+        avatarId,
+        nickname: inputRef.current?.value,
+      };
+
+      addUser(userData);
+      setLoginUser(userData);
     } catch (error) {
       console.log('error', error);
     }
@@ -37,7 +41,6 @@ const NicknameContainer = (prop: Props) => {
 
   return (
     <Wrapper onSubmit={onClickSubmit}>
-      {/* <Title>프로필을 설정해주세요 !</Title> */}
       <Body>
         <AvatarWrapper>
           <AvatarSelect

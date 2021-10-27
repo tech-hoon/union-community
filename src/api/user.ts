@@ -6,9 +6,9 @@ export const getUserData = async (uid: string) => {
   return userDB.data() ? userDB.data() : null;
 };
 
-export const addUser = async ({ uid, ...rest }: loginUserType) => {
+export const addUser = ({ uid, ...rest }: loginUserType) => {
   try {
-    await dbService
+    dbService
       .collection('users')
       .doc(uid)
       .set({

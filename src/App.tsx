@@ -1,53 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { authService } from 'service/firebase';
 import Routes from 'Routes';
 import { registerStatus, loginUserState } from 'store/loginUser';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { getUserData } from 'api/user';
 import useLoginStep from 'hooks/useLoginStep';
-import { loginUserType } from 'types';
 
 interface Props {}
 
 const App = (props: Props) => {
-  const [userData, setUserData] = useState<loginUserType>();
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
-  const resetLoginUser = useResetRecoilState(loginUserState);
-  const isRegistered = useRecoilValue(registerStatus);
+  const isLoggedIn = useRecoilValue(registerStatus);
   const { onLoginStepReset, onLoginStepNext } = useLoginStep();
 
-  useEffect(() => {
-    const fetchUser = async (uid: string) => {
-      const _userData: any = await getUserData(uid);
-      setUserData({ ..._userData });
-    };
+  const hasRegistered = async (uid: string) => {
+    return await getUserData(uid);
+  };
 
-    authService.onAuthStateChanged((user) => {
+  useEffect(() => {
+    const unsubscribe = authService.onAuthStateChanged(async (user) => {
       if (user) {
-        fetchUser(user.uid);
-        setLoginUser((prev) => ({
-          ...prev,
-          name: user.displayName!!,
-          email: user.email!!,
-          uid: user.uid,
-        }));
-      } else resetLoginUser();
+        const res = await hasRegistered(user.uid);
+        if (res) {
+          setLoginUser({ ...loginUser, ...res });
+          return;
+        }
+
+        onLoginStepNext();
+        return;
+      }
     });
 
     return () => {
       onLoginStepReset();
+      unsubscribe();
     };
   }, []);
 
-  useEffect(() => {
-    if (userData) {
-      setLoginUser(userData);
-    }
-  }, [userData]);
-
   return (
     <>
-      <Routes isLoggedIn={isRegistered} />
+      <Routes isLoggedIn={isLoggedIn} />
     </>
   );
 };

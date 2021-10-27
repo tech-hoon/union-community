@@ -1,20 +1,14 @@
-import { useState, memo } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 import googleImg from 'assets/images/logo/google-logo.png';
 import facebookImg from 'assets/images/logo/facebook-logo.png';
-import useLoginStep from 'hooks/useLoginStep';
-import { registerStatus } from 'store/loginUser';
-import { useRecoilValue } from 'recoil';
-import { firebaseApp, authService, dbService } from 'service/firebase';
+import { firebaseApp, authService } from 'service/firebase';
 
 interface SocialLoginProps {
   name: string;
 }
 
 const SocialLogin = ({ name }: SocialLoginProps) => {
-  const { onLoginStepNext } = useLoginStep();
-  const isRegistered = useRecoilValue(registerStatus);
-
   const onClickSocial: React.MouseEventHandler<HTMLImageElement> = async (event: any) => {
     const {
       target: { name },
@@ -27,11 +21,7 @@ const SocialLogin = ({ name }: SocialLoginProps) => {
           ? new firebaseApp.auth.GoogleAuthProvider()
           : new firebaseApp.auth.FacebookAuthProvider();
 
-      authService.signInWithPopup(provider).then(() => {
-        if (!isRegistered) {
-          onLoginStepNext();
-        }
-      });
+      authService.signInWithPopup(provider);
     } catch (error) {
       console.log(error);
     }
@@ -46,8 +36,6 @@ const SocialLogin = ({ name }: SocialLoginProps) => {
 };
 
 const Wrapper = styled.div`
-  width: 200px;
-  height: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
