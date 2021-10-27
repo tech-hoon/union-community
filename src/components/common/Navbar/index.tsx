@@ -20,6 +20,11 @@ const Wrapper = styled.nav`
   display: flex;
   padding: 24px;
   user-select: none;
+  justify-content: space-between;
+
+  @media ${({ theme }) => theme.size.mobileS} {
+    padding: 18px;
+  }
 `;
 
 export default memo(Navbar);

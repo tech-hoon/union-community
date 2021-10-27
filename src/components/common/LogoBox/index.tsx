@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import MainLogo from 'assets/mainLogo/MainLogo';
 
 interface Props {}
 
@@ -8,38 +9,19 @@ const LogoBox = (props: Props) => {
 
   return (
     <Wrapper onClick={() => history.push(`/`)}>
-      <LogoImgWrapper>
-        <LogoTitle>WOORI</LogoTitle>
-      </LogoImgWrapper>
+      <MainLogo />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
-  flex: 3;
-`;
-
-const LogoImgWrapper = styled.div`
-  display: flex;
+  width: 100px;
   align-items: center;
   cursor: pointer;
-`;
 
-const LogoTitle = styled.h1`
-  display: inline;
-  font-weight: 700;
-  font-size: 2em;
-  line-height: 40px;
-  letter-spacing: -0.04em;
-  color: #18a0fb;
-  @media (max-width: 568px) {
-    font-size: 1.2em;
-  }
-
-  @media (max-width: 440px) {
-    display: none;
+  @media ${({ theme }) => theme.size.mobileS} {
+    width: 80px;
   }
 `;
 

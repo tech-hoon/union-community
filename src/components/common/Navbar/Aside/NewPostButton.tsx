@@ -18,6 +18,10 @@ const Wrapper = styled.div``;
 const Button = styled.button`
   font-weight: 500;
   font-size: 1em;
+
+  @media ${({ theme }) => theme.size.mobileS} {
+    font-size: 0.8em;
+  }
 `;
 
 export default NewPostButton;
