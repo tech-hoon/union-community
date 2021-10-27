@@ -17,11 +17,10 @@ const GlobalStyle = createGlobalStyle`
     outline:none;
     background: none;
     cursor:pointer;
-    font-family: "Spoqa Han Sans Neo";
   }
   body{
-    font-family: "Spoqa Han Sans Neo";
     background-color: #f8f9fa;
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
   }
 
   input{
