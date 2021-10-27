@@ -1,1 +1,1 @@
-export const tagEliminatingRegex = (rawData: string) => rawData.replace(/(<([^>]+)>)/gi, '');
+export const tagEliminatingRegex = (rawData: string) => rawData.replace(/(<([^>]+)>)/gi, ' ');
