@@ -19,7 +19,6 @@ export interface PostType {
   title: string;
   content: string;
   creator: CreatorType;
-
   view_count: number;
   like_count: number;
   created_at: number;
@@ -37,6 +36,4 @@ export interface loginUserType {
   name: string;
   email: string;
   avatarId: number;
-  residentAuthenticated: boolean;
-  registerDone: boolean;
 }

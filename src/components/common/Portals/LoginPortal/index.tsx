@@ -14,7 +14,7 @@ interface Props {
 }
 
 const LoginPortal = ({ onClose }: Props) => {
-  const { loginStep, onLoginStepPrev, onLoginStepNext, onLoginStepReset } = useLoginStep();
+  const { loginStep, onLoginStepPrev } = useLoginStep();
 
   const CurrentContainer = () => {
     switch (loginStep) {
@@ -30,22 +30,19 @@ const LoginPortal = ({ onClose }: Props) => {
   };
 
   const portalRef = useRef<HTMLDivElement>(null);
-  const portalClose = useCallback(
-    (e) => {
-      if ((portalRef.current && !portalRef.current.contains(e.target)) || e.key === 'Escape') {
-        onClose();
-      }
-    },
-    [onClose, onLoginStepReset]
+  const onOutsideClick = useCallback(
+    (e) => !portalRef.current?.contains(e.target) && onClose(),
+    [onClose]
   );
+  const onEscClick = useCallback((e) => e.key === 'Escape' && onClose(), [onClose]);
 
   useEffect(() => {
-    window.addEventListener('click', portalClose);
-    window.addEventListener('keydown', portalClose);
+    window.addEventListener('click', onOutsideClick);
+    window.addEventListener('keydown', onEscClick);
 
     return () => {
-      window.removeEventListener('click', portalClose);
-      window.removeEventListener('keydown', portalClose);
+      window.removeEventListener('click', onOutsideClick);
+      window.removeEventListener('keydown', onEscClick);
     };
   });
 
@@ -108,7 +105,8 @@ const Nav = styled.div`
 `;
 
 const BackButton = styled.button`
-  font-weight: 700;
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 500;
   font-size: 32px;
   padding: 16px;
   margin-right: 90%;
