@@ -7,31 +7,35 @@ import { PostType } from 'types';
 export const useGetPosts = () => {
   const [posts, setPosts] = useRecoilState(postsState);
   const [isLastPost, setIsLastPost] = useState<boolean>();
+  const [isLoading, setIsLoading] = useState(true);
   const category = useRecoilValue(postsCategoryState);
   const orderBy = useRecoilValue(postsOrderByState);
   const lastIndex = useRecoilValue(postsLastIndex);
 
+  const fetchPosts = async () => {
+    const _posts: any = category
+      ? await getPostsByCategory({ lastIndex, category, orderBy })
+      : await getAllPosts({ lastIndex, orderBy });
+
+    //더 이상 불러 올 게 없을 시
+    if (_posts.length === posts?.length) {
+      setIsLastPost(true);
+      setIsLoading(false);
+      return;
+    }
+    setPosts(_posts);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      const _posts: any = category
-        ? await getPostsByCategory({ lastIndex, category, orderBy })
-        : await getAllPosts({ lastIndex, orderBy });
-
-      //더 이상 불러 올 게 없을 시
-      if (_posts.length === posts?.length) {
-        setIsLastPost(true);
-        return;
-      }
-
-      setPosts(_posts);
-    };
-
     fetchPosts();
   }, [category, orderBy, lastIndex]);
 
   return {
     posts,
     setPosts,
+    fetchPosts,
+    isLoading,
     isLastPost,
   };
 };

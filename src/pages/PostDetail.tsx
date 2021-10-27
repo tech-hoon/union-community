@@ -122,7 +122,7 @@ const Wrapper = styled.div``;
 
 const PostContainer = styled.section`
   width: 70vw;
-  margin: 8% auto;
+  margin: 3% auto;
 `;
 
 const BackButton = styled.span`

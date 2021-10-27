@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Navbar from 'components/common/Navbar';
 import LoginButton from 'components/common/LoginButton';
 import styled from 'styled-components';
@@ -62,4 +63,4 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-export default About;
+export default memo(About);

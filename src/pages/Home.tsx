@@ -7,39 +7,42 @@ import Footer from 'components/common/Footer';
 import useIntersectionObserver from 'hooks/useIntersectionObserver';
 import { useState, useRef, useEffect } from 'react';
 import { CARD_AMOUNT } from 'utils/config';
-import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
+import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 import { useGetPosts } from 'hooks/useGetPosts';
 import { ArrowCircleDown } from '@styled-icons/fa-solid';
 import SearchBox from 'components/Home/SearchBox';
 import { useRecoilState } from 'recoil';
 import { postsLastIndex } from 'store/post';
+import { Refresh } from '@styled-icons/foundation';
 
 interface Props {}
 
 const Home = (props: Props) => {
-  const [initialLoading, setInitialLoading] = useState(true);
+  const { posts, fetchPosts, isLoading, isLastPost } = useGetPosts();
   const [lastIndex, setLastIndex] = useRecoilState(postsLastIndex);
-  const { posts, isLastPost } = useGetPosts();
+  const [refreshClicked, setRefreshClicked] = useState(false);
 
   const onIndexIncrease = () => setLastIndex((lastIndex) => lastIndex + CARD_AMOUNT);
+  const onRefreshClick = () => {
+    fetchPosts();
+    setRefreshClicked(!refreshClicked);
+  };
 
   const ioRef = useRef<HTMLDivElement | null>(null);
-  const entry = useIntersectionObserver(ioRef, {}, onIndexIncrease);
-
-  useEffect(() => {
-    posts && setInitialLoading(false);
-  }, [posts]);
+  // const entry = useIntersectionObserver(ioRef, {}, onIndexIncrease);
 
   return (
     <Wrapper>
       <Navbar isLoggedIn={true} />
       <CategoryBox />
-      <OrderSearchWrapper>
+      <MidWrapper>
         <OrderbyBox />
+        <RefreshButton onClick={onRefreshClick} refreshClicked={refreshClicked}>
+          <Refresh />
+        </RefreshButton>
         <SearchBox />
-      </OrderSearchWrapper>
-      {initialLoading ? <PostSkeleton /> : <PostCardBox posts={posts || []} />}
-
+      </MidWrapper>
+      {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts || []} />}
       {/* <Observer ref={ioRef} /> */}
       {isLastPost ? (
         <Last>글이 없습니다.</Last>
@@ -58,7 +61,7 @@ const Observer = styled.div`
   height: 20px;
 `;
 
-const OrderSearchWrapper = styled.div`
+const MidWrapper = styled.div`
   width: 70%;
   display: flex;
   align-items: center;
@@ -68,6 +71,18 @@ const OrderSearchWrapper = styled.div`
   @media ${({ theme }) => theme.size.mobile} {
     width: 95%;
   }
+`;
+
+interface IRefreshButton {
+  refreshClicked: boolean;
+}
+
+const RefreshButton = styled.button<IRefreshButton>`
+  color: gray;
+  display: inline-block;
+  width: 44px;
+  transition: transform 0.6s ease-in-out;
+  transform: ${(props) => (props.refreshClicked ? `rotate(360deg)` : null)};
 `;
 
 const PageNextButton = styled(ArrowCircleDown)`
