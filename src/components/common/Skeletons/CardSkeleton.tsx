@@ -22,7 +22,9 @@ const CardSkeleton = (props: Props) => {
 };
 
 const Wrapper = styled.ul`
-  width: 70%;
+  max-width: 1120px;
+  padding: 0 60px;
+
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 32px;
