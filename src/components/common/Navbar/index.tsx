@@ -10,21 +10,35 @@ interface Props {
 const Navbar = ({ isLoggedIn }: Props) => {
   return (
     <Wrapper>
-      <LogoBox />
-      <Aside isLoggedIn={isLoggedIn} />
+      <Inner>
+        <LogoBox />
+        <Aside isLoggedIn={isLoggedIn} />
+      </Inner>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.nav`
+const Wrapper = styled.div`
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0px;
+  z-index: 9999;
+  border-bottom: 1px solid #ededed;
+`;
+
+const Inner = styled.nav`
+  max-width: 1120px;
+  padding: 12px 60px;
+
   display: flex;
-  padding: 24px;
   user-select: none;
   justify-content: space-between;
 
-  @media ${({ theme }) => theme.size.mobileS} {
-    padding: 18px;
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 95%;
+    padding: 12px 0;
   }
+  margin: 0 auto;
 `;
 
 export default memo(Navbar);

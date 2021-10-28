@@ -29,14 +29,20 @@ const Wrapper = styled.ul`
   position: absolute;
   z-index: 2000;
   background-color: #f8f9fa;
-  padding: 4px;
-  border: 0.1px solid #eee;
+  padding: 8px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
   width: 140px;
   user-select: none;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 100px;
+    font-size: 0.8em;
+  }
 `;
 
 const DropdownItem = styled.li`
-  margin: 8px 4px;
+  margin: 12px 4px;
 `;
 
 const MyPosts = styled(DropdownItem)``;

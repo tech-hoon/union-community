@@ -12,13 +12,11 @@ const ProfileBox = () => {
   const onToggleClick = () => setToggleOpened(!toggleOpened);
 
   return (
-    <Wrapper>
+    <Wrapper onClick={onToggleClick}>
       <Top>
         <Name>{loginUser.nickname}</Name>
         <Avatar avatarId={loginUser?.avatarId!!} />
-        <Icon onClick={onToggleClick}>
-          {toggleOpened ? <CaretUp size='20' /> : <CaretDown size='20' />}
-        </Icon>
+        <Icon>{toggleOpened ? <CaretUp size='20' /> : <CaretDown size='20' />}</Icon>
       </Top>
       <Bottom>{toggleOpened && <MypageDropdown />}</Bottom>
     </Wrapper>

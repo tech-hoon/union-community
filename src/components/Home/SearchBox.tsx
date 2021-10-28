@@ -40,7 +40,7 @@ const SearchBox = (props: Props) => {
         <Option value='creator'>작성자</Option>
       </Select>
       <Input onChange={onInputChange} />
-      <SearchIcon onClick={onSearchValue} />
+      <SearchIcon size='20px' onClick={onSearchValue} />
     </Wrapper>
   );
 };
@@ -50,16 +50,12 @@ export default memo(SearchBox);
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  border: 0.5px solid #666;
-  max-width: 500px;
-  width: 50%;
+  border: 1px solid #dbdbdb;
+  max-width: 700px;
   border-radius: 4px;
   padding: 4px 12px;
   gap: 12px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    width: 50%;
-  }
+  margin: 12px 0;
 `;
 
 const Input = styled.input`
@@ -79,6 +75,5 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const SearchIcon = styled(Search)`
-  width: 20px;
   cursor: pointer;
 `;
