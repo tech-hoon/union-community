@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { authService } from 'service/firebase';
 import Routes from 'Routes';
 import { registerStatus, loginUserState } from 'store/loginUser';
@@ -11,6 +11,7 @@ interface Props {}
 const App = (props: Props) => {
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
   const isLoggedIn = useRecoilValue(registerStatus);
+  const [isLoading, setIsLoading] = useState(true);
   const { onLoginStepReset, onLoginStepNext } = useLoginStep();
 
   const hasRegistered = async (uid: string) => {
@@ -23,10 +24,12 @@ const App = (props: Props) => {
         const res = await hasRegistered(user.uid);
         if (res) {
           setLoginUser({ ...loginUser, ...res });
+          setIsLoading(false);
           return;
         }
 
         onLoginStepNext();
+        setIsLoading(false);
         return;
       }
     });
@@ -39,7 +42,7 @@ const App = (props: Props) => {
 
   return (
     <>
-      <Routes isLoggedIn={isLoggedIn} />
+      <Routes isLoggedIn={isLoggedIn} isLoading={isLoading} />
     </>
   );
 };
