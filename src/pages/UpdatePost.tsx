@@ -4,7 +4,7 @@ import usePostForm from 'hooks/usePostForm';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import { useRef } from 'react';
-import { MENU_LIST } from 'utils/config';
+import { CATEGORY_LIST } from 'utils/config';
 import { useLocation } from 'react-router';
 
 interface ILocationState {
@@ -39,7 +39,7 @@ const UpdatePost = () => {
         <CategoryBox>
           <Label>카테고리: </Label>
           <Select ref={categoryRef} name='카테고리' defaultValue={category}>
-            {MENU_LIST.map(({ kor }, id) => (
+            {CATEGORY_LIST.map(({ kor }, id) => (
               <Option value={kor} key={id}>
                 {kor}
               </Option>

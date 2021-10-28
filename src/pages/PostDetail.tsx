@@ -13,6 +13,7 @@ import { useRecoilValue } from 'recoil';
 import { deletePost } from 'api/post';
 import { CommentType } from 'types';
 import { addComment, getComments } from 'api/comment';
+import { categoryColor } from 'utils/categoryColor';
 
 interface Props {}
 
@@ -90,7 +91,7 @@ const PostDetail = (props: Props) => {
             <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
           </ROW_1>
           <ROW_2>
-            카테고리 <Category>{post.category}</Category>
+            카테고리 <Category color={categoryColor(post.category)}>{post.category}</Category>
             {isCreator && (
               <EditBox>
                 <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
@@ -121,8 +122,15 @@ const PostDetail = (props: Props) => {
 const Wrapper = styled.div``;
 
 const PostContainer = styled.section`
-  width: 70vw;
+  /* width: 70vw; */
+  max-width: 1120px;
+  padding: 0 60px;
   margin: 3% auto;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 95%;
+    padding: 0;
+  }
 `;
 
 const BackButton = styled.span`
@@ -142,6 +150,11 @@ const ROW_1 = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 40px 0;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.8em;
+    margin: 20px 0;
+  }
 `;
 
 const ROW_2 = styled.div`
@@ -149,11 +162,16 @@ const ROW_2 = styled.div`
   align-items: center;
   font-weight: 500;
   font-size: 1.3em;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1em;
+    margin: 20px 0;
+  }
 `;
 
 const Category = styled.span`
   border: 0.1px solid #dedede;
-  background-color: orange;
+  background-color: ${(props) => props.color};
   color: #eeeeee;
   border-radius: 20px;
   padding: 4px 12px;

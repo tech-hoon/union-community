@@ -7,7 +7,7 @@ interface Props {
   size?: string;
   viewCount: number;
   likeCount: number;
-  commentCount: number;
+  commentCount?: number;
 }
 
 const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
