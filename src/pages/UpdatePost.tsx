@@ -61,8 +61,14 @@ const UpdatePost = () => {
 const Wrapper = styled.div``;
 
 const PostContainer = styled.form`
-  width: 95%;
-  margin: 20px auto;
+  max-width: 1120px;
+  padding: 40px 60px;
+  margin: 0 auto;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 90%;
+    padding: 20px 0;
+  }
 `;
 const TitleInput = styled.input`
   font-weight: 700;

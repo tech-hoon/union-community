@@ -80,6 +80,8 @@ const Strong = styled.strong`
 const CountBox = styled.div``;
 
 const ButtonWrapper = styled.div`
+  margin-top: 3%;
+
   @media ${({ theme }) => theme.size.mobile} {
     margin-top: 10%;
   }

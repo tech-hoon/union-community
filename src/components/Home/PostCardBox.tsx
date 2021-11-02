@@ -31,11 +31,11 @@ const PostCardBox = ({ posts }: Props) => {
                 </CreatorBox>
                 <Category color={categoryColor(category)}>{category}</Category>
                 {/* {new Date(created_at).toLocaleDateString()} */}
-                {/* <CountBox
+                <CountBox
                   viewCount={view_count}
                   likeCount={like_count}
-                  commentCount={comment_list.length}
-                /> */}
+                  // commentCount={comment_list.length}
+                />
               </CardBottom>
             </PostCard>
           );
