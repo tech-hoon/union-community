@@ -1,4 +1,6 @@
 import { RefObject, useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { postsLastKey } from 'store/post';
 
 interface Args extends IntersectionObserverInit {
   freezeOnceVisible?: boolean;
@@ -7,7 +9,8 @@ interface Args extends IntersectionObserverInit {
 function useIntersectionObserver(
   elementRef: RefObject<Element>,
   { threshold = 0, root = null, rootMargin = '10%', freezeOnceVisible = false }: Args,
-  callback: () => void
+  lastKey: any,
+  callback: (key: any) => void
 ): IntersectionObserverEntry | undefined {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
 
@@ -15,7 +18,7 @@ function useIntersectionObserver(
 
   const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
     setEntry(entry);
-    entry.isIntersecting && callback();
+    entry.isIntersecting && callback(lastKey);
   };
 
   useEffect(() => {

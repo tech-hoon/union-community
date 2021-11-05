@@ -1,6 +1,6 @@
-import { atom, AtomOptions, selector, selectorFamily } from 'recoil';
+import { atom } from 'recoil';
 import { PostType } from 'types';
-import { FIRST_INDEX } from 'utils/config';
+import { PAGE_START } from 'utils/config';
 
 interface IgetPostsParams {
   lastIndex: number;
@@ -12,9 +12,9 @@ export const postsState = atom<PostType[]>({
   default: [],
 });
 
-export const postsLastIndex = atom<number>({
-  key: 'posts/lastIndex',
-  default: FIRST_INDEX,
+export const postsPageIndex = atom<number>({
+  key: 'posts/pageIndex',
+  default: PAGE_START,
 });
 
 export const postsCategoryState = atom<string>({
@@ -25,4 +25,9 @@ export const postsCategoryState = atom<string>({
 export const postsOrderByState = atom<string>({
   key: 'posts/orderBy',
   default: 'created_at',
+});
+
+export const postsLastKey = atom<any>({
+  key: 'posts/lastKey',
+  default: '',
 });
