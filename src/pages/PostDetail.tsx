@@ -10,7 +10,7 @@ import CommentBox from 'components/PostDetail/CommentBox';
 import { useGetPostDetail } from 'hooks/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
-import { deletePost } from 'api/post';
+import { deletePost, viewCountUp } from 'api/post';
 import { CommentType } from 'types';
 import { addComment, getComments } from 'api/comment';
 import { categoryColor } from 'utils/categoryColor';
@@ -24,13 +24,19 @@ const PostDetail = (props: Props) => {
   const id = location.pathname.split('/')[2];
   const loginUser = useRecoilValue(loginUserState);
 
-  const { post } = useGetPostDetail(id);
+  const { post, fetchPostDetail } = useGetPostDetail(id);
   const [isCreator, setIsCreator] = useState<boolean>();
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
   const [comments, setComments] = useState<CommentType[]>([]);
   const commentRef = useRef<any>(null);
 
-  const onDeleteClick = async () => {
+  const onViewCountUp = async () => {
+    //TODO: 쿠키로 조회수 중복방지
+    await viewCountUp(id);
+    await fetchPostDetail(id);
+  };
+
+  const onDeleteClick = () => {
     const ok = window.confirm('정말 삭제하시겠습니까?');
     ok && deletePost(id) && history.push('/');
   };
@@ -48,9 +54,9 @@ const PostDetail = (props: Props) => {
       });
   };
 
-  const onSubmitComment: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const onSubmitComment: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    const commentId = await addComment({
+    addComment({
       post_id: id,
       creator: loginUser,
       content: commentRef.current.value,
@@ -73,6 +79,7 @@ const PostDetail = (props: Props) => {
   }, [post, comments]);
 
   useEffect(() => {
+    onViewCountUp();
     fetchComments(id);
   }, []);
 
@@ -103,9 +110,9 @@ const PostDetail = (props: Props) => {
           <Content dangerouslySetInnerHTML={contentMarkup} />
           <CountBox
             size='20px'
-            viewCount={post.view_count!!}
-            likeCount={post.like_count!!}
-            commentCount={comments?.length!!}
+            viewCount={post.view_count}
+            likeCount={post.like_count}
+            commentCount={comments.length}
           />
           <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
           <SubmitBtn onClick={onSubmitComment}>등록하기</SubmitBtn>
@@ -128,7 +135,7 @@ const PostContainer = styled.section`
   margin: 3% auto;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 95%;
+    width: 90%;
     padding: 0;
   }
 `;
@@ -233,7 +240,8 @@ const Button = styled.button`
 `;
 
 const CommentWrite = styled.textarea`
-  font-weight: 300;
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 400;
   margin: 20px 0;
   padding: 10px;
   height: 100px;
