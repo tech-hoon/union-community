@@ -1,52 +1,61 @@
 import { getPostDetail, getInitialPosts, getMorePosts } from 'api/post';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { postsCategoryState, postsOrderByState, postsPageIndex, postsState } from 'store/post';
+import { postsCategoryState, postsOrderByState, postsState } from 'store/post';
 import { PostType } from 'types';
-import useDidUpdateEffect from './useDidUpdateEffect';
 
 export const useGetPosts = () => {
   const [posts, setPosts] = useRecoilState(postsState);
-  const [lastKey, setLastKey] = useState();
+  const [lastVisible, setLastVisible] = useState<number | null>();
   const [isLastPost, setIsLastPost] = useState<boolean>();
   const [isLoading, setIsLoading] = useState(true);
   const category = useRecoilValue(postsCategoryState);
   const orderBy = useRecoilValue(postsOrderByState);
-  const index = useRecoilValue(postsPageIndex);
 
   const fetchPosts = async () => {
-    const { posts, lastDoc }: any = await getInitialPosts({ category, orderBy });
+    const res: any = await getInitialPosts({ category, orderBy });
 
-    setPosts(posts);
-    setLastKey(lastDoc);
+    if (res) {
+      const __posts = res?.documentData;
+      const __lastVisible = res?.lastVisible;
+
+      setPosts(__posts);
+      setLastVisible(__lastVisible);
+      setIsLoading(false);
+      return;
+    }
+
+    setPosts([]);
+    setLastVisible(null);
     setIsLoading(false);
   };
 
   //TODO
   //마지막 데이터 처리
-  const fetchMorePosts = useCallback(async () => {
-    const { posts, lastDoc }: any = await getMorePosts({
-      lastVisible: lastKey,
+  const fetchMorePosts = async () => {
+    const res: any = await getMorePosts({
+      lastVisible,
       category,
       orderBy,
     });
 
-    setPosts((prevPosts) => [...prevPosts, ...posts]);
-    setLastKey(lastDoc);
-    setIsLoading(false);
-  }, [lastKey]);
+    if (res) {
+      const __posts = res.documentData;
+      const __lastVisible = res.lastVisible;
+
+      setPosts((prevPosts) => [...prevPosts, ...__posts]);
+      setLastVisible(__lastVisible);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchPosts();
   }, [category, orderBy]);
 
-  useDidUpdateEffect(() => {
-    // lastKey && fetchMorePosts();
-  }, [lastKey]);
-
   return {
     posts,
-    lastKey,
+    lastVisible,
     fetchPosts,
     fetchMorePosts,
     setPosts,

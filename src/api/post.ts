@@ -1,7 +1,8 @@
-import { dbService } from 'service/firebase';
+import { dbService, firebaseApp } from 'service/firebase';
+import { CARD_LIMIT } from 'utils/config';
 
 interface IgetPostParams {
-  lastIndex: number;
+  lastVisible?: any;
   category?: string;
   orderBy: string;
 }
@@ -33,33 +34,65 @@ interface IupdatePostParams {
   };
 }
 
-export const getAllPosts = async ({ lastIndex, orderBy }: IgetPostParams) => {
+export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => {
   try {
-    const res = await dbService.collection('posts').orderBy(orderBy, 'desc').limit(lastIndex).get();
+    const res = category
+      ? await dbService
+          .collection('posts')
+          .orderBy(orderBy, 'desc')
+          .where('category', '==', category)
+          .limit(CARD_LIMIT)
+          .get()
+      : await dbService.collection('posts').orderBy(orderBy, 'desc').limit(CARD_LIMIT).get();
 
-    return res.docs.map((doc) => ({
+    // const count = (await dbService.collection('posts').get()).size;
+
+    if (res.docs === []) {
+      return false;
+    }
+
+    const documentData = res.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
+
+    const lastVisible = res.docs[res.docs.length - 1];
+
+    return { documentData, lastVisible };
   } catch (error) {
     console.log(error);
     return;
   }
 };
 
-export const getPostsByCategory = async ({ lastIndex, category, orderBy }: IgetPostParams) => {
-  try {
-    const res = await dbService
-      .collection('posts')
-      .orderBy(orderBy, 'desc')
-      .where('category', '==', category)
-      .limit(lastIndex)
-      .get();
+export const getMorePosts = async ({ lastVisible, category, orderBy }: IgetPostParams) => {
+  // 마지막 데이터 처리
+  console.log('파라미터로 넘어온 lastVisible: ', lastVisible);
 
-    return res.docs.map((doc) => ({
+  try {
+    const res = category
+      ? await dbService
+          .collection('posts')
+          .where('category', '==', category)
+          .orderBy(orderBy, 'desc')
+          .startAfter(lastVisible)
+          .limit(CARD_LIMIT)
+          .get()
+      : await dbService
+          .collection('posts')
+          .orderBy(orderBy, 'desc')
+          .startAfter(lastVisible)
+          .limit(CARD_LIMIT)
+          .get();
+
+    const documentData = res.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
+
+    const __lastVisible = res.docs[res.docs.length - 1];
+
+    return { documentData, lastVisible: __lastVisible };
   } catch (error) {
     console.log(error);
     return;
@@ -77,8 +110,6 @@ export const getPostDetail = async (postId: string) => {
 };
 
 export const getPostBySearch = async (searchBy: string, value: string) => {
-  console.log(value);
-
   try {
     const res =
       searchBy === 'content'
@@ -123,6 +154,16 @@ export const updatePost = async ({ postId, postInput, creator }: IupdatePostPara
 export const deletePost = async (postId: string) => {
   try {
     await dbService.doc(`posts/${postId}`).delete();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const viewCountUp = async (postId: string) => {
+  try {
+    await dbService.doc(`posts/${postId}`).update({
+      view_count: firebaseApp.firestore.FieldValue.increment(1),
+    });
   } catch (error) {
     console.log(error);
   }
