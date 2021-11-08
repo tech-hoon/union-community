@@ -1,6 +1,6 @@
 export const ERROR_MESSAGE = 'Failed to fetch data, please check your API or internet connection';
-export const FIRST_INDEX = 6;
-export const CARD_AMOUNT = 6;
+export const PAGE_START = 1;
+export const CARD_LIMIT = 4;
 
 export const CATEGORY_LIST = [
   { eng: 'free', kor: '자유', color: '#18A0FB' },
