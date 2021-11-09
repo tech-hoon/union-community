@@ -56,14 +56,17 @@ const PostDetail = (props: Props) => {
 
   const onSubmitComment: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    addComment({
-      post_id: id,
-      creator: loginUser,
-      content: commentRef.current.value,
-    });
-    commentRef.current.value = '';
 
-    fetchComments(id);
+    if (commentRef.current.value) {
+      addComment({
+        post_id: id,
+        creator: loginUser,
+        content: commentRef.current.value,
+      });
+
+      commentRef.current.value = '';
+      fetchComments(id);
+    }
   };
 
   const fetchComments = async (id: string) => {
