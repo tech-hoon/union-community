@@ -13,10 +13,12 @@ interface Props {
 const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
   return (
     <CountSection>
-      <Box>
-        <Chat size={size || `14px`} color='#0ca5af' />
-        <Count size={size || `14px`}>{commentCount}</Count>
-      </Box>
+      {commentCount && (
+        <Box>
+          <Chat size={size || `14px`} color='#0ca5af' />
+          <Count size={size || `14px`}>{commentCount}</Count>
+        </Box>
+      )}
       <Box>
         <Eye size={size || `14px`} />
         <Count size={size || `14px`}>{viewCount}</Count>
@@ -36,6 +38,8 @@ const CountSection = styled.section`
 
 const Box = styled.div`
   padding: 0 3px;
+  display: flex;
+  align-items: center;
 `;
 
 interface ICount {

@@ -22,6 +22,7 @@ export interface PostType {
   view_count: number;
   like_count: number;
   created_at: number;
+  comment: [];
 }
 
 export interface PostFormType {
