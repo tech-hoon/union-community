@@ -11,21 +11,39 @@ import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 import { useGetPosts } from 'hooks/useGetPosts';
 import SearchBox from 'components/Home/SearchBox';
 import { Refresh } from '@styled-icons/foundation';
+import { dbService } from 'service/firebase';
+import useDidUpdateEffect from 'hooks/useDidUpdateEffect';
 
 interface Props {}
 
 const Home = (props: Props) => {
-  const { posts, lastVisible, fetchMorePosts, isLoading } = useGetPosts();
-  const [refreshClicked, setRefreshClicked] = useState(false);
+  const { posts, fetchPosts, fetchMorePosts, isLoading, isLastPost } = useGetPosts();
+  const [isUpdated, setIsUpdated] = useState(true);
   const [isIntersecting, setIsIntersecting] = useState(false);
-
-  const onRefreshClick = () => {
-    fetchMorePosts();
-    setRefreshClicked(!refreshClicked);
-  };
 
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, {});
+
+  const onRefreshClick = () => {
+    fetchPosts();
+    setIsUpdated(false);
+  };
+
+  useDidUpdateEffect(() => {
+    const unsubscribe = dbService.collection('posts').onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'modified') {
+          setIsUpdated(true);
+        }
+      });
+    });
+
+    isUpdated && unsubscribe();
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     entry?.isIntersecting && fetchMorePosts();
@@ -37,13 +55,11 @@ const Home = (props: Props) => {
       <CategoryBox />
       <MidWrapper>
         <OrderbyBox />
-        {/* <RefreshButton onClick={onRefreshClick} refreshClicked={refreshClicked}>
-          <Refresh />
-        </RefreshButton> */}
         <SearchBox />
       </MidWrapper>
       {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts || []} />}
-      <Observer ref={ioRef} />
+      {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
+      {!isLastPost && <Observer ref={ioRef} />}
       <Footer />
     </Wrapper>
   );
@@ -54,7 +70,6 @@ const Wrapper = styled.div``;
 const Observer = styled.div`
   bottom: 0;
   height: 20px;
-  /* background-color: red; */
 `;
 
 const MidWrapper = styled.div`
@@ -74,16 +89,17 @@ const MidWrapper = styled.div`
   }
 `;
 
-interface IRefreshButton {
-  refreshClicked: boolean;
-}
-
-const RefreshButton = styled.button<IRefreshButton>`
-  color: gray;
-  display: inline-block;
-  width: 44px;
-  transition: transform 0.6s ease-in-out;
-  transform: ${(props) => (props.refreshClicked ? `rotate(360deg)` : null)};
+const RefreshButton = styled.button`
+  top: 25%;
+  width: 100px;
+  height: 30px;
+  position: fixed;
+  left: 50%;
+  background-color: white;
+  box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
 `;
 
 export default memo(Home);

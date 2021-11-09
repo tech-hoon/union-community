@@ -7,7 +7,7 @@ import { PostType } from 'types';
 export const useGetPosts = () => {
   const [posts, setPosts] = useRecoilState(postsState);
   const [lastVisible, setLastVisible] = useState<number | null>();
-  const [isLastPost, setIsLastPost] = useState<boolean>();
+  const [isLastPost, setIsLastPost] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const category = useRecoilValue(postsCategoryState);
   const orderBy = useRecoilValue(postsOrderByState);
@@ -30,14 +30,14 @@ export const useGetPosts = () => {
     setIsLoading(false);
   };
 
-  //TODO
-  //마지막 데이터 처리
   const fetchMorePosts = async () => {
-    const res: any = await getMorePosts({
-      lastVisible,
-      category,
-      orderBy,
-    });
+    const res: any =
+      lastVisible &&
+      (await getMorePosts({
+        lastVisible,
+        category,
+        orderBy,
+      }));
 
     if (res) {
       const __posts = res.documentData;
@@ -46,6 +46,7 @@ export const useGetPosts = () => {
       setPosts((prevPosts) => [...prevPosts, ...__posts]);
       setLastVisible(__lastVisible);
       setIsLoading(false);
+      return;
     }
   };
 
@@ -55,7 +56,6 @@ export const useGetPosts = () => {
 
   return {
     posts,
-    lastVisible,
     fetchPosts,
     fetchMorePosts,
     setPosts,

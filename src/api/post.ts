@@ -47,10 +47,6 @@ export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => 
 
     // const count = (await dbService.collection('posts').get()).size;
 
-    if (res.docs === []) {
-      return false;
-    }
-
     const documentData = res.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -67,8 +63,6 @@ export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => 
 
 export const getMorePosts = async ({ lastVisible, category, orderBy }: IgetPostParams) => {
   // 마지막 데이터 처리
-  console.log('파라미터로 넘어온 lastVisible: ', lastVisible);
-
   try {
     const res = category
       ? await dbService
@@ -109,14 +103,19 @@ export const getPostDetail = async (postId: string) => {
   }
 };
 
+//TODO
+//카테고리
+//내용
 export const getPostBySearch = async (searchBy: string, value: string) => {
   try {
-    const res =
-      searchBy === 'content'
-        ? await dbService.collection(`posts`).where('content', 'in', value).get()
-        : await dbService.collection(`posts`).where('creator.nickname', '==', value).get();
+    if (value) {
+      const res =
+        searchBy === 'content'
+          ? await dbService.collection(`posts`).where('content', 'in', value).get()
+          : await dbService.collection(`posts`).where('creator.nickname', '==', value).get();
 
-    return res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      return res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    }
   } catch (error) {
     console.log(error);
     return;
