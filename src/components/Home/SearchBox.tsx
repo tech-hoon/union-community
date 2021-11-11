@@ -53,9 +53,9 @@ const Wrapper = styled.div`
   border: 1px solid #dbdbdb;
   max-width: 700px;
   border-radius: 4px;
-  padding: 4px 12px;
+  padding: 8px 12px;
   gap: 12px;
-  margin: 12px 0;
+  margin: 16px 0;
 `;
 
 const Input = styled.input`
