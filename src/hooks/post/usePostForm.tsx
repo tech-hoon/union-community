@@ -31,17 +31,24 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, postId }: Props)
     if (checkPostValidation(postInput)) {
       if (mode === 'add') {
         const postId = await addPost({ postInput, creator: loginUser });
-        history.push(`/post/${postId}`);
+        history.push({
+          pathname: `/post/${postId}`,
+          state: 'isAdded',
+        });
         return;
       }
 
       if (mode === 'update') {
         postId && (await updatePost({ postInput, creator: loginUser, postId }));
-        history.push(`/post/${postId}`);
+        history.push({
+          pathname: `/post/${postId}`,
+          state: 'isUpdated',
+        });
+        return;
       }
-    } else {
-      window.alert('내용을 모두 작성해 주세요.');
+      return;
     }
+    window.alert('내용을 모두 작성해 주세요.');
   };
 
   return {

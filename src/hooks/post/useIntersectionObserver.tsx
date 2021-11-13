@@ -1,6 +1,6 @@
+import useDidUpdateEffect from 'hooks/common/useDidUpdateEffect';
 import { RefObject, useEffect, useState } from 'react';
-import useDebounce from './useDebounce';
-import useDidUpdateEffect from './useDidUpdateEffect';
+import useDebounce from '../common/useDebounce';
 
 interface Args extends IntersectionObserverInit {
   freezeOnceVisible?: boolean;
@@ -8,31 +8,28 @@ interface Args extends IntersectionObserverInit {
 
 function useIntersectionObserver(
   elementRef: RefObject<Element>,
-  { threshold = 1, root = null, rootMargin = '10%', freezeOnceVisible = false }: Args
-): IntersectionObserverEntry | undefined {
+  { threshold = 0.5, root = null, rootMargin = '0%' }: Args
+): boolean | undefined {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
-  // const debouncedEntry = useDebounce({ value: entry, delay: 1000 });
-
-  const frozen = entry?.isIntersecting && freezeOnceVisible;
 
   const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
     setEntry(entry);
   };
 
-  useDidUpdateEffect(() => {
+  useEffect(() => {
     const node = elementRef?.current;
     const hasIOSupport = !!window.IntersectionObserver;
 
-    if (!hasIOSupport || frozen || !node) return;
+    if (!hasIOSupport || !node) return;
 
     const observerOptions = { threshold, root, rootMargin };
     const observer = new IntersectionObserver(updateEntry, observerOptions);
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [elementRef, threshold, root, rootMargin, frozen]);
+  }, [elementRef, threshold, root, rootMargin]);
 
-  return entry;
+  return entry?.isIntersecting;
 }
 
 export default useIntersectionObserver;
