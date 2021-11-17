@@ -2,7 +2,7 @@ import { dbService, firebaseApp } from 'service/firebase';
 import { CARD_LIMIT } from 'utils/config';
 
 interface IgetPostParams {
-  lastVisible?: any;
+  lastVisiblePost?: string;
   category?: string;
   orderBy: string;
 }
@@ -45,48 +45,45 @@ export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => 
           .get()
       : await dbService.collection('posts').orderBy(orderBy, 'desc').limit(CARD_LIMIT).get();
 
-    // const count = (await dbService.collection('posts').get()).size;
-
-    const documentData = res.docs.map((doc) => ({
+    const data = res.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    const lastVisible = res.docs[res.docs.length - 1];
+    const lastVisiblePost = res.docs[res.docs.length - 1];
 
-    return { documentData, lastVisible };
+    return { data, lastVisiblePost };
   } catch (error) {
     console.log(error);
     return;
   }
 };
 
-export const getMorePosts = async ({ lastVisible, category, orderBy }: IgetPostParams) => {
-  // 마지막 데이터 처리
+export const getMorePosts = async ({ lastVisiblePost, category, orderBy }: IgetPostParams) => {
   try {
     const res = category
       ? await dbService
           .collection('posts')
           .where('category', '==', category)
           .orderBy(orderBy, 'desc')
-          .startAfter(lastVisible)
+          .startAfter(lastVisiblePost)
           .limit(CARD_LIMIT)
           .get()
       : await dbService
           .collection('posts')
           .orderBy(orderBy, 'desc')
-          .startAfter(lastVisible)
+          .startAfter(lastVisiblePost)
           .limit(CARD_LIMIT)
           .get();
 
-    const documentData = res.docs.map((doc) => ({
+    const data = res.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    const __lastVisible = res.docs[res.docs.length - 1];
+    const __lastVisiblePost = res.docs[res.docs.length - 1];
 
-    return { documentData, lastVisible: __lastVisible };
+    return { data, lastVisiblePost: __lastVisiblePost };
   } catch (error) {
     console.log(error);
     return;

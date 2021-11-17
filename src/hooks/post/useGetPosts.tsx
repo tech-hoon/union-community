@@ -1,57 +1,69 @@
 import { getPostDetail, getInitialPosts, getMorePosts } from 'api/post';
-import usePrevious from 'hooks/common/usePrevious';
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { postsCategoryState, postsOrderByState, postsState } from 'store/post';
+import {
+  postsCategoryState,
+  postsOrderByState,
+  postsState,
+  lastVisiblePostState,
+} from 'store/post';
 import { PostType } from 'types';
 
 export const useGetPosts = () => {
   const [posts, setPosts] = useRecoilState(postsState);
-  const [lastVisiblePost, setLastVisiblePost] =
-    useState<firebase.default.firestore.QuerySnapshot>();
-
+  const [lastVisiblePost, setLastVisiblePost] = useRecoilState(lastVisiblePostState);
   const category = useRecoilValue(postsCategoryState);
   const orderBy = useRecoilValue(postsOrderByState);
 
+  const [isInitial, setIsInitial] = useState<boolean>(true);
   const [isLastPost, setIsLastPost] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchPosts = async (isUpdated?: boolean) => {
-    //1. 첫 렌더링
-    //2. 최근 게시물 업데이트
-    //3. 정렬 or 카테고리 변경 시(TODO)
-    //-> API 호출
-
-    if (!posts.length || isUpdated) {
+  const fetchPosts = async (isInitial?: boolean) => {
+    if (!posts.length || !isInitial) {
       const response: any = await getInitialPosts({ orderBy, category });
+
       const __posts = response?.data;
       const __lastVisiblePost = response?.lastVisiblePost;
 
       setPosts(__posts);
-      setLastVisiblePost({ ...__lastVisiblePost });
+      setLastVisiblePost(__lastVisiblePost);
+      setIsLoading(false);
+
       return;
     }
 
     setPosts(posts);
     setLastVisiblePost(lastVisiblePost);
+    setIsLoading(false);
   };
 
   const fetchMorePosts = async () => {
-    if (!!lastVisiblePost) {
+    if (lastVisiblePost) {
       const response: any = await getMorePosts({ orderBy, category, lastVisiblePost });
       const __posts = response?.data;
       const __lastVisiblePost = response?.lastVisiblePost;
 
-      setPosts((prevPosts) => [...prevPosts, ...__posts]);
+      __posts && setPosts((prevPosts) => [...prevPosts, ...__posts]);
       setLastVisiblePost(__lastVisiblePost);
       setIsLoading(false);
       return;
     }
   };
 
+  const updatePosts = async () => {
+    const response: any = await getInitialPosts({ orderBy, category });
+    const __posts = response?.data;
+    const __lastVisiblePost = response?.lastVisiblePost;
+
+    setPosts(__posts);
+    setLastVisiblePost(__lastVisiblePost);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(isInitial);
+    setIsInitial(false);
   }, [category, orderBy]);
 
   return {
@@ -59,6 +71,7 @@ export const useGetPosts = () => {
     lastVisiblePost,
     fetchPosts,
     fetchMorePosts,
+    updatePosts,
     setPosts,
     isLoading,
     isLastPost,

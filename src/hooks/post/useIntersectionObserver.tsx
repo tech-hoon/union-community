@@ -9,7 +9,7 @@ interface Args extends IntersectionObserverInit {
 function useIntersectionObserver(
   elementRef: RefObject<Element>,
   { threshold = 0.5, root = null, rootMargin = '0%' }: Args
-): boolean | undefined {
+): IntersectionObserverEntry | undefined {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
 
   const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
@@ -29,7 +29,7 @@ function useIntersectionObserver(
     return () => observer.disconnect();
   }, [elementRef, threshold, root, rootMargin]);
 
-  return entry?.isIntersecting;
+  return entry;
 }
 
 export default useIntersectionObserver;
