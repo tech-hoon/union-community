@@ -1,4 +1,4 @@
-import { useState, memo, useEffect } from 'react';
+import { useState, memo, useLayoutEffect } from 'react';
 import Navbar from 'components/common/Navbar';
 import LoginButton from 'components/common/LoginButton';
 import styled from 'styled-components';
@@ -13,13 +13,20 @@ const About = (props: Props) => {
     postCount: 0,
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchCount = async () => {
       const count = await getUserPostCount();
       setCount(count);
     };
 
     fetchCount();
+
+    return () => {
+      setCount({
+        userCount: 0,
+        postCount: 0,
+      });
+    };
   }, []);
 
   return (

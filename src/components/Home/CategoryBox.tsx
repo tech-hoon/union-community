@@ -66,8 +66,8 @@ const Menu = styled.button<IMenu>`
   font-size: 1em;
   font-weight: 500;
   &:hover {
-    color: white;
-    background-color: ${({ theme }) => theme.color.BUTTON_CLICKED};
+    /* color: white; */
+    /* background-color: ${({ theme }) => theme.color.BUTTON_CLICKED}; */
   }
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8em;

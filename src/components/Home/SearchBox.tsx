@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { Search } from '@styled-icons/bootstrap';
 import { memo, useRef, useEffect, useState } from 'react';
 import { getPostBySearch } from 'api/post';
-import { useGetPosts } from 'hooks/useGetPosts';
+import { useGetPosts } from 'hooks/post/useGetPosts';
 import { PostType } from 'types';
-import useDebounce from 'hooks/useDebounce';
+import useDebounce from 'hooks/common/useDebounce';
 
 interface Props {}
 
@@ -53,7 +53,7 @@ const Wrapper = styled.div`
   border: 1px solid #dbdbdb;
   max-width: 700px;
   border-radius: 4px;
-  padding: 8px 12px;
+  padding: 2px 12px;
   gap: 12px;
   margin: 16px 0;
 `;

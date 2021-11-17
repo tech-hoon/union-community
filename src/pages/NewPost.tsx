@@ -1,6 +1,6 @@
 import Navbar from 'components/common/Navbar';
 import Editor from 'components/common/Editor';
-import usePostForm from 'hooks/usePostForm';
+import usePostForm from 'hooks/post/usePostForm';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import { useRef } from 'react';
