@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { forwardRef, memo } from 'react';
 import styled from 'styled-components';
 import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
@@ -14,12 +14,16 @@ interface Props {
 const PostCardBox = ({ posts }: Props) => {
   const history = useHistory();
 
+  const handleClick = (id: string) => {
+    history.push(`post/${id}`);
+  };
+
   return (
     <Wrapper>
       {posts.map(
         ({ id, category, title, content, creator, view_count, like_count, created_at }, key) => {
           return (
-            <PostCard key={key} onClick={() => history.push(`post/${id}`)}>
+            <PostCard key={key} onClick={() => handleClick(id!!)}>
               <Title>{title}</Title>
               <Content>{tagEliminatingRegex(content).substring(0, 50)}...</Content>
               <CardBottom>
@@ -67,6 +71,7 @@ const Wrapper = styled.ul`
     padding: 0px;
   }
 `;
+
 const PostCard = styled.li`
   height: 300px;
   padding: 24px;

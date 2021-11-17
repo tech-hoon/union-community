@@ -7,7 +7,7 @@ import Avatar from 'components/common/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CountBox from 'components/common/CountBox';
 import CommentBox from 'components/PostDetail/CommentBox';
-import { useGetPostDetail } from 'hooks/useGetPosts';
+import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
 import { deletePost, viewCountUp } from 'api/post';
@@ -18,6 +18,8 @@ import { categoryColor } from 'utils/categoryColor';
 interface Props {}
 
 // TODO: Comment 모듈화
+// TODO: API 호출 최소화
+
 const PostDetail = (props: Props) => {
   const location = useLocation();
   const history = useHistory();
@@ -38,7 +40,12 @@ const PostDetail = (props: Props) => {
 
   const onDeleteClick = () => {
     const ok = window.confirm('정말 삭제하시겠습니까?');
-    ok && deletePost(id) && history.push('/');
+    ok &&
+      deletePost(id) &&
+      history.push({
+        pathname: '/',
+        state: 'isDeleted',
+      });
   };
 
   const onUpdateClick = () => {
@@ -91,7 +98,16 @@ const PostDetail = (props: Props) => {
       <Navbar isLoggedIn={true} />
       {!!post ? (
         <PostContainer>
-          <BackButton onClick={() => history.push('/')}>&#xE000;</BackButton>
+          <BackButton
+            onClick={() =>
+              history.push({
+                pathname: '/',
+                state: history.location.state,
+              })
+            }
+          >
+            &#xE000;
+          </BackButton>
           <Title>{post.title}</Title>
           <ROW_1>
             <ProfileBox>
