@@ -21,7 +21,7 @@ const PostCardBox = ({ posts }: Props) => {
   return (
     <Wrapper>
       {posts.map(
-        ({ id, category, title, content, creator, view_count, like_count, created_at }, key) => {
+        ({ id, category, title, content, creator, view_count, liker_list, created_at }, key) => {
           return (
             <PostCard key={key} onClick={() => handleClick(id!!)}>
               <Title>{title}</Title>
@@ -37,7 +37,7 @@ const PostCardBox = ({ posts }: Props) => {
                 {/* {new Date(created_at).toLocaleDateString()} */}
                 <CountBox
                   viewCount={view_count}
-                  likeCount={like_count}
+                  likeCount={liker_list.length}
                   // commentCount={comment_list.length}
                 />
               </CardBottom>

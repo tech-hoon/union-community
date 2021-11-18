@@ -1,10 +1,10 @@
 export interface CommentType {
-  id?: string;
+  id: string;
   content: string;
   creator: CreatorType;
   created_at: number;
-  like_count: number;
   liker_list: [];
+  is_edited?: boolean;
 }
 
 export type CreatorType = {
@@ -20,9 +20,9 @@ export interface PostType {
   content: string;
   creator: CreatorType;
   view_count: number;
-  like_count: number;
+  liker_list: [];
   created_at: number;
-  comment: [];
+  comment: CommentType[] | [];
 }
 
 export interface PostFormType {

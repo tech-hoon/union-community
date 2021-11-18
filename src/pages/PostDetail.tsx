@@ -1,6 +1,7 @@
 import Footer from 'components/common/Footer';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
+import { HandThumbsUp, HandThumbsUpFill } from '@styled-icons/bootstrap';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
@@ -10,10 +11,11 @@ import CommentBox from 'components/PostDetail/CommentBox';
 import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
-import { deletePost, viewCountUp } from 'api/post';
+import { deletePost, postLike, postUnlike, viewCountUp } from 'api/post';
 import { CommentType } from 'types';
 import { addComment, getComments } from 'api/comment';
 import { categoryColor } from 'utils/categoryColor';
+import { likeOrUnlike } from 'utils/likeOrUnlike';
 
 interface Props {}
 
@@ -72,13 +74,20 @@ const PostDetail = (props: Props) => {
       });
 
       commentRef.current.value = '';
-      fetchComments(id);
+      fetchComments();
     }
   };
 
-  const fetchComments = async (id: string) => {
-    const _comments: any = await getComments(id);
-    setComments(_comments);
+  const onLikePost = async (liker_list: string[], loginUserUid: string) => {
+    likeOrUnlike(liker_list, loginUserUid) === 'unlike'
+      ? await postUnlike(id, loginUserUid)
+      : await postLike(id, loginUserUid);
+    fetchPostDetail(id);
+  };
+
+  const fetchComments = async () => {
+    const __comments: any = await getComments(id);
+    setComments(__comments);
   };
 
   useEffect(() => {
@@ -86,11 +95,11 @@ const PostDetail = (props: Props) => {
       !!loginUser && !!post.creator && setIsCreator(loginUser.uid === post.creator.uid);
       setContentMarkup({ __html: post.content });
     }
-  }, [post, comments]);
+  }, [post]);
 
   useEffect(() => {
     onViewCountUp();
-    fetchComments(id);
+    fetchComments();
   }, []);
 
   return (
@@ -127,15 +136,19 @@ const PostDetail = (props: Props) => {
           </ROW_2>
           <HR />
           <Content dangerouslySetInnerHTML={contentMarkup} />
-          <CountBox
-            size='20px'
-            viewCount={post.view_count}
-            likeCount={post.like_count}
-            commentCount={comments.length}
-          />
+          <CountBox size='20px' viewCount={post.view_count} commentCount={comments.length} />
+          <LikeButtonWrapper onClick={() => onLikePost(post.liker_list, loginUser.uid)}>
+            {likeOrUnlike(post.liker_list, loginUser.uid) === 'unlike' ? (
+              <UnlikeButton />
+            ) : (
+              <LikeButton />
+            )}
+          </LikeButtonWrapper>
+          <LikeCount>{post.liker_list.length}</LikeCount>
+
           <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
           <SubmitBtn onClick={onSubmitComment}>등록하기</SubmitBtn>
-          <CommentBox commentList={comments} />
+          <CommentBox postId={id} commentList={comments} fetchComments={fetchComments} />
         </PostContainer>
       ) : (
         <PostSkeleton />
@@ -227,6 +240,15 @@ const EditBox = styled.div`
   align-items: center;
   margin-left: auto;
 `;
+
+const LikeButtonWrapper = styled.div`
+  width: 20px;
+  color: #c62917;
+  cursor: pointer;
+`;
+const LikeButton = styled(HandThumbsUp)``;
+const UnlikeButton = styled(HandThumbsUpFill)``;
+const LikeCount = styled.div``;
 
 const Btn = styled.button`
   font-size: 1em;

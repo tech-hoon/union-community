@@ -125,7 +125,7 @@ export const addPost = async ({ postInput, creator }: IaddPostParams) => {
       ...postInput,
       creator,
       view_count: 0,
-      like_count: 0,
+      liker_list: [],
       created_at: new Date().getTime(),
     });
     return res.id;
@@ -139,8 +139,6 @@ export const updatePost = async ({ postId, postInput, creator }: IupdatePostPara
     await dbService.doc(`posts/${postId}`).update({
       ...postInput,
       creator,
-      view_count: 0,
-      like_count: 0,
     });
   } catch (error) {
     console.log(error);
@@ -159,6 +157,25 @@ export const viewCountUp = async (postId: string) => {
   try {
     await dbService.doc(`posts/${postId}`).update({
       view_count: firebaseApp.firestore.FieldValue.increment(1),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postLike = async (post_id: string, uid: string) => {
+  try {
+    await dbService.doc(`posts/${post_id}`).update({
+      liker_list: firebaseApp.firestore.FieldValue.arrayUnion(uid),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const postUnlike = async (post_id: string, uid: string) => {
+  try {
+    await dbService.doc(`posts/${post_id}`).update({
+      liker_list: firebaseApp.firestore.FieldValue.arrayRemove(uid),
     });
   } catch (error) {
     console.log(error);
