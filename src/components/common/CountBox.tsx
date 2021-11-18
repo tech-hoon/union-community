@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { memo } from 'react';
-import { Chat, Eye } from '@styled-icons/bootstrap';
+import { Chat } from '@styled-icons/bootstrap';
 import { Like } from '@styled-icons/boxicons-regular';
+import { Eye } from '@styled-icons/fa-regular';
 
 interface Props {
   size?: string;
-  viewCount: number;
-  likeCount: number;
+  viewCount?: number;
+  likeCount?: number;
   commentCount?: number;
 }
 
@@ -20,13 +21,16 @@ const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
         </Box>
       )}
       <Box>
-        <Eye size={size || `14px`} />
+        <Eye size={size || `14px`} color='#888' />
         <Count size={size || `14px`}>{viewCount}</Count>
       </Box>
-      <Box>
-        <Like size={size || `14px`} color='#c62917' />
-        <Count size={size || `14px`}>{likeCount}</Count>
-      </Box>
+
+      {likeCount && (
+        <Box>
+          <Like size={size || `14px`} color='#c62917' />
+          <Count size={size || `14px`}>{likeCount}</Count>
+        </Box>
+      )}
     </CountSection>
   );
 };
