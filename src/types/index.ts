@@ -21,6 +21,7 @@ export interface PostType {
   creator: CreatorType;
   view_count: number;
   liker_list: [];
+  like_count: number;
   created_at: number;
   comment: CommentType[] | [];
 }

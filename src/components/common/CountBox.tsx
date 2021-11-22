@@ -25,12 +25,10 @@ const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
         <Count size={size || `14px`}>{viewCount}</Count>
       </Box>
 
-      {likeCount && (
-        <Box>
-          <Like size={size || `14px`} color='#c62917' />
-          <Count size={size || `14px`}>{likeCount}</Count>
-        </Box>
-      )}
+      <Box>
+        <Like size={size || `14px`} color='#c62917' />
+        <Count size={size || `14px`}>{likeCount}</Count>
+      </Box>
     </CountSection>
   );
 };
