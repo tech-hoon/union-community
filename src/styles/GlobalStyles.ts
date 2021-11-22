@@ -28,6 +28,8 @@ const GlobalStyle = createGlobalStyle`
     outline:none;
     background:none;
   }
+
+  touch-action: pan-y;
 `;
 
 export default GlobalStyle;
