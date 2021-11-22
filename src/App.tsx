@@ -11,7 +11,7 @@ interface Props {}
 const App = (props: Props) => {
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
   const isLoggedIn = useRecoilValue(registerStatus);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { onLoginStepReset, onLoginStepNext } = useLoginStep();
 
   const hasRegistered = async (uid: string) => {
@@ -42,7 +42,8 @@ const App = (props: Props) => {
 
   return (
     <>
-      <Routes isLoggedIn={isLoggedIn} isLoading={isLoading} />
+      {/* 임시 */}
+      <Routes isLoggedIn={isLoggedIn} isLoading={false} />
     </>
   );
 };
