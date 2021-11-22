@@ -1,19 +1,17 @@
-import { useState, memo, useLayoutEffect } from 'react';
+import { useState, memo, useEffect } from 'react';
 import Navbar from 'components/common/Navbar';
 import LoginButton from 'components/common/LoginButton';
 import styled from 'styled-components';
 import PeopleAvatar from 'components/About/PeopleAvatar';
 import { getUserPostCount } from 'api/count';
 
-interface Props {}
-
-const About = (props: Props) => {
+const About = () => {
   const [count, setCount] = useState({
     userCount: 0,
     postCount: 0,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchCount = async () => {
       const count = await getUserPostCount();
       setCount(count);
