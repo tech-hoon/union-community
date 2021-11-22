@@ -1,4 +1,5 @@
 import { getPostDetail, getInitialPosts, getMorePosts } from 'api/post';
+import useDidUpdateEffect from 'hooks/common/useDidUpdateEffect';
 import { useState, useEffect, useCallback } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
@@ -6,6 +7,7 @@ import {
   postsOrderByState,
   postsState,
   lastVisiblePostState,
+  getPostsSelector,
 } from 'store/post';
 import { PostType } from 'types';
 
@@ -15,28 +17,18 @@ export const useGetPosts = () => {
   const category = useRecoilValue(postsCategoryState);
   const orderBy = useRecoilValue(postsOrderByState);
 
-  const [isInitial, setIsInitial] = useState<boolean>(true);
   const [isLastPost, setIsLastPost] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchPosts = async (isInitial?: boolean) => {
-    if (!posts.length || !isInitial) {
-      const response: any = await getInitialPosts({ orderBy, category });
+  const fetchPosts = useCallback(async () => {
+    const response: any = await getInitialPosts({ orderBy, category });
+    const __posts = response?.data;
+    const __lastVisiblePost = response?.lastVisiblePost;
 
-      const __posts = response?.data;
-      const __lastVisiblePost = response?.lastVisiblePost;
-
-      setPosts(__posts);
-      setLastVisiblePost(__lastVisiblePost);
-      setIsLoading(false);
-
-      return;
-    }
-
-    setPosts(posts);
-    setLastVisiblePost(lastVisiblePost);
+    setPosts(__posts);
+    setLastVisiblePost(__lastVisiblePost);
     setIsLoading(false);
-  };
+  }, [orderBy, category, lastVisiblePost]);
 
   const fetchMorePosts = async () => {
     if (lastVisiblePost) {
@@ -51,19 +43,14 @@ export const useGetPosts = () => {
     }
   };
 
-  const updatePosts = async () => {
-    const response: any = await getInitialPosts({ orderBy, category });
-    const __posts = response?.data;
-    const __lastVisiblePost = response?.lastVisiblePost;
-
-    setPosts(__posts);
-    setLastVisiblePost(__lastVisiblePost);
-    setIsLoading(false);
-  };
-
+  //첫 렌더링시, 캐싱된 post있으면 그거로 사용
   useEffect(() => {
-    fetchPosts(isInitial);
-    setIsInitial(false);
+    !posts.length && fetchPosts();
+  }, []);
+
+  //category, orderBy 바뀐거로 fetch
+  useDidUpdateEffect(() => {
+    fetchPosts();
   }, [category, orderBy]);
 
   return {
@@ -71,7 +58,6 @@ export const useGetPosts = () => {
     lastVisiblePost,
     fetchPosts,
     fetchMorePosts,
-    updatePosts,
     setPosts,
     isLoading,
     isLastPost,
@@ -83,7 +69,7 @@ export const useGetPostDetail = (id: string) => {
 
   const fetchPostDetail = async (id: string) => {
     const _post: any = await getPostDetail(id);
-    setPost(_post);
+    _post && setPost(_post);
   };
 
   return {

@@ -13,20 +13,18 @@ import { useGetPosts } from 'hooks/post/useGetPosts';
 import useLocalStorage from 'hooks/common/useLocalStorage';
 import { useLocation } from 'react-router';
 
-interface Props {}
-
-const Home = (props: Props) => {
-  const { posts, updatePosts, fetchMorePosts, isLoading, lastVisiblePost } = useGetPosts();
+//TODO: 새 게시물 감지시, unsubscribe
+const Home = () => {
+  const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost } = useGetPosts();
   const location = useLocation();
   const [isUpdated, setIsUpdated] = useState(false);
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, {});
-
   const [scrollY, setScrollY] = useLocalStorage('scrollY', 0);
 
   const onRefreshClick = () => {
     setIsUpdated(false);
-    updatePosts();
+    fetchPosts();
     window.scroll({ behavior: 'smooth', top: 0 });
   };
 
@@ -35,7 +33,6 @@ const Home = (props: Props) => {
 
     const unsubscribe = dbService.collection('posts').onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
-        //TODO: 조회수 갱신(수정) 때문에 error 생김
         if (change.type === 'modified') {
           console.log('new post');
           setIsUpdated(true);
@@ -49,11 +46,12 @@ const Home = (props: Props) => {
     };
   }, []);
 
+  // 새 글,수정,삭제시 새로운 게시물로 fetch
   useEffect(() => {
-    // 새 글,수정,삭제시 새로운 게시물로 fetch
-    location.state && updatePosts();
+    location.state && fetchPosts();
   }, []);
 
+  // IO 감지시 게시물 추가 fetch
   useEffect(() => {
     entry?.isIntersecting && fetchMorePosts();
   }, [lastVisiblePost, entry]);
