@@ -7,13 +7,11 @@ import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <RecoilRoot>
     <GlobalStyles />
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </React.StrictMode>,
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </RecoilRoot>,
   document.getElementById('root')
 );
