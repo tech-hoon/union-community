@@ -27,17 +27,22 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.nav`
-  max-width: 1120px;
+  max-width: 1440px;
   padding: 12px 60px;
+  margin: 0 auto;
+
+  /* width: 90%; */
+  /* margin: 0 auto 5%; */
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 97%;
+    padding: 12px;
+  }
 
   display: flex;
   user-select: none;
   justify-content: space-between;
 
-  @media ${({ theme }) => theme.size.mobile} {
-    width: 95%;
-    padding: 12px 0;
-  }
   margin: 0 auto;
 `;
 

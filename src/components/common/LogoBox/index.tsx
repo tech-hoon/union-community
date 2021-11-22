@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   cursor: pointer;
 
   @media ${({ theme }) => theme.size.mobileS} {
-    width: 80px;
+    width: 70px;
   }
 `;
 
