@@ -2,25 +2,26 @@ import { useCallback, useRef, useEffect } from 'react';
 import { CloseOutline } from '@styled-icons/evaicons-outline';
 import styled from 'styled-components';
 import Portal from '..';
-import LogoImg from '../../LogoBox/LogoImg';
 import LoginContainer from './LoginContainer';
-import AuthContainer from './AuthContainer';
+import ResidentAuthContainer from './ResidentAuthContainer';
 import NicknameContainer from './NicknameContainer';
 import useLoginStep from 'hooks/useLoginStep';
+import LogoBox from 'components/common/LogoBox';
+import { authService } from 'service/firebase';
 
 interface Props {
   onClose: () => void;
 }
 
 const LoginPortal = ({ onClose }: Props) => {
-  const { loginStep, onStepPrev, onStepReset } = useLoginStep();
+  const { loginStep, onLoginStepPrev } = useLoginStep();
 
   const CurrentContainer = () => {
     switch (loginStep) {
       case 1:
         return <LoginContainer />;
       case 2:
-        return <AuthContainer />;
+        return <ResidentAuthContainer />;
       case 3:
         return <NicknameContainer />;
       default:
@@ -29,23 +30,19 @@ const LoginPortal = ({ onClose }: Props) => {
   };
 
   const portalRef = useRef<HTMLDivElement>(null);
-  const portalClose = useCallback(
-    (e) => {
-      if ((portalRef.current && !portalRef.current.contains(e.target)) || e.key === 'Escape') {
-        onStepReset();
-        onClose();
-      }
-    },
-    [onClose, onStepReset]
+  const onOutsideClick = useCallback(
+    (e) => !portalRef.current?.contains(e.target) && onClose(),
+    [onClose]
   );
+  const onEscClick = useCallback((e) => e.key === 'Escape' && onClose(), [onClose]);
 
   useEffect(() => {
-    window.addEventListener('click', portalClose);
-    window.addEventListener('keydown', portalClose);
+    window.addEventListener('click', onOutsideClick);
+    window.addEventListener('keydown', onEscClick);
 
     return () => {
-      window.removeEventListener('click', portalClose);
-      window.removeEventListener('keydown', portalClose);
+      window.removeEventListener('click', onOutsideClick);
+      window.removeEventListener('keydown', onEscClick);
     };
   });
 
@@ -54,10 +51,12 @@ const LoginPortal = ({ onClose }: Props) => {
       <Background>
         <Wrapper ref={portalRef}>
           <Header>
-            <LogoImg />
+            <LogoBox />
             <CloseBtn onClick={onClose} size='24' color='gray' />
           </Header>
-          <Nav>{loginStep !== 0 && <BackButton onClick={onStepPrev}>&#xE000;</BackButton>}</Nav>
+          <Nav>
+            {loginStep !== 1 && <BackButton onClick={onLoginStepPrev}>&#xE000;</BackButton>}
+          </Nav>
           <CurrentContainer />
         </Wrapper>
       </Background>
@@ -106,7 +105,8 @@ const Nav = styled.div`
 `;
 
 const BackButton = styled.button`
-  font-family: 'Spoqa Bold';
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 500;
   font-size: 32px;
   padding: 16px;
   margin-right: 90%;

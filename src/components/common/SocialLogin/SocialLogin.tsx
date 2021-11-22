@@ -1,10 +1,7 @@
-import React from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 import googleImg from 'assets/images/logo/google-logo.png';
 import facebookImg from 'assets/images/logo/facebook-logo.png';
-import useLoginStep from 'hooks/useLoginStep';
-import { loginUserState } from 'store/loginUser';
-import { useRecoilState } from 'recoil';
 import { firebaseApp, authService } from 'service/firebase';
 
 interface SocialLoginProps {
@@ -12,37 +9,19 @@ interface SocialLoginProps {
 }
 
 const SocialLogin = ({ name }: SocialLoginProps) => {
-  const { onStepNext } = useLoginStep();
-  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
-
-  /* TODO:
-    가입 안 되어 있으면, 바로 로그인 X
-    가입 되어 있으면 바로 로그인 & login step reset
-  */
-
-  const onSocialClick: React.MouseEventHandler<HTMLImageElement> = async (event: any) => {
+  const onClickSocial: React.MouseEventHandler<HTMLImageElement> = async (event: any) => {
     const {
       target: { name },
     } = event;
 
     let provider;
-
     try {
       provider =
         name === 'google'
           ? new firebaseApp.auth.GoogleAuthProvider()
           : new firebaseApp.auth.FacebookAuthProvider();
 
-      const data = await authService.signInWithPopup(provider);
-
-      if (data.additionalUserInfo?.isNewUser) {
-        onStepNext();
-      } else {
-        setLoginUser({
-          displayName: data.user?.displayName,
-          uid: data.user?.uid,
-        });
-      }
+      authService.signInWithPopup(provider);
     } catch (error) {
       console.log(error);
     }
@@ -50,15 +29,13 @@ const SocialLogin = ({ name }: SocialLoginProps) => {
 
   return (
     <Wrapper>
-      <Logo src={name === 'google' ? googleImg : facebookImg} onClick={onSocialClick} name={name} />
+      <Logo src={name === 'google' ? googleImg : facebookImg} onClick={onClickSocial} name={name} />
       <Title>{name}</Title>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  width: 200px;
-  height: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,8 +50,8 @@ const Logo = styled.img<SocialLoginProps>`
 `;
 
 const Title = styled.span`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
   font-size: 20px;
 `;
 
-export default SocialLogin;
+export default memo(SocialLogin);

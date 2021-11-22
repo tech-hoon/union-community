@@ -1,15 +1,13 @@
+import { memo } from 'react';
 import useLoginStep from 'hooks/useLoginStep';
 import styled from 'styled-components';
 import SocialLogin from '../../SocialLogin/SocialLogin';
+import { RESIDENT_AUTH_STEP, NICKNAME_STEP } from 'utils/config';
 
 interface Props {}
 
-const SNS_LOGIN_STEP = 1;
-const AUTH_STEP = 2;
-const NICKNAME_STEP = 3;
-
 const LoginContainer = (prop: Props) => {
-  const { loginStep, onStepNext } = useLoginStep();
+  const { loginStep, onLoginStepNext } = useLoginStep();
 
   return (
     <Wrapper>
@@ -18,8 +16,8 @@ const LoginContainer = (prop: Props) => {
         <SocialLogin name='google' />
         <SocialLogin name='facebook' />
       </Body>
-      {(loginStep === AUTH_STEP || loginStep === NICKNAME_STEP) && (
-        <Button onClick={onStepNext}>다음</Button>
+      {(loginStep === RESIDENT_AUTH_STEP || loginStep === NICKNAME_STEP) && (
+        <Button onClick={onLoginStepNext}>다음</Button>
       )}
     </Wrapper>
   );
@@ -36,7 +34,7 @@ const Body = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 2em;
 `;
 
@@ -47,4 +45,4 @@ const Button = styled.div`
   margin: 0 auto;
 `;
 
-export default LoginContainer;
+export default memo(LoginContainer);

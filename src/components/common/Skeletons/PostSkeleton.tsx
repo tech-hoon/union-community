@@ -14,8 +14,10 @@ const PostSkeleton = (props: Props) => {
 };
 
 const Wrapper = styled.div`
-  width: 80vw;
-  margin: 8% auto;
+  max-width: 1120px;
+  padding: 0 60px;
+  margin: 3% auto;
+
   display: flex;
   flex-direction: column;
   gap: 20px;

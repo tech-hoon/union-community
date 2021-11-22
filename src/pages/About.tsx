@@ -1,11 +1,32 @@
+import { useState, memo, useEffect } from 'react';
 import Navbar from 'components/common/Navbar';
 import LoginButton from 'components/common/LoginButton';
 import styled from 'styled-components';
 import PeopleAvatar from 'components/About/PeopleAvatar';
+import { getUserPostCount } from 'api/count';
 
-interface Props {}
+const About = () => {
+  const [count, setCount] = useState({
+    userCount: 0,
+    postCount: 0,
+  });
 
-const About = (props: Props) => {
+  useEffect(() => {
+    const fetchCount = async () => {
+      const count = await getUserPostCount();
+      setCount(count);
+    };
+
+    fetchCount();
+
+    return () => {
+      setCount({
+        userCount: 0,
+        postCount: 0,
+      });
+    };
+  }, []);
+
   return (
     <Wrapper>
       <Navbar isLoggedIn={false} />
@@ -16,6 +37,10 @@ const About = (props: Props) => {
           가입하고 <Strong>동아리, 스터디</Strong> 등 다양한 정보를 나누어 보세요!
         </Content>
         <PeopleAvatar />
+        <CountBox>
+          <Strong>{count.postCount}</Strong>개의 글과 <Strong>{count.userCount}</Strong>명의
+          사용자가 함께하고 있어요!
+        </CountBox>
         <ButtonWrapper>
           <LoginButton />
         </ButtonWrapper>
@@ -36,7 +61,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.p`
-  font-family: 'Spoqa Light';
+  font-weight: 200;
   font-size: 2em;
   line-height: 180%;
   letter-spacing: -0.05em;
@@ -54,12 +79,17 @@ const Content = styled.p`
 `;
 
 const Strong = styled.strong`
-  font-family: 'Spoqa Medium';
+  font-weight: 500;
 `;
+
+const CountBox = styled.div``;
+
 const ButtonWrapper = styled.div`
+  margin-top: 3%;
+
   @media ${({ theme }) => theme.size.mobile} {
     margin-top: 10%;
   }
 `;
 
-export default About;
+export default memo(About);

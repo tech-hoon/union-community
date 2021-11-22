@@ -1,73 +1,108 @@
-import React from 'react';
 import styled from 'styled-components';
-import { SuitHeart } from '@styled-icons/bootstrap';
-import { MOCK_COMMENT_LIST } from 'assets/mockData';
+import { HandThumbsUp, HandThumbsUpFill } from '@styled-icons/bootstrap';
+import { CommentType } from 'types';
+import Avatar from 'components/common/Avatar';
+import { useRecoilValue } from 'recoil';
+import { loginUserState } from 'store/loginUser';
+import { commentLike, commentUnlike, deleteComment, updateComment } from 'api/comment';
+import { useRef, useState } from 'react';
+import { likeOrUnlike } from 'utils/likeOrUnlike';
 
-interface Props {}
+interface Props {
+  postId: string;
+  commentList: CommentType[];
+  fetchComments: () => void;
+}
 
-const CommentBox = (props: Props) => {
+const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
+  //TODO: 좋아요 아이콘 처리(liker_list)
+  const [editingComment, setEditingComment] = useState<string | null>();
+  const loginUser = useRecoilValue(loginUserState);
+  const inputRef = useRef<any>(null);
+
+  const onEdit = (targetId: string) => setEditingComment(targetId);
+  const onDelete = async (commentId: string) => {
+    const ok = window.confirm('정말 삭제하시겠습니까?');
+    if (ok) {
+      await deleteComment(postId, commentId);
+      fetchComments();
+      setEditingComment(null);
+    }
+  };
+  const onSubmit = async (commentId: string) => {
+    if (inputRef.current.value) {
+      await updateComment(inputRef.current.value, postId, commentId);
+      fetchComments();
+      setEditingComment(null);
+    }
+  };
+
+  const onLikeComment = async (like_list: string[], loginUserUid: string, comment_id: string) => {
+    likeOrUnlike(like_list, loginUserUid) === 'unlike'
+      ? await commentUnlike({ post_id: postId, comment_id, uid: loginUserUid })
+      : await commentLike({ post_id: postId, comment_id, uid: loginUserUid });
+    fetchComments();
+  };
+
   return (
-    <Wrapper>
-      <CommentWrite placeholder='댓글을 입력해주세요.' />
-      <SubmitBtn>등록하기</SubmitBtn>
-      <CommentList>
-        {MOCK_COMMENT_LIST.map(({ user_id, avatar_img, content, like_count }, key) => (
-          <Comment key={key}>
-            <ROW1>
-              <COL1>
-                <Avatar src={avatar_img} />
-              </COL1>
-              <COL2>
-                <Nickname>{user_id}</Nickname>
-                <CreatedAt>{new Date().toLocaleDateString()}</CreatedAt>
-              </COL2>
-              <COL3>
-                <LikeButton />
-                <LikeCount>{like_count}</LikeCount>
-              </COL3>
-            </ROW1>
-            <ROW2>
-              <Content>{content}</Content>
-            </ROW2>
-          </Comment>
-        ))}
-      </CommentList>
-    </Wrapper>
+    <List>
+      {commentList.map(
+        ({ id, creator: { uid, nickname, avatarId }, content, is_edited, liker_list }, key) => {
+          return (
+            <Comment key={key}>
+              <ROW1>
+                <COL1>
+                  <Avatar avatarId={avatarId} />
+                </COL1>
+                <COL2>
+                  <Nickname>{nickname}</Nickname>
+                  <CreatedAt>{new Date().toLocaleDateString()}</CreatedAt>
+                </COL2>
+                <COL3>
+                  <Button onClick={() => onLikeComment(liker_list, loginUser.uid, id)}>
+                    {likeOrUnlike(liker_list, loginUser.uid) === 'unlike' ? (
+                      <UnlikeButton />
+                    ) : (
+                      <LikeButton />
+                    )}
+                  </Button>
+                  <LikeCount>{liker_list.length}</LikeCount>
+                </COL3>
+                <COL4>{is_edited && '수정됨'}</COL4>
+                {uid === loginUser.uid && (
+                  <COL5>
+                    <EditBtn onClick={() => onEdit(id)}>수정</EditBtn>
+                    <DelBtn onClick={() => onDelete(id)}>삭제</DelBtn>
+                  </COL5>
+                )}
+              </ROW1>
+              <ROW2>
+                {uid === loginUser.uid && editingComment === id ? (
+                  <EditContent>
+                    <EditInput autoFocus defaultValue={content} ref={inputRef} />
+                    <EditCancleBtn onClick={() => onEdit(id)}>취소하기</EditCancleBtn>
+                    <EditSubmitBtn onClick={() => onSubmit(id)}>등록하기</EditSubmitBtn>
+                  </EditContent>
+                ) : (
+                  <Content>{content}</Content>
+                )}
+              </ROW2>
+            </Comment>
+          );
+        }
+      )}
+    </List>
   );
 };
 
-const Wrapper = styled.div``;
-
-const Button = styled.button`
-  font-family: 'Spoqa Medium';
-  font-size: 1em;
-  padding: 12px;
-  border: 0.3px solid #eee;
-  border-radius: 4px;
-`;
-
-const CommentWrite = styled.textarea`
-  font-family: 'Spoqa Regular';
-  margin: 20px 0;
-  padding: 10px;
-  height: 100px;
-  width: 100%;
-`;
-
-const SubmitBtn = styled(Button)`
-  width: 100px;
-  margin-bottom: 40px;
-  background-color: skyblue;
-  color: white;
-`;
-
-const CommentList = styled.ul``;
+const List = styled.ul``;
 const Comment = styled.li`
   margin-bottom: 48px;
 `;
 
 const ROW1 = styled.div`
   display: flex;
+  align-items: center;
   width: 100%;
   gap: 4px;
 `;
@@ -84,26 +119,56 @@ const COL3 = styled.div`
   margin-left: 16px;
   gap: 8px;
 `;
-const Avatar = styled.img`
-  width: 32px;
+
+const COL4 = styled.div`
+  font-weight: 400;
+  font-size: 16px;
+  margin-left: 8px;
 `;
+
+const COL5 = styled.div`
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  gap: 8px;
+`;
+
+const EditBtn = styled.button``;
+const DelBtn = styled.button``;
+
 const CreatedAt = styled.p`
   color: gray;
 `;
 const Nickname = styled.p`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 20px;
 `;
-const Content = styled.div`
+
+const EditContent = styled.div``;
+
+const EditInput = styled.input`
+  font-size: 20px;
+  padding: 20px 0 40px;
+  width: 100%;
+`;
+
+const EditCancleBtn = styled.button``;
+const EditSubmitBtn = styled.button``;
+
+const Content = styled.p`
   font-size: 20px;
   padding: 20px 0 40px;
   border-bottom: solid 2px #e9ecef;
 `;
-const LikeButton = styled(SuitHeart)`
-  width: 24px;
-  color: red;
+const Button = styled.div`
+  width: 20px;
+  color: #c62917;
   cursor: pointer;
 `;
+
+const LikeButton = styled(HandThumbsUp)``;
+const UnlikeButton = styled(HandThumbsUpFill)``;
+
 const LikeCount = styled.div``;
 
 export default CommentBox;

@@ -1,24 +1,33 @@
 import styled from 'styled-components';
-import { ChatDots, SuitHeartFill, Eye } from '@styled-icons/bootstrap';
+import { memo } from 'react';
+import { Chat } from '@styled-icons/bootstrap';
+import { Like } from '@styled-icons/boxicons-regular';
+import { Eye } from '@styled-icons/fa-regular';
 
 interface Props {
   size?: string;
+  viewCount?: number;
+  likeCount?: number;
+  commentCount?: number;
 }
 
-const CountBox = ({ size }: Props) => {
+const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
   return (
     <CountSection>
+      {commentCount && (
+        <Box>
+          <Chat size={size || `14px`} color='#0ca5af' />
+          <Count size={size || `14px`}>{commentCount}</Count>
+        </Box>
+      )}
       <Box>
-        <ChatDots size={size || `14px`} />
-        <Count size={size || `14px`}>4</Count>
+        <Eye size={size || `14px`} color='#888' />
+        <Count size={size || `14px`}>{viewCount}</Count>
       </Box>
+
       <Box>
-        <Eye size={size || `14px`} />
-        <Count size={size || `14px`}>120</Count>
-      </Box>
-      <Box>
-        <SuitHeartFill size={size || `14px`} color='red' />
-        <Count size={size || `14px`}>10</Count>
+        <Like size={size || `14px`} color='#c62917' />
+        <Count size={size || `14px`}>{likeCount}</Count>
       </Box>
     </CountSection>
   );
@@ -30,7 +39,9 @@ const CountSection = styled.section`
 `;
 
 const Box = styled.div`
-  padding: 0 2px;
+  padding: 0 3px;
+  display: flex;
+  align-items: center;
 `;
 
 interface ICount {
@@ -42,4 +53,4 @@ const Count = styled.span<ICount>`
   padding: 0 2px;
 `;
 
-export default CountBox;
+export default memo(CountBox);

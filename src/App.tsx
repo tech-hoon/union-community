@@ -1,25 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { authService } from 'service/firebase';
 import Routes from 'Routes';
-import { loginUserState } from 'store/loginUser';
-import { useRecoilState } from 'recoil';
+import { registerStatus, loginUserState } from 'store/loginUser';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { getUserData } from 'api/user';
+import useLoginStep from 'hooks/useLoginStep';
 
 interface Props {}
 
 const App = (props: Props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [, setLoginUser] = useRecoilState(loginUserState);
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+  const isLoggedIn = useRecoilValue(registerStatus);
+  const [isLoading, setIsLoading] = useState(false);
+  const { onLoginStepReset, onLoginStepNext } = useLoginStep();
+
+  const hasRegistered = async (uid: string) => {
+    return await getUserData(uid);
+  };
 
   useEffect(() => {
-    authService.onAuthStateChanged((user) => {
-      setLoginUser(user ? { displayName: user.displayName, uid: user.uid } : {});
-      setIsLoggedIn(Boolean(user));
+    const unsubscribe = authService.onAuthStateChanged(async (user) => {
+      if (user) {
+        const res = await hasRegistered(user.uid);
+        if (res) {
+          setLoginUser({ ...loginUser, ...res });
+          setIsLoading(false);
+          return;
+        }
+
+        onLoginStepNext();
+        setIsLoading(false);
+        return;
+      }
     });
+
+    return () => {
+      onLoginStepReset();
+      unsubscribe();
+    };
   }, []);
 
   return (
     <>
-      <Routes isLoggedIn={isLoggedIn} />
+      {/* 임시 */}
+      <Routes isLoggedIn={isLoggedIn} isLoading={false} />
     </>
   );
 };

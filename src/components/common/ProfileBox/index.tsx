@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Avatar from './Avatar';
-import { CaretDown } from '@styled-icons/boxicons-regular';
-import React, { useState } from 'react';
+import Avatar from '../Avatar';
+import { CaretDown, CaretUp } from '@styled-icons/boxicons-regular';
+import { useState, memo } from 'react';
 import MypageDropdown from './MypageDropdown';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
@@ -12,11 +12,11 @@ const ProfileBox = () => {
   const onToggleClick = () => setToggleOpened(!toggleOpened);
 
   return (
-    <Wrapper>
+    <Wrapper onClick={onToggleClick}>
       <Top>
-        <Name>{loginUser.displayName}</Name>
-        <Avatar />
-        <CaretDown size='20' onClick={onToggleClick} />
+        <Name>{loginUser.nickname}</Name>
+        <Avatar avatarId={loginUser?.avatarId!!} />
+        <Icon>{toggleOpened ? <CaretUp size='20' /> : <CaretDown size='20' />}</Icon>
       </Top>
       <Bottom>{toggleOpened && <MypageDropdown />}</Bottom>
     </Wrapper>
@@ -32,11 +32,18 @@ const Top = styled.div`
   align-items: center;
   gap: 8px;
 `;
+
+const Icon = styled.div``;
+
 const Bottom = styled.div``;
 
 const Name = styled.h3`
-  font-family: 'Spoqa Bold';
+  font-weight: 700;
   font-size: 1em;
+
+  @media ${({ theme }) => theme.size.mobileS} {
+    font-size: 0.8em;
+  }
 `;
 
-export default React.memo(ProfileBox);
+export default memo(ProfileBox);

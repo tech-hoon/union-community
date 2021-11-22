@@ -3,11 +3,11 @@ import { loginStepState } from 'store/loginStep';
 
 const useLoginStep = () => {
   const [loginStep, setLoginStep] = useRecoilState(loginStepState);
-  const onStepNext = () => setLoginStep((prevStep) => prevStep + 1);
-  const onStepPrev = () => setLoginStep((prevStep) => prevStep - 1);
-  const onStepReset = () => setLoginStep(1);
+  const onLoginStepNext = () => setLoginStep((prevStep) => prevStep + 1);
+  const onLoginStepPrev = () => setLoginStep((prevStep) => prevStep - 1);
+  const onLoginStepReset = () => setLoginStep(1);
 
-  return { loginStep, onStepNext, onStepPrev, onStepReset };
+  return { loginStep, onLoginStepNext, onLoginStepPrev, setLoginStep, onLoginStepReset };
 };
 
 export default useLoginStep;

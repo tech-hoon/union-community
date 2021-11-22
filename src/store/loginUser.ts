@@ -1,17 +1,22 @@
 import { atom, selector } from 'recoil';
-
-interface loginUserType {
-  displayName?: string | null;
-  uid?: string;
-}
+import { loginUserType } from 'types';
 
 export const loginUserState = atom<loginUserType>({
   key: 'login_user',
-  default: {},
+  default: {
+    name: '',
+    nickname: '',
+    email: '',
+    uid: '',
+    avatarId: 1,
+  },
 });
 
-export const loginState = selector({
-  key: 'is_logged_in',
-  get: ({ get }) =>
-    !(Object.keys(get(loginUserState)).length === 0 && get(loginUserState).constructor === Object),
+export const registerStatus = selector({
+  key: 'isLoggedIn',
+  get: ({ get }) => isEmpty(get(loginUserState)),
 });
+
+const isEmpty = ({ name, nickname, email, uid, avatarId }: loginUserType) => {
+  return !!(name && nickname && email && uid && avatarId);
+};
