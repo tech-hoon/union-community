@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
   *  {
     box-sizing: border-box;
+    font-size:62.5%;
   }
   a {
     color:#333
