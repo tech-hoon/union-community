@@ -12,7 +12,7 @@ export const loginUserState = atom<loginUserType>({
   },
 });
 
-export const registerStatus = selector({
+export const loginStatus = selector({
   key: 'isLoggedIn',
   get: ({ get }) => isEmpty(get(loginUserState)),
 });

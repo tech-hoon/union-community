@@ -5,25 +5,20 @@ import NotFound from 'pages/NotFound';
 
 interface Props {
   isLoggedIn: boolean;
-  isLoading: boolean;
 }
 
-const Routes = ({ isLoggedIn, isLoading }: Props) => (
+const Routes = ({ isLoggedIn }: Props) => (
   <Router>
     <Switch>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <Route exact path='/'>
-            {isLoggedIn ? <Home /> : <About />}
-          </Route>
-          <PrivateRoute exact path='/post/:id' component={PostDetail} isLoggedIn={isLoggedIn} />
-          <PrivateRoute exact path='/new' component={NewPost} isLoggedIn={isLoggedIn} />
-          <PrivateRoute exact path='/update' component={UpdatePost} isLoggedIn={isLoggedIn} />
-          {/* <Route path='*' component={NotFound} /> */}
-        </>
-      )}
+      <>
+        <Route exact path='/' component={About} />
+
+        <PrivateRoute exact path='/home' component={Home} isLoggedIn={isLoggedIn} />
+        <PrivateRoute exact path='/post/:id' component={PostDetail} isLoggedIn={isLoggedIn} />
+        <PrivateRoute exact path='/new' component={NewPost} isLoggedIn={isLoggedIn} />
+        <PrivateRoute exact path='/update' component={UpdatePost} isLoggedIn={isLoggedIn} />
+        {/* <Route path='*' component={NotFound} /> */}
+      </>
     </Switch>
   </Router>
 );
