@@ -16,11 +16,23 @@ const PeopleAvatar = () => {
 };
 
 const Wrapper = styled.div`
-  width: 100%;
+  /* width: 100%; */
 `;
 
 const Img = styled.img`
-  width: 25%;
+  width: 140px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 100px;
+  }
+
+  @media (max-width: 500px) {
+    width: 92px;
+  }
+
+  @media ${({ theme }) => theme.size.mobileS} {
+    width: 72px;
+  }
 `;
 
 const Peep1 = styled(Img)``;

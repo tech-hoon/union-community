@@ -33,16 +33,14 @@ const CategoryBox = (props: Props) => {
 };
 
 const Wrapper = styled.div`
-  max-width: 1120px;
-  padding: 0 60px;
+  width: 100%;
 
   display: flex;
-  gap: 1%;
-  margin: 24px auto 36px;
+  box-shadow: 0 0 15px rgb(0 0 0 / 15%);
+  margin: 12px auto 24px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 95%;
-    margin: 12px auto 24px;
+    /* margin: 12px auto 24px; */
     font-size: 1em;
     padding: 0px;
   }
@@ -56,19 +54,13 @@ interface IMenu {
 
 const Menu = styled.button<IMenu>`
   width: 100%;
-  height: 36px;
-  border-radius: 10px;
+  height: 48px;
+
   background-color: ${(props) => (props.isClicked ? props.theme.color.BUTTON_CLICKED : '#fff')};
   color: ${(props) => (props.isClicked ? '#fff' : '#000')};
-
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-
   font-size: 1em;
   font-weight: 500;
-  &:hover {
-    /* color: white; */
-    /* background-color: ${({ theme }) => theme.color.BUTTON_CLICKED}; */
-  }
+
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8em;
   }

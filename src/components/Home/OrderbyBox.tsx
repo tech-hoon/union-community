@@ -60,21 +60,22 @@ const Button = styled.button`
 
 const FireIcon = styled(Fire)`
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
 `;
 const CalendarIcon = styled(CalendarCheck)`
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
 `;
 
 const Title = styled.div`
   font-weight: 700;
-  font-size: 1.5em;
+  font-size: 1.4rem;
+  line-height: 1;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
 `;
 
