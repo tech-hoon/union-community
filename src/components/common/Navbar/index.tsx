@@ -31,9 +31,6 @@ const Inner = styled.nav`
   padding: 12px 60px;
   margin: 0 auto;
 
-  /* width: 90%; */
-  /* margin: 0 auto 5%; */
-
   @media ${({ theme }) => theme.size.mobile} {
     width: 97%;
     padding: 12px;
@@ -42,8 +39,6 @@ const Inner = styled.nav`
   display: flex;
   user-select: none;
   justify-content: space-between;
-
-  margin: 0 auto;
 `;
 
 export default memo(Navbar);
