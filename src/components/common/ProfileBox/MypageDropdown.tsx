@@ -1,26 +1,38 @@
 import { authService } from 'service/firebase';
 import styled from 'styled-components';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { useResetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
 import useLoginStep from 'hooks/useLoginStep';
+import { useHistory } from 'react-router';
 
 const MypageDropdown = () => {
+  const history = useHistory();
   const resetLoginUser = useResetRecoilState(loginUserState);
   const { onLoginStepReset } = useLoginStep();
 
-  const onLogoutClick = () => {
+  const onLogout = () => {
     resetLoginUser();
     onLoginStepReset();
     authService.signOut();
   };
 
+  const onButtonClick: React.MouseEventHandler<HTMLUListElement> = (event) => {
+    const id = (event.target as Element).id;
+    if (id !== 'logout') {
+      history.push(`/${id}`);
+      return;
+    }
+
+    onLogout();
+  };
+
   return (
-    <Wrapper>
-      <MyPosts>내 작성글</MyPosts>
-      <MyLikes>내 관심글</MyLikes>
-      <Settings>설정</Settings>
-      <Logout onClick={onLogoutClick}>로그아웃</Logout>
+    <Wrapper onClick={onButtonClick}>
+      <MyPosts id='myposts'>내 작성글</MyPosts>
+      <MyLikes id='likes'>내 관심글</MyLikes>
+      <Settings id='setting'>설정</Settings>
+      <Logout id='logout'>로그아웃</Logout>
     </Wrapper>
   );
 };
@@ -29,7 +41,6 @@ const Wrapper = styled.ul`
   position: absolute;
   z-index: 2000;
   background-color: #f8f9fa;
-  padding: 8px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   width: 140px;
@@ -42,7 +53,7 @@ const Wrapper = styled.ul`
 `;
 
 const DropdownItem = styled.li`
-  margin: 12px 4px;
+  padding: 12px;
 `;
 
 const MyPosts = styled(DropdownItem)``;
