@@ -25,7 +25,6 @@ const About = () => {
 
   const fetchCount = async () => {
     const count = await getUserPostCount();
-    console.log('count', count);
     setCount(count);
   };
 
@@ -47,7 +46,7 @@ const About = () => {
     const timer = setTimeout(() => {
       setIsLoading(false);
       fetchCount();
-    }, 1000);
+    }, 1500);
 
     return () => {
       clearTimeout(timer);

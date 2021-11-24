@@ -1,7 +1,7 @@
 import { dbService } from 'service/firebase';
 
 export const getUserPostCount = async () => {
-  const userCount = (await dbService.collection('users').get()).size;
-  const postCount = (await dbService.collection('posts').get()).size;
-  return { userCount, postCount };
+  const res = await dbService.collection('counter').get();
+  const [post, user] = res.docs.map((doc) => doc.data());
+  return { userCount: user.count, postCount: post.count };
 };
