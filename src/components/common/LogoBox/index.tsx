@@ -17,7 +17,8 @@ const LogoBox = (props: Props) => {
 const Wrapper = styled.div`
   display: flex;
   width: 100px;
-  padding: 3.75px 0;
+  /* padding: 3.75px 0; */
+  height: 32px;
   align-items: center;
   cursor: pointer;
 
