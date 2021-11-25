@@ -36,7 +36,7 @@ const PostDetail = (props: Props) => {
 
   const onViewCountUp = async () => {
     //TODO: 쿠키로 조회수 중복방지
-    await viewCountUp(id);
+    // await viewCountUp(id);
     await fetchPostDetail(id);
   };
 
@@ -110,7 +110,7 @@ const PostDetail = (props: Props) => {
           <BackButton
             onClick={() =>
               history.push({
-                pathname: '/',
+                pathname: '/home',
                 state: history.location.state,
               })
             }
