@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { memo } from 'react';
 import { Chat } from '@styled-icons/bootstrap';
-import { Like } from '@styled-icons/boxicons-regular';
+import { Heart } from '@styled-icons/entypo';
 import { Eye } from '@styled-icons/fa-regular';
 
 interface Props {
@@ -26,7 +26,7 @@ const CountBox = ({ size, viewCount, likeCount, commentCount }: Props) => {
       </Box>
 
       <Box>
-        <Like size={size || `14px`} color='#c62917' />
+        <Heart size={size || `14px`} color='#ED384F' />
         <Count size={size || `14px`}>{likeCount}</Count>
       </Box>
     </CountSection>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { HandThumbsUp, HandThumbsUpFill } from '@styled-icons/bootstrap';
+import { Heart, HeartOutlined } from '@styled-icons/entypo';
 import { CommentType } from 'types';
 import Avatar from 'components/common/Avatar';
 import { useRecoilValue } from 'recoil';
@@ -61,7 +61,7 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
                 </COL2>
                 <COL3>
                   <Button
-                    onClick={debounce(() => onLikeComment(liker_list, loginUser.uid, id), 800)}
+                    onClick={debounce(() => onLikeComment(liker_list, loginUser.uid, id), 400)}
                   >
                     {likeOrUnlike(liker_list, loginUser.uid) === 'unlike' ? (
                       <UnlikeButton />
@@ -120,7 +120,7 @@ const COL3 = styled.div`
   display: flex;
   align-items: center;
   margin-left: 16px;
-  gap: 8px;
+  gap: 4px;
 `;
 
 const COL4 = styled.div`
@@ -165,13 +165,15 @@ const Content = styled.p`
 `;
 const Button = styled.div`
   width: 20px;
-  color: #c62917;
+  color: #ed384f;
   cursor: pointer;
 `;
 
-const LikeButton = styled(HandThumbsUp)``;
-const UnlikeButton = styled(HandThumbsUpFill)``;
+const LikeButton = styled(HeartOutlined)``;
+const UnlikeButton = styled(Heart)``;
 
-const LikeCount = styled.div``;
+const LikeCount = styled.div`
+  font-size: 1rem;
+`;
 
 export default CommentBox;

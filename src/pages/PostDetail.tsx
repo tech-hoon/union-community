@@ -1,8 +1,8 @@
 import Footer from 'components/common/Footer';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
-import { HandThumbsUp, HandThumbsUpFill } from '@styled-icons/bootstrap';
 import { useState, useEffect, useRef } from 'react';
+import { Heart, HeartOutlined } from '@styled-icons/entypo';
 import { useLocation, useHistory } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
@@ -246,11 +246,11 @@ const EditBox = styled.div`
 
 const LikeButtonWrapper = styled.div`
   width: 20px;
-  color: #c62917;
+  color: #ed384f;
   cursor: pointer;
 `;
-const LikeButton = styled(HandThumbsUp)``;
-const UnlikeButton = styled(HandThumbsUpFill)``;
+const LikeButton = styled(HeartOutlined)``;
+const UnlikeButton = styled(Heart)``;
 const LikeCount = styled.div``;
 
 const Btn = styled.button`
