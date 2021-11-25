@@ -20,7 +20,7 @@ const PostCardBox = ({ posts }: Props) => {
 
   return (
     <Wrapper>
-      {posts.map(
+      {posts?.map(
         ({ id, category, title, content, creator, view_count, like_count, created_at }, key) => {
           return (
             <PostCard key={key} onClick={() => handleClick(id!!)}>
