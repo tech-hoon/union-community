@@ -46,7 +46,7 @@ const About = () => {
     const timer = setTimeout(() => {
       setIsLoading(false);
       fetchCount();
-    }, 1500);
+    }, 2000);
 
     return () => {
       clearTimeout(timer);
