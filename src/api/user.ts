@@ -39,3 +39,23 @@ export const getMyLikes = async (uid: string) => {
   }));
   return data;
 };
+
+export const getMyPosts = async (uid: string) => {
+  const res: any = await dbService.doc(`users/${uid}`).get();
+  const myPosts = res.data().post_list;
+
+  if (!myPosts.length) {
+    return [];
+  }
+
+  const posts = await dbService
+    .collection(`posts`)
+    .where(firebaseApp.firestore.FieldPath.documentId(), 'in', myPosts)
+    .get();
+
+  const data = posts.docs.map((doc: any) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return data;
+};

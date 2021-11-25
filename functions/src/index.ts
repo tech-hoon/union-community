@@ -5,15 +5,23 @@ import _ = require('lodash');
 admin.initializeApp();
 const firestore = admin.firestore();
 
-export const postCreated = functions.firestore.document('posts/{postId}').onCreate(() => {
+export const postCreated = functions.firestore.document('posts/{postId}').onCreate((doc) => {
   firestore.doc(`counter/posts`).update({
     count: admin.firestore.FieldValue.increment(1),
   });
+
+  firestore.doc(`users/${doc.data().creator.uid}`).update({
+    post_list: admin.firestore.FieldValue.arrayUnion(doc.id),
+  });
 });
 
-export const postDeleted = functions.firestore.document('posts/{postId}').onDelete(() => {
+export const postDeleted = functions.firestore.document('posts/{postId}').onDelete((doc) => {
   firestore.doc(`counter/posts`).update({
     count: admin.firestore.FieldValue.increment(-1),
+  });
+
+  firestore.doc(`users/${doc.data().creator.uid}`).update({
+    post_list: admin.firestore.FieldValue.arrayRemove(doc.id),
   });
 });
 
