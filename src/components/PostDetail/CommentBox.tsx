@@ -7,6 +7,7 @@ import { loginUserState } from 'store/loginUser';
 import { commentLike, commentUnlike, deleteComment, updateComment } from 'api/comment';
 import { useRef, useState } from 'react';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
+import { debounce } from 'lodash';
 
 interface Props {
   postId: string;
@@ -59,7 +60,9 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
                   <CreatedAt>{new Date().toLocaleDateString()}</CreatedAt>
                 </COL2>
                 <COL3>
-                  <Button onClick={() => onLikeComment(liker_list, loginUser.uid, id)}>
+                  <Button
+                    onClick={debounce(() => onLikeComment(liker_list, loginUser.uid, id), 800)}
+                  >
                     {likeOrUnlike(liker_list, loginUser.uid) === 'unlike' ? (
                       <UnlikeButton />
                     ) : (

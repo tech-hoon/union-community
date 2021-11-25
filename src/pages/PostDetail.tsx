@@ -16,6 +16,7 @@ import { CommentType } from 'types';
 import { addComment, getComments } from 'api/comment';
 import { categoryColor } from 'utils/categoryColor';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
+import { debounce } from 'lodash';
 
 interface Props {}
 
@@ -137,7 +138,9 @@ const PostDetail = (props: Props) => {
           <HR />
           <Content dangerouslySetInnerHTML={contentMarkup} />
           <CountBox size='20px' viewCount={post.view_count} commentCount={comments.length} />
-          <LikeButtonWrapper onClick={() => onLikePost(post.liker_list, loginUser.uid)}>
+          <LikeButtonWrapper
+            onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid), 800)}
+          >
             {likeOrUnlike(post.liker_list, loginUser.uid) === 'unlike' ? (
               <UnlikeButton />
             ) : (
