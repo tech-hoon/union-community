@@ -1,9 +1,9 @@
 import { dbService, firebaseApp } from 'service/firebase';
-import { loginUserType, CreatorType, CommentType } from 'types';
+import { loginUserType, UserType, CommentType } from 'types';
 
 interface ICommentAdd {
   post_id: string;
-  creator: CreatorType;
+  creator: UserType;
   content: string;
 }
 

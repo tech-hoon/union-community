@@ -1,4 +1,4 @@
-import { FormEventHandler, useRef, useState } from 'react';
+import React, { FormEventHandler, useRef, useState } from 'react';
 import styled from 'styled-components';
 import AvatarSelect from './components/AvatarSelect';
 import { addUser } from 'api/user';
@@ -11,8 +11,8 @@ interface Props {}
 
 const NicknameContainer = (prop: Props) => {
   const setLoginUser = useSetRecoilState(loginUserState);
-  const [avatarId, setAvatarId] = useState(1);
-  const inputRef = useRef<any>(null);
+  const [avatarId, setAvatarId] = useState<number>(1);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 10 - prev : prev - 1));
   const onAvatarIdNext = () => setAvatarId((prev) => (prev >= 10 ? (prev % 10) + 1 : prev + 1));
@@ -29,7 +29,9 @@ const NicknameContainer = (prop: Props) => {
         email,
         uid,
         avatarId,
-        nickname: inputRef.current?.value,
+        nickname: inputRef.current?.value!!,
+        like_list: [],
+        post_list: [],
       };
 
       addUser(userData);
