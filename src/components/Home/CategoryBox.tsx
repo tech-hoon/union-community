@@ -34,11 +34,11 @@ const CategoryBox = (props: Props) => {
 
 const Wrapper = styled.div`
   max-width: 1120px;
-  padding: 0 60px;
+  padding: 20px 60px;
 
   display: flex;
   gap: 1%;
-  margin: 36px auto;
+  margin: 0px auto 12px;
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 95%;

@@ -118,23 +118,25 @@ const PostDetail = (props: Props) => {
           >
             &#xE000;
           </BackButton>
-          <Title>{post.title}</Title>
           <ROW_1>
+            <Title>{post.title}</Title>
+            <Category color={categoryColor(post.category)}>{post.category}</Category>
+          </ROW_1>
+          <ROW_2>
             <ProfileBox>
               <Avatar avatarId={post.creator.avatar_id} />
               <Creator>{post.creator?.nickname}</Creator>
             </ProfileBox>
             <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
-          </ROW_1>
-          <ROW_2>
-            카테고리 <Category color={categoryColor(post.category)}>{post.category}</Category>
+          </ROW_2>
+          <ROW_3>
             {isCreator && (
               <EditBox>
                 <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
                 <DeleteBtn onClick={onDeleteClick}>삭제하기</DeleteBtn>
               </EditBox>
             )}
-          </ROW_2>
+          </ROW_3>
           <HR />
           <Content dangerouslySetInnerHTML={contentMarkup} />
           <CountBox size='20px' viewCount={post.view_count} commentCount={comments.length} />
@@ -181,34 +183,17 @@ const BackButton = styled.span`
   cursor: pointer;
 `;
 
-const Title = styled.h1`
-  font-weight: 700;
-  font-size: 2.5em;
-  margin-top: 24px;
-`;
-
 const ROW_1 = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 40px 0;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.8em;
-    margin: 20px 0;
-  }
+  gap: 4px;
+  margin-top: 24px;
 `;
 
-const ROW_2 = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  font-size: 1.3em;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1em;
-    margin: 20px 0;
-  }
+const Title = styled.h1`
+  font-weight: 700;
+  font-size: 2em;
+  line-height: 1;
 `;
 
 const Category = styled.span`
@@ -217,31 +202,52 @@ const Category = styled.span`
   color: #eeeeee;
   border-radius: 20px;
   padding: 4px 12px;
+  font-size: 1rem;
+  line-height: 1;
+`;
+
+const ROW_2 = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.8em;
+    margin: 20px 0;
+  }
+`;
+
+const ROW_3 = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1.3em;
+  margin: 20px 0;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1em;
+    margin: 20px 0;
+  }
 `;
 
 const HR = styled.hr`
   height: 3px;
   background-color: #dcdcdc;
   border: none;
-  margin: 40px 0;
 `;
 
 const ProfileBox = styled.div`
   display: flex;
   align-items: center;
+  width: 12rem;
   gap: 4px;
 `;
 
 const Creator = styled.span`
   font-weight: 500;
-  font-size: 1.5em;
+  font-size: 1.2em;
   color: #999999;
-`;
-
-const EditBox = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
 `;
 
 const LikeButtonWrapper = styled.div`
@@ -259,20 +265,27 @@ const Btn = styled.button`
   color: #999;
 `;
 
+const EditBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  font-size: 0.8rem;
+`;
+
 const UpdateBtn = styled(Btn)``;
 
 const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
   font-weight: 500;
-  font-size: 1.5em;
+  font-size: 1.2rem;
   color: #999;
 `;
 
 const Content = styled.section`
   margin: 40px 0;
-  font-size: 20px;
-  line-height: 200%;
+  font-size: 1.2rem;
+  line-height: 1.5;
 `;
 
 const Button = styled.button`
