@@ -1,4 +1,5 @@
 import { dbService, firebaseApp } from 'service/firebase';
+import { UserType } from 'types';
 import { CARD_LIMIT } from 'utils/config';
 
 interface IgetPostParams {
@@ -13,11 +14,7 @@ interface IaddPostParams {
     category: string;
     content: string;
   };
-  creator: {
-    nickname: string;
-    uid: string;
-    avatarId: number;
-  };
+  creator: UserType;
 }
 
 interface IupdatePostParams {
@@ -27,11 +24,7 @@ interface IupdatePostParams {
     category: string;
     content: string;
   };
-  creator: {
-    nickname: string;
-    uid: string;
-    avatarId: number;
-  };
+  creator: UserType;
 }
 
 export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => {

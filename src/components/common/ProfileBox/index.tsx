@@ -15,7 +15,7 @@ const ProfileBox = () => {
     <Wrapper onClick={onToggleClick}>
       <Top>
         <Name>{loginUser.nickname}</Name>
-        <Avatar avatarId={loginUser?.avatarId!!} />
+        <Avatar avatarId={loginUser?.avatar_id!!} />
         <Icon>{toggleOpened ? <CaretUp size='20' /> : <CaretDown size='20' />}</Icon>
       </Top>
       <Bottom>{toggleOpened && <MypageDropdown />}</Bottom>

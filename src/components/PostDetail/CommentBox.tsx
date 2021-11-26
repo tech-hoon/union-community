@@ -48,12 +48,12 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
   return (
     <List>
       {commentList.map(
-        ({ id, creator: { uid, nickname, avatarId }, content, is_edited, liker_list }, key) => {
+        ({ id, creator: { uid, nickname, avatar_id }, content, is_edited, liker_list }, key) => {
           return (
             <Comment key={key}>
               <ROW1>
                 <COL1>
-                  <Avatar avatarId={avatarId} />
+                  <Avatar avatarId={avatar_id} />
                 </COL1>
                 <COL2>
                   <Nickname>{nickname}</Nickname>

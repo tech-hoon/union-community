@@ -29,7 +29,7 @@ const PostCardBox = ({ posts }: Props) => {
               <CardBottom>
                 <CreatorBox>
                   <AvatarWrapper>
-                    <Avatar avatarId={creator.avatarId} />
+                    <Avatar avatarId={creator.avatar_id} />
                   </AvatarWrapper>
                   <Creator>{creator.nickname}</Creator>
                 </CreatorBox>

@@ -1,8 +1,8 @@
-import React, { FormEventHandler, useRef, useState } from 'react';
+import { FormEventHandler, useRef, useState } from 'react';
 import styled from 'styled-components';
 import AvatarSelect from './components/AvatarSelect';
 import { addUser } from 'api/user';
-import { authService } from 'service/firebase';
+import { authService, firebaseApp } from 'service/firebase';
 import { loginUserType } from 'types';
 import { useSetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
@@ -24,14 +24,16 @@ const NicknameContainer = (prop: Props) => {
 
     try {
       const { displayName, email, uid }: any = authService.currentUser;
+
       const userData: loginUserType = {
         name: displayName,
         email,
         uid,
-        avatarId,
+        avatar_id: avatarId,
         nickname: inputRef.current?.value!!,
         like_list: [],
         post_list: [],
+        created_at: new Date().getTime(),
       };
 
       addUser(userData);

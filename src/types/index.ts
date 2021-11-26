@@ -9,12 +9,14 @@ export interface CommentType {
 
 export type UserType = {
   name: string;
-  avatarId: number;
+  avatar_id: number;
   nickname: string;
   uid: string;
   email: string;
-  like_list?: string[];
-  post_list?: PostType[];
+  like_list: string[] | [];
+  post_list: PostType[] | [];
+  created_at?: number;
+  updated_at?: number;
 };
 
 export interface loginUserType extends UserType {}
