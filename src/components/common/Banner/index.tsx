@@ -31,6 +31,10 @@ const Wrapper = styled.div`
     width: 90%;
     flex-direction: column;
   }
+
+  @media ${({ theme }) => theme.size.mobile} {
+    display: none;
+  }
 `;
 
 const Content = styled.p`
