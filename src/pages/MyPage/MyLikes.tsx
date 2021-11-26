@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { BookHeart } from '@styled-icons/boxicons-regular';
 import { useState, useEffect } from 'react';
-import { PostType } from 'types';
 import { getMyLikes } from 'api/user';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
@@ -14,7 +13,6 @@ const MyLikes = () => {
   useEffect(() => {
     const fetchMyLikes = async () => {
       const __posts = await getMyLikes(loginUser.uid);
-      console.log('my posts', __posts);
       setPosts(__posts);
     };
 
