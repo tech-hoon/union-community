@@ -13,12 +13,17 @@ export const Layouts = {
 
   Title: styled.div`
     margin-top: 50px;
-    font-weight: 700;
-    font-size: 1.4rem;
+    font-weight: bold;
+    font-size: 1.6rem;
     line-height: 1;
     display: flex;
     align-items: center;
     gap: 4px;
+  `,
+
+  Body: styled.div`
+    margin-top: 50px;
+    float: left;
   `,
 
   PostCards: styled(PostCardBox)`
@@ -31,6 +36,15 @@ export const Layouts = {
     @media ${({ theme }) => theme.size.mobile} {
       grid-template-columns: 1fr 1fr;
     }
+  `,
+
+  Button: styled.button`
+    width: 100px;
+    border-radius: 4px;
+    color: white;
+    height: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
   `,
 };
 

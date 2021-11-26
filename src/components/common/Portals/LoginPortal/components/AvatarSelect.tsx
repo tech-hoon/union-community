@@ -7,11 +7,12 @@ interface Props {
   avatarId: number;
   onClickPrev: () => void;
   onClickNext: () => void;
+  size?: string;
 }
 
-const AvatarSelect = ({ avatarId, onClickPrev, onClickNext }: Props) => {
+const AvatarSelect = ({ avatarId, onClickPrev, onClickNext, size }: Props) => {
   return (
-    <Wrapper>
+    <Wrapper size={size || `100%`}>
       <Pagination>
         {new Array(MAX).fill('').map((_, currentId) => (
           <Dot selected={avatarId - 1 === currentId} key={currentId} />
@@ -31,18 +32,21 @@ const AvatarSelect = ({ avatarId, onClickPrev, onClickNext }: Props) => {
 
 const MAX = 10;
 
-const Wrapper = styled.div`
-  width: 100%;
+interface IWrapper {
+  size: string;
+}
+
+const Wrapper = styled.div<IWrapper>`
+  width: ${(props) => props.size};
 `;
 const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 8px;
 `;
 
 const AvatarWrapper = styled.div`
-  width: 30%;
-  height: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
