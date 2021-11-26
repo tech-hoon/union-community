@@ -21,7 +21,9 @@ const Routes = ({ isLoggedIn }: Props) => (
   <Router>
     <Switch>
       <>
-        <Route exact path='/' component={About} />
+        <Route exact path='/'>
+          {isLoggedIn ? <Redirect to={{ pathname: '/home' }} /> : <About />}
+        </Route>
 
         <PrivateRoute exact path='/home' component={Home} isLoggedIn={isLoggedIn} />
         <PrivateRoute exact path='/post/:id' component={PostDetail} isLoggedIn={isLoggedIn} />
