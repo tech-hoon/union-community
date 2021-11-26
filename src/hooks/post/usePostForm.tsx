@@ -25,7 +25,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, postId }: Props)
     const postInput = {
       title: titleRef.current?.value!!,
       category: categoryRef.current?.value!!,
-      content: contentRef.current?.state.value!!,
+      content: contentRef.current?.value.replaceAll('\n', '<br/>'),
     };
 
     if (checkPostValidation(postInput)) {

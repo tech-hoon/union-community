@@ -30,6 +30,10 @@ const GlobalStyle = createGlobalStyle`
     background:none;
   }
 
+  textarea{
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+  }
+
   touch-action: pan-y;
 `;
 

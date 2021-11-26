@@ -1,4 +1,5 @@
 import Navbar from 'components/common/Navbar';
+// import QuillEditor from 'components/common/Editor/QuillEditor';
 import Editor from 'components/common/Editor';
 import usePostForm from 'hooks/post/usePostForm';
 import styled from 'styled-components';
@@ -37,6 +38,7 @@ const NewPost = (props: Props) => {
           </Select>
         </CategoryBox>
 
+        {/* <QuillEditor ref={contentRef} /> */}
         <Editor ref={contentRef} />
 
         <ButtonBox>
