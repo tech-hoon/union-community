@@ -33,13 +33,16 @@ const CategoryBox = (props: Props) => {
 };
 
 const Wrapper = styled.div`
-  width: 70%;
+  max-width: 1120px;
+  padding: 0 60px;
+
   display: flex;
   gap: 1%;
-  margin: 24px auto 36px;
+  margin: 36px auto;
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 95%;
+    padding: 0;
     margin: 12px auto 30px;
     font-size: 1em;
   }
@@ -54,7 +57,7 @@ interface IMenu {
 const Menu = styled.button<IMenu>`
   width: 100%;
   height: 36px;
-  border-radius: 20px;
+  border-radius: 16px;
   background-color: ${(props) => (props.isClicked ? props.theme.color.BUTTON_CLICKED : '#fff')};
   color: ${(props) => (props.isClicked ? '#fff' : '#000')};
 
