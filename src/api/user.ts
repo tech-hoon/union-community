@@ -11,10 +11,28 @@ export const addUser = ({ uid, ...rest }: loginUserType) => {
     dbService
       .collection('users')
       .doc(uid)
-      .set({
+      .update({
         uid,
         ...rest,
       });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+interface IupdateProfile {
+  uid: string;
+  avatar_id: number;
+  nickname: string;
+}
+
+export const updateProfile = async ({ uid, avatar_id, nickname }: IupdateProfile) => {
+  try {
+    dbService.collection('users').doc(uid).update({
+      uid,
+      avatar_id,
+      nickname,
+    });
   } catch (error) {
     console.log(error);
   }
