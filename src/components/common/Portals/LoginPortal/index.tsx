@@ -46,6 +46,13 @@ const LoginPortal = ({ onClose }: Props) => {
     };
   });
 
+  const onClickBackButton = () => {
+    if (loginStep === 2) {
+      authService.signOut();
+      onLoginStepPrev();
+    }
+  };
+
   return (
     <Portal>
       <Background>
@@ -55,7 +62,7 @@ const LoginPortal = ({ onClose }: Props) => {
             <CloseBtn onClick={onClose} size='24' color='gray' />
           </Header>
           <Nav>
-            {loginStep !== 1 && <BackButton onClick={onLoginStepPrev}>&#xE000;</BackButton>}
+            {loginStep !== 1 && <BackButton onClick={onClickBackButton}>&#xE000;</BackButton>}
           </Nav>
           <CurrentContainer />
         </Wrapper>
