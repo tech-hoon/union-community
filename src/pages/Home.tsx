@@ -13,11 +13,15 @@ import { dbService } from 'service/firebase';
 import { useGetPosts } from 'hooks/post/useGetPosts';
 import useLocalStorage from 'hooks/common/useLocalStorage';
 import { useLocation } from 'react-router';
+import { getUserData } from 'api/user';
+import { loginUserState } from 'store/loginUser';
+import { useRecoilState } from 'recoil';
 
 //TODO: 새 게시물 감지시, unsubscribe
 const Home = () => {
-  const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost } = useGetPosts();
   const location = useLocation();
+  const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost } = useGetPosts();
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
   const [isUpdated, setIsUpdated] = useState(false);
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, {});
@@ -47,8 +51,19 @@ const Home = () => {
     };
   }, []);
 
-  // 새 글,수정,삭제시 새로운 게시물로 fetch
   useEffect(() => {
+    const fetchUserData = async () => {
+      const __user: any = await getUserData(loginUser.uid);
+      setLoginUser(__user);
+    };
+
+    // 프로필 변경 시, 새 데이터로 fetch
+    if (location.state === 'profileUpdated') {
+      fetchUserData();
+      return;
+    }
+
+    // 글 등록,수정,삭제 시 새 데이터로 fetch
     location.state && fetchPosts();
   }, []);
 
