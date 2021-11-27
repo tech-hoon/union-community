@@ -1,18 +1,22 @@
 import styled from 'styled-components';
 import ProfileBox from '../../ProfileBox';
-import NewPostButton from './NewPostButton';
 import { memo } from 'react';
+import { useHistory } from 'react-router';
 
 interface Props {
   isLoggedIn: boolean;
 }
 
 const Aside = ({ isLoggedIn }: Props) => {
+  const history = useHistory();
+
   return (
     <Wrapper>
       {isLoggedIn && (
         <>
-          <NewPostButton />
+          <NewPostBtn onClick={() => history.push({ pathname: '/upload', state: { mode: 'add' } })}>
+            새 글 쓰기
+          </NewPostBtn>
           <ProfileBox />
         </>
       )}
@@ -24,6 +28,15 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+`;
+
+const NewPostBtn = styled.button`
+  font-weight: 500;
+  font-size: 1em;
+
+  @media ${({ theme }) => theme.size.mobileS} {
+    font-size: 0.8em;
+  }
 `;
 
 export default memo(Aside);
