@@ -22,7 +22,7 @@ export type UserType = {
 export interface loginUserType extends UserType {}
 
 export interface PostType {
-  id?: string;
+  id: string;
   category: string;
   title: string;
   content: string;

@@ -87,7 +87,8 @@ export const getMorePosts = async ({ lastVisiblePost, category, orderBy }: IgetP
 export const getPostDetail = async (postId: string) => {
   try {
     const res = await dbService.doc(`posts/${postId}`).get();
-    return res.data();
+
+    return { ...res.data(), id: res.id };
   } catch (error) {
     console.log(error);
     return;
