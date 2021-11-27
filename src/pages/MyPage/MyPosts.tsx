@@ -5,10 +5,11 @@ import { getMyPosts } from 'api/user';
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
+import { loginUserType } from 'types';
 
 const MyPosts = () => {
   const [posts, setPosts] = useState<any>();
-  const loginUser = useRecoilValue(loginUserState);
+  const loginUser = useRecoilValue(loginUserState) as loginUserType;
 
   useEffect(() => {
     const fetchMyPosts = async () => {

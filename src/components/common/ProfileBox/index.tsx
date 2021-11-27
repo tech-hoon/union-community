@@ -3,11 +3,12 @@ import Avatar from '../Avatar';
 import { CaretDown, CaretUp } from '@styled-icons/boxicons-regular';
 import { useState, memo } from 'react';
 import MypageDropdown from './MypageDropdown';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
+import { loginUserType } from 'types';
 
 const ProfileBox = () => {
-  const [loginUser] = useRecoilState(loginUserState);
+  const loginUser = useRecoilValue(loginUserState) as loginUserType;
   const [toggleOpened, setToggleOpened] = useState(false);
   const onToggleClick = () => setToggleOpened(!toggleOpened);
 

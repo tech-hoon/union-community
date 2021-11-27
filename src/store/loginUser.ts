@@ -1,24 +1,9 @@
 import { atom, selector } from 'recoil';
 import { loginUserType } from 'types';
 
-export const loginUserState = atom<loginUserType>({
+export const loginUserState = atom<loginUserType | null>({
   key: 'login_user',
-  default: {
-    name: '',
-    nickname: '',
-    email: '',
-    uid: '',
-    avatar_id: 1,
-    like_list: [],
-    post_list: [],
-    created_at: 0,
-    updated_at: 0,
-  },
-});
-
-export const loginStatus = selector({
-  key: 'isLoggedIn',
-  get: ({ get }) => isEmpty(get(loginUserState)),
+  default: null,
 });
 
 const isEmpty = ({ name, nickname, email, uid, avatar_id }: loginUserType) => {

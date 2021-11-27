@@ -2,14 +2,15 @@ import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { SettingsOutline } from '@styled-icons/evaicons-outline';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
 import AvatarSelect from 'components/common/Portals/LoginPortal/components/AvatarSelect';
 import { useHistory } from 'react-router';
 import { updateProfile } from 'api/user';
+import { loginUserType } from 'types';
 
 const Setting = () => {
-  const [user, setUser] = useRecoilState(loginUserState);
+  const user = useRecoilValue(loginUserState) as loginUserType;
   const [avatarId, setAvatarId] = useState<number>(user.avatar_id);
   const [errorInfo, setErrorInfo] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);

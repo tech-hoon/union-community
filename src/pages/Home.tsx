@@ -15,13 +15,15 @@ import useLocalStorage from 'hooks/common/useLocalStorage';
 import { useLocation } from 'react-router';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
-import { useRecoilState } from 'recoil';
+import { loginUserType } from 'types';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 
 //TODO: 새 게시물 감지시, unsubscribe
 const Home = () => {
   const location = useLocation();
   const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost } = useGetPosts();
-  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+  const loginUser = useRecoilValue(loginUserState) as loginUserType;
+  const setLoginUser = useSetRecoilState(loginUserState);
   const [isUpdated, setIsUpdated] = useState(false);
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, {});

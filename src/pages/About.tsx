@@ -3,7 +3,7 @@ import Navbar from 'components/common/Navbar';
 import LoginButton from 'components/common/LoginButton';
 import styled from 'styled-components';
 import { getUserPostCount } from 'api/count';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import useLoginStep from 'hooks/useLoginStep';
 import { authService } from 'service/firebase';
 import { getUserData } from 'api/user';
@@ -11,11 +11,13 @@ import { loginUserState } from 'store/loginUser';
 import { useHistory } from 'react-router';
 import { Loading } from 'pages';
 import Banner from 'components/common/Banner';
+import { loginUserType } from 'types';
 
 const About = () => {
   const [count, setCount] = useState({ userCount: 0, postCount: 0 });
   const [isLoading, setIsLoading] = useState(true);
-  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+  const loginUser = useRecoilValue(loginUserState) as loginUserType;
+  const setLoginUser = useSetRecoilState(loginUserState);
   const { onLoginStepReset, onLoginStepNext } = useLoginStep();
   const history = useHistory();
 

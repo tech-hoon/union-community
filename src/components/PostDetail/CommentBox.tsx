@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Heart, HeartOutlined } from '@styled-icons/entypo';
-import { CommentType } from 'types';
+import { CommentType, loginUserType } from 'types';
 import Avatar from 'components/common/Avatar';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
@@ -18,7 +18,7 @@ interface Props {
 const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
   //TODO: 좋아요 아이콘 처리(liker_list)
   const [editingComment, setEditingComment] = useState<string | null>();
-  const loginUser = useRecoilValue(loginUserState);
+  const loginUser = useRecoilValue(loginUserState) as loginUserType;
   const inputRef = useRef<any>(null);
 
   const onEdit = (targetId: string) => setEditingComment(targetId);
