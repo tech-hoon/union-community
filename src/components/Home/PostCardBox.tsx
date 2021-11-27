@@ -1,4 +1,4 @@
-import { forwardRef, memo } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
@@ -6,6 +6,7 @@ import Avatar from 'components/common/Avatar';
 import CountBox from '../common/CountBox';
 import { tagEliminatingRegex } from 'utils/regex';
 import { categoryColor } from 'utils/categoryColor';
+import { PhotoLibrary } from '@styled-icons/material-outlined';
 
 interface Props {
   posts: PostType[] | [];
@@ -21,10 +22,26 @@ const PostCardBox = ({ posts }: Props) => {
   return (
     <Wrapper>
       {posts?.map(
-        ({ id, category, title, content, creator, view_count, like_count, created_at }, key) => {
+        (
+          {
+            id,
+            category,
+            title,
+            content,
+            creator,
+            view_count,
+            liker_list,
+            created_at,
+            attachment_url,
+          },
+          key
+        ) => {
           return (
             <PostCard key={key} onClick={() => handleClick(id!!)}>
-              <Title>{title}</Title>
+              <Head>
+                <Title>{title}</Title>
+                {!!attachment_url && <ImageIcon />}
+              </Head>
               <Content>{tagEliminatingRegex(content).substring(0, 50)}...</Content>
               <CardBottom>
                 <CreatorBox>
@@ -37,7 +54,7 @@ const PostCardBox = ({ posts }: Props) => {
                 {/* {new Date(created_at).toLocaleDateString()} */}
                 <CountBox
                   viewCount={view_count}
-                  likeCount={like_count}
+                  likeCount={liker_list.length}
                   // commentCount={comment_list.length}
                 />
               </CardBottom>
@@ -93,10 +110,21 @@ const PostCard = styled.li`
     transform: scale(103%);
   }
 `;
+
+const Head = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+`;
 const Title = styled.h2`
   font-weight: 700;
   font-size: 20px;
-  margin-bottom: 24px;
+`;
+
+const ImageIcon = styled(PhotoLibrary)`
+  width: 24px;
+  color: #333;
 `;
 const Content = styled.p`
   font-weight: 300;

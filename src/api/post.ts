@@ -13,6 +13,7 @@ interface IaddPostParams {
     title: string;
     category: string;
     content: string;
+    attachmentUrl?: string;
   };
   creator: UserType;
 }

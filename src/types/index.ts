@@ -29,9 +29,9 @@ export interface PostType {
   creator: UserType;
   view_count: number;
   liker_list: string[];
-  like_count: number;
   created_at: number;
   comment?: CommentType[] | [];
+  attachment_url?: string;
 }
 
 export interface PostFormType {

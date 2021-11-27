@@ -12,11 +12,12 @@ import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
 import { deletePost, postLike, postUnlike, viewCountUp } from 'api/post';
-import { CommentType } from 'types';
+import { CommentType, loginUserType } from 'types';
 import { addComment, getComments } from 'api/comment';
 import { categoryColor } from 'utils/categoryColor';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { debounce } from 'lodash';
+import { storageService } from 'service/firebase';
 
 interface Props {}
 
@@ -27,11 +28,12 @@ const PostDetail = (props: Props) => {
   const location = useLocation();
   const history = useHistory();
   const id = location.pathname.split('/')[2];
-  const loginUser = useRecoilValue(loginUserState);
+  const loginUser = useRecoilValue(loginUserState) as loginUserType;
 
-  const { post, fetchPostDetail } = useGetPostDetail(id);
+  const { post, fetchPostDetail, resetPostDetail } = useGetPostDetail(id);
   const [isCreator, setIsCreator] = useState<boolean>();
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
+
   const [comments, setComments] = useState<CommentType[]>([]);
   const commentRef = useRef<any>(null);
 
@@ -41,26 +43,20 @@ const PostDetail = (props: Props) => {
     await fetchPostDetail(id);
   };
 
-  const onDeleteClick = () => {
+  const onDeleteClick = async () => {
     const ok = window.confirm('정말 삭제하시겠습니까?');
-    ok &&
-      deletePost(id) &&
-      history.push({
-        pathname: '/',
-        state: 'isDeleted',
-      });
+    if (ok) {
+      await deletePost(id);
+      post?.attachment_url && (await storageService.refFromURL(post.attachment_url).delete());
+      history.push({ pathname: '/home', state: 'isDeleted' });
+    }
   };
 
   const onUpdateClick = () => {
     post &&
       history.push({
-        pathname: '/update',
-        state: {
-          id: id,
-          title: post.title,
-          content: post.content,
-          category: post.category,
-        },
+        pathname: '/upload',
+        state: { mode: 'update', postId: id },
       });
   };
 
@@ -68,11 +64,7 @@ const PostDetail = (props: Props) => {
     e.preventDefault();
 
     if (commentRef.current.value) {
-      addComment({
-        post_id: id,
-        creator: loginUser,
-        content: commentRef.current.value,
-      });
+      addComment({ post_id: id, creator: loginUser, content: commentRef.current.value });
 
       commentRef.current.value = '';
       fetchComments();
@@ -101,6 +93,8 @@ const PostDetail = (props: Props) => {
   useEffect(() => {
     onViewCountUp();
     fetchComments();
+
+    return () => resetPostDetail();
   }, []);
 
   return (
@@ -139,11 +133,12 @@ const PostDetail = (props: Props) => {
           </ROW_3>
           <HR />
           <Content dangerouslySetInnerHTML={contentMarkup} />
+          {post.attachment_url?.length && <Images src={post.attachment_url} alt='' />}
           <CountBox size='20px' viewCount={post.view_count} commentCount={comments.length} />
           <LikeButtonWrapper
-            onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid), 800)}
+            onClick={debounce(() => onLikePost(post.liker_list, loginUser?.uid!!), 800)}
           >
-            {likeOrUnlike(post.liker_list, loginUser.uid) === 'unlike' ? (
+            {likeOrUnlike(post.liker_list, loginUser?.uid!!) === 'unlike' ? (
               <UnlikeButton />
             ) : (
               <LikeButton />
@@ -286,6 +281,11 @@ const Content = styled.section`
   margin: 40px 0;
   font-size: 1.2rem;
   line-height: 1.5;
+`;
+
+const Images = styled.img`
+  max-width: 500px;
+  margin-bottom: 24px;
 `;
 
 const Button = styled.button`
