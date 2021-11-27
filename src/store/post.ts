@@ -7,6 +7,11 @@ export const postsState = atom<PostType[]>({
   default: [],
 });
 
+export const postDetail = atom<PostType | null>({
+  key: 'post',
+  default: null,
+});
+
 export const postsCategoryState = atom<string>({
   key: 'posts/category',
   default: '',
