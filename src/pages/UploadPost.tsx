@@ -6,12 +6,11 @@ import { useLocation } from 'react-router';
 import { useEffect, useRef } from 'react';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { CATEGORY_LIST } from 'utils/config';
-import { useRecoilValue } from 'recoil';
-import { postDetail } from 'store/post';
+import { PostType } from 'types';
 
 interface ILocationState {
   mode: string;
-  postId?: string;
+  initialPost?: PostType | null;
 }
 
 const UploadPost = () => {
@@ -19,16 +18,10 @@ const UploadPost = () => {
   const categoryRef = useRef<HTMLSelectElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const location = useLocation();
-
-  const { mode, postId } = location.state as ILocationState;
-  const post = useRecoilValue(postDetail);
-  const initialTitle = post?.title;
-  const initialCategory = post?.category;
-  const initialContent = post?.content;
-  const initialAttachment = post?.attachment_url;
+  const { mode, initialPost } = location.state as ILocationState;
 
   useEffect(() => {
-    initialAttachment && setAttachment(initialAttachment);
+    initialPost?.attachment_url && setAttachment(initialPost.attachment_url);
   }, []);
 
   const { setAttachment, attachment, onEditorCancle, onSubmit, onFileChange, onDeleteAttachment } =
@@ -37,7 +30,7 @@ const UploadPost = () => {
       categoryRef,
       contentRef,
       mode,
-      postId,
+      prevPost: initialPost || null,
     });
 
   return (
@@ -47,13 +40,13 @@ const UploadPost = () => {
         <TitleInput
           ref={titleRef}
           placeholder='제목을 입력하세요'
-          defaultValue={initialTitle || ''}
+          defaultValue={initialPost?.title || ''}
         />
         <HR />
 
         <CategoryBox>
           <Label>카테고리: </Label>
-          <Select ref={categoryRef} name='카테고리' defaultValue={initialCategory || '자유'}>
+          <Select ref={categoryRef} name='카테고리' defaultValue={initialPost?.category || '자유'}>
             {CATEGORY_LIST.map(({ kor }, id) => (
               <Option value={kor} key={id}>
                 {kor}
@@ -66,7 +59,7 @@ const UploadPost = () => {
           <UploadInput id='upload-image' type='file' accept='image/*' onChange={onFileChange} />
         </CategoryBox>
 
-        <Editor ref={contentRef} value={initialContent || null} />
+        <Editor ref={contentRef} value={initialPost?.content || null} />
         {attachment && (
           <ThumbnailsBox>
             <ThumbnailWrapper>

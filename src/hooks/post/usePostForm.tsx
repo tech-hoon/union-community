@@ -1,4 +1,4 @@
-import { useState, RefObject } from 'react';
+import { useState, RefObject, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,26 +7,24 @@ import { loginUserState } from 'store/loginUser';
 import { loginUserType, PostType } from 'types';
 import { checkPostValidation } from 'utils/validation';
 import { storageService } from 'service/firebase';
-import { postDetail } from 'store/post';
 
 interface Props {
   titleRef: RefObject<HTMLInputElement | null>;
   categoryRef: RefObject<HTMLSelectElement | null>;
   contentRef: RefObject<any>;
-  postId?: string;
   mode: string;
+  prevPost: PostType | null;
 }
 
-const usePostForm = ({ titleRef, categoryRef, contentRef, mode, postId }: Props) => {
+const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Props) => {
   const history = useHistory();
-  const postPrevState = useRecoilValue(postDetail);
   const [attachment, setAttachment] = useState('');
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
 
   const onEditorCancle = () => window.confirm('글 작성을 취소하시겠습니까?') && history.push('/');
 
   const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event: any) => {
-    const file = event.target.files[0]!!;
+    const file = event.target.files[0];
     const reader = new FileReader();
 
     reader.onloadend = (finishedEvent: any) => {
@@ -48,8 +46,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, postId }: Props)
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    postPrevState?.attachment_url &&
-      (await storageService.refFromURL(postPrevState.attachment_url).delete());
+    prevPost?.attachment_url && (await storageService.refFromURL(prevPost.attachment_url).delete());
 
     let attachmentUrl = '';
     if (attachment !== '') {
@@ -76,9 +73,9 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, postId }: Props)
       }
 
       if (mode === 'update') {
-        postId && (await updatePost({ postInput, creator: loginUser, postId }));
+        prevPost?.id && (await updatePost({ postInput, creator: loginUser, postId: prevPost.id }));
         history.push({
-          pathname: `/post/${postId}`,
+          pathname: `/post/${prevPost?.id}`,
           state: 'isUpdated',
         });
         return;

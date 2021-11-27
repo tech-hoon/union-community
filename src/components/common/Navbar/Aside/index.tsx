@@ -10,13 +10,15 @@ interface Props {
 const Aside = ({ isLoggedIn }: Props) => {
   const history = useHistory();
 
+  const onClickButton = () => {
+    history.push({ pathname: '/upload', state: { mode: 'add', initialPost: null } });
+  };
+
   return (
     <Wrapper>
       {isLoggedIn && (
         <>
-          <NewPostBtn onClick={() => history.push({ pathname: '/upload', state: { mode: 'add' } })}>
-            새 글 쓰기
-          </NewPostBtn>
+          <NewPostBtn onClick={onClickButton}>새 글 쓰기</NewPostBtn>
           <ProfileBox />
         </>
       )}

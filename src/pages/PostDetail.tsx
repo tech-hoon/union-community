@@ -30,10 +30,9 @@ const PostDetail = (props: Props) => {
   const id = location.pathname.split('/')[2];
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
 
-  const { post, fetchPostDetail, resetPostDetail } = useGetPostDetail(id);
+  const { post, fetchPostDetail } = useGetPostDetail(id);
   const [isCreator, setIsCreator] = useState<boolean>();
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
-
   const [comments, setComments] = useState<CommentType[]>([]);
   const commentRef = useRef<any>(null);
 
@@ -47,7 +46,7 @@ const PostDetail = (props: Props) => {
     const ok = window.confirm('정말 삭제하시겠습니까?');
     if (ok) {
       await deletePost(id);
-      post?.attachment_url && (await storageService.refFromURL(post.attachment_url).delete());
+      post?.attachment_url!! && (await storageService.refFromURL(post?.attachment_url!!).delete());
       history.push({ pathname: '/home', state: 'isDeleted' });
     }
   };
@@ -56,7 +55,7 @@ const PostDetail = (props: Props) => {
     post &&
       history.push({
         pathname: '/upload',
-        state: { mode: 'update', postId: id },
+        state: { mode: 'update', initialPost: post },
       });
   };
 
@@ -93,8 +92,6 @@ const PostDetail = (props: Props) => {
   useEffect(() => {
     onViewCountUp();
     fetchComments();
-
-    return () => resetPostDetail();
   }, []);
 
   return (

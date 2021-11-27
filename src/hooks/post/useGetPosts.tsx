@@ -1,16 +1,14 @@
 import { getPostDetail, getInitialPosts, getMorePosts } from 'api/post';
 import useDidUpdateEffect from 'hooks/common/useDidUpdateEffect';
 import { useState, useEffect, useCallback } from 'react';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { PostType } from 'types';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   postsCategoryState,
   postsOrderByState,
   postsState,
   lastVisiblePostState,
-  getPostsSelector,
-  postDetail,
 } from 'store/post';
-import { PostType } from 'types';
 
 export const useGetPosts = () => {
   const [posts, setPosts] = useRecoilState(postsState);
@@ -66,8 +64,7 @@ export const useGetPosts = () => {
 };
 
 export const useGetPostDetail = (id: string) => {
-  const [post, setPost] = useRecoilState(postDetail);
-  const resetPostDetail = useResetRecoilState(postDetail);
+  const [post, setPost] = useState<PostType>();
 
   const fetchPostDetail = async (id: string) => {
     const _post: any = await getPostDetail(id);
@@ -77,6 +74,5 @@ export const useGetPostDetail = (id: string) => {
   return {
     post,
     fetchPostDetail,
-    resetPostDetail,
   };
 };
