@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   background-color: #f8f9fa;
   position: sticky;
   top: 0px;
-  z-index: 9999;
+  z-index: 111;
   border-bottom: 1px solid #ededed;
 `;
 

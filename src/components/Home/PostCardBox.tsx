@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
-import CountBox from '../common/CountBox';
 import { tagEliminatingRegex } from 'utils/regex';
 import { categoryColor } from 'utils/categoryColor';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
+import ViewCount from 'components/common/Count/ViewCount';
+import LikeCount from 'components/common/Count/LikeCount';
+import CommentCount from 'components/common/Count/CommentCount';
 
 interface Props {
   posts: PostType[] | [];
@@ -32,6 +34,7 @@ const PostCardBox = ({ posts }: Props) => {
             view_count,
             liker_list,
             created_at,
+            comment_count,
             attachment_url,
           },
           key
@@ -42,7 +45,7 @@ const PostCardBox = ({ posts }: Props) => {
                 <Title>{title}</Title>
                 {!!attachment_url && <ImageIcon />}
               </Head>
-              <Content>{tagEliminatingRegex(content).substring(0, 50)}...</Content>
+              <Content>{tagEliminatingRegex(content)}</Content>
               <CardBottom>
                 <CreatorBox>
                   <AvatarWrapper>
@@ -52,11 +55,12 @@ const PostCardBox = ({ posts }: Props) => {
                 </CreatorBox>
                 <Category color={categoryColor(category)}>{category}</Category>
                 {/* {new Date(created_at).toLocaleDateString()} */}
-                <CountBox
-                  viewCount={view_count}
-                  likeCount={liker_list.length}
-                  // commentCount={comment_list.length}
-                />
+
+                <CountBox>
+                  <ViewCount count={view_count || 0} />
+                  <CommentCount count={comment_count || 0} />
+                  <LikeCount count={liker_list.length || 0} />
+                </CountBox>
               </CardBottom>
             </PostCard>
           );
@@ -119,7 +123,7 @@ const Head = styled.div`
 `;
 const Title = styled.h2`
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.3rem;
 `;
 
 const ImageIcon = styled(PhotoLibrary)`
@@ -131,6 +135,8 @@ const Content = styled.p`
   padding-left: 4px;
   padding-bottom: 48px;
   line-height: 1.8em;
+
+  text-overflow: ellipsis;
 `;
 
 const CardBottom = styled.div`
@@ -147,6 +153,11 @@ const CreatorBox = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+`;
+
+const CountBox = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const AvatarWrapper = styled.div``;

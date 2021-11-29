@@ -41,6 +41,7 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 12px;
   user-select: none;
+  margin: 10px 0 4px;
 
   @media ${({ theme }) => theme.size.mobile} {
     gap: 4px;

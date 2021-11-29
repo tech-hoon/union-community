@@ -34,7 +34,7 @@ const CategoryBox = (props: Props) => {
 
 const Wrapper = styled.div`
   max-width: 1120px;
-  padding: 20px 60px;
+  padding: 0px 60px 20px;
 
   display: flex;
   gap: 1%;
@@ -43,7 +43,7 @@ const Wrapper = styled.div`
   @media ${({ theme }) => theme.size.mobile} {
     width: 95%;
     padding: 0;
-    margin: 24px auto;
+    margin: 20px auto 28px;
     font-size: 1em;
   }
 

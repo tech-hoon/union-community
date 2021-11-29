@@ -12,6 +12,7 @@ const LoginContainer = (prop: Props) => {
   return (
     <Wrapper>
       <Title>환영합니다!</Title>
+      <Subtitle>소셜 계정으로 로그인</Subtitle>
       <Body>
         <SocialLogin name='google' />
         <SocialLogin name='facebook' />
@@ -30,12 +31,19 @@ const Wrapper = styled.div`
 const Body = styled.div`
   display: flex;
   justify-content: space-around;
-  margin: 5% 0;
+  margin: 3% 0;
 `;
 
 const Title = styled.h1`
   font-weight: 700;
-  font-size: 2em;
+  font-size: 2rem;
+  margin-bottom: 26px;
+`;
+
+const Subtitle = styled.h2`
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: #888;
 `;
 
 const Button = styled.div`

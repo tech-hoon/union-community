@@ -77,11 +77,13 @@ const Home = () => {
   return (
     <Wrapper>
       <Navbar isLoggedIn={true} />
-      <Banner />
+      <BannerWrapper>
+        <Banner />
+      </BannerWrapper>
       <CategoryBox />
       <MidWrapper>
         <OrderbyBox />
-        <SearchBox />
+        {/* <SearchBox /> */}
       </MidWrapper>
       {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
@@ -96,6 +98,12 @@ const Wrapper = styled.div``;
 const Observer = styled.div`
   bottom: 0;
   height: 20px;
+`;
+
+const BannerWrapper = styled.div`
+  @media ${({ theme }) => theme.size.mobile} {
+    display: none;
+  }
 `;
 
 const MidWrapper = styled.div`

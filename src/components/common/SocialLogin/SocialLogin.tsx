@@ -29,7 +29,13 @@ const SocialLogin = ({ name }: SocialLoginProps) => {
 
   return (
     <Wrapper>
-      <Logo src={name === 'google' ? googleImg : facebookImg} onClick={onClickSocial} name={name} />
+      <LogoWrapper>
+        <Logo
+          src={name === 'google' ? googleImg : facebookImg}
+          onClick={onClickSocial}
+          name={name}
+        />
+      </LogoWrapper>
       <Title>{name}</Title>
     </Wrapper>
   );
@@ -43,15 +49,38 @@ const Wrapper = styled.div`
   gap: 12px;
 `;
 
+const LogoWrapper = styled.div`
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
+  border-radius: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 6px;
+  }
+`;
+
 const Logo = styled.img<SocialLoginProps>`
-  width: 150px;
-  height: 150px;
-  margin-bottom: 16px;
+  width: 88px;
+  height: 88px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 const Title = styled.span`
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #555;
 `;
 
 export default memo(SocialLogin);

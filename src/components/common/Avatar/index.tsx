@@ -59,7 +59,7 @@ const Wrapper = styled.div<IWrapper>`
   border-radius: 50%;
   width: ${(props) => props.size || 32}px;
   height: ${(props) => props.size || 32}px;
-  border: 0.3px solid #666;
+  border: 0.3px solid #999;
   background-color: white;
   overflow: hidden;
 `;

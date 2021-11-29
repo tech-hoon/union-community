@@ -31,16 +31,12 @@ const Wrapper = styled.div`
     width: 90%;
     flex-direction: column;
   }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    display: none;
-  }
 `;
 
 const Content = styled.p`
   font-weight: 200;
-  font-size: 1.8rem;
-  line-height: 1.7;
+  font-size: 1.7rem;
+  line-height: 1.5;
   letter-spacing: -0.05em;
   text-align: start;
   word-break: keep-all;
