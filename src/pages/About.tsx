@@ -1,7 +1,9 @@
-import { useState, memo, useEffect } from 'react';
 import Navbar from 'components/common/Navbar';
 import LoginButton from 'components/common/LoginButton';
+import Banner from 'components/common/Banner';
+import Footer from 'components/common/Footer';
 import styled from 'styled-components';
+import { useState, memo, useEffect } from 'react';
 import { getUserPostCount } from 'api/count';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import useLoginStep from 'hooks/useLoginStep';
@@ -10,15 +12,14 @@ import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { useHistory } from 'react-router';
 import { Loading } from 'pages';
-import Banner from 'components/common/Banner';
 import { loginUserType } from 'types';
 
 const About = () => {
   const [count, setCount] = useState({ userCount: 0, postCount: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
-  const setLoginUser = useSetRecoilState(loginUserState);
   const { onLoginStepReset, onLoginStepNext } = useLoginStep();
+  const setLoginUser = useSetRecoilState(loginUserState);
   const history = useHistory();
 
   const hasRegistered = async (uid: string) => {
@@ -76,6 +77,7 @@ const About = () => {
           </>
         )}
       </Container>
+      <Footer />
     </Wrapper>
   );
 };

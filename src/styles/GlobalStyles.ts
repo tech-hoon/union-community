@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     border:none;
     outline:none;
     background: none;
-    cursor:pointer;
+    cursor: pointer;
   }
   body{
     background-color: #f8f9fa;
