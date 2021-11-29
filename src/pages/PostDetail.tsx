@@ -2,11 +2,9 @@ import Footer from 'components/common/Footer';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
-import { Heart, HeartOutlined } from '@styled-icons/entypo';
 import { useLocation, useHistory } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
-import CountBox from 'components/common/CountBox';
 import CommentBox from 'components/PostDetail/CommentBox';
 import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
@@ -18,6 +16,9 @@ import { categoryColor } from 'utils/categoryColor';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { debounce } from 'lodash';
 import { storageService } from 'service/firebase';
+import CommentCount from 'components/common/Count/CommentCount';
+import ViewCount from 'components/common/Count/ViewCount';
+import LikeCount from 'components/common/Count/LikeCount';
 
 interface Props {}
 
@@ -97,7 +98,7 @@ const PostDetail = (props: Props) => {
   return (
     <Wrapper>
       <Navbar isLoggedIn={true} />
-      {!!post ? (
+      {post ? (
         <PostContainer>
           <BackButton
             onClick={() =>
@@ -128,23 +129,26 @@ const PostDetail = (props: Props) => {
               </EditBox>
             )}
           </ROW_3>
-          <HR />
+          {/* <HR /> */}
           <Content dangerouslySetInnerHTML={contentMarkup} />
-          {post.attachment_url?.length && <Images src={post.attachment_url} alt='' />}
-          <CountBox size='20px' viewCount={post.view_count} commentCount={comments.length} />
-          <LikeButtonWrapper
-            onClick={debounce(() => onLikePost(post.liker_list, loginUser?.uid!!), 800)}
-          >
-            {likeOrUnlike(post.liker_list, loginUser?.uid!!) === 'unlike' ? (
-              <UnlikeButton />
-            ) : (
-              <LikeButton />
-            )}
-          </LikeButtonWrapper>
-          <LikeCount>{post.liker_list.length}</LikeCount>
+          {!!post?.attachment_url?.length && <Images src={post.attachment_url} alt='' />}
 
-          <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
-          <SubmitBtn onClick={onSubmitComment}>등록하기</SubmitBtn>
+          <CountBox>
+            <ViewCount size='16px' count={post.view_count || 0} />
+            <CommentCount size='16px' count={post.comment_count || 0} />
+            <LikeCount
+              size='16px'
+              count={post.liker_list.length || 0}
+              flag={likeOrUnlike(post.liker_list, loginUser?.uid!!)}
+              onClick={debounce(() => onLikePost(post.liker_list, loginUser?.uid!!), 800)}
+            />
+          </CountBox>
+
+          <CommentWriteWrapper>
+            <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
+            <SubmitBtn onClick={onSubmitComment}>등록하기</SubmitBtn>
+          </CommentWriteWrapper>
+
           <CommentBox postId={id} commentList={comments} fetchComments={fetchComments} />
         </PostContainer>
       ) : (
@@ -158,7 +162,6 @@ const PostDetail = (props: Props) => {
 const Wrapper = styled.div``;
 
 const PostContainer = styled.section`
-  /* width: 70vw; */
   max-width: 1120px;
   padding: 0 60px;
   margin: 3% auto;
@@ -184,7 +187,7 @@ const ROW_1 = styled.div`
 
 const Title = styled.h1`
   font-weight: 700;
-  font-size: 2em;
+  font-size: 2rem;
   line-height: 1;
 `;
 
@@ -242,14 +245,11 @@ const Creator = styled.span`
   color: #999999;
 `;
 
-const LikeButtonWrapper = styled.div`
-  width: 20px;
-  color: #ed384f;
-  cursor: pointer;
+const CountBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `;
-const LikeButton = styled(HeartOutlined)``;
-const UnlikeButton = styled(Heart)``;
-const LikeCount = styled.div``;
 
 const Btn = styled.button`
   font-size: 1em;
@@ -283,28 +283,41 @@ const Content = styled.section`
 const Images = styled.img`
   max-width: 500px;
   margin-bottom: 24px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    max-width: 300px;
+  }
 `;
 
 const Button = styled.button`
   font-weight: 500;
-  font-size: 1em;
+  font-size: 1rem;
   padding: 12px;
   border: 0.3px solid #eee;
   border-radius: 4px;
 `;
 
-const CommentWrite = styled.textarea`
-  font-family: 'Spoqa Han Sans Neo';
-  font-weight: 400;
-  margin: 20px 0;
-  padding: 10px;
-  height: 100px;
+const CommentWriteWrapper = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 40px 0;
+  gap: 4px;
+`;
+
+const CommentWrite = styled.input`
+  font-weight: 400;
+  font-size: 1rem;
+  padding: 10px;
+  width: 100%;
+  height: 45px;
+  flex: 1;
+
+  border: 0.3px solid #888;
 `;
 
 const SubmitBtn = styled(Button)`
   width: 100px;
-  margin-bottom: 40px;
   background-color: skyblue;
   color: white;
 `;

@@ -8,6 +8,8 @@ import { commentLike, commentUnlike, deleteComment, updateComment } from 'api/co
 import { useRef, useState } from 'react';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { debounce } from 'lodash';
+import LikeCount from 'components/common/Count/LikeCount';
+import { toDateStringByFormating } from 'utils/date';
 
 interface Props {
   postId: string;
@@ -16,12 +18,12 @@ interface Props {
 }
 
 const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
-  //TODO: 좋아요 아이콘 처리(liker_list)
   const [editingComment, setEditingComment] = useState<string | null>();
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
   const inputRef = useRef<any>(null);
 
   const onEdit = (targetId: string) => setEditingComment(targetId);
+  const onCancel = () => setEditingComment(null);
   const onDelete = async (commentId: string) => {
     const ok = window.confirm('정말 삭제하시겠습니까?');
     if (ok) {
@@ -48,7 +50,10 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
   return (
     <List>
       {commentList.map(
-        ({ id, creator: { uid, nickname, avatar_id }, content, is_edited, liker_list }, key) => {
+        (
+          { id, creator: { uid, nickname, avatar_id }, content, is_edited, liker_list, created_at },
+          key
+        ) => {
           return (
             <Comment key={key}>
               <ROW1>
@@ -57,21 +62,17 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
                 </COL1>
                 <COL2>
                   <Nickname>{nickname}</Nickname>
-                  <CreatedAt>{new Date().toLocaleDateString()}</CreatedAt>
+                  <CreatedAt>{toDateStringByFormating(created_at, true)}</CreatedAt>
                 </COL2>
                 <COL3>
-                  <Button
-                    onClick={debounce(() => onLikeComment(liker_list, loginUser.uid, id), 400)}
-                  >
-                    {likeOrUnlike(liker_list, loginUser.uid) === 'unlike' ? (
-                      <UnlikeButton />
-                    ) : (
-                      <LikeButton />
-                    )}
-                  </Button>
-                  <LikeCount>{liker_list.length}</LikeCount>
+                  <LikeCount
+                    size='16px'
+                    count={liker_list.length || 0}
+                    flag={likeOrUnlike(liker_list, loginUser?.uid)}
+                    onClick={debounce(() => onLikeComment(liker_list, loginUser?.uid, id), 800)}
+                  />
+                  <IsEdited>{is_edited ? '수정됨' : ''}</IsEdited>
                 </COL3>
-                <COL4>{is_edited && '수정됨'}</COL4>
                 {uid === loginUser.uid && (
                   <COL5>
                     <EditBtn onClick={() => onEdit(id)}>수정</EditBtn>
@@ -83,7 +84,7 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
                 {uid === loginUser.uid && editingComment === id ? (
                   <EditContent>
                     <EditInput autoFocus defaultValue={content} ref={inputRef} />
-                    <EditCancleBtn onClick={() => onEdit(id)}>취소하기</EditCancleBtn>
+                    <EditCancelBtn onClick={onCancel}>취소하기</EditCancelBtn>
                     <EditSubmitBtn onClick={() => onSubmit(id)}>등록하기</EditSubmitBtn>
                   </EditContent>
                 ) : (
@@ -109,12 +110,17 @@ const ROW1 = styled.div`
   width: 100%;
   gap: 4px;
 `;
-const ROW2 = styled.div``;
+const ROW2 = styled.div`
+  margin: 0 4px;
+`;
 
-const COL1 = styled.div``;
+const COL1 = styled.div`
+  margin-right: 2px;
+`;
 const COL2 = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 2px;
 `;
 const COL3 = styled.div`
   display: flex;
@@ -123,10 +129,8 @@ const COL3 = styled.div`
   gap: 4px;
 `;
 
-const COL4 = styled.div`
-  font-weight: 400;
-  font-size: 16px;
-  margin-left: 8px;
+const IsEdited = styled.p`
+  font-size: 0.8rem;
 `;
 
 const COL5 = styled.div`
@@ -134,17 +138,36 @@ const COL5 = styled.div`
   margin-left: auto;
   align-items: center;
   gap: 8px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    flex-direction: column;
+  }
 `;
 
-const EditBtn = styled.button``;
-const DelBtn = styled.button``;
+const CommentButton = styled.button`
+  border: 0.5px solid #eee;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.7rem;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.5rem;
+  }
+`;
+
+const EditBtn = styled(CommentButton)``;
+const DelBtn = styled(CommentButton)``;
 
 const CreatedAt = styled.p`
   color: gray;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.7rem;
+  }
 `;
 const Nickname = styled.p`
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1rem;
 `;
 
 const EditContent = styled.div``;
@@ -155,25 +178,16 @@ const EditInput = styled.input`
   width: 100%;
 `;
 
-const EditCancleBtn = styled.button``;
-const EditSubmitBtn = styled.button``;
+const EditCancelBtn = styled(CommentButton)`
+  margin-right: 8px;
+`;
+const EditSubmitBtn = styled(CommentButton)``;
 
 const Content = styled.p`
-  font-size: 20px;
-  padding: 20px 0 40px;
-  border-bottom: solid 2px #e9ecef;
-`;
-const Button = styled.div`
-  width: 20px;
-  color: #ed384f;
-  cursor: pointer;
-`;
-
-const LikeButton = styled(HeartOutlined)``;
-const UnlikeButton = styled(Heart)``;
-
-const LikeCount = styled.div`
   font-size: 1rem;
+  padding: 20px 0;
+  border-bottom: solid 2px #e9ecef;
+  word-break: break-all;
 `;
 
 export default CommentBox;
