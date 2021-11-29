@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Github } from '@styled-icons/icomoon';
+import { Email } from '@styled-icons/material-outlined';
 
 interface Props {}
 
 const Footer = (props: Props) => {
   return (
     <Wrapper>
-      <Title>
-        &copy; Nam Taekhun {new Date().getFullYear()}
-        <Github href='https://github.com/tech-hoon' target='_blank'>
-          @tech-hoon
-        </Github>
-      </Title>
+      <Title>&copy; Nam Taekhun {new Date().getFullYear()}</Title>
+      <GithubIcon href='https://github.com/tech-hoon' target='_blank'>
+        <Github size='14px' />
+      </GithubIcon>
+      <EmailIcon href='mailto:nth9708@naver.com' target='_blank'>
+        <Email size='16px' />
+      </EmailIcon>
     </Wrapper>
   );
 };
@@ -19,16 +22,26 @@ const Footer = (props: Props) => {
 const Wrapper = styled.footer`
   width: 100%;
   padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 `;
 
 const Title = styled.p`
   color: #999999;
   text-align: center;
+  line-height: 1;
 `;
 
-const Github = styled.a`
-  margin-left: 4px;
+const GithubIcon = styled.a`
   color: #999999;
+  margin-bottom: 3px;
+`;
+
+const EmailIcon = styled.a`
+  color: #999999;
+  margin-bottom: 2px;
 `;
 
 export default Footer;
