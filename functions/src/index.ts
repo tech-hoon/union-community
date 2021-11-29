@@ -10,11 +10,6 @@ const config = functions.config();
 const url = config.slack.url;
 const Slack = new IncomingWebhook(url);
 
-export const helloWorld = functions.https.onRequest((request: any, response: any) => {
-  functions.logger.log('firestore functions conntected');
-  functions.logger.log('Slack URL: ', url);
-});
-
 export const postCreated = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}')
@@ -27,7 +22,7 @@ export const postCreated = functions
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
 
-    const { id, creator, title, content, attachment_url } = snapshot.data();
+    const { creator, title, content, attachment_url } = snapshot.data();
     Slack.send(
       `
       [새로운 글이 등록되었습니다]
@@ -38,7 +33,7 @@ export const postCreated = functions
       - name: ${creator.name}
 
       * POST
-      - id: ${id}
+      - id: ${snapshot.id}
       - title: ${title}
       - content : ${content}
       - attachment_url: ${attachment_url}
