@@ -6,7 +6,8 @@ import _ = require('lodash');
 admin.initializeApp();
 const firestore = admin.firestore();
 const IncomingWebhook = SlackWebhook.IncomingWebhook;
-const url = 'SLACK_WEBHOOK_URL';
+const config = functions.config();
+const url = config.slack.url;
 const Slack = new IncomingWebhook(url);
 
 export const postCreated = functions
@@ -20,6 +21,25 @@ export const postCreated = functions
     firestore.doc(`users/${snapshot.data().creator.uid}`).update({
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
+
+    const { id, creator, title, content, attachment_url } = snapshot.data();
+    Slack.send(
+      `
+      [새로운 글이 등록되었습니다]
+
+      * CREATOR
+      - id: ${creator.uid}
+      - nickname: ${creator.nickname}
+      - name: ${creator.name}
+
+      * POST
+      - id: ${id}
+      - title: ${title}
+      - content : ${content}
+      - attachment_url: ${attachment_url}
+
+      `
+    );
   });
 
 export const postDeleted = functions
@@ -95,7 +115,7 @@ export const userCreated = functions
     const { email, name, resident_auth_image, uid } = snapshot.data();
     Slack.send(
       `
-      새로운 사용자가 등록되었습니다.
+      [새로운 사용자가 등록되었습니다]
       
       아이디: ${uid}
       이메일: ${email}
@@ -104,7 +124,5 @@ export const userCreated = functions
       `
     );
   });
-
-// const test =functions.auth.user().onCreate()
 
 // export const postViewUp = functions.https.onRequest((request:any, response:any)=>{});
