@@ -34,6 +34,7 @@ const NicknameContainer = (prop: Props) => {
         like_list: [],
         post_list: [],
         created_at: new Date().getTime(),
+        resident_auth_image: '',
       };
 
       addUser(userData);
@@ -45,6 +46,7 @@ const NicknameContainer = (prop: Props) => {
 
   return (
     <Wrapper onSubmit={onClickSubmit}>
+      <Title>사용하실 닉네임과 아바타를 선택해주세요.</Title>
       <Body>
         <AvatarWrapper>
           <AvatarSelect
@@ -69,36 +71,42 @@ const Wrapper = styled.form`
 
 const Title = styled.h1`
   font-weight: 700;
-  font-size: 2em;
+  font-size: 1.5em;
   line-height: 150%;
+  margin-bottom: 24px;
 `;
 
 const Body = styled.div`
-  margin: 0 auto 20px;
+  margin: 0 auto 40px;
 `;
 
-const AvatarWrapper = styled.div``;
+const AvatarWrapper = styled.div`
+  margin-bottom: 24px;
+`;
 
 const NicknameWrapper = styled.div``;
 
 const Label = styled.label`
   font-weight: 500;
-  font-size: 1.5em;
+  font-size: 1.2rem;
   margin-right: 8px;
 `;
 const Input = styled.input`
-  font-size: 1.5em;
-  width: 300px;
+  font-size: 1.2em;
   padding: 4px 8px;
   border: 0.1px solid #aaa;
   border-radius: 4px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 180px;
+  }
 `;
 
 const Button = styled.button`
   font-weight: 500;
   font-size: 1em;
 
-  padding: 12px 28px;
+  padding: 8px 24px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   background-color: #18a0fb;
