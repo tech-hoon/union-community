@@ -49,8 +49,8 @@ const LoginPortal = ({ onClose }: Props) => {
   const onClickBackButton = () => {
     if (loginStep === 2) {
       authService.signOut();
-      onLoginStepPrev();
     }
+    onLoginStepPrev();
   };
 
   return (
@@ -88,6 +88,8 @@ const Wrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 70%;
+  max-width: 1000px;
+  max-height: 600px;
   height: 80vh;
   margin: auto;
   background-color: white;
@@ -96,6 +98,7 @@ const Wrapper = styled.div`
   @media ${({ theme }) => theme.size.mobile} {
     width: 100%;
     height: 100vh;
+    max-height: none;
   }
 `;
 
