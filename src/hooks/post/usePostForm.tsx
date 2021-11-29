@@ -19,6 +19,8 @@ interface Props {
 const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Props) => {
   const history = useHistory();
   const [attachment, setAttachment] = useState('');
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
 
   const onEditorCancle = () => window.confirm('글 작성을 취소하시겠습니까?') && history.push('/');
@@ -46,13 +48,40 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    prevPost?.attachment_url && (await storageService.refFromURL(prevPost.attachment_url).delete());
-
     let attachmentUrl = '';
+
+    if (
+      !checkPostValidation(
+        titleRef.current?.value!!,
+        categoryRef.current?.value!!,
+        contentRef.current?.value
+      )
+    ) {
+      window.alert('내용을 모두 작성해 주세요.');
+      return;
+    }
+
+    // 첨부 파일 있고,
     if (attachment !== '') {
-      const attachmentRef = storageService.ref().child(`${loginUser.uid}/${uuidv4()}`);
-      const response = await attachmentRef.putString(attachment, 'data_url');
-      attachmentUrl = await response.ref.getDownloadURL();
+      // 기존 attachment_url 있는 경우 그대로 db로
+      if (attachment.indexOf('firebasestorage') !== -1) {
+        attachmentUrl = attachment;
+      } else {
+        // 기존에 있는거 삭제
+        if (!!prevPost?.attachment_url) {
+          await storageService.refFromURL(prevPost.attachment_url).delete();
+        }
+
+        // 새로운 attachment, url 따와서
+        const attachmentRef = storageService.ref().child(`${loginUser.uid}/${uuidv4()}`);
+        const response = await attachmentRef.putString(attachment, 'data_url');
+        attachmentUrl = await response.ref.getDownloadURL();
+      }
+    } else {
+      // 기존에 있는거 삭제
+      if (!!prevPost?.attachment_url) {
+        await storageService.refFromURL(prevPost.attachment_url).delete();
+      }
     }
 
     const postInput = {
@@ -62,27 +91,24 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
       attachment_url: attachmentUrl,
     };
 
-    if (checkPostValidation(postInput)) {
-      if (mode === 'add') {
-        const __postId = await addPost({ postInput, creator: loginUser });
-        history.push({
-          pathname: `/post/${__postId}`,
-          state: 'isAdded',
-        });
-        return;
-      }
-
-      if (mode === 'update') {
-        prevPost?.id && (await updatePost({ postInput, creator: loginUser, postId: prevPost.id }));
-        history.push({
-          pathname: `/post/${prevPost?.id}`,
-          state: 'isUpdated',
-        });
-        return;
-      }
+    if (mode === 'add') {
+      const __postId = await addPost({ postInput, creator: loginUser });
+      history.push({
+        pathname: `/post/${__postId}`,
+        state: 'isAdded',
+      });
       return;
     }
-    window.alert('내용을 모두 작성해 주세요.');
+
+    if (mode === 'update') {
+      prevPost?.id && (await updatePost({ postInput, creator: loginUser, postId: prevPost.id }));
+      history.push({
+        pathname: `/post/${prevPost?.id}`,
+        state: 'isUpdated',
+      });
+      return;
+    }
+    return;
   };
 
   return {
@@ -92,6 +118,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     onFileChange,
     onDeleteAttachment,
     onSubmit,
+    isUploading,
   };
 };
 

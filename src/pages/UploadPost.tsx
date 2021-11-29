@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { CATEGORY_LIST } from 'utils/config';
 import { PostType } from 'types';
+import { Delete } from '@styled-icons/material';
 
 interface ILocationState {
   mode: string;
@@ -24,15 +25,21 @@ const UploadPost = () => {
     initialPost?.attachment_url && setAttachment(initialPost.attachment_url);
   }, []);
 
-  const { setAttachment, attachment, onEditorCancle, onSubmit, onFileChange, onDeleteAttachment } =
-    usePostForm({
-      titleRef,
-      categoryRef,
-      contentRef,
-      mode,
-      prevPost: initialPost || null,
-    });
-
+  const {
+    setAttachment,
+    attachment,
+    onEditorCancle,
+    onSubmit,
+    onFileChange,
+    onDeleteAttachment,
+    isUploading,
+  } = usePostForm({
+    titleRef,
+    categoryRef,
+    contentRef,
+    mode,
+    prevPost: initialPost || null,
+  });
   return (
     <Wrapper>
       <Navbar isLoggedIn={true} />
@@ -60,22 +67,28 @@ const UploadPost = () => {
         </CategoryBox>
 
         <Editor ref={contentRef} value={initialPost?.content || null} />
+
         {attachment && (
           <ThumbnailsBox>
+            <ThumbnailTitle>첨부 사진</ThumbnailTitle>
             <ThumbnailWrapper>
               <Thumbnail src={attachment} alt='' />
               <ThumbnailDeleteBtn onClick={onDeleteAttachment} type='button'>
-                ❌
+                <Delete size='20px' />
               </ThumbnailDeleteBtn>
             </ThumbnailWrapper>
           </ThumbnailsBox>
         )}
-        <ButtonBox>
-          <CancleBtn type='button' onClick={onEditorCancle}>
-            취소하기
-          </CancleBtn>
-          <SubmitBtn type='submit'>등록하기</SubmitBtn>
-        </ButtonBox>
+        {!isUploading ? (
+          <ButtonBox>
+            <CancleBtn type='button' onClick={onEditorCancle}>
+              취소하기
+            </CancleBtn>
+            <SubmitBtn type='submit'>등록하기</SubmitBtn>
+          </ButtonBox>
+        ) : (
+          <>로딩중</>
+        )}
       </PostContainer>
     </Wrapper>
   );
@@ -95,7 +108,11 @@ const PostContainer = styled.form`
 `;
 const TitleInput = styled.input`
   font-weight: 700;
-  font-size: 2em;
+  font-size: 2rem;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1.5rem;
+  }
 `;
 const HR = styled.hr`
   margin: 20px 0;
@@ -110,6 +127,11 @@ const CategoryBox = styled.div`
   align-items: center;
   gap: 24px;
   margin: 20px 0;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.8rem;
+    gap: 12px;
+  }
 `;
 
 const Select = styled.select`
@@ -129,18 +151,24 @@ const UploadInput = styled.input`
 `;
 
 const ThumbnailsBox = styled.ol`
-  width: 100%;
-  border: 1px solid #888;
-  padding: 8px;
+  /* width: 100%; */
+  /* border: 1px solid #888; */
+  /* padding: 8px; */
+`;
+
+const ThumbnailTitle = styled.div`
+  margin: 12px 2px;
+  font-weight: 700;
+  font-size: 1em;
 `;
 
 const ThumbnailDeleteBtn = styled.button`
-  display: none;
+  display: block;
   font-size: 0.8rem;
   position: absolute;
   top: -10px;
-  right: -10px;
-  color: red;
+  right: -14px;
+  color: gray;
 `;
 
 const Thumbnail = styled.img`
@@ -152,26 +180,28 @@ const ThumbnailWrapper = styled.li`
   position: relative;
   padding: 8px;
   border: 1px solid #888;
-
-  &:hover ${ThumbnailDeleteBtn} {
-    display: block;
-  }
+  border-radius: 4px;
 `;
 
 const ButtonBox = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   gap: 4px;
 `;
 
 const Button = styled.button`
   font-weight: 500;
-  font-size: 1em;
+  font-size: 1rem;
   padding: 12px;
   border: 0.3px solid #eee;
   border-radius: 4px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
 `;
 
 const CancleBtn = styled(Button)`
@@ -181,6 +211,11 @@ const CancleBtn = styled(Button)`
 const SubmitBtn = styled(Button)`
   background-color: skyblue;
   color: white;
+
+  &:hover {
+    background-color: rgb(24, 160, 251);
+    transition: 0.3s ease-in-out;
+  }
 `;
 
 export default UploadPost;
