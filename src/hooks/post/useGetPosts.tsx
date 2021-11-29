@@ -54,6 +54,8 @@ export const useGetPosts = () => {
 
   return {
     posts,
+    category,
+    orderBy,
     lastVisiblePost,
     fetchPosts,
     fetchMorePosts,
