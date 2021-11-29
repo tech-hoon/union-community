@@ -38,6 +38,7 @@ export const updateProfile = async ({ uid, avatar_id, nickname }: IupdateProfile
   }
 };
 
+//TODO: firebase "in" query's max-length is 10
 export const getMyLikes = async (uid: string) => {
   const res: any = await dbService.doc(`users/${uid}`).get();
   const likeList = res.data().like_list;

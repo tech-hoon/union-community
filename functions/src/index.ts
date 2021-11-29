@@ -10,6 +10,11 @@ const config = functions.config();
 const url = config.slack.url;
 const Slack = new IncomingWebhook(url);
 
+export const helloWorld = functions.https.onRequest((request: any, response: any) => {
+  functions.logger.log('firestore functions conntected');
+  functions.logger.log('Slack URL: ', url);
+});
+
 export const postCreated = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}')
