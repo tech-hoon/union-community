@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { Home, About, PostDetail, UploadPost, Setting, MyLikes, MyPosts, Loading } from 'pages';
+import { Home, About, PostDetail, UploadPost, Setting, MyLikes, MyPosts } from 'pages';
 import NotFound from 'pages/NotFound';
 
 interface Props {

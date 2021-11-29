@@ -1,6 +1,7 @@
 import Navbar from 'components/common/Navbar';
 import LoginButton from 'components/common/LoginButton';
 import Banner from 'components/common/Banner';
+import Loading from 'components/common/Loading';
 import Footer from 'components/common/Footer';
 import styled from 'styled-components';
 import { useState, memo, useEffect } from 'react';
@@ -11,7 +12,6 @@ import { authService } from 'service/firebase';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { useHistory } from 'react-router';
-import { Loading } from 'pages';
 import { loginUserType } from 'types';
 
 const About = () => {
@@ -96,13 +96,19 @@ const Strong = styled.strong`
   font-weight: 500;
 `;
 
-const CountBox = styled.div``;
-
-const ButtonWrapper = styled.div`
-  margin-top: 3%;
+const CountBox = styled.div`
+  font-size: 1.3rem;
 
   @media ${({ theme }) => theme.size.mobile} {
-    margin-top: 10%;
+    font-size: 1rem;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 48px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    margin-top: 24px;
   }
 `;
 
