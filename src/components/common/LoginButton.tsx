@@ -18,9 +18,9 @@ const LoginButton = (props: Props) => {
 
 const Button = styled.button`
   font-weight: 500;
-  font-size: 1.4em;
+  font-size: 1.2em;
 
-  padding: 12px 40px;
+  padding: 12px 20px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
   background-color: #18a0fb;
@@ -28,6 +28,7 @@ const Button = styled.button`
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1em;
+    padding: 8px 24px;
   }
 
   &:hover {

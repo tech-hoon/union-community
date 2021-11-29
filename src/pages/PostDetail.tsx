@@ -293,7 +293,7 @@ const Button = styled.button`
   font-weight: 500;
   font-size: 1rem;
   padding: 12px;
-  border: 0.3px solid #eee;
+  /* border: 0.3px solid #eee; */
   border-radius: 4px;
 `;
 
@@ -303,6 +303,8 @@ const CommentWriteWrapper = styled.div`
   align-items: center;
   margin: 40px 0;
   gap: 4px;
+  border: 0.3px solid #999;
+  padding: 0px;
 `;
 
 const CommentWrite = styled.input`
@@ -312,14 +314,12 @@ const CommentWrite = styled.input`
   width: 100%;
   height: 45px;
   flex: 1;
-
-  border: 0.3px solid #888;
+  /* border: 0.3px solid #888; */
 `;
 
 const SubmitBtn = styled(Button)`
   width: 100px;
-  background-color: skyblue;
-  color: white;
+  color: #18a0fb;
 `;
 
 export default PostDetail;

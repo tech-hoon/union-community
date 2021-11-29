@@ -41,11 +41,12 @@ const PostCardBox = ({ posts }: Props) => {
         ) => {
           return (
             <PostCard key={key} onClick={() => handleClick(id!!)}>
+              <Category color={categoryColor(category)}>{category}</Category>
               <Head>
                 <Title>{title}</Title>
                 {!!attachment_url && <ImageIcon />}
               </Head>
-              <Content>{tagEliminatingRegex(content)}</Content>
+              <Content>{tagEliminatingRegex(content).substring(0, 180)}</Content>
               <CardBottom>
                 <CreatorBox>
                   <AvatarWrapper>
@@ -53,7 +54,6 @@ const PostCardBox = ({ posts }: Props) => {
                   </AvatarWrapper>
                   <Creator>{creator.nickname}</Creator>
                 </CreatorBox>
-                <Category color={categoryColor(category)}>{category}</Category>
                 {/* {new Date(created_at).toLocaleDateString()} */}
 
                 <CountBox>
@@ -121,22 +121,27 @@ const Head = styled.div`
   justify-content: space-between;
   margin-bottom: 24px;
 `;
-const Title = styled.h2`
+const Title = styled.p`
   font-weight: 700;
   font-size: 1.3rem;
+
+  display: block;
+  text-overflow: ellipsis; /* 말줄임 css */
+  white-space: nowrap; /*글자를 한줄로 모아준다*/
+  overflow: hidden;
 `;
 
 const ImageIcon = styled(PhotoLibrary)`
   width: 24px;
   color: #333;
+  margin-right: 8px;
 `;
 const Content = styled.p`
   font-weight: 300;
   padding-left: 4px;
   padding-bottom: 48px;
-  line-height: 1.8em;
-
-  text-overflow: ellipsis;
+  line-height: 1.3em;
+  max-height: 100px;
 `;
 
 const CardBottom = styled.div`
@@ -182,6 +187,7 @@ const Category = styled.span<ICategory>`
   border-radius: 20px;
   padding: 4px 12px;
   font-size: 0.9em;
+  float: right;
 `;
 
 export default memo(PostCardBox);
