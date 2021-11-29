@@ -17,6 +17,7 @@ export type UserType = {
   post_list: PostType[] | [];
   created_at?: number;
   updated_at?: number;
+  resident_auth_image?: string;
 };
 
 export interface loginUserType extends UserType {}
@@ -27,6 +28,7 @@ export interface PostType {
   title: string;
   content: string;
   creator: UserType;
+  comment_count: number;
   view_count: number;
   liker_list: string[];
   created_at: number;
