@@ -13,7 +13,7 @@ interface IaddPostParams {
     title: string;
     category: string;
     content: string;
-    attachmentUrl?: string;
+    attachment_url: string;
   };
   creator: UserType;
 }
@@ -24,6 +24,7 @@ interface IupdatePostParams {
     title: string;
     category: string;
     content: string;
+    attachment_url: string;
   };
   creator: UserType;
 }
@@ -98,15 +99,25 @@ export const getPostDetail = async (postId: string) => {
 //TODO
 //카테고리
 //내용
-export const getPostBySearch = async (searchBy: string, value: string) => {
+export const getPostBySearch = async (
+  category: string,
+  orderBy: string,
+  searchBy: string,
+  value: string
+) => {
   try {
     if (value) {
-      const res =
-        searchBy === 'content'
-          ? await dbService.collection(`posts`).where('content', 'in', value).get()
-          : await dbService.collection(`posts`).where('creator.nickname', '==', value).get();
+      if (searchBy === 'content') {
+        const res = await dbService.collection(`posts`).where('content', 'in', value).get();
+        const posts = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        console.log('검색된 포스트', posts);
+        return posts;
+      }
 
-      return res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      const res = await dbService.collection(`posts`).where('creator.nickname', '==', value).get();
+      const posts = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      console.log('검색된 포스트', posts);
+      return posts;
     }
   } catch (error) {
     console.log(error);
