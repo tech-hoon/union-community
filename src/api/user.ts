@@ -11,7 +11,7 @@ export const addUser = ({ uid, ...rest }: loginUserType) => {
     dbService
       .collection('users')
       .doc(uid)
-      .update({
+      .set({
         uid,
         ...rest,
       });
