@@ -6,7 +6,7 @@ export const Layouts = {
   Wrapper: styled.div``,
   Navbar: styled(Navbar)``,
   Container: styled.div`
-    max-width: 1000px;
+    max-width: 1160px;
     padding: 0 60px;
     margin: auto;
   `,
@@ -27,14 +27,14 @@ export const Layouts = {
   `,
 
   PostCards: styled(PostCardBox)`
-    grid-template-columns: 1fr;
-
-    @media ${({ theme }) => theme.size.desktop} {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
+    grid-template-columns: 1fr 1fr 1fr;
 
     @media ${({ theme }) => theme.size.mobile} {
       grid-template-columns: 1fr 1fr;
+    }
+
+    @media ${({ theme }) => theme.size.mobile} {
+      grid-template-columns: 1fr;
     }
   `,
 
