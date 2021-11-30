@@ -17,6 +17,7 @@ import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { loginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { ChevronUpCircle } from '@styled-icons/boxicons-solid';
 
 //TODO: 새 게시물 감지시, unsubscribe
 const Home = () => {
@@ -62,6 +63,7 @@ const Home = () => {
     // 프로필 변경 시, 새 데이터로 fetch
     if (location.state === 'profileUpdated') {
       fetchUserData();
+      fetchPosts();
       return;
     }
 
@@ -87,6 +89,7 @@ const Home = () => {
       </MidWrapper>
       {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
+      <ScrollUpIcon size='60px' onClick={() => window.scroll({ behavior: 'smooth', top: 0 })} />
       <Observer ref={ioRef} />
       <Footer />
     </Wrapper>
@@ -94,6 +97,13 @@ const Home = () => {
 };
 
 const Wrapper = styled.div``;
+
+const ScrollUpIcon = styled(ChevronUpCircle)`
+  position: fixed;
+  right: 24px;
+  bottom: 48px;
+  color: rgba(136, 136, 136, 0.8);
+`;
 
 const Observer = styled.div`
   bottom: 0;
