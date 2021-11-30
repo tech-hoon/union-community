@@ -38,6 +38,18 @@ export const updateProfile = async ({ uid, avatar_id, nickname }: IupdateProfile
   }
 };
 
+export const verifyNickname = async (nickname: string) => {
+  try {
+    const res = await dbService.collection('users').where('nickname', '==', nickname).get();
+    const data = res.docs.map((doc) => doc.data());
+
+    return data?.length ? false : true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 //TODO: firebase "in" query's max-length is 10
 export const getMyLikes = async (uid: string) => {
   const res: any = await dbService.doc(`users/${uid}`).get();

@@ -2,15 +2,17 @@ import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { SettingsOutline } from '@styled-icons/evaicons-outline';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
 import AvatarSelect from 'components/common/Portals/LoginPortal/components/AvatarSelect';
 import { useHistory } from 'react-router';
-import { updateProfile } from 'api/user';
+import { updateProfile, verifyNickname } from 'api/user';
 import { loginUserType } from 'types';
+import { NICKNAME_LENGTH } from 'utils/config';
 
 const Setting = () => {
   const user = useRecoilValue(loginUserState) as loginUserType;
+  const setLoginUser = useSetRecoilState(loginUserState);
   const [avatarId, setAvatarId] = useState<number>(user.avatar_id);
   const [errorInfo, setErrorInfo] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -21,27 +23,26 @@ const Setting = () => {
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const __value = event.target.value;
-
     if (!__value) {
       setErrorInfo('* 필수 입력 항목입니다.');
       return;
     }
-
-    if (__value.length > 10) {
-      setErrorInfo('* 10자 이하로 입력해주세요.');
+    if (__value.length > NICKNAME_LENGTH) {
+      setErrorInfo(`* ${NICKNAME_LENGTH}자 이하로 입력해주세요.`);
       return;
     }
-
     setErrorInfo(null);
   };
 
   const onCancel = () => history.goBack();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const __value = inputRef?.current?.value;
 
-    if (!__value || __value.length > 10) {
-      window.alert(!__value ? '입력값을 모두 입력해 주세요' : '10자 이하로 입력해주세요');
+    if (!__value || __value.length > NICKNAME_LENGTH) {
+      window.alert(
+        !__value ? `입력값을 모두 입력해 주세요` : `${NICKNAME_LENGTH}자 이하로 입력해주세요`
+      );
       return;
     }
 
@@ -50,7 +51,16 @@ const Setting = () => {
       return;
     }
 
-    updateProfile({ uid: user.uid, nickname: __value, avatar_id: avatarId });
+    if (!(await verifyNickname(__value))) {
+      setErrorInfo('* 이미 존재하는 닉네임입니다.');
+      return;
+    }
+
+    const newData = { uid: user.uid, nickname: __value, avatar_id: avatarId };
+
+    updateProfile(newData);
+    setLoginUser({ ...user, ...newData });
+
     history.push({
       pathname: '/home',
       state: 'profileUpdated',
