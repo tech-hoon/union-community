@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
 import { tagEliminatingRegex } from 'utils/regex';
 import { categoryColor } from 'utils/categoryColor';
-import { toDateStringByFormating } from 'utils/date';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';

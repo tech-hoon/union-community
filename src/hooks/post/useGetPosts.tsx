@@ -21,6 +21,7 @@ export const useGetPosts = () => {
 
   const fetchPosts = useCallback(async () => {
     const response: any = await getInitialPosts({ orderBy, category });
+
     const __posts = response?.data;
     const __lastVisiblePost = response?.lastVisiblePost;
 
@@ -65,12 +66,12 @@ export const useGetPosts = () => {
   };
 };
 
-export const useGetPostDetail = (id: string) => {
+export const useGetPostDetail = () => {
   const [post, setPost] = useState<PostType>();
 
   const fetchPostDetail = async (id: string) => {
-    const _post: any = await getPostDetail(id);
-    _post && setPost(_post);
+    const __post: any = await getPostDetail(id);
+    __post && setPost(__post);
   };
 
   return {
