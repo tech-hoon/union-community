@@ -31,15 +31,15 @@ const PostDetail = (props: Props) => {
   const id = location.pathname.split('/')[2];
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
 
-  const { post, fetchPostDetail } = useGetPostDetail(id);
+  const { post, fetchPostDetail } = useGetPostDetail();
   const [isCreator, setIsCreator] = useState<boolean>();
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
   const [comments, setComments] = useState<CommentType[]>([]);
   const commentRef = useRef<any>(null);
 
   const onViewCountUp = async () => {
-    //TODO: 쿠키로 조회수 중복방지
-    // await viewCountUp(id);
+    //TODO: 조회수 중복방지
+    //await viewCountUp(id);
     await fetchPostDetail(id);
   };
 
@@ -65,7 +65,6 @@ const PostDetail = (props: Props) => {
 
     if (commentRef.current.value) {
       addComment({ post_id: id, creator: loginUser, content: commentRef.current.value });
-
       commentRef.current.value = '';
       fetchComments();
     }
@@ -112,12 +111,12 @@ const PostDetail = (props: Props) => {
           </BackButton>
           <ROW_1>
             <Title>{post.title}</Title>
-            <Category color={categoryColor(post.category)}>{post.category}</Category>
+            <Category color={categoryColor('자유')}>{post.category}</Category>
           </ROW_1>
           <ROW_2>
             <ProfileBox>
               <Avatar avatarId={post.creator.avatar_id} />
-              <Creator>{post.creator?.nickname}</Creator>
+              <Creator>{post.creator.nickname}</Creator>
             </ProfileBox>
             <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
           </ROW_2>
@@ -131,7 +130,7 @@ const PostDetail = (props: Props) => {
           </ROW_3>
           {/* <HR /> */}
           <Content dangerouslySetInnerHTML={contentMarkup} />
-          {!!post?.attachment_url?.length && <Images src={post.attachment_url} alt='' />}
+          {post.attachment_url?.length && <Images src={post.attachment_url} alt='' />}
 
           <CountBox>
             <ViewCount size='16px' count={post.view_count || 0} />
@@ -139,8 +138,8 @@ const PostDetail = (props: Props) => {
             <LikeCount
               size='16px'
               count={post.liker_list.length || 0}
-              flag={likeOrUnlike(post.liker_list, loginUser?.uid!!)}
-              onClick={debounce(() => onLikePost(post.liker_list, loginUser?.uid!!), 800)}
+              flag={likeOrUnlike(post.liker_list, loginUser.uid)}
+              onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 800)}
             />
           </CountBox>
 
@@ -275,7 +274,7 @@ const CreatedAt = styled.span`
 `;
 
 const Content = styled.section`
-  margin: 40px 0;
+  margin: 20px 0 40px;
   font-size: 1.2rem;
   line-height: 1.5;
 `;

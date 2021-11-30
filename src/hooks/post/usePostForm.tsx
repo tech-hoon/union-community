@@ -92,7 +92,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     };
 
     if (mode === 'add') {
-      const __postId = await addPost({ postInput, creator: loginUser });
+      const __postId = await addPost({ postInput, uid: loginUser.uid });
       history.push({
         pathname: `/post/${__postId}`,
         state: 'isAdded',
@@ -101,7 +101,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     }
 
     if (mode === 'update') {
-      prevPost?.id && (await updatePost({ postInput, creator: loginUser, postId: prevPost.id }));
+      prevPost?.id && (await updatePost({ postInput, uid: loginUser.uid, postId: prevPost.id }));
       history.push({
         pathname: `/post/${prevPost?.id}`,
         state: 'isUpdated',

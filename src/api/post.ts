@@ -1,4 +1,4 @@
-import { dbService, firebaseApp } from 'service/firebase';
+import { authService, dbService, firebaseApp } from 'service/firebase';
 import { UserType } from 'types';
 import { CARD_LIMIT } from 'utils/config';
 
@@ -15,7 +15,7 @@ interface IaddPostParams {
     content: string;
     attachment_url: string;
   };
-  creator: UserType;
+  uid: string;
 }
 
 interface IupdatePostParams {
@@ -26,7 +26,7 @@ interface IupdatePostParams {
     content: string;
     attachment_url: string;
   };
-  creator: UserType;
+  uid: string;
 }
 
 export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => {
@@ -40,10 +40,14 @@ export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => 
           .get()
       : await dbService.collection('posts').orderBy(orderBy, 'desc').limit(CARD_LIMIT).get();
 
-    const data = res.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const data = await Promise.all(
+      res.docs.map(async (doc) => {
+        const newItem = doc.data();
+        const userData = await newItem.creator.get();
+
+        return { ...newItem, id: doc.id, creator: userData.data() };
+      })
+    );
 
     const lastVisiblePost = res.docs[res.docs.length - 1];
 
@@ -71,10 +75,14 @@ export const getMorePosts = async ({ lastVisiblePost, category, orderBy }: IgetP
           .limit(CARD_LIMIT)
           .get();
 
-    const data = res.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const data = await Promise.all(
+      res.docs.map(async (doc) => {
+        const newItem = doc.data();
+        const userData = await newItem.creator.get();
+
+        return { ...newItem, id: doc.id, creator: userData.data() };
+      })
+    );
 
     const __lastVisiblePost = res.docs[res.docs.length - 1];
 
@@ -89,7 +97,16 @@ export const getPostDetail = async (postId: string) => {
   try {
     const res = await dbService.doc(`posts/${postId}`).get();
 
-    return { ...res.data(), id: res.id };
+    const postData: any = res.data();
+    const userData = await postData.creator.get();
+
+    const data = {
+      ...postData,
+      id: res.id,
+      creator: userData.data(),
+    };
+
+    return data;
   } catch (error) {
     console.log(error);
     return;
@@ -125,11 +142,11 @@ export const getPostBySearch = async (
   }
 };
 
-export const addPost = async ({ postInput, creator }: IaddPostParams) => {
+export const addPost = async ({ postInput, uid }: IaddPostParams) => {
   try {
     const res = await dbService.collection('posts').add({
       ...postInput,
-      creator,
+      creator: dbService.doc(`users/${uid}`),
       view_count: 0,
       liker_list: [],
       created_at: new Date().getTime(),
@@ -140,11 +157,11 @@ export const addPost = async ({ postInput, creator }: IaddPostParams) => {
   }
 };
 
-export const updatePost = async ({ postId, postInput, creator }: IupdatePostParams) => {
+export const updatePost = async ({ postId, postInput, uid }: IupdatePostParams) => {
   try {
     await dbService.doc(`posts/${postId}`).update({
       ...postInput,
-      creator,
+      creator: dbService.doc(`users/${uid}`),
     });
   } catch (error) {
     console.log(error);
@@ -170,18 +187,22 @@ export const viewCountUp = async (postId: string) => {
 };
 
 export const postLike = async (post_id: string, uid: string) => {
+  const userRef = dbService.doc(`users/${uid}`);
+
   try {
     await dbService.doc(`posts/${post_id}`).update({
-      liker_list: firebaseApp.firestore.FieldValue.arrayUnion(uid),
+      liker_list: firebaseApp.firestore.FieldValue.arrayUnion(userRef),
     });
   } catch (error) {
     console.log(error);
   }
 };
 export const postUnlike = async (post_id: string, uid: string) => {
+  const userRef = dbService.doc(`users/${uid}`);
+
   try {
     await dbService.doc(`posts/${post_id}`).update({
-      liker_list: firebaseApp.firestore.FieldValue.arrayRemove(uid),
+      liker_list: firebaseApp.firestore.FieldValue.arrayRemove(userRef),
     });
   } catch (error) {
     console.log(error);
