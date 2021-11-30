@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { BookHeart } from '@styled-icons/boxicons-regular';
 import { useState, useEffect } from 'react';
@@ -28,7 +27,7 @@ const MyLikes = () => {
           <BookHeart size='30px' />
           좋아요 목록
         </S.Title>
-        <S.PostCards posts={posts} />
+        <S.PostCards posts={posts} mypage={true} />
       </S.Container>
     </S.Wrapper>
   );

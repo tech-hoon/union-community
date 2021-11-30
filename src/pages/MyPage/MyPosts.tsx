@@ -27,7 +27,7 @@ const MyPosts = () => {
           <Book size='30px' />
           작성 목록
         </S.Title>
-        <S.PostCards posts={posts} />
+        <S.PostCards posts={posts} mypage={true} />
       </S.Container>
     </S.Wrapper>
   );

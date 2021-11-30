@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
 import { tagEliminatingRegex } from 'utils/regex';
 import { categoryColor } from 'utils/categoryColor';
+import { toDateStringByFormating } from 'utils/date';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';
@@ -12,9 +13,10 @@ import CommentCount from 'components/common/Count/CommentCount';
 
 interface Props {
   posts: PostType[] | [];
+  mypage?: boolean;
 }
 
-const PostCardBox = ({ posts }: Props) => {
+const PostCardBox = ({ posts, mypage = false }: Props) => {
   const history = useHistory();
 
   const handleClick = (id: string) => {
@@ -48,14 +50,14 @@ const PostCardBox = ({ posts }: Props) => {
               </Head>
               <Content>{tagEliminatingRegex(content).substring(0, 180)}</Content>
               <CardBottom>
-                <CreatorBox>
-                  <AvatarWrapper>
-                    <Avatar avatarId={creator.avatar_id} />
-                  </AvatarWrapper>
-                  <Creator>{creator.nickname}</Creator>
-                </CreatorBox>
-                {/* {new Date(created_at).toLocaleDateString()} */}
-
+                {!mypage && (
+                  <CreatorBox>
+                    <AvatarWrapper>
+                      <Avatar avatarId={creator.avatar_id} />
+                    </AvatarWrapper>
+                    <Creator>{creator.nickname}</Creator>
+                  </CreatorBox>
+                )}
                 <CountBox>
                   <ViewCount count={view_count || 0} />
                   <CommentCount count={comment_count || 0} />
