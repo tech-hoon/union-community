@@ -19,11 +19,13 @@ import { storageService } from 'service/firebase';
 import CommentCount from 'components/common/Count/CommentCount';
 import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';
+import PortalContainer from 'components/common/Portals/PortalContainer';
+import useModal from 'hooks/common/useModal';
+import AlertModal from 'components/common/Portals/AlertModal';
 
 interface Props {}
 
 // TODO: Comment 모듈화
-// TODO: API 호출 최소화
 
 const PostDetail = (props: Props) => {
   const location = useLocation();
@@ -37,19 +39,20 @@ const PostDetail = (props: Props) => {
   const [comments, setComments] = useState<CommentType[]>([]);
   const commentRef = useRef<any>(null);
 
+  const onDeletePost = async (id: string) => {
+    await deletePost(id);
+    post?.attachment_url!! && (await storageService.refFromURL(post?.attachment_url!!).delete());
+    history.push({ pathname: '/home', state: 'isDeleted' });
+  };
+
+  const { modalOpened, onShowModal, onCloseModal, onClickOkay } = useModal({
+    okayCallback: () => onDeletePost(id),
+  });
+
   const onViewCountUp = async () => {
     //TODO: 조회수 중복방지
     //await viewCountUp(id);
     await fetchPostDetail(id);
-  };
-
-  const onDeleteClick = async () => {
-    const ok = window.confirm('정말 삭제하시겠습니까?');
-    if (ok) {
-      await deletePost(id);
-      post?.attachment_url!! && (await storageService.refFromURL(post?.attachment_url!!).delete());
-      history.push({ pathname: '/home', state: 'isDeleted' });
-    }
   };
 
   const onUpdateClick = () => {
@@ -124,13 +127,13 @@ const PostDetail = (props: Props) => {
             {isCreator && (
               <EditBox>
                 <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
-                <DeleteBtn onClick={onDeleteClick}>삭제하기</DeleteBtn>
+                <DeleteBtn onClick={onShowModal}>삭제하기</DeleteBtn>
               </EditBox>
             )}
           </ROW_3>
           {/* <HR /> */}
           <Content dangerouslySetInnerHTML={contentMarkup} />
-          {post.attachment_url?.length && <Images src={post.attachment_url} alt='' />}
+          {post.attachment_url?.length ? <Images src={post.attachment_url} alt='' /> : <></>}
 
           <CountBox>
             <ViewCount size='16px' count={post.view_count || 0} />
@@ -154,11 +157,23 @@ const PostDetail = (props: Props) => {
         <PostSkeleton />
       )}
       <Footer />
+      {modalOpened && (
+        <PortalContainer onClose={onCloseModal}>
+          <AlertModal
+            title='글을 삭제하시겠습니까?'
+            twoButton={true}
+            onClose={onCloseModal}
+            onOkay={onClickOkay}
+          />
+        </PortalContainer>
+      )}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  overflow-y: hidden;
+`;
 
 const PostContainer = styled.section`
   max-width: 1120px;
@@ -302,7 +317,9 @@ const CommentWriteWrapper = styled.div`
   align-items: center;
   margin: 40px 0;
   gap: 4px;
-  border: 0.3px solid #999;
+  /* border: 0.3px solid #999; */
+  border: 2px solid #18a0fb;
+  border-radius: 2px;
   padding: 0px;
 `;
 
@@ -313,7 +330,6 @@ const CommentWrite = styled.input`
   width: 100%;
   height: 45px;
   flex: 1;
-  /* border: 0.3px solid #888; */
 `;
 
 const SubmitBtn = styled(Button)`
