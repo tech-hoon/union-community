@@ -187,22 +187,18 @@ export const viewCountUp = async (postId: string) => {
 };
 
 export const postLike = async (post_id: string, uid: string) => {
-  const userRef = dbService.doc(`users/${uid}`);
-
   try {
     await dbService.doc(`posts/${post_id}`).update({
-      liker_list: firebaseApp.firestore.FieldValue.arrayUnion(userRef),
+      liker_list: firebaseApp.firestore.FieldValue.arrayUnion(uid),
     });
   } catch (error) {
     console.log(error);
   }
 };
 export const postUnlike = async (post_id: string, uid: string) => {
-  const userRef = dbService.doc(`users/${uid}`);
-
   try {
     await dbService.doc(`posts/${post_id}`).update({
-      liker_list: firebaseApp.firestore.FieldValue.arrayRemove(userRef),
+      liker_list: firebaseApp.firestore.FieldValue.arrayRemove(uid),
     });
   } catch (error) {
     console.log(error);
