@@ -7,7 +7,8 @@ import { useEffect, useRef } from 'react';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { CATEGORY_LIST } from 'utils/config';
 import { PostType } from 'types';
-import { Delete } from '@styled-icons/material';
+import Loading from 'components/common/Loading';
+import { Cancel } from '@styled-icons/material';
 
 interface ILocationState {
   mode: string;
@@ -74,21 +75,23 @@ const UploadPost = () => {
             <ThumbnailWrapper>
               <Thumbnail src={attachment} alt='' />
               <ThumbnailDeleteBtn onClick={onDeleteAttachment} type='button'>
-                <Delete size='20px' />
+                <Cancel size='20px' />
               </ThumbnailDeleteBtn>
             </ThumbnailWrapper>
           </ThumbnailsBox>
         )}
-        {!isUploading ? (
-          <ButtonBox>
-            <CancleBtn type='button' onClick={onEditorCancle}>
-              취소하기
-            </CancleBtn>
-            <SubmitBtn type='submit'>등록하기</SubmitBtn>
-          </ButtonBox>
-        ) : (
-          <>로딩중</>
-        )}
+        <ButtonBox>
+          {!isUploading ? (
+            <>
+              <CancleBtn type='button' onClick={onEditorCancle}>
+                취소하기
+              </CancleBtn>
+              <SubmitBtn type='submit'>등록하기</SubmitBtn>
+            </>
+          ) : (
+            <Loading />
+          )}
+        </ButtonBox>
       </PostContainer>
     </Wrapper>
   );
