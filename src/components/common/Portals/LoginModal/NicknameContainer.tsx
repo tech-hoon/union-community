@@ -1,6 +1,6 @@
 import { FormEventHandler, useRef, useState } from 'react';
 import styled from 'styled-components';
-import AvatarSelect from './components/AvatarSelect';
+import AvatarSelect from '../../Avatar/AvatarSelect';
 import { addUser } from 'api/user';
 import { authService, firebaseApp } from 'service/firebase';
 import { loginUserType } from 'types';

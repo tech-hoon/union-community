@@ -13,7 +13,7 @@ interface Props {
   onClose: () => void;
 }
 
-const LoginPortal = ({ onClose }: Props) => {
+const LoginModal = ({ onClose }: Props) => {
   const { loginStep, onLoginStepPrev } = useLoginStep();
 
   const CurrentContainer = () => {
@@ -127,4 +127,4 @@ const CloseBtn = styled(CloseOutline)`
   cursor: pointer;
 `;
 
-export default LoginPortal;
+export default LoginModal;

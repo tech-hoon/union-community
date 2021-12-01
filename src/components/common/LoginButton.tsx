@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import LoginPortal from 'components/common/Portals/LoginPortal';
+import LoginModal from 'components/common/Portals/LoginModal';
 import { useState } from 'react';
 
 interface Props {}
 
 const LoginButton = (props: Props) => {
-  const [portalClicked, setPortalClicked] = useState(false);
-  const handlePortal = () => setPortalClicked(!portalClicked);
+  const [modalOpened, setModalOpened] = useState(false);
+  const handleModal = () => setModalOpened(!modalOpened);
 
   return (
     <>
-      <Button onClick={handlePortal}>시작하기</Button>
-      {portalClicked && <LoginPortal onClose={handlePortal} />}
+      <Button onClick={handleModal}>시작하기</Button>
+      {modalOpened && <LoginModal onClose={handleModal} />}
     </>
   );
 };

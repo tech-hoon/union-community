@@ -38,6 +38,7 @@ interface IWrapper {
 
 const Wrapper = styled.div<IWrapper>`
   width: ${(props) => props.size};
+  margin: 0 auto;
 `;
 const Box = styled.div`
   display: flex;
