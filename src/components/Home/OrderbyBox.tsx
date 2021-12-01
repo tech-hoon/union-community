@@ -26,8 +26,8 @@ const OrderbyBox = () => {
       </Button>
       <Button
         onClick={onButtonClick}
-        id='like_count'
-        color={clickedOrderby === 'like_count' ? 'black' : '#868e96'}
+        id='liker_list'
+        color={clickedOrderby === 'liker_list' ? 'black' : '#868e96'}
       >
         <FireIcon size={20} />
         <Title>인기순</Title>
