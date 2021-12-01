@@ -9,8 +9,11 @@ const Portal: FC = ({ children }) => {
   });
 
   useEffect(() => {
+    document.body.style.cssText = 'overflow:hidden';
     document.body.appendChild(container);
+
     return () => {
+      document.body.style.cssText = 'overflow:auto';
       document.body.removeChild(container);
     };
   }, [container]);
