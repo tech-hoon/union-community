@@ -4,7 +4,7 @@ import { Layouts as S } from 'components/Mypage/Layouts';
 import { SettingsOutline } from '@styled-icons/evaicons-outline';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
-import AvatarSelect from 'components/common/Portals/LoginPortal/components/AvatarSelect';
+import AvatarSelect from 'components/common/Avatar/AvatarSelect';
 import { useHistory } from 'react-router';
 import { updateProfile, verifyNickname } from 'api/user';
 import { loginUserType } from 'types';
@@ -17,6 +17,8 @@ const Setting = () => {
   const [errorInfo, setErrorInfo] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
+
+  //TODO: Avatar만 바꿀 때, 닉네임 그대로일 때 처리
 
   const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 10 - prev : prev - 1));
   const onAvatarIdNext = () => setAvatarId((prev) => (prev >= 10 ? (prev % 10) + 1 : prev + 1));
@@ -34,7 +36,7 @@ const Setting = () => {
     setErrorInfo(null);
   };
 
-  const onCancel = () => history.goBack();
+  const onCancel = () => history.push('/home');
 
   const onSubmit = async () => {
     const __value = inputRef?.current?.value;
@@ -75,7 +77,7 @@ const Setting = () => {
           <SettingsOutline size='30px' />
           나의 정보 수정
         </S.Title>
-        <S.Body>
+        <Body>
           <AvatarSelect
             onClickNext={onAvatarIdNext}
             onClickPrev={onAvatarIdPrev}
@@ -96,22 +98,31 @@ const Setting = () => {
           </NicknameWrapper>
           <ButtonWrapper>
             <CancleButton onClick={onCancel}>취소</CancleButton>
-            <SubmitButton onClick={onSubmit}>완료</SubmitButton>
+            <SubmitButton onClick={onSubmit} disabled={errorInfo ? true : false}>
+              완료
+            </SubmitButton>
             {/* <DeleteButton>회원 탈퇴</DeleteButton> */}
           </ButtonWrapper>
-        </S.Body>
+        </Body>
       </S.Container>
     </S.Wrapper>
   );
 };
 
+const Body = styled.div`
+  width: 100%;
+  margin: 40px auto;
+`;
+
 const NicknameWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   line-height: 1;
   margin-top: 32px;
 `;
+
 const Label = styled.label`
   align-self: flex-start;
   font-weight: bold;
@@ -151,12 +162,15 @@ const NicknameInput = styled.input<INicknameInput>`
 const InputErrorInfo = styled.div`
   width: 100%;
   font-size: 0.8rem;
+  height: 1rem;
   margin-top: 10px;
   color: #f77;
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  margin: 32px 0;
 `;
 
 const CancleButton = styled(S.Button)`
@@ -167,6 +181,11 @@ const CancleButton = styled(S.Button)`
 const SubmitButton = styled(S.Button)`
   background-color: black;
   margin-right: 8px;
+
+  &:disabled {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: not-allowed;
+  }
 `;
 const DeleteButton = styled(S.Button)`
   background-color: #f77;
