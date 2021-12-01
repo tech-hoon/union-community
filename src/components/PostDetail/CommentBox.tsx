@@ -25,12 +25,10 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
   const onEdit = (targetId: string) => setEditingComment(targetId);
   const onCancel = () => setEditingComment(null);
   const onDelete = async (commentId: string) => {
-    const ok = window.confirm('정말 삭제하시겠습니까?');
-    if (ok) {
-      await deleteComment(postId, commentId);
-      fetchComments();
-      setEditingComment(null);
-    }
+    //TODO: 모달창
+    await deleteComment(postId, commentId);
+    fetchComments();
+    setEditingComment(null);
   };
   const onSubmit = async (commentId: string) => {
     if (inputRef.current.value) {
@@ -174,7 +172,10 @@ const EditContent = styled.div``;
 
 const EditInput = styled.input`
   font-size: 20px;
-  padding: 20px 0 40px;
+  padding: 12px 4px;
+  border: 1px solid gray;
+  border-radius: 2px;
+  margin: 10px 0;
   width: 100%;
 `;
 
