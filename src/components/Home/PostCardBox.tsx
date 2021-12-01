@@ -95,6 +95,7 @@ const Wrapper = styled.ul`
 `;
 
 const PostCard = styled.li`
+  width: 100%;
   height: 300px;
   padding: 24px;
   background: #ffffff;
