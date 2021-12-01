@@ -20,10 +20,9 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   const history = useHistory();
   const [attachment, setAttachment] = useState('');
   const [isUploading, setIsUploading] = useState<boolean>(false);
-
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
 
-  const onEditorCancle = () => window.confirm('글 작성을 취소하시겠습니까?') && history.push('/');
+  const onEditorCancle = () => history.push('/');
 
   const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event: any) => {
     const file = event.target.files[0];
@@ -92,6 +91,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     };
 
     if (mode === 'add') {
+      setIsUploading(true);
       const __postId = await addPost({ postInput, uid: loginUser.uid });
       history.push({
         pathname: `/post/${__postId}`,
@@ -101,6 +101,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     }
 
     if (mode === 'update') {
+      setIsUploading(true);
       prevPost?.id && (await updatePost({ postInput, uid: loginUser.uid, postId: prevPost.id }));
       history.push({
         pathname: `/post/${prevPost?.id}`,
@@ -114,6 +115,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   return {
     attachment,
     setAttachment,
+    setIsUploading,
     onEditorCancle,
     onFileChange,
     onDeleteAttachment,
