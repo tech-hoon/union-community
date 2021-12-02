@@ -18,7 +18,7 @@ export const postCreated = functions
       count: admin.firestore.FieldValue.increment(1),
     });
 
-    firestore.doc(`users/${snapshot.data().creator.split('/')[2]}`).update({
+    firestore.doc(`users/${snapshot.data().creator.split('/')[2]}`).set({
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
 
@@ -49,7 +49,7 @@ export const postDeleted = functions
       count: admin.firestore.FieldValue.increment(-1),
     });
 
-    firestore.doc(`users/${snapshot.data().creator.split('/')[2]}`).update({
+    firestore.doc(`users/${snapshot.data().creator.split('/')[2]}`).set({
       post_list: admin.firestore.FieldValue.arrayRemove(snapshot.id),
     });
   });
@@ -75,14 +75,14 @@ export const postLiked = functions
 
     // user.like_list에 postId 추가
     if (uid_like.length) {
-      firestore.doc(`users/${uid_like}`).update({
+      firestore.doc(`users/${uid_like}`).set({
         like_list: admin.firestore.FieldValue.arrayUnion(postId),
       });
       return;
     }
 
     // user.like_list에 postId 제거
-    firestore.doc(`users/${uid_unlike}`).update({
+    firestore.doc(`users/${uid_unlike}`).set({
       like_list: admin.firestore.FieldValue.arrayRemove(postId),
     });
   });
@@ -92,7 +92,7 @@ export const commentCreated = functions
   .firestore.document('posts/{postId}/comments/{commentId}')
   .onCreate((_, context) => {
     const postId = context.resource.name.split('/')[6];
-    firestore.doc(`posts/${postId}`).update({
+    firestore.doc(`posts/${postId}`).set({
       comment_count: admin.firestore.FieldValue.increment(1),
     });
   });
@@ -102,7 +102,7 @@ export const commentDeleted = functions
   .firestore.document('posts/{postId}/comments/{commentId}')
   .onDelete((_, context) => {
     const postId = context.resource.name.split('/')[6];
-    firestore.doc(`posts/${postId}`).update({
+    firestore.doc(`posts/${postId}`).set({
       comment_count: admin.firestore.FieldValue.increment(-1),
     });
   });
