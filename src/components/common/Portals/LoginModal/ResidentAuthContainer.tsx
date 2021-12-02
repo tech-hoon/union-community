@@ -116,7 +116,7 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.h2`
-  margin: 20% 0;
+  margin: 15% 0;
 `;
 
 const Caption = styled.figcaption`

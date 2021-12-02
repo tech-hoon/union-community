@@ -212,14 +212,14 @@ const Title = styled.h1`
 
 const Category = styled.div`
   flex: 1;
-  max-width: 60px;
+  max-width: 80px;
 
   text-align: center;
   border: 0.1px solid #dedede;
   background-color: ${(props) => props.color};
   color: #eeeeee;
   border-radius: 20px;
-  padding: 4px 12px;
+  padding: 4px 16px;
   font-size: 1rem;
   line-height: 1;
 `;
