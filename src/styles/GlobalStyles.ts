@@ -34,6 +34,13 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
   }
 
+  /* ios select style reset */
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none; 
+    appearance: none;
+  }
+
   touch-action: pan-y;
 `;
 
