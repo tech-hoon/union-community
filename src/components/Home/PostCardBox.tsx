@@ -44,7 +44,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
             <PostCard key={key} onClick={() => handleClick(id!!)}>
               <Category color={categoryColor(category)}>{category}</Category>
               <Head>
-                <Title>{title}</Title>
+                <Title>{title.length > 10 ? `${title.substring(0, 10)}...` : title}</Title>
                 {!!attachment_url && <ImageIcon />}
               </Head>
               <Content>{tagEliminatingRegex(content).substring(0, 180)}</Content>
@@ -71,7 +71,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
   );
 };
 
-const Wrapper = styled.ul`
+const Wrapper = styled.ol`
   max-width: 1120px;
   padding: 0 60px;
 
@@ -95,7 +95,6 @@ const Wrapper = styled.ul`
 `;
 
 const PostCard = styled.li`
-  width: 100%;
   height: 300px;
   padding: 24px;
   background: #ffffff;
@@ -126,11 +125,11 @@ const Head = styled.div`
 const Title = styled.p`
   font-weight: 700;
   font-size: 1.3rem;
-
+  /* 
   display: block;
-  text-overflow: ellipsis; /* 말줄임 css */
-  white-space: nowrap; /*글자를 한줄로 모아준다*/
-  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; */
 `;
 
 const ImageIcon = styled(PhotoLibrary)`

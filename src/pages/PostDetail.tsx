@@ -203,9 +203,18 @@ const Title = styled.h1`
   font-weight: 700;
   font-size: 2rem;
   line-height: 1;
+  flex: 4;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1.5rem;
+  }
 `;
 
-const Category = styled.span`
+const Category = styled.div`
+  flex: 1;
+  max-width: 60px;
+
+  text-align: center;
   border: 0.1px solid #dedede;
   background-color: ${(props) => props.color};
   color: #eeeeee;
