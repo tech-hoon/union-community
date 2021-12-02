@@ -55,6 +55,7 @@ const OkayButton = styled(Button)`
 `;
 const CancelButton = styled(Button)`
   background-color: #e9ecef;
+  color: black;
 `;
 
 export default AlertModal;
