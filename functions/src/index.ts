@@ -14,31 +14,30 @@ export const postCreated = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}')
   .onCreate((snapshot) => {
-    firestore.doc(`counter/posts`).set({
+    firestore.doc(`counter/posts`).update({
       count: admin.firestore.FieldValue.increment(1),
     });
 
-    const uid = snapshot.data().creator.data().split('/')[2];
+    const uid = snapshot.data().creator.id;
 
-    firestore.doc(`users/${uid}`).set({
+    firestore.doc(`users/${uid}`).update({
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
 
-    const { creator, title, content, attachment_url } = snapshot.data();
+    const { title, content, attachment_url } = snapshot.data();
 
     Slack.send(
       `
-      [새로운 글이 등록되었습니다]
+    [새로운 글이 등록되었습니다]
 
-      * CREATOR
-      - id: ${creator.split('/')[2]}
+    * CREATOR
+    - id: ${uid}
 
-      * POST
-      - id: ${snapshot.id}
-      - title: ${title}
-      - content : ${content}
-      - attachment_url: ${attachment_url}
-
+    * POST
+    - id: ${snapshot.id}
+    - title: ${title}
+    - content : ${content}
+    - attachment_url: ${attachment_url}  
       `
     );
   });
@@ -47,13 +46,13 @@ export const postDeleted = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}')
   .onDelete((snapshot) => {
-    firestore.doc(`counter/posts`).set({
+    firestore.doc(`counter/posts`).update({
       count: admin.firestore.FieldValue.increment(-1),
     });
 
-    const uid = snapshot.data().creator.data().split('/')[2];
+    const uid = snapshot.data().creator.id;
 
-    firestore.doc(`users/${uid}`).set({
+    firestore.doc(`users/${uid}`).update({
       post_list: admin.firestore.FieldValue.arrayRemove(snapshot.id),
     });
   });
@@ -79,14 +78,14 @@ export const postLiked = functions
 
     // user.like_list에 postId 추가
     if (uid_like.length) {
-      firestore.doc(`users/${uid_like}`).set({
+      firestore.doc(`users/${uid_like}`).update({
         like_list: admin.firestore.FieldValue.arrayUnion(postId),
       });
       return;
     }
 
     // user.like_list에 postId 제거
-    firestore.doc(`users/${uid_unlike}`).set({
+    firestore.doc(`users/${uid_unlike}`).update({
       like_list: admin.firestore.FieldValue.arrayRemove(postId),
     });
   });
@@ -96,7 +95,7 @@ export const commentCreated = functions
   .firestore.document('posts/{postId}/comments/{commentId}')
   .onCreate((_, context) => {
     const postId = context.resource.name.split('/')[6];
-    firestore.doc(`posts/${postId}`).set({
+    firestore.doc(`posts/${postId}`).update({
       comment_count: admin.firestore.FieldValue.increment(1),
     });
   });
@@ -106,7 +105,7 @@ export const commentDeleted = functions
   .firestore.document('posts/{postId}/comments/{commentId}')
   .onDelete((_, context) => {
     const postId = context.resource.name.split('/')[6];
-    firestore.doc(`posts/${postId}`).set({
+    firestore.doc(`posts/${postId}`).update({
       comment_count: admin.firestore.FieldValue.increment(-1),
     });
   });
@@ -115,19 +114,19 @@ export const userCreated = functions
   .region('asia-northeast3')
   .firestore.document('users/{userId}')
   .onCreate((snapshot) => {
-    firestore.doc(`counter/users`).set({
+    firestore.doc(`counter/users`).update({
       count: admin.firestore.FieldValue.increment(1),
     });
 
     const { email, name, resident_auth_image, uid } = snapshot.data();
     Slack.send(
       `
-      [새로운 사용자가 등록되었습니다]
+    [새로운 사용자가 등록되었습니다]
       
-      아이디: ${uid}
-      이메일: ${email}
-      이름: ${name}
-      인증사진: ${resident_auth_image}
+    - 아이디: ${uid}
+    - 이메일: ${email}
+    - 이름: ${name}
+    - 인증사진: ${resident_auth_image}
       `
     );
   });
