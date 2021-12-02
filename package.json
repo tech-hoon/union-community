@@ -1,5 +1,5 @@
 {
-  "name": "univ-dorm-community",
+  "name": "union-community",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -37,6 +37,7 @@
     "deploy": "npm install && npm run build && npm run firebase",
     "firebase": "firebase login && firebase deploy"
   },
+  "homepage": "https://uni-on.me",
   "eslintConfig": {
     "extends": [
       "react-app",
