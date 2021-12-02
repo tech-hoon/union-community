@@ -1,36 +1,63 @@
 import { FormEventHandler, useRef, useState } from 'react';
 import styled from 'styled-components';
 import AvatarSelect from '../../Avatar/AvatarSelect';
-import { addUser } from 'api/user';
+import CustomInput from 'components/common/CustomInput';
+import { addUser, verifyNickname } from 'api/user';
 import { authService, firebaseApp } from 'service/firebase';
 import { loginUserType } from 'types';
 import { useSetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
+import { NICKNAME_LENGTH } from 'utils/config';
 
 interface Props {}
 
 const NicknameContainer = (prop: Props) => {
   const setLoginUser = useSetRecoilState(loginUserState);
   const [avatarId, setAvatarId] = useState<number>(1);
+  const [errorInfo, setErrorInfo] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 10 - prev : prev - 1));
   const onAvatarIdNext = () => setAvatarId((prev) => (prev >= 10 ? (prev % 10) + 1 : prev + 1));
 
-  //TODO: 로그인 처리 로직
-  const onClickSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const __value = event.target.value;
+    if (!__value) {
+      setErrorInfo('* 필수 입력 항목입니다.');
+      return;
+    }
+    if (__value.length > NICKNAME_LENGTH) {
+      setErrorInfo(`* ${NICKNAME_LENGTH}자 이하로 입력해주세요.`);
+      return;
+    }
+    setErrorInfo(null);
+  };
+
+  const onClickSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    //TODO: 닉네임 유효성 검사
+
+    const __value = inputRef?.current?.value;
+
+    if (!__value || __value.length > NICKNAME_LENGTH) {
+      setErrorInfo(
+        !__value ? `입력값을 모두 입력해 주세요` : `${NICKNAME_LENGTH}자 이하로 입력해주세요`
+      );
+      return;
+    }
+
+    if (!(await verifyNickname(__value))) {
+      setErrorInfo('* 이미 존재하는 닉네임입니다.');
+      return;
+    }
 
     try {
       const { displayName, email, uid }: any = authService.currentUser;
-
       const userData: loginUserType = {
         name: displayName,
         email,
         uid,
         avatar_id: avatarId,
-        nickname: inputRef.current?.value!!,
+        nickname: __value,
         like_list: [],
         post_list: [],
         created_at: new Date().getTime(),
@@ -56,8 +83,7 @@ const NicknameContainer = (prop: Props) => {
           />
         </AvatarWrapper>
         <NicknameWrapper>
-          <Label>닉네임</Label>
-          <Input ref={inputRef} />
+          <CustomInput label='닉네임' ref={inputRef} onChange={onChange} errorInfo={errorInfo} />
         </NicknameWrapper>
       </Body>
       <Button>시작하기</Button>
@@ -84,22 +110,8 @@ const AvatarWrapper = styled.div`
   margin-bottom: 24px;
 `;
 
-const NicknameWrapper = styled.div``;
-
-const Label = styled.label`
-  font-weight: 500;
-  font-size: 1.2rem;
-  margin-right: 8px;
-`;
-const Input = styled.input`
-  font-size: 1.2em;
-  padding: 4px 8px;
-  border: 0.1px solid #aaa;
-  border-radius: 4px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    width: 180px;
-  }
+const NicknameWrapper = styled.div`
+  width: 100%;
 `;
 
 const Button = styled.button`

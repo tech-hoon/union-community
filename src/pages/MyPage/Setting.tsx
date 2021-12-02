@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import CustomInput from 'components/common/CustomInput';
+import AvatarSelect from 'components/common/Avatar/AvatarSelect';
 import { useRef, useState } from 'react';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { SettingsOutline } from '@styled-icons/evaicons-outline';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
-import AvatarSelect from 'components/common/Avatar/AvatarSelect';
 import { useHistory } from 'react-router';
 import { updateProfile, verifyNickname } from 'api/user';
 import { loginUserType } from 'types';
@@ -42,7 +43,7 @@ const Setting = () => {
     const __value = inputRef?.current?.value;
 
     if (!__value || __value.length > NICKNAME_LENGTH) {
-      window.alert(
+      setErrorInfo(
         !__value ? `입력값을 모두 입력해 주세요` : `${NICKNAME_LENGTH}자 이하로 입력해주세요`
       );
       return;
@@ -84,18 +85,13 @@ const Setting = () => {
             avatarId={avatarId}
             size={`80%`}
           />
-          <NicknameWrapper>
-            <Label>닉네임</Label>
-            <InputWrapper>
-              <NicknameInput
-                defaultValue={user.nickname}
-                onChange={onChange}
-                ref={inputRef}
-                isWarning={!!errorInfo}
-              />
-              <InputErrorInfo>{errorInfo}</InputErrorInfo>
-            </InputWrapper>
-          </NicknameWrapper>
+          <CustomInput
+            defaultValue={user.nickname}
+            label='닉네임'
+            ref={inputRef}
+            onChange={onChange}
+            errorInfo={errorInfo}
+          />
           <ButtonWrapper>
             <CancleButton onClick={onCancel}>취소</CancleButton>
             <SubmitButton onClick={onSubmit} disabled={errorInfo ? true : false}>
@@ -112,59 +108,6 @@ const Setting = () => {
 const Body = styled.div`
   width: 100%;
   margin: 40px auto;
-`;
-
-const NicknameWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  line-height: 1;
-  margin-top: 32px;
-`;
-
-const Label = styled.label`
-  align-self: flex-start;
-  font-weight: bold;
-  font-size: 1.3rem;
-  padding-top: 9px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2em;
-  }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1em;
-  }
-`;
-
-interface INicknameInput {
-  isWarning: boolean;
-}
-
-const InputWrapper = styled.div``;
-
-const NicknameInput = styled.input<INicknameInput>`
-  font-size: 1.5rem;
-  padding: 4px 0 4px 8px;
-  border: 1px solid ${({ isWarning }) => (isWarning ? '#f77' : '#ccc')};
-  border-radius: 4px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.3em;
-  }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1em;
-  }
-`;
-
-const InputErrorInfo = styled.div`
-  width: 100%;
-  font-size: 0.8rem;
-  height: 1rem;
-  margin-top: 10px;
-  color: #f77;
 `;
 
 const ButtonWrapper = styled.div`
