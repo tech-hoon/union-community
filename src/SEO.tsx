@@ -11,6 +11,18 @@ const SEO = () => (
     <meta property='og:description' content='대학생 연합기숙사 입주생을 위한 커뮤니티입니다.' />
     <meta property='og:site_name' content='union' />
     <meta property='og:locale' content='kor-KR' />
+    <meta charSet='utf-8' />
+    <link rel='icon' href='%PUBLIC_URL%/logo192.png' />
+    <meta
+      name='viewport'
+      content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'
+    />
+    <link
+      href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
+      rel='stylesheet'
+      type='text/css'
+    />
+    <title>대학생 연합기숙사 커뮤니티, 유니온</title>
   </Helmet>
 );
 
