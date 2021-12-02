@@ -2,7 +2,7 @@ import Helmet from 'react-helmet';
 
 const SEO = () => (
   <Helmet>
-    <meta name='theme-color' content='#000000' />
+    {/* <meta name='theme-color' content='#000000' />
     <meta name='description' content='Web site created using create-react-app' />
     <meta property='og:type' content='website' />
     <meta property='og:url' content='https://uni-on.me/' />
@@ -22,7 +22,7 @@ const SEO = () => (
       rel='stylesheet'
       type='text/css'
     />
-    <title>대학생 연합기숙사 커뮤니티, 유니온</title>
+    <title>대학생 연합기숙사 커뮤니티, 유니온</title> */}
   </Helmet>
 );
 
