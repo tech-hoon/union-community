@@ -53,7 +53,7 @@ const Setting = () => {
       return;
     }
 
-    if (!(await verifyNickname(__value))) {
+    if (!(await verifyNickname(__value)) && user.nickname !== __value) {
       setErrorInfo('* 이미 존재하는 닉네임입니다.');
       return;
     }
