@@ -18,7 +18,9 @@ export const postCreated = functions
       count: admin.firestore.FieldValue.increment(1),
     });
 
-    firestore.doc(`users/${snapshot.data().creator.split('/')[2]}`).set({
+    const uid = snapshot.data().creator.data().split('/')[2];
+
+    firestore.doc(`users/${uid}`).set({
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
 
@@ -49,7 +51,9 @@ export const postDeleted = functions
       count: admin.firestore.FieldValue.increment(-1),
     });
 
-    firestore.doc(`users/${snapshot.data().creator.split('/')[2]}`).set({
+    const uid = snapshot.data().creator.data().split('/')[2];
+
+    firestore.doc(`users/${uid}`).set({
       post_list: admin.firestore.FieldValue.arrayRemove(snapshot.id),
     });
   });
@@ -111,6 +115,10 @@ export const userCreated = functions
   .region('asia-northeast3')
   .firestore.document('users/{userId}')
   .onCreate((snapshot) => {
+    firestore.doc(`counter/users`).set({
+      count: admin.firestore.FieldValue.increment(1),
+    });
+
     const { email, name, resident_auth_image, uid } = snapshot.data();
     Slack.send(
       `
