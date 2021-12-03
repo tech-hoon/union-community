@@ -9,6 +9,9 @@ const Footer = (props: Props) => {
   return (
     <Wrapper>
       <Title>&copy; Nam Taekhun {new Date().getFullYear()}</Title>
+      <OpenKakao href='https://open.kakao.com/o/s3IX0aNd' target='_blank'>
+        문의사항
+      </OpenKakao>
       <GithubIcon href='https://github.com/tech-hoon' target='_blank'>
         <Github size='14px' />
       </GithubIcon>
@@ -26,6 +29,11 @@ const Wrapper = styled.footer`
   justify-content: center;
   align-items: center;
   gap: 8px;
+`;
+
+const OpenKakao = styled.a`
+  color: #999999;
+  text-decoration: none;
 `;
 
 const Title = styled.p`

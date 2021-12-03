@@ -90,9 +90,9 @@ const Home = () => {
       </MidWrapper>
       {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
-      <OpenKakaoIcon href='https://open.kakao.com/o/s3IX0aNd' target='_blank'>
+      {/* <OpenKakaoIcon href='https://open.kakao.com/o/s3IX0aNd' target='_blank'>
         <KakaoIcon />
-      </OpenKakaoIcon>
+      </OpenKakaoIcon> */}
       <ScrollUpIcon size='56px' onClick={() => window.scroll({ behavior: 'smooth', top: 0 })} />
       <Observer ref={ioRef} />
       <Footer />
