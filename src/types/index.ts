@@ -5,6 +5,8 @@ export interface CommentType {
   created_at: number;
   liker_list: [];
   is_edited?: boolean;
+  is_deleted: boolean;
+  parent_comment_id: string | null;
 }
 
 export type UserType = {
@@ -28,12 +30,12 @@ export interface PostType {
   title: string;
   content: string;
   creator: UserType;
-  comment_count: number;
-  view_count: number;
   liker_list: string[];
   created_at: number;
-  comment?: CommentType[] | [];
-  attachment_url?: string;
+  attachment_url: string | '';
+  visitor_list: string[];
+  comment_list: CommentType[] | [];
+  comment_count: number;
 }
 
 export interface PostFormType {

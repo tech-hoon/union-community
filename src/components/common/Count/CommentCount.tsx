@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   padding: 0 4px;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 `;
 
 interface ICount {

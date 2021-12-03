@@ -103,11 +103,15 @@ export const commentCreated = functions
 export const commentDeleted = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}/comments/{commentId}')
-  .onDelete((_, context) => {
-    const postId = context.resource.name.split('/')[6];
-    firestore.doc(`posts/${postId}`).update({
-      comment_count: admin.firestore.FieldValue.increment(-1),
-    });
+  .onUpdate((snapshot, context) => {
+    const isDeleted = snapshot.after.data().isDeleted;
+
+    if (isDeleted) {
+      const postId = context.resource.name.split('/')[6];
+      firestore.doc(`posts/${postId}`).update({
+        comment_count: admin.firestore.FieldValue.increment(-1),
+      });
+    }
   });
 
 export const userCreated = functions
@@ -130,5 +134,3 @@ export const userCreated = functions
       `
     );
   });
-
-// export const postViewUp = functions.https.onRequest((request:any, response:any)=>{});
