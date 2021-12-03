@@ -10,6 +10,7 @@ import Avatar7 from './Avatar7';
 import Avatar8 from './Avatar8';
 import Avatar9 from './Avatar9';
 import Avatar10 from './Avatar10';
+import DefaultAvatar from './DefaultAvatar';
 
 interface Props {
   avatarId: number;
@@ -39,7 +40,7 @@ const CurrentAvatar = ({ avatarId }: Props) => {
     case 10:
       return <Avatar10 />;
     default:
-      return <></>;
+      return <DefaultAvatar />;
   }
 };
 
@@ -59,6 +60,9 @@ const Wrapper = styled.div<IWrapper>`
   border-radius: 50%;
   width: ${(props) => props.size || 32}px;
   height: ${(props) => props.size || 32}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 0.3px solid #999;
   background-color: white;
   overflow: hidden;

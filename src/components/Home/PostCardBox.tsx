@@ -35,7 +35,6 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
             visitor_list,
             liker_list,
             comment_count,
-            created_at,
             attachment_url,
           },
           key
@@ -52,9 +51,11 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
                 {!mypage && (
                   <CreatorBox>
                     <AvatarWrapper>
-                      <Avatar avatarId={creator.avatar_id} />
+                      <Avatar avatarId={category === '비밀' ? -1 : creator.avatar_id} />
                     </AvatarWrapper>
-                    <Creator>{creator.nickname}</Creator>
+                    <Creator isSecret={category === '비밀'}>
+                      {category === '비밀' ? '익명' : creator.nickname}
+                    </Creator>
                   </CreatorBox>
                 )}
                 <CountBox>
@@ -168,9 +169,13 @@ const CountBox = styled.div`
 
 const AvatarWrapper = styled.div``;
 
-const Creator = styled.span`
+interface ICreator {
+  isSecret: boolean;
+}
+
+const Creator = styled.span<ICreator>`
   font-weight: 500;
-  color: ${({ theme }) => theme.color.BLUE};
+  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.BLUE)};
   font-size: 16px;
 
   @media ${({ theme }) => theme.size.mobile} {

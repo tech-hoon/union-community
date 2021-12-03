@@ -14,14 +14,16 @@ interface Props {
   postId: string;
   commentList: CommentType[];
   fetchComments: () => void;
+  category: string;
 }
 
-const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
+const CommentBox = ({ postId, commentList, fetchComments, category }: Props) => {
   const [editingComment, setEditingComment] = useState<string | null>();
   const [replyingComment, setReplyingComment] = useState<string | null>();
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
   const inputRef = useRef<any>(null);
   const replyInputRef = useRef<any>(null);
+  const isSecretPost = category === '비밀';
 
   const onCancel = () => setEditingComment(null);
   const onDelete = async (commentId: string) => {
@@ -91,10 +93,10 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
             <Comment key={key}>
               <ROW1>
                 <COL1>
-                  <Avatar avatarId={avatar_id} />
+                  <Avatar avatarId={isSecretPost ? -1 : avatar_id} />
                 </COL1>
                 <COL2>
-                  <Nickname>{nickname}</Nickname>
+                  <Nickname>{isSecretPost ? '익명' : nickname}</Nickname>
                   <CreatedAt>{toDateStringByFormating(created_at, true)}</CreatedAt>
                 </COL2>
                 {!is_deleted && (
@@ -136,7 +138,7 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
                   <ReplyInput
                     autoFocus
                     ref={replyInputRef}
-                    placeholder={`${nickname}님에게 답글 달기`}
+                    placeholder={`${isSecretPost ? '익명' : nickname}에게 답글 달기`}
                   />
                   <ReplyCancleBtn onClick={onReplyCancle}>취소하기</ReplyCancleBtn>
                   <ReplySubmitBtn onClick={() => onReplyComment(id)}>등록하기</ReplySubmitBtn>
@@ -149,10 +151,10 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
             <ReplyComment key={key}>
               <ROW1>
                 <COL1>
-                  <Avatar avatarId={avatar_id} />
+                  <Avatar avatarId={isSecretPost ? -1 : avatar_id} />
                 </COL1>
                 <COL2>
-                  <Nickname>{nickname}</Nickname>
+                  <Nickname>{isSecretPost ? '익명' : nickname}</Nickname>
                   <CreatedAt>{toDateStringByFormating(created_at, true)}</CreatedAt>
                 </COL2>
                 {!is_deleted && (

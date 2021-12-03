@@ -38,6 +38,7 @@ const PostDetail = (props: Props) => {
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
   const [comments, setComments] = useState<CommentType[]>([]);
   const commentRef = useRef<any>(null);
+  const isSecret = post?.category === '비밀';
 
   const onDeletePost = async (id: string) => {
     await deletePost(id);
@@ -118,12 +119,12 @@ const PostDetail = (props: Props) => {
           </BackButton>
           <ROW_1>
             <Title>{post.title}</Title>
-            <Category color={categoryColor('자유')}>{post.category}</Category>
+            <Category color={categoryColor(post.category)}>{post.category}</Category>
           </ROW_1>
           <ROW_2>
             <ProfileBox>
-              <Avatar avatarId={post.creator.avatar_id} />
-              <Creator>{post.creator.nickname}</Creator>
+              <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
+              <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
             </ProfileBox>
             <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
           </ROW_2>
@@ -155,7 +156,12 @@ const PostDetail = (props: Props) => {
             <SubmitBtn onClick={onSubmitComment}>등록하기</SubmitBtn>
           </CommentWriteWrapper>
 
-          <CommentBox postId={id} commentList={comments} fetchComments={fetchComments} />
+          <CommentBox
+            postId={id}
+            commentList={comments}
+            fetchComments={fetchComments}
+            category={post.category}
+          />
         </PostContainer>
       ) : (
         <PostSkeleton />
@@ -259,10 +265,14 @@ const ProfileBox = styled.div`
   gap: 4px;
 `;
 
-const Creator = styled.span`
+interface ICreator {
+  isSecret: boolean;
+}
+
+const Creator = styled.span<ICreator>`
   font-weight: 500;
   font-size: 1.2em;
-  color: #999999;
+  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.BLUE)};
 `;
 
 const CountBox = styled.div`
