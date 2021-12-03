@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
-import CommentBox from 'components/PostDetail/CommentBox';
+import CommentBox from 'components/PostDetail/Comment/CommentBox';
 import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
@@ -50,9 +50,9 @@ const PostDetail = (props: Props) => {
   });
 
   const onViewCountUp = async () => {
-    //TODO: 조회수 중복방지
-    //await viewCountUp(id);
-    await fetchPostDetail(id);
+    if (post && !post?.visitor_list.includes(loginUser.uid)) {
+      await viewCountUp(post.id, loginUser.uid);
+    }
   };
 
   const onUpdateClick = () => {
@@ -93,9 +93,13 @@ const PostDetail = (props: Props) => {
   }, [post]);
 
   useEffect(() => {
-    onViewCountUp();
+    fetchPostDetail(id);
     fetchComments();
   }, []);
+
+  useEffect(() => {
+    onViewCountUp();
+  }, [post]);
 
   return (
     <Wrapper>
@@ -136,11 +140,11 @@ const PostDetail = (props: Props) => {
           {post.attachment_url?.length ? <Images src={post.attachment_url} alt='' /> : <></>}
 
           <CountBox>
-            <ViewCount size='16px' count={post.view_count || 0} />
-            <CommentCount size='16px' count={post.comment_count || 0} />
+            <ViewCount size='16px' count={post.visitor_list?.length} />
+            <CommentCount size='16px' count={post.comment_count} />
             <LikeCount
               size='16px'
-              count={post.liker_list.length || 0}
+              count={post.liker_list?.length}
               flag={likeOrUnlike(post.liker_list, loginUser.uid)}
               onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 800)}
             />
@@ -215,7 +219,6 @@ const Category = styled.div`
   max-width: 60px;
 
   text-align: center;
-  border: 0.1px solid #dedede;
   background-color: ${(props) => props.color};
   color: #eeeeee;
   border-radius: 20px;
@@ -247,12 +250,6 @@ const ROW_3 = styled.div`
     font-size: 1em;
     margin: 20px 0;
   }
-`;
-
-const HR = styled.hr`
-  height: 3px;
-  background-color: #dcdcdc;
-  border: none;
 `;
 
 const ProfileBox = styled.div`
@@ -326,9 +323,9 @@ const CommentWriteWrapper = styled.div`
   align-items: center;
   margin: 40px 0;
   gap: 4px;
-  /* border: 0.3px solid #999; */
-  border: 2px solid #18a0fb;
-  border-radius: 2px;
+  border: 0.3px solid #666;
+  /* border: 2px solid #18a0fb; */
+  border-radius: 4px;
   padding: 0px;
 `;
 
@@ -343,7 +340,7 @@ const CommentWrite = styled.input`
 
 const SubmitBtn = styled(Button)`
   width: 100px;
-  color: #18a0fb;
+  color: #666;
 `;
 
 export default PostDetail;
