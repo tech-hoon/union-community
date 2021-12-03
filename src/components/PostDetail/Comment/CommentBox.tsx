@@ -111,9 +111,9 @@ const CommentBox = ({ postId, commentList, fetchComments, category }: Props) => 
                   </COL3>
                 )}
                 <COL5>
+                  <ReplyBtn onClick={() => onReplyOpen(id)}>답글</ReplyBtn>
                   {uid === loginUser.uid && !is_deleted && (
                     <>
-                      <ReplyBtn onClick={() => onReplyOpen(id)}>답글</ReplyBtn>
                       <EditBtn onClick={() => onEdit(id)}>수정</EditBtn>
                       <DelBtn onClick={() => onDelete(id)}>삭제</DelBtn>
                     </>
