@@ -23,10 +23,13 @@ const MyPosts = () => {
     <S.Wrapper>
       <S.Navbar isLoggedIn={true} />
       <S.Container>
-        <S.Title>
-          <Book size='30px' />
-          작성 목록
-        </S.Title>
+        <S.Header>
+          <S.Title>
+            <Book size='30px' />
+            작성 목록
+          </S.Title>
+          <S.Subtitle>* 반영되는 데에는 최대 1분 정도 소요될 수 있습니다.</S.Subtitle>
+        </S.Header>
         <S.PostCards posts={posts} mypage={true} />
       </S.Container>
     </S.Wrapper>

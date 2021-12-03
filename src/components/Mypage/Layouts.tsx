@@ -11,14 +11,37 @@ export const Layouts = {
     margin: auto;
   `,
 
-  Title: styled.div`
+  Header: styled.header`
     margin-top: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      flex-direction: column;
+      align-items: baseline;
+      gap: 20px;
+    }
+  `,
+
+  Title: styled.h1`
     font-weight: bold;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     line-height: 1;
     display: flex;
     align-items: center;
     gap: 4px;
+  `,
+
+  Subtitle: styled.h2`
+    font-size: 1.2rem;
+    color: gray;
+    font-weight: 500;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 1rem;
+    }
   `,
 
   Body: styled.div`
@@ -29,7 +52,7 @@ export const Layouts = {
   PostCards: styled(PostCardBox)`
     grid-template-columns: 1fr 1fr 1fr;
 
-    @media ${({ theme }) => theme.size.mobile} {
+    @media ${({ theme }) => theme.size.tablet} {
       grid-template-columns: 1fr 1fr;
     }
 

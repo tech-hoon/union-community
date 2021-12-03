@@ -89,7 +89,9 @@ const UploadPost = () => {
               <SubmitBtn type='submit'>등록하기</SubmitBtn>
             </>
           ) : (
-            <Loading />
+            <LoadingWrapper>
+              <Loading />
+            </LoadingWrapper>
           )}
         </ButtonBox>
       </PostContainer>
@@ -176,14 +178,15 @@ const ThumbnailDeleteBtn = styled.button`
 
 const Thumbnail = styled.img`
   width: 100%;
+  box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
 `;
 
 const ThumbnailWrapper = styled.li`
   width: 100px;
   position: relative;
-  padding: 8px;
-  border: 1px solid #888;
-  border-radius: 4px;
+  /* padding: 8px; */
+  /* border: 1px solid #888; */
+  /* border-radius: 4px; */
 `;
 
 const ButtonBox = styled.div`
@@ -214,11 +217,14 @@ const CancleBtn = styled(Button)`
 const SubmitBtn = styled(Button)`
   background-color: skyblue;
   color: white;
-
-  &:hover {
+  ㅔ &:hover {
     background-color: rgb(24, 160, 251);
     transition: 0.3s ease-in-out;
   }
+`;
+
+const LoadingWrapper = styled.div`
+  width: 50%;
 `;
 
 export default UploadPost;
