@@ -32,10 +32,10 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
             title,
             content,
             creator,
-            view_count,
+            visitor_list,
             liker_list,
-            created_at,
             comment_count,
+            created_at,
             attachment_url,
           },
           key
@@ -58,9 +58,9 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
                   </CreatorBox>
                 )}
                 <CountBox>
-                  <ViewCount count={view_count || 0} />
-                  <CommentCount count={comment_count || 0} />
-                  <LikeCount count={liker_list.length || 0} />
+                  <ViewCount count={visitor_list.length} />
+                  <CommentCount count={comment_count} />
+                  <LikeCount count={liker_list.length} />
                 </CountBox>
               </CardBottom>
             </PostCard>
