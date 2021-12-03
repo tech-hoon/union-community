@@ -5,10 +5,11 @@ import CategoryBox from 'components/Home/CategoryBox';
 import OrderbyBox from 'components/Home/OrderbyBox';
 import Footer from 'components/common/Footer';
 import Banner from 'components/common/Banner';
+import KakaoIcon from 'assets/icons/KakaoIcon';
+import SearchBox from 'components/Home/SearchBox';
 import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
-import SearchBox from 'components/Home/SearchBox';
 import { dbService } from 'service/firebase';
 import { useGetPosts } from 'hooks/post/useGetPosts';
 import useLocalStorage from 'hooks/common/useLocalStorage';
@@ -89,7 +90,10 @@ const Home = () => {
       </MidWrapper>
       {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
-      <ScrollUpIcon size='60px' onClick={() => window.scroll({ behavior: 'smooth', top: 0 })} />
+      <OpenKakaoIcon href='https://open.kakao.com/o/s3IX0aNd' target='_blank'>
+        <KakaoIcon />
+      </OpenKakaoIcon>
+      <ScrollUpIcon size='56px' onClick={() => window.scroll({ behavior: 'smooth', top: 0 })} />
       <Observer ref={ioRef} />
       <Footer />
     </Wrapper>
@@ -100,9 +104,27 @@ const Wrapper = styled.div``;
 
 const ScrollUpIcon = styled(ChevronUpCircle)`
   position: fixed;
-  right: 24px;
-  bottom: 48px;
   color: rgba(136, 136, 136, 0.8);
+
+  right: 48px;
+  bottom: 64px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    right: 24px;
+    bottom: 52px;
+  }
+`;
+
+const OpenKakaoIcon = styled.a`
+  position: fixed;
+
+  left: 48px;
+  bottom: 64px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    left: 24px;
+    bottom: 52px;
+  }
 `;
 
 const Observer = styled.div`
