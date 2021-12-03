@@ -4,7 +4,7 @@ import { Eye } from '@styled-icons/fa-regular';
 
 interface Props {
   size?: string;
-  count: number;
+  count: number | 0;
 }
 
 const ViewCount = ({ size, count }: Props) => {
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   padding: 0 4px;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 `;
 
 interface ICount {

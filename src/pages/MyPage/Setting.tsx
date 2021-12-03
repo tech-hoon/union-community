@@ -73,10 +73,10 @@ const Setting = () => {
     <S.Wrapper>
       <S.Navbar isLoggedIn={true} />
       <S.Container>
-        <S.Title>
+        <Title>
           <SettingsOutline size='30px' />
           나의 정보 수정
-        </S.Title>
+        </Title>
         <Body>
           <AvatarSelect
             onClickNext={onAvatarIdNext}
@@ -121,6 +121,12 @@ const NicknameWrapper = styled.div`
   gap: 12px;
   line-height: 1;
   margin-top: 32px;
+`;
+
+const Title = styled(S.Title)`
+  @media ${({ theme }) => theme.size.mobile} {
+    justify-content: center;
+  }
 `;
 
 const Label = styled.label`
