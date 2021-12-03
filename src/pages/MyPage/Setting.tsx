@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import AvatarSelect from 'components/common/Avatar/AvatarSelect';
+import CustomInput from 'components/common/CustomInput';
 import { useRef, useState } from 'react';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { SettingsOutline } from '@styled-icons/evaicons-outline';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
-import AvatarSelect from 'components/common/Avatar/AvatarSelect';
 import { useHistory } from 'react-router';
 import { updateProfile, verifyNickname } from 'api/user';
 import { loginUserType } from 'types';
@@ -71,10 +72,13 @@ const Setting = () => {
     <S.Wrapper>
       <S.Navbar isLoggedIn={true} />
       <S.Container>
-        <Title>
-          <SettingsOutline size='30px' />
-          나의 정보 수정
-        </Title>
+        <S.Header>
+          <S.Title>
+            <SettingsOutline size='30px' />
+            나의 정보 수정
+          </S.Title>
+          {/* <S.Subtitle>* 닉네임은 1회만 변경 가능합니다.</S.Subtitle> */}
+        </S.Header>
         <Body>
           <AvatarSelect
             onClickNext={onAvatarIdNext}
@@ -83,24 +87,21 @@ const Setting = () => {
             size={`80%`}
           />
           <NicknameWrapper>
-            <Label>닉네임</Label>
-            <InputWrapper>
-              <NicknameInput
-                defaultValue={user.nickname}
-                onChange={onChange}
-                ref={inputRef}
-                isWarning={!!errorInfo}
-              />
-              <InputErrorInfo>{errorInfo}</InputErrorInfo>
-            </InputWrapper>
+            <CustomInput
+              label='닉네임'
+              defaultValue={user.nickname}
+              onChange={onChange}
+              errorInfo={errorInfo}
+              ref={inputRef}
+            />
           </NicknameWrapper>
           <ButtonWrapper>
             <CancleButton onClick={onCancel}>취소</CancleButton>
             <SubmitButton onClick={onSubmit} disabled={!!errorInfo}>
               완료
             </SubmitButton>
-            {/* <DeleteButton>회원 탈퇴</DeleteButton> */}
           </ButtonWrapper>
+          {/* <DeleteButton>회원 탈퇴</DeleteButton> */}
         </Body>
       </S.Container>
     </S.Wrapper>
@@ -121,12 +122,6 @@ const NicknameWrapper = styled.div`
   margin-top: 32px;
 `;
 
-const Title = styled(S.Title)`
-  @media ${({ theme }) => theme.size.mobile} {
-    justify-content: center;
-  }
-`;
-
 const Label = styled.label`
   align-self: flex-start;
   font-weight: bold;
@@ -134,41 +129,10 @@ const Label = styled.label`
   padding-top: 9px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2em;
-  }
-
-  @media ${({ theme }) => theme.size.mobile} {
     font-size: 1em;
+    padding-top: 6px;
+    flex: 1;
   }
-`;
-
-interface INicknameInput {
-  isWarning: boolean;
-}
-
-const InputWrapper = styled.div``;
-
-const NicknameInput = styled.input<INicknameInput>`
-  font-size: 1.5rem;
-  padding: 4px 0 4px 8px;
-  border: 1px solid ${({ isWarning }) => (isWarning ? '#f77' : '#ccc')};
-  border-radius: 4px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.3em;
-  }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1em;
-  }
-`;
-
-const InputErrorInfo = styled.div`
-  width: 100%;
-  font-size: 0.8rem;
-  height: 1rem;
-  margin-top: 10px;
-  color: #f77;
 `;
 
 const ButtonWrapper = styled.div`
@@ -192,6 +156,8 @@ const SubmitButton = styled(S.Button)`
 `;
 const DeleteButton = styled(S.Button)`
   background-color: #f77;
+  float: right;
+  bottom: 0px;
 `;
 
 export default Setting;

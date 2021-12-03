@@ -51,6 +51,7 @@ const Label = styled.label`
 const InputWrapper = styled.div``;
 
 const NicknameInput = styled.input<INicknameInput>`
+  width: 100%;
   font-size: 1.5rem;
   padding: 4px 0 4px 8px;
   border: 1px solid ${({ errorInfo }) => (errorInfo ? '#f77' : '#ccc')};
