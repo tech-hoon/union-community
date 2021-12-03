@@ -43,7 +43,7 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
     if (replyInputRef.current.value) {
       await addComment({
         post_id: postId,
-        creator: loginUser,
+        uid: loginUser.uid,
         content: replyInputRef.current.value,
         parent_comment_id: parentId,
       });
@@ -61,6 +61,8 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
     setEditingComment(null);
     setReplyingComment(targetId);
   };
+
+  const onReplyCancle = () => setReplyingComment(null);
 
   const onLikeComment = async (like_list: string[], loginUserUid: string, comment_id: string) => {
     likeOrUnlike(like_list, loginUserUid) === 'unlike'
@@ -101,7 +103,7 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
                       size='16px'
                       count={liker_list.length || 0}
                       flag={likeOrUnlike(liker_list, loginUser?.uid)}
-                      onClick={debounce(() => onLikeComment(liker_list, loginUser?.uid, id), 800)}
+                      onClick={debounce(() => onLikeComment(liker_list, loginUser?.uid, id), 500)}
                     />
                     <IsEdited>{is_edited ? '수정됨' : ''}</IsEdited>
                   </COL3>
@@ -131,7 +133,12 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
               </ROW2>
               {replyingComment === id && !is_deleted ? (
                 <ROW3>
-                  <ReplyInput autoFocus ref={replyInputRef} />
+                  <ReplyInput
+                    autoFocus
+                    ref={replyInputRef}
+                    placeholder={`${nickname}님에게 답글 달기`}
+                  />
+                  <ReplyCancleBtn onClick={onReplyCancle}>취소하기</ReplyCancleBtn>
                   <ReplySubmitBtn onClick={() => onReplyComment(id)}>등록하기</ReplySubmitBtn>
                 </ROW3>
               ) : (
@@ -154,7 +161,7 @@ const CommentBox = ({ postId, commentList, fetchComments }: Props) => {
                       size='16px'
                       count={liker_list.length || 0}
                       flag={likeOrUnlike(liker_list, loginUser?.uid)}
-                      onClick={debounce(() => onLikeComment(liker_list, loginUser?.uid, id), 800)}
+                      onClick={debounce(() => onLikeComment(liker_list, loginUser?.uid, id), 500)}
                     />
                     <IsEdited>{is_edited ? '수정됨' : ''}</IsEdited>
                   </COL3>
@@ -230,14 +237,10 @@ const COL5 = styled.div`
   margin-left: auto;
   align-items: center;
   gap: 4px;
-
-  /* @media ${({ theme }) => theme.size.mobile} {
-    flex-direction: column;
-  } */
 `;
 
 const CommentButton = styled.button`
-  color: rgb(26, 140, 250);
+  color: gray;
   padding: 4px 4px;
   font-size: 0.7rem;
 
@@ -252,7 +255,6 @@ const DelBtn = styled(CommentButton)``;
 
 const CreatedAt = styled.p`
   font-size: 0.8rem;
-
   color: gray;
 
   @media ${({ theme }) => theme.size.mobile} {
@@ -265,22 +267,36 @@ const Nickname = styled.p`
 `;
 
 const Input = styled.input`
-  font-size: 20px;
-  padding: 12px 4px;
+  font-size: 1rem;
+  padding: 8px;
   border: 1px solid gray;
-  border-radius: 2px;
+  border-radius: 4px;
   margin: 10px 0;
   width: 100%;
+
+  &::placeholder {
+    color: gray;
+  }
 `;
 
 const EditContent = styled.div``;
 
 const EditInput = styled(Input)``;
 
-const EditCancelBtn = styled(CommentButton)`
+const Button = styled.button`
+  font-size: 0.8rem;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: white;
+`;
+
+const EditCancelBtn = styled(Button)`
+  background-color: #888;
   margin-right: 8px;
 `;
-const EditSubmitBtn = styled(CommentButton)``;
+const EditSubmitBtn = styled(Button)`
+  background-color: black;
+`;
 
 interface IContent {
   is_deleted: boolean;
@@ -288,7 +304,7 @@ interface IContent {
 
 const Content = styled.p<IContent>`
   font-size: 1rem;
-  padding: 16px 0;
+  padding: 12px 0;
   border-bottom: solid 1.4px #e9ecef;
   word-break: break-all;
 
@@ -299,6 +315,7 @@ const Content = styled.p<IContent>`
 const ROW3 = styled.div``;
 
 const ReplyInput = styled(Input)``;
-const ReplySubmitBtn = styled(CommentButton)``;
+const ReplySubmitBtn = styled(EditSubmitBtn)``;
+const ReplyCancleBtn = styled(EditCancelBtn)``;
 
 export default CommentBox;

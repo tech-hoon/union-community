@@ -67,7 +67,7 @@ const PostDetail = (props: Props) => {
     e.preventDefault();
 
     if (commentRef.current.value) {
-      addComment({ post_id: id, creator: loginUser, content: commentRef.current.value });
+      addComment({ post_id: id, uid: loginUser.uid, content: commentRef.current.value });
       commentRef.current.value = '';
       fetchComments();
     }
@@ -290,7 +290,7 @@ const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #999;
 `;
 
@@ -313,7 +313,6 @@ const Button = styled.button`
   font-weight: 500;
   font-size: 1rem;
   padding: 12px;
-  /* border: 0.3px solid #eee; */
   border-radius: 4px;
 `;
 
@@ -324,7 +323,6 @@ const CommentWriteWrapper = styled.div`
   margin: 40px 0;
   gap: 4px;
   border: 0.3px solid #666;
-  /* border: 2px solid #18a0fb; */
   border-radius: 4px;
   padding: 0px;
 `;

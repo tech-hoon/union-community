@@ -1,5 +1,5 @@
 import { dbService, firebaseApp } from 'service/firebase';
-import { UserType } from 'types';
+import { CommentType } from 'types';
 import { changeReplyCommentOrder } from 'utils/comment';
 
 interface ICommentLike {
@@ -10,7 +10,7 @@ interface ICommentLike {
 
 interface ICommentAdd {
   post_id: string;
-  creator: UserType;
+  uid: string;
   content: string;
   parent_comment_id?: string | null;
 }
@@ -18,17 +18,20 @@ interface ICommentAdd {
 export const addComment = async ({
   post_id,
   content,
-  creator,
+  uid,
   parent_comment_id = null,
 }: ICommentAdd) => {
   try {
-    const res = await dbService.doc(`posts/${post_id}`).collection('comments').add({
-      content,
-      creator,
-      created_at: new Date().getTime(),
-      liker_list: [],
-      parent_comment_id,
-    });
+    const res = await dbService
+      .doc(`posts/${post_id}`)
+      .collection('comments')
+      .add({
+        content,
+        creator: dbService.doc(`users/${uid}`),
+        created_at: new Date().getTime(),
+        liker_list: [],
+        parent_comment_id,
+      });
     return res.id;
   } catch (error) {
     console.log(error);
@@ -43,10 +46,15 @@ export const getComments = async (postId: string) => {
       .orderBy('created_at', 'asc')
       .get();
 
-    const oldList: any = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    const newList = changeReplyCommentOrder(oldList);
+    const data: any = await Promise.all(
+      res.docs.map(async (doc) => {
+        const newItem = doc.data();
+        const userData = await newItem.creator.get();
+        return { ...newItem, id: doc.id, creator: userData.data() };
+      })
+    );
 
-    return newList;
+    return changeReplyCommentOrder(data);
   } catch (error) {
     console.log(error);
     return;
