@@ -28,7 +28,6 @@ const Wrapper = styled.div`
   gap: 12px;
 
   @media ${({ theme }) => theme.size.tablet} {
-    width: 90%;
     flex-direction: column;
   }
 `;
@@ -42,23 +41,12 @@ const Content = styled.p`
   word-break: keep-all;
   flex: 1;
 
-  @media ${({ theme }) => theme.size.tablet} {
-    line-height: 1.5;
-    font-size: 1.7rem;
-  }
-
   @media ${({ theme }) => theme.size.mobile} {
-    line-height: 1.5;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 
   @media (max-width: 500px) {
     font-size: 1.2rem;
-  }
-
-  @media ${({ theme }) => theme.size.mobileS} {
-    line-height: 1.4;
-    font-size: 1rem;
   }
 `;
 

@@ -23,21 +23,22 @@ const PeopleAvatar = () => {
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
+  padding: 10px;
 `;
 
 const AvatarWrapper = styled.div`
   width: 140px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 100px;
+    width: 120px;
   }
 
   @media (max-width: 500px) {
-    width: 92px;
+    width: 100px;
   }
 
   @media ${({ theme }) => theme.size.mobileS} {
-    width: 72px;
+    width: 90px;
   }
 `;
 

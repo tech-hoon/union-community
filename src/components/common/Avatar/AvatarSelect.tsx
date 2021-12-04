@@ -19,12 +19,11 @@ const AvatarSelect = ({ avatarId, onClickPrev, onClickNext, size }: Props) => {
         ))}
       </Pagination>
       <Box>
-        <PrevBtn onClick={onClickPrev} />
+        <PrevBtn onClick={onClickPrev} size='20px' />
         <AvatarWrapper>
           <Avatar avatarId={avatarId} size={128} />
         </AvatarWrapper>
-
-        <NextBtn onClick={onClickNext} />
+        <NextBtn onClick={onClickNext} size='20px' />
       </Box>
     </Wrapper>
   );
@@ -39,6 +38,7 @@ interface IWrapper {
 const Wrapper = styled.div<IWrapper>`
   width: ${(props) => props.size};
   margin: 0 auto;
+  user-select: none;
 `;
 const Box = styled.div`
   display: flex;
