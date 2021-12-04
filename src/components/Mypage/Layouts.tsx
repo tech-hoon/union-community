@@ -1,4 +1,5 @@
 import Navbar from 'components/common/Navbar';
+import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 import PostCardBox from 'components/Home/PostCardBox';
 import styled from 'styled-components';
 
@@ -9,11 +10,15 @@ export const Layouts = {
     max-width: 1160px;
     padding: 0 60px;
     margin: auto;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      width: 95%;
+      padding: 0;
+    }
   `,
 
   Header: styled.header`
-    margin-top: 50px;
-    margin-bottom: 20px;
+    margin: 30px 20px;
     display: flex;
     gap: 32px;
     align-items: center;
@@ -69,6 +74,8 @@ export const Layouts = {
     font-size: 1rem;
     font-weight: 600;
   `,
+
+  CardSkeleton: styled(CardSkeleton)``,
 };
 
 export default Layouts;

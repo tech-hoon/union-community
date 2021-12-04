@@ -41,12 +41,12 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
         ) => {
           return (
             <PostCard key={key} onClick={() => handleClick(id!!)}>
-              <Category color={categoryColor(category)}>{category}</Category>
               <Head>
                 <Title>{title.length > 10 ? `${title.substring(0, 10)}...` : title}</Title>
                 {!!attachment_url && <ImageIcon />}
+                <Category color={categoryColor(category)}>{category}</Category>
               </Head>
-              <Content>{tagEliminatingRegex(content).substring(0, 180)}</Content>
+              <Content>{tagEliminatingRegex(content)}</Content>
               <CardBottom>
                 {!mypage && (
                   <CreatorBox>
@@ -75,6 +75,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
 const Wrapper = styled.ol`
   max-width: 1120px;
   padding: 0 60px;
+  user-select: none;
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -83,9 +84,6 @@ const Wrapper = styled.ol`
 
   @media ${({ theme }) => theme.size.tablet} {
     grid-template-columns: 1fr 1fr;
-    width: 70%;
-    padding: 20px;
-    padding: 0px;
   }
 
   @media ${({ theme }) => theme.size.mobile} {
@@ -102,7 +100,9 @@ const PostCard = styled.li`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   cursor: pointer;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
 
   @media ${({ theme }) => theme.size.desktop} {
     height: 260px;
@@ -125,7 +125,8 @@ const Head = styled.div`
 `;
 const Title = styled.p`
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  flex: 1;
   /* 
   display: block;
   text-overflow: ellipsis;
@@ -140,20 +141,27 @@ const ImageIcon = styled(PhotoLibrary)`
 `;
 const Content = styled.p`
   font-weight: 300;
-  padding-left: 4px;
-  padding-bottom: 48px;
-  line-height: 1.3em;
-  max-height: 100px;
+  padding: 0px 4px;
+  flex: 1;
+
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  white-space: normal;
+  line-height: 1.2;
+  height: 6rem;
+  text-overflow: ellipsis;
+
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 `;
 
 const CardBottom = styled.div`
-  width: 88%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
-  bottom: 0.8rem;
-  margin: 0 auto;
+  margin-top: 1rem;
 `;
 
 const CreatorBox = styled.div`
