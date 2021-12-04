@@ -21,6 +21,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 95%;
+    padding: 0;
+  }
 `;
 
 const Top = styled(SkeletonBar)`

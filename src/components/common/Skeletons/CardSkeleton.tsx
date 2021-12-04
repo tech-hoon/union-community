@@ -28,17 +28,22 @@ const Wrapper = styled.ul`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 32px;
-  margin: 20px auto;
+  margin: 40px auto;
+
+  @media ${({ theme }) => theme.size.tablet} {
+    grid-template-columns: 1fr 1fr;
+  }
 
   @media ${({ theme }) => theme.size.mobile} {
     grid-template-columns: 1fr;
     width: 70%;
+    padding: 0px;
   }
 `;
 
 const Card = styled.div`
   width: 100%;
-  height: 240px;
+  height: 260px;
   padding: 24px;
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -53,7 +58,7 @@ const Card = styled.div`
 const Title = styled(SkeletonBar)``;
 
 const Content = styled(SkeletonBar)`
-  height: 100px;
+  height: 120px;
 `;
 
 const Bottom = styled.div`
