@@ -1,32 +1,20 @@
-import './style.css';
+import './styles.css';
 
 const Loading = () => {
   return (
-    <div className='loadingio-spinner-spin-gx5dncoxu7h'>
-      <div className='ldio-nji0akc8i5s'>
+    <div className='loadingio-spinner-interwind-wokxo2goub'>
+      <div className='ldio-0pdomtc9psya'>
         <div>
-          <div></div>
-        </div>
-        <div>
-          <div></div>
-        </div>
-        <div>
-          <div></div>
-        </div>
-        <div>
-          <div></div>
-        </div>
-        <div>
-          <div></div>
-        </div>
-        <div>
-          <div></div>
-        </div>
-        <div>
-          <div></div>
-        </div>
-        <div>
-          <div></div>
+          <div>
+            <div>
+              <div></div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
