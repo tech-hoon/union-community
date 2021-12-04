@@ -4,10 +4,11 @@ import Banner from 'components/common/Banner';
 import Loading from 'components/common/Loading';
 import Footer from 'components/common/Footer';
 import styled from 'styled-components';
-import { useState, memo, useEffect } from 'react';
+import useLoginStep from 'hooks/useLoginStep';
+import useCountUp from 'hooks/common/useCountUp';
+import { useState, memo, useEffect, useRef } from 'react';
 import { getUserPostCount } from 'api/count';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import useLoginStep from 'hooks/useLoginStep';
 import { authService } from 'service/firebase';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
@@ -15,12 +16,17 @@ import { useHistory } from 'react-router';
 import { loginUserType } from 'types';
 
 const About = () => {
-  const [count, setCount] = useState({ userCount: 0, postCount: 0 });
+  const [count, setCount] = useState({ user: 0, post: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
   const { onLoginStepReset, onLoginStepNext } = useLoginStep();
   const setLoginUser = useSetRecoilState(loginUserState);
   const history = useHistory();
+
+  const counter: any = {
+    0: useCountUp(count.user, 0, 500),
+    1: useCountUp(count.post, 0, 500),
+  };
 
   const hasRegistered = async (uid: string) => {
     return await getUserData(uid);
@@ -47,8 +53,8 @@ const About = () => {
     });
 
     const timer = setTimeout(() => {
-      setIsLoading(false);
       fetchCount();
+      setIsLoading(false);
     }, 2000);
 
     return () => {
@@ -68,8 +74,8 @@ const About = () => {
         ) : (
           <>
             <CountBox>
-              <Strong>{count.postCount}</Strong>개의 글과 <Strong>{count.userCount}</Strong>명의
-              사용자가 함께하고 있어요!
+              <Count {...counter[0]}>0</Count>개의 글과 <Count {...counter[1]}>0</Count>
+              명의 사용자가 함께하고 있어요!
             </CountBox>
             <ButtonWrapper>
               <LoginButton />
@@ -92,8 +98,10 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Strong = styled.strong`
-  font-weight: 500;
+const Count = styled.strong`
+  font-weight: bolder;
+  color: ${({ theme }) => theme.color.BUTTON_CLICKED};
+  margin: 0 1px;
 `;
 
 const CountBox = styled.div`

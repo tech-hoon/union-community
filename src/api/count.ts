@@ -5,8 +5,8 @@ export const getUserPostCount = async () => {
   const [post, user] = res.docs.map((doc) => doc.data());
 
   if (!post || !user) {
-    return { userCount: 0, postCount: 0 };
+    return { user: 0, post: 0 };
   }
 
-  return { userCount: user.count, postCount: post.count };
+  return { user: user.count, post: post.count };
 };
