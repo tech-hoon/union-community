@@ -9,11 +9,14 @@ import { loginUserType } from 'types';
 const MyLikes = () => {
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
   const [posts, setPosts] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchMyLikes = async () => {
       const __posts = await getMyLikes(loginUser.uid);
       setPosts(__posts);
+      setIsLoading(false);
     };
 
     fetchMyLikes();
@@ -22,6 +25,7 @@ const MyLikes = () => {
   return (
     <S.Wrapper>
       <S.Navbar isLoggedIn={true} />
+
       <S.Container>
         <S.Header>
           <S.Title>
@@ -30,8 +34,7 @@ const MyLikes = () => {
           </S.Title>
           <S.Subtitle>* 반영되는 데에는 최대 1분 정도 소요될 수 있습니다.</S.Subtitle>
         </S.Header>
-
-        <S.PostCards posts={posts} mypage={true} />
+        {isLoading ? <S.CardSkeleton /> : <S.PostCards posts={posts} mypage={true} />}
       </S.Container>
     </S.Wrapper>
   );

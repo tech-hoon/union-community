@@ -20,6 +20,8 @@ export const useGetPosts = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchPosts = useCallback(async () => {
+    setIsLoading(true);
+
     const response: any = await getInitialPosts({ orderBy, category });
 
     const __posts = response?.data;
@@ -38,7 +40,6 @@ export const useGetPosts = () => {
 
       __posts && setPosts((prevPosts) => [...prevPosts, ...__posts]);
       setLastVisiblePost(__lastVisiblePost);
-      setIsLoading(false);
       return;
     }
   };

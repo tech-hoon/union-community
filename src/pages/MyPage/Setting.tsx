@@ -122,19 +122,6 @@ const NicknameWrapper = styled.div`
   margin-top: 32px;
 `;
 
-const Label = styled.label`
-  align-self: flex-start;
-  font-weight: bold;
-  font-size: 1.3rem;
-  padding-top: 9px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1em;
-    padding-top: 6px;
-    flex: 1;
-  }
-`;
-
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;

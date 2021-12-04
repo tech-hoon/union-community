@@ -9,12 +9,15 @@ import { loginUserType } from 'types';
 
 const MyPosts = () => {
   const [posts, setPosts] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
   const loginUser = useRecoilValue(loginUserState) as loginUserType;
 
   useEffect(() => {
+    setIsLoading(false);
     const fetchMyPosts = async () => {
       const __posts = await getMyPosts(loginUser.uid);
       setPosts(__posts);
+      setIsLoading(false);
     };
 
     fetchMyPosts();
@@ -30,7 +33,7 @@ const MyPosts = () => {
           </S.Title>
           <S.Subtitle>* 반영되는 데에는 최대 1분 정도 소요될 수 있습니다.</S.Subtitle>
         </S.Header>
-        <S.PostCards posts={posts} mypage={true} />
+        {isLoading ? <S.CardSkeleton /> : <S.PostCards posts={posts} mypage={true} />}
       </S.Container>
     </S.Wrapper>
   );
