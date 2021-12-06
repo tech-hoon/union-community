@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { CloseOutline } from '@styled-icons/evaicons-outline';
+import { SNS_LOGIN_STEP, AUTH_WAITING_STEP } from 'utils/config';
 
 export const Layouts = {
   Wrapper: styled.div`
@@ -25,8 +26,14 @@ export const Layouts = {
     border-radius: 8px 8px 0 0;
   `,
 
+  Top: styled.div`
+    width: 100%;
+    height: 80px;
+  `,
   BackButton: styled.button<IBackButton>`
-    visibility: ${({ step }) => step === 1 && `none`};
+    display: ${({ step }) => {
+      if (step === SNS_LOGIN_STEP || step === AUTH_WAITING_STEP) return `none`;
+    }};
     font-family: 'Spoqa Han Sans Neo';
     font-weight: 500;
     font-size: 32px;
@@ -75,22 +82,19 @@ export const Layouts = {
   ContainerBottom: styled.div`
     position: absolute;
     bottom: 10%;
-
-    & button {
-      font-weight: 500;
-      padding: 6px 16px;
-      font-size: 1em;
-      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-      border-radius: 10px;
-      background-color: ${(props) => props.theme.color.MAIN};
-      color: white;
-      cursor: pointer;
-      line-height: 1.3rem;
-    }
   `,
 
-  NextButton: styled.button``,
-  UploadImageBtn: styled.label``,
+  NextButton: styled.button`
+    background-color: ${(props) => props.theme.color.MAIN};
+    font-weight: 500;
+    padding: 6px 16px;
+    font-size: 1em;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    line-height: 1.3rem;
+  `,
 
   CloseBtn: styled(CloseOutline)`
     cursor: pointer;
