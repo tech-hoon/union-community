@@ -21,13 +21,24 @@ const SocialLoginButton = ({ name, handleErrorInfo }: SocialLoginProps) => {
     } catch (error: any) {
       const code = error.code;
 
+      let msg;
       switch (code) {
         case 'auth/account-exists-with-different-credential':
-          handleErrorInfo('*이미 가입된 소셜계정이 있습니다.');
+          msg = '*이미 가입된 소셜계정이 있습니다.';
           break;
+
+        case 'auth/cancelled-popup-request':
+          msg = '*요청이 취소되었습니다. 다시 시도해주세요.';
+          break;
+
+        case 'auth/popup-closed-by-user':
+          msg = '*요청이 취소되었습니다. 다시 시도해주세요.';
+          break;
+
         default:
-          handleErrorInfo('*에러가 발생하였습니다.');
+          msg = '*에러가 발생하였습니다. 다시 시도해주세요.';
       }
+      handleErrorInfo(msg);
     }
   };
 
