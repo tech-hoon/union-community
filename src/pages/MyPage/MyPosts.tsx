@@ -13,7 +13,7 @@ const MyPosts = () => {
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   useEffect(() => {
-    setIsLoading(false);
+    setIsLoading(true);
     const fetchMyPosts = async () => {
       const __posts = await getMyPosts(loginUser.uid);
       setPosts(__posts);

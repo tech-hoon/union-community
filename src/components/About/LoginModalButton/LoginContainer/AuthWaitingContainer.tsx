@@ -34,7 +34,7 @@ const AuthWaitingContainer = ({ loginUser, onLoginStepReset }: Props) => {
         </Description>
       </S.Body>
       <S.ContainerBottom>
-        <LogOutButton onClick={onClickLogOut}>다른 계정으로 로그인하기</LogOutButton>
+        <LogOutButton onClick={onClickLogOut}>로그아웃</LogOutButton>
       </S.ContainerBottom>
     </S.Container>
   );
