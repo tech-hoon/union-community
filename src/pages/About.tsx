@@ -1,34 +1,35 @@
 import Navbar from 'components/common/Navbar';
-import LoginButton from 'components/common/LoginButton';
 import Banner from 'components/common/Banner';
 import Loading from 'components/common/Loading';
 import Footer from 'components/common/Footer';
+import LoginModalButton from 'components/About/LoginModalButton';
 import styled from 'styled-components';
 import useLoginStep from 'hooks/useLoginStep';
 import useCountUp from 'hooks/common/useCountUp';
-import { useState, memo, useEffect, useRef } from 'react';
+import { useState, memo, useEffect } from 'react';
 import { getUserPostCount } from 'api/count';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { authService } from 'service/firebase';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { useHistory } from 'react-router';
-import { loginUserType } from 'types';
+import { LoginUserType, UserType } from 'types';
+import { AUTH_WAITING_STEP } from 'utils/config';
 
 const About = () => {
   const [count, setCount] = useState({ user: 0, post: 0 });
   const [isLoading, setIsLoading] = useState(true);
-  const loginUser = useRecoilValue(loginUserState) as loginUserType;
-  const { onLoginStepReset, onLoginStepNext } = useLoginStep();
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
+  const { onLoginStepReset, onLoginStepNext, setLoginStep } = useLoginStep();
   const setLoginUser = useSetRecoilState(loginUserState);
   const history = useHistory();
 
-  const counter: any = {
+  const counter = {
     0: useCountUp(count.user, 0, 500),
     1: useCountUp(count.post, 0, 500),
   };
 
-  const hasRegistered = async (uid: string) => {
+  const fetchUserData = async (uid: string) => {
     return await getUserData(uid);
   };
 
@@ -40,13 +41,26 @@ const About = () => {
   useEffect(() => {
     const unsubscribe = authService.onAuthStateChanged(async (user) => {
       if (user) {
-        const res = await hasRegistered(user.uid);
-        if (res) {
-          setIsLoading(false);
+        const res = await fetchUserData(user.uid);
+        setIsLoading(false);
+
+        if (res?.auth_status === 'approved') {
           setLoginUser({ ...loginUser, ...res });
           history.push('/home');
           return;
         }
+
+        if (res?.auth_status === 'rejected') {
+          console.log('승인이 거절된 계정입니다.');
+          return;
+        }
+
+        if (res?.auth_status === 'waiting') {
+          setLoginUser({ ...loginUser, ...res });
+          setLoginStep(AUTH_WAITING_STEP);
+          return;
+        }
+
         onLoginStepNext();
         return;
       }
@@ -78,7 +92,7 @@ const About = () => {
               명의 사용자가 함께하고 있어요!
             </CountBox>
             <ButtonWrapper>
-              <LoginButton />
+              <LoginModalButton />
             </ButtonWrapper>
           </>
         )}
@@ -98,18 +112,18 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Count = styled.strong`
-  font-weight: bolder;
-  color: ${({ theme }) => theme.color.BUTTON_CLICKED};
-  margin: 0 1px;
-`;
-
 const CountBox = styled.div`
-  font-size: 1.3rem;
+  font-size: 1.4rem;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
+`;
+
+const Count = styled.strong`
+  font-weight: bolder;
+  color: ${({ theme }) => theme.color.MAIN};
+  margin: 0 1px;
 `;
 
 const ButtonWrapper = styled.div`
