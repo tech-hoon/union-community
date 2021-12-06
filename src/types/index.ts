@@ -34,9 +34,10 @@ export interface PostType {
   title: string;
   content: string;
   creator: UserType;
-  liker_list: string[];
   created_at: number;
   attachment_url: string | '';
+  like_count: number;
+  liker_list: string[];
   visitor_list: string[];
   comment_list: CommentType[] | [];
   comment_count: number;

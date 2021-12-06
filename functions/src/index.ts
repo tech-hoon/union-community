@@ -80,6 +80,7 @@ export const postLiked = functions
     if (uid_like.length) {
       firestore.doc(`users/${uid_like}`).update({
         like_list: admin.firestore.FieldValue.arrayUnion(postId),
+        like_count: admin.firestore.FieldValue.increment(1),
       });
       return;
     }
@@ -87,6 +88,7 @@ export const postLiked = functions
     // user.like_list에 postId 제거
     firestore.doc(`users/${uid_unlike}`).update({
       like_list: admin.firestore.FieldValue.arrayRemove(postId),
+      like_count: admin.firestore.FieldValue.increment(-1),
     });
   });
 
