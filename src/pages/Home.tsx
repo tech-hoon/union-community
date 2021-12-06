@@ -5,31 +5,29 @@ import CategoryBox from 'components/Home/CategoryBox';
 import OrderbyBox from 'components/Home/OrderbyBox';
 import Footer from 'components/common/Footer';
 import Banner from 'components/common/Banner';
-import KakaoIcon from 'assets/icons/KakaoIcon';
-import SearchBox from 'components/Home/SearchBox';
-import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
-import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
-import { dbService } from 'service/firebase';
-import { useGetPosts } from 'hooks/post/useGetPosts';
+import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import useLocalStorage from 'hooks/common/useLocalStorage';
+import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
+import { useGetPosts } from 'hooks/post/useGetPosts';
 import { useLocation } from 'react-router';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
-import { loginUserType } from 'types';
+import { LoginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { ChevronUpCircle } from '@styled-icons/boxicons-solid';
 
-//TODO: 새 게시물 감지시, unsubscribe
 const Home = () => {
   const location = useLocation();
-  const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost } = useGetPosts();
-  const loginUser = useRecoilValue(loginUserState) as loginUserType;
   const setLoginUser = useSetRecoilState(loginUserState);
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
+
+  const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost } = useGetPosts();
   const [isUpdated, setIsUpdated] = useState(false);
+  const [scrollY, setScrollY] = useLocalStorage('scrollY', 0);
+
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, {});
-  const [scrollY, setScrollY] = useLocalStorage('scrollY', 0);
 
   const onRefreshClick = () => {
     setIsUpdated(false);
@@ -40,17 +38,7 @@ const Home = () => {
   useLayoutEffect(() => {
     window.scrollTo({ top: scrollY });
 
-    // const unsubscribe = dbService.collection('posts').onSnapshot((snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === 'modified') {
-    //       console.log('new post');
-    //       setIsUpdated(true);
-    //     }
-    //   });
-    // });
-
     return () => {
-      // unsubscribe();
       setScrollY(window.scrollY);
     };
   }, []);
@@ -86,13 +74,9 @@ const Home = () => {
       <CategoryBox />
       <MidWrapper>
         <OrderbyBox />
-        {/* <SearchBox /> */}
       </MidWrapper>
       {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
-      {/* <OpenKakaoIcon href='https://open.kakao.com/o/s3IX0aNd' target='_blank'>
-        <KakaoIcon />
-      </OpenKakaoIcon> */}
       <ScrollUpIcon size='56px' onClick={() => window.scroll({ behavior: 'smooth', top: 0 })} />
       <Observer ref={ioRef} />
       <Footer />
@@ -111,18 +95,6 @@ const ScrollUpIcon = styled(ChevronUpCircle)`
 
   @media ${({ theme }) => theme.size.mobile} {
     right: 24px;
-    bottom: 52px;
-  }
-`;
-
-const OpenKakaoIcon = styled.a`
-  position: fixed;
-
-  left: 48px;
-  bottom: 64px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    left: 24px;
     bottom: 52px;
   }
 `;
