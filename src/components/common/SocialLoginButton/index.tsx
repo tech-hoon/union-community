@@ -10,11 +10,7 @@ interface SocialLoginProps {
 }
 
 const SocialLoginButton = ({ name, handleErrorInfo }: SocialLoginProps) => {
-  const onClickSocial: React.MouseEventHandler<HTMLImageElement> = async (event: any) => {
-    const {
-      target: { name },
-    } = event;
-
+  const onClickSocial: React.MouseEventHandler<HTMLImageElement> = async () => {
     try {
       const provider =
         name === 'google'
