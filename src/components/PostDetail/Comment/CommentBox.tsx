@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommentType, loginUserType } from 'types';
+import { CommentType, LoginUserType } from 'types';
 import Avatar from 'components/common/Avatar';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
@@ -20,7 +20,7 @@ interface Props {
 const CommentBox = ({ postId, commentList, fetchComments, category }: Props) => {
   const [editingComment, setEditingComment] = useState<string | null>();
   const [replyingComment, setReplyingComment] = useState<string | null>();
-  const loginUser = useRecoilValue(loginUserState) as loginUserType;
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
   const inputRef = useRef<any>(null);
   const replyInputRef = useRef<any>(null);
   const isSecretPost = category === '비밀';
@@ -97,7 +97,7 @@ const CommentBox = ({ postId, commentList, fetchComments, category }: Props) => 
                 </COL1>
                 <COL2>
                   <Nickname>{isSecretPost ? '익명' : nickname}</Nickname>
-                  <CreatedAt>{toDateStringByFormating(created_at, true)}</CreatedAt>
+                  <CreatedAt>{toDateStringByFormating(created_at)}</CreatedAt>
                 </COL2>
                 {!is_deleted && (
                   <COL3>
@@ -197,12 +197,12 @@ const CommentBox = ({ postId, commentList, fetchComments, category }: Props) => 
 
 const List = styled.ul``;
 const Comment = styled.li`
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 `;
 
 const ReplyComment = styled.li`
-  margin-bottom: 48px;
-  margin-left: 40px;
+  margin-bottom: 18px;
+  margin-left: 24px;
 `;
 
 const ROW1 = styled.div`
@@ -221,7 +221,7 @@ const COL1 = styled.div`
 const COL2 = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 `;
 const COL3 = styled.div`
   display: flex;
@@ -256,11 +256,12 @@ const EditBtn = styled(CommentButton)``;
 const DelBtn = styled(CommentButton)``;
 
 const CreatedAt = styled.p`
-  font-size: 0.8rem;
+  max-width: 82px;
+  font-size: 0.9rem;
   color: gray;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.5rem;
+    font-size: 0.8rem;
   }
 `;
 const Nickname = styled.p`
@@ -306,7 +307,7 @@ interface IContent {
 
 const Content = styled.p<IContent>`
   font-size: 1rem;
-  padding: 12px 0;
+  padding: 14px 0;
   border-bottom: solid 1.4px #e9ecef;
   word-break: break-all;
 

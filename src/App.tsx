@@ -6,7 +6,8 @@ import SEO from 'SEO';
 interface Props {}
 
 const App = (props: Props) => {
-  const isLoggedIn = !!useRecoilValue(loginUserState);
+  const loginUser = useRecoilValue(loginUserState);
+  const isLoggedIn = loginUser?.auth_status === 'approved';
 
   return (
     <>

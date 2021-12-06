@@ -5,12 +5,12 @@ import { getMyPosts } from 'api/user';
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
-import { loginUserType } from 'types';
+import { LoginUserType } from 'types';
 
 const MyPosts = () => {
   const [posts, setPosts] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
-  const loginUser = useRecoilValue(loginUserState) as loginUserType;
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   useEffect(() => {
     setIsLoading(false);

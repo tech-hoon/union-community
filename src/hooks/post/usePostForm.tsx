@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import { addPost, updatePost } from 'api/post';
 import { loginUserState } from 'store/loginUser';
-import { loginUserType, PostType } from 'types';
+import { LoginUserType, PostType } from 'types';
 import { checkPostValidation } from 'utils/validation';
 import { storageService } from 'service/firebase';
 
@@ -20,7 +20,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   const history = useHistory();
   const [attachment, setAttachment] = useState('');
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const loginUser = useRecoilValue(loginUserState) as loginUserType;
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   const onEditorCancle = () => history.push('/');
 

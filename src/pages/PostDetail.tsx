@@ -10,7 +10,7 @@ import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
 import { deletePost, postLike, postUnlike, viewCountUp } from 'api/post';
-import { CommentType, loginUserType } from 'types';
+import { CommentType, LoginUserType } from 'types';
 import { addComment, getComments } from 'api/comment';
 import { categoryColor } from 'utils/categoryColor';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
@@ -19,9 +19,9 @@ import { storageService } from 'service/firebase';
 import CommentCount from 'components/common/Count/CommentCount';
 import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';
-import PortalContainer from 'components/common/Portals/PortalContainer';
 import useModal from 'hooks/common/useModal';
-import AlertModal from 'components/common/Portals/AlertModal';
+import AlertModalButton from 'components/common/Portal/AlertModalButton';
+import PortalContainer from 'components/common/Portal/PortalContainer';
 
 interface Props {}
 
@@ -31,7 +31,7 @@ const PostDetail = (props: Props) => {
   const location = useLocation();
   const history = useHistory();
   const id = location.pathname.split('/')[2];
-  const loginUser = useRecoilValue(loginUserState) as loginUserType;
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   const { post, fetchPostDetail } = useGetPostDetail();
   const [isCreator, setIsCreator] = useState<boolean>();
@@ -40,15 +40,13 @@ const PostDetail = (props: Props) => {
   const commentRef = useRef<any>(null);
   const isSecret = post?.category === '비밀';
 
+  const { modalOpened, onShowModal, onCloseModal, onClickOkay } = useModal(() => onDeletePost(id));
+
   const onDeletePost = async (id: string) => {
     await deletePost(id);
     post?.attachment_url!! && (await storageService.refFromURL(post?.attachment_url!!).delete());
     history.push({ pathname: '/home', state: 'isDeleted' });
   };
-
-  const { modalOpened, onShowModal, onCloseModal, onClickOkay } = useModal({
-    okayCallback: () => onDeletePost(id),
-  });
 
   const onViewCountUp = async () => {
     if (post && !post?.visitor_list.includes(loginUser.uid)) {
@@ -169,7 +167,7 @@ const PostDetail = (props: Props) => {
       <Footer />
       {modalOpened && (
         <PortalContainer onClose={onCloseModal}>
-          <AlertModal
+          <AlertModalButton
             title='글을 삭제하시겠습니까?'
             twoButton={true}
             onClose={onCloseModal}
@@ -192,7 +190,7 @@ const PostContainer = styled.section`
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 90%;
-    padding: 0;
+    padding: 0 20px;
   }
 `;
 
@@ -216,7 +214,7 @@ const Title = styled.h1`
   flex: 4;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 `;
 
@@ -237,11 +235,10 @@ const ROW_2 = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 0;
+  margin: 20px 0 0;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8em;
-    margin: 20px 0;
   }
 `;
 
@@ -250,18 +247,16 @@ const ROW_3 = styled.div`
   align-items: center;
   font-weight: 500;
   font-size: 1.3em;
-  margin: 20px 0;
+  margin: 4px 0;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1em;
-    margin: 20px 0;
   }
 `;
 
 const ProfileBox = styled.div`
   display: flex;
   align-items: center;
-  width: 12rem;
   gap: 4px;
 `;
 
@@ -300,12 +295,12 @@ const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #999;
 `;
 
 const Content = styled.section`
-  margin: 20px 0 40px;
+  margin: 20px 2px 40px;
   font-size: 1.2rem;
   line-height: 1.5;
 `;
@@ -322,7 +317,7 @@ const Images = styled.img`
 const Button = styled.button`
   font-weight: 500;
   font-size: 1rem;
-  padding: 12px;
+  padding: 4px 0px;
   border-radius: 4px;
 `;
 
@@ -330,7 +325,7 @@ const CommentWriteWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  margin: 40px 0;
+  margin: 20px 0 30px;
   gap: 4px;
   border: 0.3px solid #666;
   border-radius: 4px;
@@ -340,9 +335,8 @@ const CommentWriteWrapper = styled.div`
 const CommentWrite = styled.input`
   font-weight: 400;
   font-size: 1rem;
-  padding: 10px;
+  padding: 10px 0px 10px 8px;
   width: 100%;
-  height: 45px;
   flex: 1;
 `;
 

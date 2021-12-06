@@ -8,11 +8,11 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
 import { useHistory } from 'react-router';
 import { updateProfile, verifyNickname } from 'api/user';
-import { loginUserType } from 'types';
+import { LoginUserType } from 'types';
 import { NICKNAME_LENGTH } from 'utils/config';
 
 const Setting = () => {
-  const user = useRecoilValue(loginUserState) as loginUserType;
+  const user = useRecoilValue(loginUserState) as LoginUserType;
   const setLoginUser = useSetRecoilState(loginUserState);
   const [avatarId, setAvatarId] = useState<number>(user.avatar_id);
   const [errorInfo, setErrorInfo] = useState<string | null>(null);

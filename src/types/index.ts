@@ -9,10 +9,13 @@ export interface CommentType {
   parent_comment_id: string | null;
 }
 
-export type UserType = {
-  name: string;
-  avatar_id: number;
+export type RegisterDataType = {
   nickname: string;
+  avatar_id: number;
+};
+
+export interface UserType extends RegisterDataType {
+  name: string;
   uid: string;
   email: string;
   like_list: string[] | [];
@@ -20,9 +23,10 @@ export type UserType = {
   created_at?: number;
   updated_at?: number;
   resident_auth_image?: string;
-};
+  auth_status?: 'waiting' | 'approved' | 'rejected';
+}
 
-export interface loginUserType extends UserType {}
+export interface LoginUserType extends UserType {}
 
 export interface PostType {
   id: string;

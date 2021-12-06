@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import { getMyLikes } from 'api/user';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
-import { loginUserType } from 'types';
+import { LoginUserType } from 'types';
 
 const MyLikes = () => {
-  const loginUser = useRecoilValue(loginUserState) as loginUserType;
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
   const [posts, setPosts] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
 
