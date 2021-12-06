@@ -12,8 +12,9 @@ export const CATEGORY_LIST = [
 
 //Login Step
 export const SNS_LOGIN_STEP = 1;
-export const RESIDENT_AUTH_STEP = 2;
-export const NICKNAME_STEP = 3;
-export const LOGIN_DONE = 4;
+export const NICKNAME_STEP = 2;
+export const RESIDENT_AUTH_STEP = 3;
+export const AUTH_WAITING_STEP = 4;
+export const LOGIN_DONE = 5;
 
 export const NICKNAME_LENGTH = 6;
