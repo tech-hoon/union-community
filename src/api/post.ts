@@ -1,5 +1,4 @@
-import { authService, dbService, firebaseApp } from 'service/firebase';
-import { UserType } from 'types';
+import { dbService, firebaseApp } from 'service/firebase';
 import { CARD_LIMIT } from 'utils/config';
 
 interface IgetPostParams {
@@ -149,6 +148,7 @@ export const addPost = async ({ postInput, uid }: IaddPostParams) => {
       creator: dbService.doc(`users/${uid}`),
       view_count: 0,
       comment_count: 0,
+      like_count: 0,
       liker_list: [],
       visitor_list: [],
       created_at: new Date().getTime(),
@@ -192,6 +192,7 @@ export const postLike = async (postId: string, uid: string) => {
   try {
     await dbService.doc(`posts/${postId}`).update({
       liker_list: firebaseApp.firestore.FieldValue.arrayUnion(uid),
+      like_count: firebaseApp.firestore.FieldValue.increment(1),
     });
   } catch (error) {
     console.log(error);
@@ -201,6 +202,7 @@ export const postUnlike = async (postId: string, uid: string) => {
   try {
     await dbService.doc(`posts/${postId}`).update({
       liker_list: firebaseApp.firestore.FieldValue.arrayRemove(uid),
+      like_count: firebaseApp.firestore.FieldValue.increment(-1),
     });
   } catch (error) {
     console.log(error);
