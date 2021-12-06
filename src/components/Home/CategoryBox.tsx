@@ -58,7 +58,7 @@ const Menu = styled.button<IMenu>`
   width: 100%;
   height: 36px;
   border-radius: 16px;
-  background-color: ${(props) => (props.isClicked ? props.theme.color.BUTTON_CLICKED : '#fff')};
+  background-color: ${(props) => (props.isClicked ? props.theme.color.MAIN : '#fff')};
   color: ${(props) => (props.isClicked ? '#fff' : '#000')};
 
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
@@ -67,7 +67,7 @@ const Menu = styled.button<IMenu>`
   font-weight: 500;
   &:hover {
     color: white;
-    background-color: ${({ theme }) => theme.color.BUTTON_CLICKED};
+    background-color: ${({ theme }) => theme.color.MAIN};
   }
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8em;

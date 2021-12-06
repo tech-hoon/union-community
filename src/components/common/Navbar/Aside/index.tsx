@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  user-select: none;
 `;
 
 const NewPostBtn = styled.button`

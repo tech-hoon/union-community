@@ -183,7 +183,7 @@ interface ICreator {
 
 const Creator = styled.span<ICreator>`
   font-weight: 500;
-  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.BLUE)};
+  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.MAIN)};
   font-size: 16px;
 
   @media ${({ theme }) => theme.size.mobile} {

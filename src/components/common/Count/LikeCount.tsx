@@ -19,7 +19,7 @@ const LikeCount = ({ size = `14px`, count, color, onClick, flag }: Props) => {
         {flag === 'unlike' ? (
           <Like size={size} color={color || '#18A0FB'} />
         ) : (
-          <LikeCancel size={size} color={color || '#888'} />
+          <LikeCancel size={size} color={color || '#666'} />
         )}
       </Button>
       <Count size={size}>{count}</Count>
@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   padding: 0 4px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 `;
 
 interface ICount {
@@ -46,6 +46,7 @@ const Button = styled.button`
 
 const Count = styled.span<ICount>`
   font-size: ${({ size }) => size};
+  color: #666;
 `;
 
 export default memo(LikeCount);

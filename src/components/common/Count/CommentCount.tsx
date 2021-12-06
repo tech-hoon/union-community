@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   padding: 0 4px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 `;
 
 interface ICount {
@@ -29,6 +29,7 @@ interface ICount {
 
 const Count = styled.span<ICount>`
   font-size: ${({ size }) => size};
+  color: #666;
 `;
 
 export default memo(CommentCount);

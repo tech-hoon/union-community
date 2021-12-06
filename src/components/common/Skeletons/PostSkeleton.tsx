@@ -23,8 +23,8 @@ const Wrapper = styled.div`
   gap: 20px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 95%;
-    padding: 0;
+    width: 90%;
+    padding: 0 20px;
   }
 `;
 
