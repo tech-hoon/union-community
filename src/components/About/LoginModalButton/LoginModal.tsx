@@ -8,13 +8,16 @@ import {
   NicknameContainer,
   AuthWaitingContainer,
 } from './LoginContainer';
+import { loginUserState } from 'store/loginUser';
+import { useRecoilValue } from 'recoil';
 
 interface Props {
   onClose: () => void;
 }
 
 const LoginModal = ({ onClose }: Props) => {
-  const { loginStep, onLoginStepPrev } = useLoginStep();
+  const { loginStep, onLoginStepPrev, onLoginStepReset } = useLoginStep();
+  const loginUser = useRecoilValue(loginUserState);
 
   const CurrentContainer = () => {
     switch (loginStep) {
@@ -25,7 +28,7 @@ const LoginModal = ({ onClose }: Props) => {
       case RESIDENT_AUTH_STEP:
         return <ResidentAuthContainer />;
       case AUTH_WAITING_STEP:
-        return <AuthWaitingContainer />;
+        return <AuthWaitingContainer loginUser={loginUser} onLoginStepReset={onLoginStepReset} />;
       default:
         return null;
     }
@@ -37,9 +40,11 @@ const LoginModal = ({ onClose }: Props) => {
         <LogoBox />
         <S.CloseBtn onClick={onClose} size='24' color='gray' />
       </S.Header>
-      <S.BackButton onClick={onLoginStepPrev} step={loginStep}>
-        &#xE000;
-      </S.BackButton>
+      <S.Top>
+        <S.BackButton onClick={onLoginStepPrev} step={loginStep}>
+          &#xE000;
+        </S.BackButton>
+      </S.Top>
       <CurrentContainer />
     </S.Wrapper>
   );
