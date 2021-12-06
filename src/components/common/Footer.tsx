@@ -9,13 +9,13 @@ const Footer = (props: Props) => {
   return (
     <Wrapper>
       <Title>&copy; Nam Taekhun {new Date().getFullYear()}</Title>
-      <OpenKakao href='https://open.kakao.com/o/s3IX0aNd' target='_blank'>
+      <OpenKakao href='https://open.kakao.com/o/s3IX0aNd' target='_blank' rel='noreferrer'>
         문의사항
       </OpenKakao>
-      <GithubIcon href='https://github.com/tech-hoon' target='_blank'>
+      <GithubIcon href='https://github.com/tech-hoon' target='_blank' rel='noreferrer'>
         <Github size='14px' />
       </GithubIcon>
-      <EmailIcon href='mailto:nth9708@naver.com' target='_blank'>
+      <EmailIcon href='mailto:nth9708@naver.com' target='_blank' rel='noreferrer'>
         <Email size='16px' />
       </EmailIcon>
     </Wrapper>
@@ -29,6 +29,7 @@ const Wrapper = styled.footer`
   justify-content: center;
   align-items: center;
   gap: 8px;
+  position: absolute;
 `;
 
 const OpenKakao = styled.a`
