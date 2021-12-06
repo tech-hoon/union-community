@@ -8,9 +8,9 @@ const Banner = (props: Props) => {
   return (
     <Wrapper>
       <Content>
-        <Strong>대학생 연합기숙사 입주생</Strong>을 위한 커뮤니티입니다.
+        <Bold>대학생 연합생활관 입주생</Bold>을 위한 커뮤니티입니다.
         <br />
-        <Strong>동아리, 스터디</Strong> 등 다양한 정보를 나누어 보세요!
+        <Bold>동아리, 스터디</Bold> 등 다양한 정보를 나누어 보세요!
       </Content>
       <AvatarWrapper>
         <PeopleAvatar />
@@ -50,7 +50,7 @@ const Content = styled.p`
   }
 `;
 
-const Strong = styled.strong`
+const Bold = styled.b`
   font-weight: 500;
 `;
 
