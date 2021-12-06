@@ -1,6 +1,6 @@
 import Navbar from 'components/common/Navbar';
 import Banner from 'components/common/Banner';
-import Loading from 'components/common/Loading';
+import InterWind from 'components/common/Loading/InterWind';
 import Footer from 'components/common/Footer';
 import LoginModalButton from 'components/About/LoginModalButton';
 import styled from 'styled-components';
@@ -84,7 +84,7 @@ const About = () => {
       <Container>
         <Banner />
         {isLoading ? (
-          <Loading />
+          <InterWind />
         ) : (
           <>
             <CountBox>

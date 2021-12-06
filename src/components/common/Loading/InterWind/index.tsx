@@ -1,6 +1,6 @@
 import './styles.css';
 
-const Loading = () => {
+const InterWind = () => {
   return (
     <div className='loadingio-spinner-interwind-wokxo2goub'>
       <div className='ldio-0pdomtc9psya'>
@@ -21,4 +21,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default InterWind;

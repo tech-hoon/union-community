@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { CATEGORY_LIST } from 'utils/config';
 import { PostType } from 'types';
-import Loading from 'components/common/Loading';
+import Circle from 'components/common/Loading/Circle';
 import { Cancel } from '@styled-icons/material';
 
 interface ILocationState {
@@ -90,7 +90,7 @@ const UploadPost = () => {
             </>
           ) : (
             <LoadingWrapper>
-              <Loading />
+              <Circle />
             </LoadingWrapper>
           )}
         </ButtonBox>
