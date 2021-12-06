@@ -5,10 +5,10 @@ import { useState, memo } from 'react';
 import MypageDropdown from './MypageDropdown';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
-import { loginUserType } from 'types';
+import { LoginUserType } from 'types';
 
 const ProfileBox = () => {
-  const loginUser = useRecoilValue(loginUserState) as loginUserType;
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
   const [toggleOpened, setToggleOpened] = useState(false);
   const onToggleClick = () => setToggleOpened(!toggleOpened);
 
