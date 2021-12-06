@@ -9,6 +9,7 @@ import { NICKNAME_LENGTH } from 'utils/config';
 import { Layouts as S } from '../Layouts';
 import useLoginStep from 'hooks/useLoginStep';
 import { RegisterDataType } from 'types';
+import { authService } from 'service/firebase';
 
 interface Props {}
 
@@ -18,6 +19,7 @@ const NicknameContainer = (prop: Props) => {
   const [errorInfo, setErrorInfo] = useState<string | null>(null);
   const { onLoginStepNext } = useLoginStep();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { displayName }: any = authService.currentUser;
 
   const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 10 - prev : prev - 1));
   const onAvatarIdNext = () => setAvatarId((prev) => (prev >= 10 ? (prev % 10) + 1 : prev + 1));
@@ -68,6 +70,7 @@ const NicknameContainer = (prop: Props) => {
   return (
     <S.Container>
       <Title>닉네임과 아바타를 선택해주세요.</Title>
+      <S.Subtitle>{displayName}님 안녕하세요!</S.Subtitle>
       <Body>
         <AvatarSelect
           avatarId={avatarId}

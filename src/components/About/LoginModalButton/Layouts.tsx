@@ -39,7 +39,7 @@ export const Layouts = {
     font-size: 32px;
     padding: 20px;
     color: gray;
-    margin-right: auto;
+    margin-right: 90%;
   `,
   Container: styled.div`
     display: flex;
