@@ -1,20 +1,23 @@
 import { dbService, firebaseApp } from 'service/firebase';
-import { loginUserType } from 'types';
+import { LoginUserType } from 'types';
 
 export const getUserData = async (uid: string) => {
   const doc = await dbService.doc(`users/${uid}`).get();
   return doc.data() ? doc.data() : null;
 };
 
-export const addUser = ({ uid, ...rest }: loginUserType) => {
+export const addUser = ({ uid, ...rest }: any) => {
   try {
     dbService
       .collection('users')
       .doc(uid)
-      .set({
-        uid,
-        ...rest,
-      });
+      .set(
+        {
+          uid,
+          ...rest,
+        },
+        { merge: true }
+      );
   } catch (error) {
     console.log(error);
   }
@@ -51,6 +54,7 @@ export const verifyNickname = async (nickname: string) => {
 };
 
 //TODO: firebase "in" query's max-length is 10
+//TODO: 최신순 정렬
 export const getMyLikes = async (uid: string) => {
   const res: any = await dbService.doc(`users/${uid}`).get();
   const likeList = res.data().like_list;

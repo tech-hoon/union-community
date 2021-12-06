@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-interface Props {
-  okayCallback?: () => void;
-}
-
-const useModal = ({ okayCallback }: Props) => {
+const useModal = (okayCallback?: () => void) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [okayClicked, setOkayClicked] = useState(false);
   const onShowModal = () => setModalOpened(true);
