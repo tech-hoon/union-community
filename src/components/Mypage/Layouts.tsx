@@ -77,5 +77,3 @@ export const Layouts = {
 
   CardSkeleton: styled(CardSkeleton)``,
 };
-
-export default Layouts;

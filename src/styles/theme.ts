@@ -13,8 +13,7 @@ const theme = {
     desktop: `(max-width:${size.desktop})`,
   },
   color: {
-    BUTTON_CLICKED: '#18A0FB',
-    BLUE: '#18A0FB',
+    MAIN: '#18A0FB',
   },
 };
 export default theme;

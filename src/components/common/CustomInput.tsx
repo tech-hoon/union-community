@@ -11,16 +11,16 @@ interface Props {
 const CustomInput = forwardRef(({ defaultValue, onChange, errorInfo, label }: Props, ref: any) => {
   return (
     <Wrapper>
-      <Label>{label}</Label>
       <InputWrapper>
+        <Label>{label}</Label>
         <NicknameInput
           defaultValue={defaultValue}
           onChange={onChange}
           ref={ref}
           errorInfo={errorInfo}
         />
-        <InputErrorInfo>{errorInfo}</InputErrorInfo>
       </InputWrapper>
+      <InputErrorInfo>{errorInfo}</InputErrorInfo>
     </Wrapper>
   );
 });
@@ -31,27 +31,23 @@ interface INicknameInput {
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 `;
 
 const Label = styled.label`
-  align-self: flex-start;
   font-weight: 500;
   font-size: 1.3rem;
-  padding-top: 9.4px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    padding-top: 5px;
-    font-size: 1.2em;
-  }
+  margin-top: 1px;
 `;
 
-const InputWrapper = styled.div``;
-
 const NicknameInput = styled.input<INicknameInput>`
-  width: 100%;
   font-size: 1.5rem;
   padding: 4px 0 4px 8px;
   border: 1px solid ${({ errorInfo }) => (errorInfo ? '#f77' : '#ccc')};
@@ -60,19 +56,12 @@ const NicknameInput = styled.input<INicknameInput>`
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1.3em;
   }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1em;
-  }
 `;
 
 const InputErrorInfo = styled.div`
-  width: 100%;
   font-size: 0.8rem;
   height: 1rem;
-  margin-top: 12px;
   color: #f77;
-  text-align: left;
 `;
 
 export default CustomInput;
