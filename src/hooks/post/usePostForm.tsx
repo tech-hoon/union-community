@@ -20,6 +20,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   const history = useHistory();
   const [attachment, setAttachment] = useState('');
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [errorInfo, setErrorInfo] = useState<string | null>();
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   const onEditorCancle = () => history.push('/');
@@ -56,7 +57,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
         contentRef.current?.value
       )
     ) {
-      window.alert('내용을 모두 작성해 주세요.');
+      setErrorInfo('*내용을 모두 작성해주세요.');
       return;
     }
 
@@ -121,6 +122,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     onDeleteAttachment,
     onSubmit,
     isUploading,
+    errorInfo,
   };
 };
 

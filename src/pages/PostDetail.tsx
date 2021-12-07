@@ -40,7 +40,7 @@ const PostDetail = (props: Props) => {
   const commentRef = useRef<any>(null);
   const isSecret = post?.category === '비밀';
 
-  const { modalOpened, onShowModal, onCloseModal, onClickOkay } = useModal(() => onDeletePost(id));
+  const { modalOpened, onOpenModal, onCloseModal } = useModal();
 
   const onDeletePost = async (id: string) => {
     await deletePost(id);
@@ -124,13 +124,14 @@ const PostDetail = (props: Props) => {
               <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
               <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
             </ProfileBox>
+            <IsEdited>{post.is_edited && `수정됨 `}</IsEdited>
             <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
           </ROW_2>
           <ROW_3>
             {isCreator && (
               <EditBox>
                 <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
-                <DeleteBtn onClick={onShowModal}>삭제하기</DeleteBtn>
+                <DeleteBtn onClick={onOpenModal}>삭제하기</DeleteBtn>
               </EditBox>
             )}
           </ROW_3>
@@ -151,7 +152,9 @@ const PostDetail = (props: Props) => {
 
           <CommentWriteWrapper>
             <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
-            <SubmitBtn onClick={onSubmitComment}>등록하기</SubmitBtn>
+            <SubmitBtn onClick={onSubmitComment} type='submit'>
+              등록하기
+            </SubmitBtn>
           </CommentWriteWrapper>
 
           <CommentBox
@@ -170,8 +173,8 @@ const PostDetail = (props: Props) => {
           <AlertModalButton
             title='글을 삭제하시겠습니까?'
             twoButton={true}
-            onClose={onCloseModal}
-            onOkay={onClickOkay}
+            callback={() => onDeletePost(id)}
+            onCloseModal={onCloseModal}
           />
         </PortalContainer>
       )}
@@ -236,6 +239,7 @@ const ROW_2 = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 20px 0 0;
+  gap: 12px;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8em;
@@ -258,6 +262,7 @@ const ProfileBox = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  flex: 1;
 `;
 
 interface ICreator {
@@ -296,6 +301,12 @@ const DeleteBtn = styled(Btn)``;
 const CreatedAt = styled.span`
   font-weight: 500;
   font-size: 1.1rem;
+  color: #999;
+`;
+
+const IsEdited = styled.span`
+  font-weight: 500;
+  font-size: 1rem;
   color: #999;
 `;
 

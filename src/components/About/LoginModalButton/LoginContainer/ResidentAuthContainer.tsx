@@ -9,6 +9,7 @@ import { addUser } from 'api/user';
 import { loginUserState, registerDataState } from 'store/loginUser';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { LoginUserType, RegisterDataType } from 'types';
+import { Cancel } from '@styled-icons/material';
 
 const ResidentAuthContainer = () => {
   const { displayName, uid }: any = authService.currentUser;
@@ -39,7 +40,7 @@ const ResidentAuthContainer = () => {
       };
 
       addUser(userData);
-      // setLoginUser({ ...loginUser, ...userData });
+      setLoginUser({ ...loginUser, ...userData });
       onLoginStepNext();
     } catch (error) {
       console.log('error', error);
@@ -58,6 +59,11 @@ const ResidentAuthContainer = () => {
     if (!!file) {
       reader.readAsDataURL(file);
     }
+  };
+
+  const onDeleteAttachment: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    setAttachment('');
   };
 
   useEffect(() => {
@@ -91,7 +97,12 @@ const ResidentAuthContainer = () => {
           <ImageWrapper>
             <Caption>업로드 사진</Caption>
             {attachment ? (
-              <AttachmentImage src={attachment} />
+              <AttachmentWrapper>
+                <ThumbnailDeleteBtn onClick={onDeleteAttachment}>
+                  <Cancel size='20px' />
+                </ThumbnailDeleteBtn>
+                <AttachmentImage src={attachment} />
+              </AttachmentWrapper>
             ) : (
               <UploadImage htmlFor='upload-image'>
                 <PlusLg size='48px' color='#ddd' />
@@ -166,6 +177,19 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+`;
+
+const AttachmentWrapper = styled.div`
+  position: relative;
+`;
+
+const ThumbnailDeleteBtn = styled.button`
+  display: block;
+  font-size: 0.8rem;
+  position: absolute;
+  top: -14px;
+  right: -20px;
+  color: red;
 `;
 
 const UploadImage = styled.label`

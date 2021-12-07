@@ -53,8 +53,6 @@ export const verifyNickname = async (nickname: string) => {
   }
 };
 
-//TODO: firebase "in" query's max-length is 10
-//TODO: 최신순 정렬
 export const getMyLikes = async (uid: string) => {
   const res: any = await dbService.doc(`users/${uid}`).get();
   const likeList = res.data().like_list;
@@ -63,16 +61,24 @@ export const getMyLikes = async (uid: string) => {
     return [];
   }
 
-  const posts = await dbService
-    .collection(`posts`)
-    .where(firebaseApp.firestore.FieldPath.documentId(), 'in', likeList)
-    .get();
+  const batches = [];
+  while (likeList.length) {
+    const batch = likeList.splice(0, 10);
 
-  const data = posts.docs.map((doc: any) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-  return data;
+    const posts = await dbService
+      .collection(`posts`)
+      .where(firebaseApp.firestore.FieldPath.documentId(), 'in', batch)
+      .get();
+
+    const data = posts.docs.map((doc: any) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    batches.push(...data);
+  }
+
+  return batches.sort((a, b) => b.created_at - a.created_at);
 };
 
 export const getMyPosts = async (uid: string) => {
@@ -83,14 +89,22 @@ export const getMyPosts = async (uid: string) => {
     return [];
   }
 
-  const posts = await dbService
-    .collection(`posts`)
-    .where(firebaseApp.firestore.FieldPath.documentId(), 'in', myPosts)
-    .get();
+  const batches = [];
+  while (myPosts.length) {
+    const batch = myPosts.splice(0, 10);
 
-  const data = posts.docs.map((doc: any) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-  return data;
+    const posts = await dbService
+      .collection(`posts`)
+      .where(firebaseApp.firestore.FieldPath.documentId(), 'in', batch)
+      .get();
+
+    const data = posts.docs.map((doc: any) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    batches.push(...data);
+  }
+
+  return batches.sort((a, b) => b.created_at - a.created_at);
 };

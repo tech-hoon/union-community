@@ -39,8 +39,8 @@ export interface PostType {
   like_count: number;
   liker_list: string[];
   visitor_list: string[];
-  comment_list: CommentType[] | [];
   comment_count: number;
+  is_edited: boolean;
 }
 
 export interface PostFormType {

@@ -14,13 +14,13 @@ export const postCreated = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}')
   .onCreate((snapshot) => {
-    firestore.doc(`counter/posts`).update({
+    firestore.doc(`counter/posts`).set({
       count: admin.firestore.FieldValue.increment(1),
     });
 
     const uid = snapshot.data().creator.id;
 
-    firestore.doc(`users/${uid}`).update({
+    firestore.doc(`users/${uid}`).set({
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
 
@@ -104,7 +104,7 @@ export const commentDeleted = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}/comments/{commentId}')
   .onUpdate((snapshot, context) => {
-    const isDeleted = snapshot.after.data().isDeleted;
+    const isDeleted = snapshot.after.data().is_deleted;
 
     if (isDeleted) {
       const postId = context.resource.name.split('/')[6];
@@ -112,6 +112,17 @@ export const commentDeleted = functions
         comment_count: admin.firestore.FieldValue.increment(-1),
       });
     }
+  });
+
+export const replyCommentDeleted = functions
+  .region('asia-northeast3')
+  .firestore.document('posts/{postId}/comments/{commentId}')
+  .onDelete((snapshot) => {
+    const postId = snapshot.data().creator.id;
+
+    firestore.doc(`posts/${postId}`).update({
+      comment_count: admin.firestore.FieldValue.increment(-1),
+    });
   });
 
 export const userCreated = functions
