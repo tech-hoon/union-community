@@ -129,7 +129,7 @@ export const userCreated = functions
   .region('asia-northeast3')
   .firestore.document('users/{userId}')
   .onCreate((snapshot) => {
-    firestore.doc(`counter/users`).update({
+    firestore.doc(`counter/user`).update({
       count: admin.firestore.FieldValue.increment(1),
     });
 
@@ -144,4 +144,13 @@ export const userCreated = functions
     - 인증사진: ${resident_auth_image}
       `
     );
+  });
+
+export const userDeleted = functions
+  .region('asia-northeast3')
+  .firestore.document('users/{userId}')
+  .onDelete(() => {
+    firestore.doc(`counter/user`).update({
+      count: admin.firestore.FieldValue.increment(-1),
+    });
   });
