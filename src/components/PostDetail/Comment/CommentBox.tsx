@@ -2,12 +2,6 @@ import styled from 'styled-components';
 import { CommentType, LoginUserType } from 'types';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
-import { useEffect } from 'react';
-
-import useModal from 'hooks/common/useModal';
-import AlertModalButton from 'components/common/Portal/AlertModalButton';
-import PortalContainer from 'components/common/Portal/PortalContainer';
-import useComment from 'hooks/comment/useComment';
 import ReplyComment from './ReplyComment';
 import Comment from './Comment';
 

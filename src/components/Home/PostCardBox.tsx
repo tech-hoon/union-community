@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
-import { tagEliminatingRegex } from 'utils/regex';
+import { tagEliminating } from 'utils/regex';
 import { categoryColor } from 'utils/categoryColor';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import ViewCount from 'components/common/Count/ViewCount';
@@ -46,7 +46,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
                 {!!attachment_url && <ImageIcon size='24px' />}
                 <Category color={categoryColor(category)}>{category}</Category>
               </Head>
-              <Content>{tagEliminatingRegex(content)}</Content>
+              <Content>{tagEliminating(content)}</Content>
               <CardBottom>
                 {!mypage && (
                   <CreatorBox>
