@@ -115,6 +115,7 @@ const PostContainer = styled.form`
   }
 `;
 const TitleInput = styled.input`
+  width: 100%;
   font-weight: 700;
   font-size: 2rem;
 
