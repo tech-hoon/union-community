@@ -85,7 +85,7 @@ const S = {
     background-color: black;
   `,
 
-  Content: styled.p<IDeleted>`
+  Content: styled.div<IDeleted>`
     font-size: 1rem;
     padding: 14px 0;
     border-bottom: solid 1.4px #e9ecef;

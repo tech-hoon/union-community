@@ -23,12 +23,9 @@ import LikeCount from 'components/common/Count/LikeCount';
 import useModal from 'hooks/common/useModal';
 import AlertModalButton from 'components/common/Portal/AlertModalButton';
 import PortalContainer from 'components/common/Portal/PortalContainer';
+import { parseUrl } from 'utils/regex';
 
-interface Props {}
-
-// TODO: Comment 모듈화
-
-const PostDetail = (props: Props) => {
+const PostDetail = () => {
   const location = useLocation();
   const history = useHistory();
   const id = location.pathname.split('/')[2];
@@ -88,7 +85,7 @@ const PostDetail = (props: Props) => {
   useEffect(() => {
     if (post) {
       !!loginUser && !!post.creator && setIsCreator(loginUser.uid === post.creator.uid);
-      setContentMarkup({ __html: post.content });
+      setContentMarkup({ __html: parseUrl(post.content) });
     }
   }, [post]);
 
@@ -138,9 +135,10 @@ const PostDetail = (props: Props) => {
             )}
           </ROW_3>
           {/* <HR /> */}
-          <Content dangerouslySetInnerHTML={contentMarkup} />
-          {post.attachment_url?.length ? <Images src={post.attachment_url} alt='' /> : <></>}
-
+          <ContentWrapper>
+            <Content dangerouslySetInnerHTML={contentMarkup} />
+            {post.attachment_url?.length ? <Images src={post.attachment_url} alt='' /> : <></>}
+          </ContentWrapper>
           <CountBox>
             <ViewCount size='16px' count={post.visitor_list?.length} />
             <CommentCount size='16px' count={post.comment_count} />
@@ -234,6 +232,10 @@ const Category = styled.div`
   font-size: 1rem;
   line-height: 1;
   flex: 1;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    flex: 2;
+  }
 `;
 
 const ImageIcon = styled(PhotoLibrary)`
@@ -316,14 +318,19 @@ const CreatedAt = styled.span`
 `;
 
 const IsEdited = styled(CreatedAt)`
-  font-size: 0.7rem;
   line-height: 1.5;
+  font-size: 0.9rem;
 `;
 
-const Content = styled.section`
+const ContentWrapper = styled.section`
+  min-height: 100px;
   margin: 20px 2px 40px;
+`;
+
+const Content = styled.div`
   font-size: 1.2rem;
   line-height: 1.5;
+  margin-bottom: 24px;
 `;
 
 const Images = styled.img`

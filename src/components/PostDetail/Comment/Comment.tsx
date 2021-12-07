@@ -9,6 +9,7 @@ import useComment from 'hooks/comment/useComment';
 import useModal from 'hooks/common/useModal';
 import AlertModalButton from 'components/common/Portal/AlertModalButton';
 import PortalContainer from 'components/common/Portal/PortalContainer';
+import { parseUrl } from 'utils/regex';
 
 interface Props {
   comment: CommentType;
@@ -23,7 +24,6 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
   const replyInputRef = useRef<any>(null);
   const isSecretPost = category === '비밀';
   const [deleteId, setDeleteId] = useState<string>('');
-
   const { modalOpened, onOpenModal, onCloseModal } = useModal();
 
   const {
@@ -100,9 +100,12 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
               </S.EditSubmitBtn>
             </S.EditContent>
           ) : (
-            <S.Content is_deleted={is_deleted}>
-              {is_deleted ? '삭제된 댓글입니다' : content}
-            </S.Content>
+            <S.Content
+              is_deleted={is_deleted}
+              dangerouslySetInnerHTML={{
+                __html: is_deleted ? '삭제된 댓글입니다.' : parseUrl(content),
+              }}
+            ></S.Content>
           )}
         </S.ROW2>
         {replyingComment === id && (
@@ -125,7 +128,7 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
       {modalOpened && (
         <PortalContainer onClose={onCloseModal}>
           <AlertModalButton
-            title='글을 삭제하시겠습니까?'
+            title='댓글을 삭제하시겠습니까?'
             twoButton={true}
             callback={() => onDelete(postId, deleteId)}
             onCloseModal={onCloseModal}
