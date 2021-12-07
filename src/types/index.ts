@@ -17,7 +17,7 @@ export type RegisterDataType = {
 export interface UserType extends RegisterDataType {
   name: string;
   uid: string;
-  email: string;
+  email: string | null;
   like_list: string[] | [];
   post_list: PostType[] | [];
   created_at?: number;
