@@ -113,10 +113,10 @@ const Container = styled.div`
 `;
 
 const CountBox = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 `;
 

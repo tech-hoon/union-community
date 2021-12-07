@@ -8,7 +8,8 @@ const GlobalStyle = createGlobalStyle`
     font-size:62.5%;
   }
   a {
-    color:#333
+    text-decoration-line:none;
+    color:#2883f3;
   }
   ul {
     list-style:none;

@@ -27,10 +27,10 @@ const Wrapper = styled.div`
 `;
 
 const AvatarWrapper = styled.div`
-  width: 140px;
+  width: 150px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 120px;
+    width: 130px;
   }
 
   @media (max-width: 500px) {

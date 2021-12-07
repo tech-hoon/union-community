@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 import PeopleAvatar from './PeopleAvatar';
 
@@ -24,17 +24,14 @@ const Wrapper = styled.div`
   width: 90%;
   max-width: 1160px;
   align-items: center;
-  margin: 24px auto 24px;
+  margin: 48px auto 24px;
   gap: 12px;
-
-  @media ${({ theme }) => theme.size.tablet} {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `;
 
 const Content = styled.p`
   font-weight: 200;
-  font-size: 1.7rem;
+  font-size: 2rem;
   line-height: 1.5;
   letter-spacing: -0.05em;
   text-align: start;
@@ -42,10 +39,14 @@ const Content = styled.p`
   flex: 1;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 
   @media (max-width: 500px) {
+    font-size: 1.4rem;
+  }
+
+  @media ${({ theme }) => theme.size.mobileS} {
     font-size: 1.2rem;
   }
 `;
