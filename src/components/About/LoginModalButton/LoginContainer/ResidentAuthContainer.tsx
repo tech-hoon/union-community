@@ -10,17 +10,21 @@ import { loginUserState, registerDataState } from 'store/loginUser';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { LoginUserType, RegisterDataType } from 'types';
 import { Cancel } from '@styled-icons/material';
+import Loading from 'components/common/Loading/CircleSmall';
 
 const ResidentAuthContainer = () => {
   const { displayName, uid }: any = authService.currentUser;
   const [attachment, setAttachment] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { onLoginStepNext } = useLoginStep();
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
   const setLoginUser = useSetRecoilState(loginUserState);
-
   const registerData = useRecoilValue(registerDataState) as RegisterDataType;
 
-  const onSubmitFile = async () => {
+  const onSubmitFile: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.stopPropagation();
+    setIsLoading(true);
+
     const attachmentRef = storageService.ref().child(`${uid}/resident_auth_image`);
     const response = await attachmentRef.putString(attachment, 'data_url');
     const attachmentUrl = await response.ref.getDownloadURL();
@@ -113,9 +117,13 @@ const ResidentAuthContainer = () => {
         </ImageBox>
       </S.Body>
       <S.ContainerBottom>
-        <SubmitButton onClick={onSubmitFile} disabled={!attachment}>
-          업로드
-        </SubmitButton>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <SubmitButton onClick={onSubmitFile} disabled={!attachment}>
+            업로드
+          </SubmitButton>
+        )}
       </S.ContainerBottom>
     </S.Container>
   );
