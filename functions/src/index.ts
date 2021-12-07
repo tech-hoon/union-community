@@ -14,13 +14,13 @@ export const postCreated = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}')
   .onCreate((snapshot) => {
-    firestore.doc(`counter/posts`).set({
+    firestore.doc(`counter/post`).set({
       count: admin.firestore.FieldValue.increment(1),
     });
 
     const uid = snapshot.data().creator.id;
 
-    firestore.doc(`users/${uid}`).set({
+    firestore.doc(`users/${uid}`).update({
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
 
