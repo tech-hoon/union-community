@@ -25,8 +25,8 @@ const About = () => {
   const history = useHistory();
 
   const counter = {
-    0: useCountUp(count.user, 0, 500),
-    1: useCountUp(count.post, 0, 500),
+    0: useCountUp(count.post, 0, 500),
+    1: useCountUp(count.user, 0, 500),
   };
 
   const fetchUserData = async (uid: string) => {
