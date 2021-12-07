@@ -65,9 +65,10 @@ const S = {
       font-size: 0.8rem;
     }
   `,
-  Nickname: styled.p`
+  Nickname: styled.p<IDeleted>`
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    color: ${({ is_deleted }) => is_deleted && `#666`};
   `,
 
   LikeCount: styled(LikeCount)``,
@@ -84,7 +85,7 @@ const S = {
     background-color: black;
   `,
 
-  Content: styled.p<IContent>`
+  Content: styled.p<IDeleted>`
     font-size: 1rem;
     padding: 14px 0;
     border-bottom: solid 1.4px #e9ecef;
@@ -106,7 +107,7 @@ const S = {
   `,
 };
 
-interface IContent {
+interface IDeleted {
   is_deleted: boolean;
 }
 

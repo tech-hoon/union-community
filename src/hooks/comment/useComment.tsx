@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { addComment, commentLike, commentUnlike, deleteComment, updateComment } from 'api/comment';
+import {
+  addComment,
+  commentLike,
+  commentUnlike,
+  deleteComment,
+  updateComment,
+  deleteReplyComment,
+} from 'api/comment';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
 
 const useComment = (callback: () => void) => {
@@ -10,7 +17,6 @@ const useComment = (callback: () => void) => {
   const onDelete = async (postId: string, commentId: string) => {
     await deleteComment(postId, commentId);
     callback();
-    setEditingComment(null);
   };
   const onUpdateComment = async (postId: string, content: string, commentId: string) => {
     if (content) {
@@ -33,6 +39,10 @@ const useComment = (callback: () => void) => {
     }
   };
 
+  const onDeleteReplyComment = async (postId: string, commentId: string) => {
+    await deleteReplyComment(postId, commentId);
+    callback();
+  };
   const onEdit = (targetId: string) => {
     setReplyingComment(null);
     setEditingComment(targetId);
@@ -67,6 +77,7 @@ const useComment = (callback: () => void) => {
     onEdit,
     onReplyOpen,
     onReplyCancle,
+    onDeleteReplyComment,
     onLikeComment,
   };
 };

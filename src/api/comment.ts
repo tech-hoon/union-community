@@ -72,6 +72,14 @@ export const deleteComment = async (postId: string, commentId: string) => {
   }
 };
 
+export const deleteReplyComment = async (postId: string, commentId: string) => {
+  try {
+    await dbService.doc(`posts/${postId}/comments/${commentId}`).delete();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const updateComment = async (content: string, postId: string, commentId: string) => {
   try {
     await dbService
