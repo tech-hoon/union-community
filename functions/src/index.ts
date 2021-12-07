@@ -14,7 +14,7 @@ export const postCreated = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}')
   .onCreate((snapshot) => {
-    firestore.doc(`counter/post`).set({
+    firestore.doc(`counter/post`).update({
       count: admin.firestore.FieldValue.increment(1),
     });
 
