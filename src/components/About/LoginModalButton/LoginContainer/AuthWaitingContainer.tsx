@@ -26,9 +26,7 @@ const AuthWaitingContainer = ({ loginUser, onLoginStepReset }: Props) => {
           <Circle />
         </LoadingWrapper>
         <Description>
-          <p>
-            <small>{name}</small>님, 현재 가입 승인 대기중입니다.
-          </p>
+          <p>{name && <small>{name}님, </small>}현재 가입 승인 대기중입니다.</p>
           <p>승인까지 1~2일 정도 소요될 수 있습니다.</p>
           <p>가입이 승인되는 대로 이용 가능합니다.</p>
         </Description>
