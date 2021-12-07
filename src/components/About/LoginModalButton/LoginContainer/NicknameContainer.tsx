@@ -1,4 +1,4 @@
-import { FormEventHandler, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import AvatarSelect from 'components/common/Avatar/AvatarSelect';
 import CustomInput from 'components/common/CustomInput';
@@ -10,12 +10,14 @@ import { Layouts as S } from '../Layouts';
 import useLoginStep from 'hooks/useLoginStep';
 import { RegisterDataType } from 'types';
 import { authService } from 'service/firebase';
+import Loading from 'components/common/Loading/CircleSmall';
 
 interface Props {}
 
 const NicknameContainer = (prop: Props) => {
   const setRegisterData = useSetRecoilState(registerDataState);
   const [avatarId, setAvatarId] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorInfo, setErrorInfo] = useState<string | null>(null);
   const { onLoginStepNext } = useLoginStep();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +40,7 @@ const NicknameContainer = (prop: Props) => {
   };
 
   const onClickNext: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
-    e.preventDefault();
+    e.stopPropagation();
 
     const __value = inputRef?.current?.value;
 
@@ -49,8 +51,11 @@ const NicknameContainer = (prop: Props) => {
       return;
     }
 
+    setIsLoading(true);
+
     if (!(await verifyNickname(__value))) {
       setErrorInfo('* 이미 존재하는 닉네임입니다.');
+      setIsLoading(false);
       return;
     }
 
@@ -61,6 +66,7 @@ const NicknameContainer = (prop: Props) => {
       };
 
       setRegisterData(userData);
+      setIsLoading(false);
       onLoginStepNext();
     } catch (error) {
       console.log('error', error);
@@ -80,7 +86,13 @@ const NicknameContainer = (prop: Props) => {
         <CustomInput label='닉네임' ref={inputRef} onChange={onChange} errorInfo={errorInfo} />
       </Body>
       <S.ContainerBottom>
-        <S.NextButton onClick={onClickNext}>다음</S.NextButton>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <S.NextButton onClick={onClickNext} disabled={!!errorInfo}>
+            다음
+          </S.NextButton>
+        )}
       </S.ContainerBottom>
     </S.Container>
   );

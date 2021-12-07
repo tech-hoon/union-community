@@ -98,6 +98,11 @@ export const Layouts = {
     color: white;
     cursor: pointer;
     line-height: 1.3rem;
+
+    &:disabled {
+      cursor: default;
+      background-color: #ccc;
+    }
   `,
 
   CloseBtn: styled(CloseOutline)`
