@@ -124,6 +124,7 @@ const PostDetail = (props: Props) => {
               <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
               <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
             </ProfileBox>
+            <IsEdited>{post.is_edited && `수정됨 `}</IsEdited>
             <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
           </ROW_2>
           <ROW_3>
@@ -238,6 +239,7 @@ const ROW_2 = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 20px 0 0;
+  gap: 12px;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8em;
@@ -260,6 +262,7 @@ const ProfileBox = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  flex: 1;
 `;
 
 interface ICreator {
@@ -298,6 +301,12 @@ const DeleteBtn = styled(Btn)``;
 const CreatedAt = styled.span`
   font-weight: 500;
   font-size: 1.1rem;
+  color: #999;
+`;
+
+const IsEdited = styled.span`
+  font-weight: 500;
+  font-size: 1rem;
   color: #999;
 `;
 

@@ -152,6 +152,7 @@ export const addPost = async ({ postInput, uid }: IaddPostParams) => {
       liker_list: [],
       visitor_list: [],
       created_at: new Date().getTime(),
+      is_edited: false,
     });
     return res.id;
   } catch (error) {
@@ -164,6 +165,7 @@ export const updatePost = async ({ postId, postInput, uid }: IupdatePostParams) 
     await dbService.doc(`posts/${postId}`).update({
       ...postInput,
       creator: dbService.doc(`users/${uid}`),
+      is_edited: true,
     });
   } catch (error) {
     console.log(error);
