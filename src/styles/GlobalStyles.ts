@@ -22,8 +22,12 @@ const GlobalStyle = createGlobalStyle`
   body{
     background-color: #f8f9fa;
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
-    min-height:100vh;
-    min-height:-webkit-fill-available;
+    height:100vh;
+
+    /* ios vh issue fix */
+    @supports (-webkit-touch-callout: none) {
+      height: -webkit-fill-available;
+    }
   }
 
   input{

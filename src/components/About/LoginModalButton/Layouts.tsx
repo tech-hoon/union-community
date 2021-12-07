@@ -17,6 +17,10 @@ export const Layouts = {
       height: 100vh;
       max-height: none;
     }
+
+    @supports (-webkit-touch-callout: none) {
+      height: -webkit-fill-available;
+    }
   `,
   Header: styled.div`
     display: flex;
