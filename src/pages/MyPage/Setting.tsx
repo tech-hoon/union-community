@@ -10,6 +10,7 @@ import { useHistory } from 'react-router';
 import { updateProfile, verifyNickname } from 'api/user';
 import { LoginUserType } from 'types';
 import { NICKNAME_LENGTH } from 'utils/config';
+import { nicknameRegex } from 'utils/regex';
 
 const Setting = () => {
   const user = useRecoilValue(loginUserState) as LoginUserType;
@@ -28,6 +29,12 @@ const Setting = () => {
       setErrorInfo('* 필수 입력 항목입니다.');
       return;
     }
+
+    if (!nicknameRegex(__value)) {
+      setErrorInfo('* 사용할 수 없는 닉네임입니다.');
+      return;
+    }
+
     if (__value.length > NICKNAME_LENGTH) {
       setErrorInfo(`* ${NICKNAME_LENGTH}자 이하로 입력해주세요.`);
       return;

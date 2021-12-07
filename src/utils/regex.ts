@@ -1,6 +1,6 @@
-export const tagEliminating = (rawData: string) => rawData.replace(/(<([^>]+)>)/gi, ' ');
+export const tagEliminatingRegex = (rawData: string) => rawData.replace(/(<([^>]+)>)/gi, ' ');
 
-export const parseUrl = (content: string) => {
+export const urlParsingRegex = (content: string) => {
   let replacedText = content.replaceAll('<br/>', '\n');
 
   const regex1 = /(\b(https?):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gim;
@@ -13,4 +13,9 @@ export const parseUrl = (content: string) => {
   replacedText = replacedText.replaceAll('\n', '<br/>');
 
   return replacedText;
+};
+
+export const nicknameRegex = (rawData: string) => {
+  const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
+  return regex.test(rawData);
 };

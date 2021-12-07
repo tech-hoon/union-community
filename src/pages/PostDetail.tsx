@@ -23,7 +23,7 @@ import LikeCount from 'components/common/Count/LikeCount';
 import useModal from 'hooks/common/useModal';
 import AlertModalButton from 'components/common/Portal/AlertModalButton';
 import PortalContainer from 'components/common/Portal/PortalContainer';
-import { parseUrl } from 'utils/regex';
+import { urlParsingRegex } from 'utils/regex';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -85,7 +85,7 @@ const PostDetail = () => {
   useEffect(() => {
     if (post) {
       !!loginUser && !!post.creator && setIsCreator(loginUser.uid === post.creator.uid);
-      setContentMarkup({ __html: parseUrl(post.content) });
+      setContentMarkup({ __html: urlParsingRegex(post.content) });
     }
   }, [post]);
 

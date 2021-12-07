@@ -11,6 +11,7 @@ import useLoginStep from 'hooks/useLoginStep';
 import { RegisterDataType } from 'types';
 import { authService } from 'service/firebase';
 import Loading from 'components/common/Loading/CircleSmall';
+import { nicknameRegex } from 'utils/regex';
 
 interface Props {}
 
@@ -32,6 +33,12 @@ const NicknameContainer = (prop: Props) => {
       setErrorInfo('* 필수 입력 항목입니다.');
       return;
     }
+
+    if (!nicknameRegex(__value)) {
+      setErrorInfo('* 사용할 수 없는 닉네임입니다.');
+      return;
+    }
+
     if (__value.length > NICKNAME_LENGTH) {
       setErrorInfo(`* ${NICKNAME_LENGTH}자 이하로 입력해주세요.`);
       return;
@@ -46,7 +53,7 @@ const NicknameContainer = (prop: Props) => {
 
     if (!__value || __value.length > NICKNAME_LENGTH) {
       setErrorInfo(
-        !__value ? `입력값을 모두 입력해 주세요` : `${NICKNAME_LENGTH}자 이하로 입력해주세요`
+        !__value ? `* 입력값을 모두 입력해 주세요` : `* ${NICKNAME_LENGTH}자 이하로 입력해주세요`
       );
       return;
     }

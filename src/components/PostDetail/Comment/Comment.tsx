@@ -9,7 +9,7 @@ import useComment from 'hooks/comment/useComment';
 import useModal from 'hooks/common/useModal';
 import AlertModalButton from 'components/common/Portal/AlertModalButton';
 import PortalContainer from 'components/common/Portal/PortalContainer';
-import { parseUrl } from 'utils/regex';
+import { urlParsingRegex } from 'utils/regex';
 
 interface Props {
   comment: CommentType;
@@ -103,7 +103,7 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
             <S.Content
               is_deleted={is_deleted}
               dangerouslySetInnerHTML={{
-                __html: is_deleted ? '삭제된 댓글입니다.' : parseUrl(content),
+                __html: is_deleted ? '삭제된 댓글입니다.' : urlParsingRegex(content),
               }}
             ></S.Content>
           )}
