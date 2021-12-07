@@ -16,6 +16,7 @@ import { categoryColor } from 'utils/categoryColor';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { debounce } from 'lodash';
 import { storageService } from 'service/firebase';
+import { PhotoLibrary } from '@styled-icons/material-outlined';
 import CommentCount from 'components/common/Count/CommentCount';
 import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';
@@ -117,6 +118,7 @@ const PostDetail = (props: Props) => {
           </BackButton>
           <ROW_1>
             <Title>{post.title}</Title>
+            {!!post.attachment_url && <ImageIcon size='30px' />}
             <Category color={categoryColor(post.category)}>{post.category}</Category>
           </ROW_1>
           <ROW_2>
@@ -214,7 +216,7 @@ const Title = styled.h1`
   font-weight: 700;
   font-size: 2rem;
   line-height: 1;
-  flex: 4;
+  flex: 8;
   word-break: break-all;
 
   @media ${({ theme }) => theme.size.mobile} {
@@ -224,7 +226,6 @@ const Title = styled.h1`
 
 const Category = styled.div`
   max-width: 80px;
-
   text-align: center;
   background-color: ${(props) => props.color};
   color: #eeeeee;
@@ -232,6 +233,12 @@ const Category = styled.div`
   padding: 4px 16px;
   font-size: 1rem;
   line-height: 1;
+  flex: 1;
+`;
+
+const ImageIcon = styled(PhotoLibrary)`
+  flex: 1;
+  color: #333;
 `;
 
 const ROW_2 = styled.div`

@@ -105,7 +105,6 @@ const PostCard = styled.li`
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 
   @media ${({ theme }) => theme.size.desktop} {
     height: 260px;
@@ -135,11 +134,6 @@ const Title = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* 
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden; */
 `;
 
 const ImageIcon = styled(PhotoLibrary)`
