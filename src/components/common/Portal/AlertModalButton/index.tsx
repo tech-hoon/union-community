@@ -3,17 +3,17 @@ import styled from 'styled-components';
 interface Props {
   title: string;
   twoButton?: boolean;
-  onClose?: () => void;
-  onOkay?: () => void;
+  callback: <T>(t: T) => void;
+  onCloseModal: () => void;
 }
 
-const AlertModalButton = ({ title, twoButton = false, onClose, onOkay }: Props) => {
+const AlertModalButton = ({ title, twoButton = false, callback, onCloseModal }: Props) => {
   return (
     <Wrapper>
       <Title>{title}</Title>
       <ButtonBox>
-        {twoButton && <CancelButton onClick={onClose}>취소</CancelButton>}
-        <OkayButton onClick={onOkay}>확인</OkayButton>
+        {twoButton && <CancelButton onClick={onCloseModal}>취소</CancelButton>}
+        <OkayButton onClick={callback}>확인</OkayButton>
       </ButtonBox>
     </Wrapper>
   );

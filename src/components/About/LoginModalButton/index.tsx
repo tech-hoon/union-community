@@ -6,11 +6,11 @@ import LoginModal from './LoginModal';
 interface Props {}
 
 const LoginModalButton = (props: Props) => {
-  const { modalOpened, onCloseModal, onShowModal } = useModal();
+  const { modalOpened, onCloseModal, onOpenModal } = useModal();
 
   return (
     <>
-      <Button onClick={onShowModal}>시작하기</Button>
+      <Button onClick={onOpenModal}>시작하기</Button>
       {modalOpened && (
         <PortalContainer onClose={onCloseModal}>
           <LoginModal onClose={onCloseModal} />
