@@ -29,6 +29,7 @@ const UploadPost = () => {
   const {
     setAttachment,
     attachment,
+    errorInfo,
     onEditorCancle,
     onSubmit,
     onFileChange,
@@ -54,7 +55,10 @@ const UploadPost = () => {
 
         <CategoryBox>
           <Label>카테고리: </Label>
-          <Select ref={categoryRef} name='카테고리' defaultValue={initialPost?.category || '자유'}>
+          <Select ref={categoryRef} name='카테고리' defaultValue={initialPost?.category || ''}>
+            <Option disabled value=''>
+              카테고리를 선택해주세요
+            </Option>
             {CATEGORY_LIST.map(({ kor }, id) => (
               <Option value={kor} key={id}>
                 {kor}
@@ -89,11 +93,10 @@ const UploadPost = () => {
               <SubmitBtn type='submit'>등록하기</SubmitBtn>
             </>
           ) : (
-            <LoadingWrapper>
-              <Circle />
-            </LoadingWrapper>
+            <Circle />
           )}
         </ButtonBox>
+        <ErrorInfo>{errorInfo}</ErrorInfo>
       </PostContainer>
     </Wrapper>
   );
@@ -223,8 +226,16 @@ const SubmitBtn = styled(Button)`
   }
 `;
 
-const LoadingWrapper = styled.div`
-  width: 50%;
+const ErrorInfo = styled.p`
+  font-weight: 500;
+  font-size: 1rem;
+  color: #f77;
+  float: right;
+  margin-top: 12px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.8rem;
+  }
 `;
 
 export default UploadPost;
