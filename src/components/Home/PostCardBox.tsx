@@ -42,8 +42,8 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
           return (
             <PostCard key={key} onClick={() => handleClick(id!!)}>
               <Head>
-                <Title>{title.length > 10 ? `${title.substring(0, 10)}...` : title}</Title>
-                {!!attachment_url && <ImageIcon />}
+                <Title>{title}</Title>
+                {!!attachment_url && <ImageIcon size='24px' />}
                 <Category color={categoryColor(category)}>{category}</Category>
               </Head>
               <Content>{tagEliminatingRegex(content)}</Content>
@@ -78,16 +78,19 @@ const Wrapper = styled.ol`
   user-select: none;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
   gap: 32px;
   margin: 40px auto;
 
   @media ${({ theme }) => theme.size.tablet} {
     grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media ${({ theme }) => theme.size.mobile} {
     grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     width: 70%;
     padding: 0px;
   }
@@ -119,14 +122,19 @@ const PostCard = styled.li`
 
 const Head = styled.div`
   display: flex;
+  overflow: hidden;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
 `;
 const Title = styled.p`
+  flex: 8;
   font-weight: 700;
   font-size: 1.2rem;
-  flex: 1;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   /* 
   display: block;
   text-overflow: ellipsis;
@@ -135,7 +143,7 @@ const Title = styled.p`
 `;
 
 const ImageIcon = styled(PhotoLibrary)`
-  width: 24px;
+  flex: 1;
   color: #333;
   margin-right: 8px;
 `;
@@ -182,6 +190,8 @@ interface ICreator {
 }
 
 const Creator = styled.span<ICreator>`
+  flex: 1;
+
   font-weight: 500;
   color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.MAIN)};
   font-size: 16px;

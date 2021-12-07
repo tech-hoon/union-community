@@ -215,6 +215,7 @@ const Title = styled.h1`
   font-size: 2rem;
   line-height: 1;
   flex: 4;
+  word-break: break-all;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1.6rem;
@@ -222,7 +223,6 @@ const Title = styled.h1`
 `;
 
 const Category = styled.div`
-  flex: 1;
   max-width: 80px;
 
   text-align: center;
@@ -272,7 +272,7 @@ interface ICreator {
 const Creator = styled.span<ICreator>`
   font-weight: 500;
   font-size: 1.2em;
-  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.BLUE)};
+  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.MAIN)};
 `;
 
 const CountBox = styled.div`
@@ -302,12 +302,15 @@ const CreatedAt = styled.span`
   font-weight: 500;
   font-size: 1.1rem;
   color: #999;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.9rem;
+  }
 `;
 
-const IsEdited = styled.span`
-  font-weight: 500;
-  font-size: 1rem;
-  color: #999;
+const IsEdited = styled(CreatedAt)`
+  font-size: 0.7rem;
+  line-height: 1.5;
 `;
 
 const Content = styled.section`
