@@ -24,7 +24,7 @@ const PortalContainer = ({ onClose, children }: Props) => {
       window.removeEventListener('click', onOutsideClick);
       window.removeEventListener('keydown', onEscClick);
     };
-  });
+  }, []);
 
   return (
     <Portal>
