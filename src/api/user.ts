@@ -23,6 +23,14 @@ export const addUser = ({ uid, ...rest }: any) => {
   }
 };
 
+export const deleteUserData = async (uid: string) => {
+  try {
+    await dbService.doc(`users/${uid}`).delete();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 interface IupdateProfile {
   uid: string;
   avatar_id: number;
