@@ -59,11 +59,15 @@ const UploadPost = () => {
             <Option disabled value=''>
               카테고리를 선택해주세요
             </Option>
-            {CATEGORY_LIST.map(({ kor }, id) => (
-              <Option value={kor} key={id}>
-                {kor}
-              </Option>
-            ))}
+            {CATEGORY_LIST.map(({ kor }, id) => {
+              return (
+                kor !== '전체' && (
+                  <Option value={kor} key={id}>
+                    {kor}
+                  </Option>
+                )
+              );
+            })}
           </Select>
           <UploadImageBtn htmlFor='upload-image'>
             <PhotoLibrary />

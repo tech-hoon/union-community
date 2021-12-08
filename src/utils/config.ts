@@ -3,11 +3,12 @@ export const PAGE_START = 1;
 export const CARD_LIMIT = 6;
 
 export const CATEGORY_LIST = [
+  { eng: 'all', kor: '전체', color: '#53565A' },
   { eng: 'free', kor: '자유', color: '#18A0FB' },
-  { eng: 'advertise', kor: '홍보', color: '#FAB800' },
-  { eng: 'study', kor: '스터디', color: '#FA1E51' },
-  { eng: 'info', kor: '정보', color: '#E06A0C' },
-  { eng: 'secret', kor: '비밀', color: '#8B00FF' },
+  { eng: 'advertise', kor: '홍보', color: '#F2A007' },
+  { eng: 'study', kor: '스터디', color: '#F25260' },
+  { eng: 'info', kor: '정보', color: '#2DA63F' },
+  { eng: 'secret', kor: '비밀', color: '#884ED9' },
 ];
 
 //Login Step

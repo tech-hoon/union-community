@@ -9,7 +9,7 @@ export const postsState = atom<PostType[]>({
 
 export const postsCategoryState = atom<string>({
   key: 'posts/category',
-  default: '',
+  default: '전체',
 });
 
 export const postsOrderByState = atom<string>({

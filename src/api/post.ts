@@ -30,14 +30,15 @@ interface IupdatePostParams {
 
 export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => {
   try {
-    const res = category
-      ? await dbService
-          .collection('posts')
-          .orderBy(orderBy, 'desc')
-          .where('category', '==', category)
-          .limit(CARD_LIMIT)
-          .get()
-      : await dbService.collection('posts').orderBy(orderBy, 'desc').limit(CARD_LIMIT).get();
+    const res =
+      category !== '전체'
+        ? await dbService
+            .collection('posts')
+            .orderBy(orderBy, 'desc')
+            .where('category', '==', category)
+            .limit(CARD_LIMIT)
+            .get()
+        : await dbService.collection('posts').orderBy(orderBy, 'desc').limit(CARD_LIMIT).get();
 
     const data = await Promise.all(
       res.docs.map(async (doc) => {

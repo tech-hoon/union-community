@@ -3,28 +3,27 @@ import { useState, memo } from 'react';
 import { postsCategoryState } from 'store/post';
 import styled from 'styled-components';
 import { CATEGORY_LIST } from 'utils/config';
+import { categoryColor } from 'utils/categoryColor';
 
 interface Props {}
 
 const CategoryBox = (props: Props) => {
   const [category, setCategory] = useRecoilState(postsCategoryState);
-  const [clickedMenu, setClickedMenu] = useState<string>(category);
 
   const onMenuClick = (value: string) => {
-    if (clickedMenu === value) {
-      setCategory('');
-      setClickedMenu('');
-      return;
-    }
-
     setCategory(value);
-    setClickedMenu(value);
   };
 
   return (
     <Wrapper>
       {CATEGORY_LIST.map(({ kor }, id) => (
-        <Menu onClick={() => onMenuClick(kor)} key={id} value={kor} isClicked={clickedMenu === kor}>
+        <Menu
+          onClick={() => onMenuClick(kor)}
+          color={categoryColor(kor)}
+          key={id}
+          value={kor}
+          isClicked={category === kor}
+        >
           {kor}
         </Menu>
       ))}
@@ -58,7 +57,7 @@ const Menu = styled.button<IMenu>`
   width: 100%;
   height: 36px;
   border-radius: 16px;
-  background-color: ${(props) => (props.isClicked ? props.theme.color.MAIN : '#fff')};
+  background-color: ${(props) => (props.isClicked ? props.color : '#fff')};
   color: ${(props) => (props.isClicked ? '#fff' : '#000')};
 
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
@@ -67,7 +66,7 @@ const Menu = styled.button<IMenu>`
   font-weight: 500;
   &:hover {
     color: white;
-    background-color: ${({ theme }) => theme.color.MAIN};
+    background-color: ${(props) => props.color};
   }
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8em;
