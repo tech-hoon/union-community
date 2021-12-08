@@ -115,16 +115,15 @@ const PostDetail = () => {
           </BackButton>
           <ROW_1>
             <Title>{post.title}</Title>
-            {!!post.attachment_url && <ImageIcon size='30px' />}
-            <Category color={categoryColor(post.category)}>{post.category}</Category>
+            <IsEdited>{post.is_edited && `수정됨 `}</IsEdited>
           </ROW_1>
           <ROW_2>
             <ProfileBox>
               <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
               <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
             </ProfileBox>
-            <IsEdited>{post.is_edited && `수정됨 `}</IsEdited>
-            <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
+            {!!post.attachment_url && <ImageIcon size='24px' />}
+            <Category color={categoryColor(post.category)}>{post.category}</Category>
           </ROW_2>
           <ROW_3>
             {isCreator && (
@@ -133,6 +132,7 @@ const PostDetail = () => {
                 <DeleteBtn onClick={onOpenModal}>삭제하기</DeleteBtn>
               </EditBox>
             )}
+            <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
           </ROW_3>
           {/* <HR /> */}
           <ContentWrapper>
@@ -205,9 +205,9 @@ const BackButton = styled.span`
 
 const ROW_1 = styled.div`
   display: flex;
-  align-items: center;
   gap: 4px;
   margin-top: 24px;
+  align-items: center;
 `;
 
 const Title = styled.h1`
@@ -231,24 +231,17 @@ const Category = styled.div`
   padding: 4px 16px;
   font-size: 1rem;
   line-height: 1;
-  flex: 1;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    flex: 2;
-  }
 `;
 
 const ImageIcon = styled(PhotoLibrary)`
-  flex: 1;
   color: #333;
 `;
 
 const ROW_2 = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin: 20px 0 0;
-  gap: 12px;
+  gap: 8px;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8em;
@@ -260,7 +253,7 @@ const ROW_3 = styled.div`
   align-items: center;
   font-weight: 500;
   font-size: 1.3em;
-  margin: 4px 0;
+  margin: 20px 0;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1em;
@@ -299,7 +292,7 @@ const Btn = styled.button`
 const EditBox = styled.div`
   display: flex;
   align-items: center;
-  margin-left: auto;
+  /* margin-left: auto; */
   font-size: 0.8rem;
 `;
 
@@ -309,11 +302,12 @@ const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #999;
+  margin-left: auto;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 `;
 
