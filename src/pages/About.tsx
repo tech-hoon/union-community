@@ -14,7 +14,7 @@ import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { useHistory } from 'react-router';
 import { LoginUserType, UserType } from 'types';
-import { AUTH_WAITING_STEP } from 'utils/config';
+import { AUTH_REJECTED_STEP, AUTH_WAITING_STEP } from 'utils/config';
 
 const About = () => {
   const [count, setCount] = useState({ user: 0, post: 0 });
@@ -51,7 +51,8 @@ const About = () => {
         }
 
         if (res?.auth_status === 'rejected') {
-          console.log('승인이 거절된 계정입니다.');
+          setLoginUser({ ...loginUser, ...res });
+          setLoginStep(AUTH_REJECTED_STEP);
           return;
         }
 

@@ -11,6 +11,7 @@ export const CATEGORY_LIST = [
 ];
 
 //Login Step
+export const AUTH_REJECTED_STEP = -1;
 export const SNS_LOGIN_STEP = 1;
 export const NICKNAME_STEP = 2;
 export const RESIDENT_AUTH_STEP = 3;

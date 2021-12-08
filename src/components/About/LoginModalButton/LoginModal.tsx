@@ -1,7 +1,13 @@
 import useLoginStep from 'hooks/useLoginStep';
 import LogoBox from 'components/common/LogoBox';
 import { Layouts as S } from './Layouts';
-import { NICKNAME_STEP, RESIDENT_AUTH_STEP, SNS_LOGIN_STEP, AUTH_WAITING_STEP } from 'utils/config';
+import {
+  NICKNAME_STEP,
+  RESIDENT_AUTH_STEP,
+  SNS_LOGIN_STEP,
+  AUTH_WAITING_STEP,
+  AUTH_REJECTED_STEP,
+} from 'utils/config';
 import {
   SocialLoginContainer,
   ResidentAuthContainer,
@@ -10,6 +16,7 @@ import {
 } from './LoginContainer';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilValue } from 'recoil';
+import AuthRejectedContainer from './LoginContainer/AuthRejectedContainer';
 
 interface Props {
   onClose: () => void;
@@ -29,6 +36,8 @@ const LoginModal = ({ onClose }: Props) => {
         return <ResidentAuthContainer />;
       case AUTH_WAITING_STEP:
         return <AuthWaitingContainer loginUser={loginUser} onLoginStepReset={onLoginStepReset} />;
+      case AUTH_REJECTED_STEP:
+        return <AuthRejectedContainer loginUser={loginUser} onLoginStepReset={onLoginStepReset} />;
       default:
         return null;
     }
