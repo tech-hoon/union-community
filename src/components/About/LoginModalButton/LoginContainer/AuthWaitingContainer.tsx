@@ -3,7 +3,8 @@ import { authService } from 'service/firebase';
 import styled from 'styled-components';
 import { LoginUserType } from 'types';
 import { Layouts as S } from '../Layouts';
-import Circle from 'components/common/Loading/Circle';
+// import Circle from 'components/common/Loading/Circle';
+import { ClockHistory } from '@styled-icons/bootstrap';
 
 interface Props {
   loginUser: LoginUserType | null;
@@ -22,12 +23,12 @@ const AuthWaitingContainer = ({ loginUser, onLoginStepReset }: Props) => {
     <S.Container>
       <S.Title>가입 승인 대기중입니다.</S.Title>
       <S.Body>
-        <LoadingWrapper>
-          <Circle />
-        </LoadingWrapper>
+        <LogoWrapper>
+          <ClockHistory size='64px' />
+        </LogoWrapper>
         <Description>
           <p>{name && <small>{name}님, </small>}현재 가입 승인 대기중입니다.</p>
-          <p>승인까지 1~2일 정도 소요될 수 있습니다.</p>
+          <p>관리자의 승인을 기다리고 있습니다.</p>
           <p>가입이 승인되는 대로 이용 가능합니다.</p>
         </Description>
       </S.Body>
@@ -51,8 +52,8 @@ const Description = styled.section`
   }
 `;
 
-const LoadingWrapper = styled.div`
-  margin-bottom: 36px;
+const LogoWrapper = styled.div`
+  margin-bottom: 50px;
 `;
 
 const LogOutButton = styled(S.NextButton)``;
