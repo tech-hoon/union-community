@@ -26,20 +26,54 @@ export const postCreated = functions
 
     const { title, content, attachment_url } = snapshot.data();
 
-    Slack.send(
-      `
-    [새로운 글이 등록되었습니다]
-
-    * CREATOR
-    - id: ${uid}
-
-    * POST
-    - id: ${snapshot.id}
-    - title: ${title}
-    - content : ${content}
-    - attachment_url: ${attachment_url}  
-      `
-    );
+    Slack.send({
+      blocks: [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: '💡 새로운 게시물이 등록되었습니다.',
+          },
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*제목:*\n${title}\n*내용:*\n${content}\n`,
+          },
+          accessory: {
+            type: 'image',
+            image_url: attachment_url,
+            alt_text: 'attachment_image',
+          },
+        },
+        {
+          type: 'actions',
+          elements: [
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                emoji: true,
+                text: '거절하기',
+              },
+              style: 'danger',
+              value: 'reject',
+            },
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                emoji: true,
+                text: '동의하기',
+              },
+              style: 'primary',
+              value: 'approve',
+            },
+          ],
+        },
+      ],
+    });
   });
 
 export const postDeleted = functions
@@ -134,16 +168,55 @@ export const userCreated = functions
     });
 
     const { email, name, resident_auth_image, uid } = snapshot.data();
-    Slack.send(
-      `
-    [새로운 사용자가 등록되었습니다]
-      
-    - 아이디: ${uid}
-    - 이메일: ${email}
-    - 이름: ${name}
-    - 인증사진: ${resident_auth_image}
-      `
-    );
+
+    Slack.send({
+      blocks: [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: '💡 새로운 사용자가 등록되었습니다.',
+          },
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*이름:*\n${name}\n*아이디:*\n${uid}\n*이메일:*\n${email}\n*Firebase*:\nhttps://console.firebase.google.com/u/1/project/univ-dorm-community/firestore/data/~2Fusers~2F${uid}\n*인증 사진*:${resident_auth_image}\n`,
+          },
+          accessory: {
+            type: 'image',
+            image_url: resident_auth_image,
+            alt_text: 'resident_auth_image',
+          },
+        },
+        {
+          type: 'actions',
+          elements: [
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                emoji: true,
+                text: '거절하기',
+              },
+              style: 'danger',
+              value: 'reject',
+            },
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                emoji: true,
+                text: '동의하기',
+              },
+              style: 'primary',
+              value: 'approve',
+            },
+          ],
+        },
+      ],
+    });
   });
 
 export const userDeleted = functions
