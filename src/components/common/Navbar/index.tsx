@@ -12,7 +12,7 @@ const Navbar = ({ isLoggedIn }: Props) => {
     <Wrapper>
       <Inner>
         <LogoBox />
-        <Aside isLoggedIn={isLoggedIn} />
+        {isLoggedIn && <Aside />}
       </Inner>
     </Wrapper>
   );
