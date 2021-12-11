@@ -29,13 +29,7 @@ const CategoryBox = (props: Props) => {
   return (
     <Wrapper ref={ref}>
       {CATEGORY_LIST.map(({ kor }, id) => (
-        <Menu
-          onClick={() => onMenuClick(kor)}
-          color={categoryColor(kor)}
-          key={id}
-          value={kor}
-          isClicked={category === kor}
-        >
+        <Menu onClick={() => onMenuClick(kor)} key={id} value={kor} isClicked={category === kor}>
           {kor}
         </Menu>
       ))}
@@ -75,7 +69,7 @@ const Menu = styled.button<IMenu>`
   width: 100%;
   height: 40px;
   border-radius: 16px;
-  background-color: ${(props) => (props.isClicked ? props.color : '#fff')};
+  background-color: ${({ isClicked, theme }) => (isClicked ? theme.color.MAIN : '#fff')};
   color: ${(props) => (props.isClicked ? '#fff' : '#000')};
 
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
@@ -85,7 +79,7 @@ const Menu = styled.button<IMenu>`
 
   &:hover {
     color: white;
-    background-color: ${(props) => props.color};
+    background-color: ${({ theme }) => theme.color.MAIN};
   }
 
   @media ${({ theme }) => theme.size.mobile} {
