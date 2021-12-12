@@ -4,10 +4,10 @@ import LogoBox from '../LogoBox';
 import { memo } from 'react';
 
 interface Props {
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
 }
 
-const Navbar = ({ isLoggedIn }: Props) => {
+const Navbar = ({ isLoggedIn = true }: Props) => {
   return (
     <Wrapper>
       <Inner>
