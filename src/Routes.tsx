@@ -1,6 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { Home, About, PostDetail, UploadPost, Setting, MyLikes, MyPosts } from 'pages';
+import {
+  Home,
+  About,
+  PostDetail,
+  UploadPost,
+  Setting,
+  MyLikes,
+  MyPosts,
+  Messenger,
+  Notification,
+} from 'pages';
 import NotFound from 'pages/NotFound';
 
 interface Props {
@@ -21,6 +31,8 @@ const Routes = ({ isLoggedIn }: Props) => (
         <PrivateRoute exact path='/setting' component={Setting} isLoggedIn={isLoggedIn} />
         <PrivateRoute exact path='/likes' component={MyLikes} isLoggedIn={isLoggedIn} />
         <PrivateRoute exact path='/myposts' component={MyPosts} isLoggedIn={isLoggedIn} />
+        <PrivateRoute exact path='/messenger' component={Messenger} isLoggedIn={isLoggedIn} />
+        <PrivateRoute exact path='/notification' component={Notification} isLoggedIn={isLoggedIn} />
 
         {/* <Route path='*' component={NotFound} /> */}
       </>
