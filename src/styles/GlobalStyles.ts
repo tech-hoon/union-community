@@ -29,6 +29,8 @@ const GlobalStyle = createGlobalStyle`
     @supports (-webkit-touch-callout: none) {
       height: -webkit-fill-available;
     }
+
+    touch-action: pan-y;
   }
 
   input{
@@ -48,7 +50,9 @@ const GlobalStyle = createGlobalStyle`
     appearance: none;
   }
 
-  touch-action: pan-y;
+  svg > path{
+    pointer-events:none;
+  }
 `;
 
 export default GlobalStyle;
