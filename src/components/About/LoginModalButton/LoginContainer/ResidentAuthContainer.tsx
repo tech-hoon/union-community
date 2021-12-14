@@ -40,6 +40,7 @@ const ResidentAuthContainer = () => {
         created_at: new Date().getTime(),
         resident_auth_image: attachmentUrl,
         auth_status: 'waiting',
+        notification_list: [],
         ...registerData,
       };
 

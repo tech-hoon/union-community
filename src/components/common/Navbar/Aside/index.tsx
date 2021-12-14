@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import ProfileBox from '../../ProfileBox';
 import { memo, MouseEventHandler } from 'react';
 import { useHistory } from 'react-router';
-import { Messenger } from '@styled-icons/remix-line';
 import { Notifications } from '@styled-icons/ionicons-sharp';
+import useNotification from 'hooks/comment/useNotification';
 
 const Aside = () => {
   const history = useHistory();
+  const { hasNewNotification, setHasNewNotification } = useNotification();
 
   const onClickButton: MouseEventHandler<HTMLElement> = (event) => {
     const id = (event.target as HTMLElement).id;
@@ -19,6 +20,7 @@ const Aside = () => {
         history.push({ pathname: '/messenger' });
         break;
       case 'notification':
+        setHasNewNotification(false);
         history.push({ pathname: '/notification' });
         break;
 
@@ -30,8 +32,10 @@ const Aside = () => {
   return (
     <Wrapper onClick={onClickButton}>
       <NewPostBtn id='upload'>새 글 쓰기</NewPostBtn>
-      <Notifications size='24px' id='notification' />
-      <Messenger size='24px' id='messenger' />
+      <NotificationWrapper id='notification'>
+        <Notifications size='24px' id='notification' />
+        {hasNewNotification && <NewNotification />}
+      </NotificationWrapper>
       <ProfileBox />
     </Wrapper>
   );
@@ -44,14 +48,19 @@ const Wrapper = styled.div`
   user-select: none;
 `;
 
-const Button = styled.button``;
-
-const MessengerBtn = styled(Messenger)`
+const NotificationWrapper = styled.button`
   cursor: pointer;
+  position: relative;
 `;
 
-const NotificationBtn = styled(Notifications)`
-  cursor: pointer;
+const NewNotification = styled.div`
+  position: absolute;
+  background-color: red;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  top: 0px;
+  right: 4px;
 `;
 
 const NewPostBtn = styled.button`
