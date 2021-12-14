@@ -12,7 +12,7 @@ interface Props {
   titleRef: RefObject<HTMLInputElement | null>;
   categoryRef: RefObject<HTMLSelectElement | null>;
   contentRef: RefObject<any>;
-  mode: string;
+  mode: 'add' | 'update';
   prevPost: PostType | null;
 }
 

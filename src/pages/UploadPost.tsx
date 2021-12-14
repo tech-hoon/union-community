@@ -11,8 +11,8 @@ import Circle from 'components/common/Loading/Circle';
 import { Cancel } from '@styled-icons/material';
 
 interface ILocationState {
-  mode: string;
-  initialPost?: PostType | null;
+  mode: 'add' | 'update';
+  initialPost?: PostType;
 }
 
 const UploadPost = () => {

@@ -1,7 +1,7 @@
 import { dbService, firebaseApp } from 'service/firebase';
-import { LoginUserType } from 'types';
+import { UserType } from 'types';
 
-export const getUserData = async (uid: string) => {
+export const getUserData = async (uid: string | UserType) => {
   const doc = await dbService.doc(`users/${uid}`).get();
   return doc.data() ? doc.data() : null;
 };
