@@ -7,8 +7,8 @@ admin.initializeApp();
 const firestore = admin.firestore();
 const IncomingWebhook = SlackWebhook.IncomingWebhook;
 const config = functions.config();
-const url = config.slack.url;
-const Slack = new IncomingWebhook(url);
+const slackUrl = config.slack.url;
+const Slack = new IncomingWebhook(slackUrl);
 
 export const postCreated = functions
   .region('asia-northeast3')
@@ -24,56 +24,45 @@ export const postCreated = functions
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
 
-    const { title, content, attachment_url } = snapshot.data();
-
-    Slack.send({
-      blocks: [
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: '💡 새로운 게시물이 등록되었습니다.',
-          },
-        },
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `*제목:*\n${title}\n*내용:*\n${content}\n`,
-          },
-          accessory: {
-            type: 'image',
-            image_url: attachment_url,
-            alt_text: 'attachment_image',
-          },
-        },
-        {
-          type: 'actions',
-          elements: [
-            {
-              type: 'button',
-              text: {
-                type: 'plain_text',
-                emoji: true,
-                text: '거절하기',
-              },
-              style: 'danger',
-              value: 'reject',
-            },
-            {
-              type: 'button',
-              text: {
-                type: 'plain_text',
-                emoji: true,
-                text: '동의하기',
-              },
-              style: 'primary',
-              value: 'approve',
-            },
-          ],
-        },
-      ],
-    });
+    // Slack.send({
+    //   blocks: [
+    //     {
+    //       type: 'section',
+    //       text: {
+    //         type: 'mrkdwn',
+    //         text: '💡TEST',
+    //       },
+    //     },
+    //     {
+    //       type: 'actions',
+    //       elements: [
+    //         {
+    //           type: 'button',
+    //           action_id: 'user_auth_approve',
+    //           text: {
+    //             type: 'plain_text',
+    //             emoji: true,
+    //             text: '거절하기',
+    //           },
+    //           style: 'danger',
+    //           value: 'reject',
+    //         },
+    //         {
+    //           type: 'button',
+    //           action_id: 'user_auth_reject',
+    //           text: {
+    //             type: 'plain_text',
+    //             emoji: true,
+    //             text: '동의하기',
+    //           },
+    //           url: 'https://asia-northeast3-univ-dorm-community.cloudfunctions.net/userAuthApproved',
+    //           style: 'primary',
+    //           value: 'approve',
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // });
   });
 
 export const postDeleted = functions
@@ -127,11 +116,43 @@ export const postLiked = functions
 export const commentCreated = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}/comments/{commentId}')
-  .onCreate((_, context) => {
-    const postId = context.resource.name.split('/')[6];
+  .onCreate(async (snapshot, context) => {
+    const postId = context.params.postId;
+    const post: any = await firestore.doc(`posts/${postId}`).get();
+
+    const postData = post.data();
+    const recieverId = await postData.creator.get().uid;
+
+    const { content, creator, parent_comment_id, parent_comment_uid } = snapshot.data();
+    const senderData = await creator.get();
+    const senderId = senderData.data().uid;
+
+    if (senderId === recieverId || senderId === parent_comment_uid) {
+      return;
+    }
+
     firestore.doc(`posts/${postId}`).update({
       comment_count: admin.firestore.FieldValue.increment(1),
     });
+
+    const notification = {
+      type: 'comment',
+      text: content,
+      link: `/post/${postId}`,
+      sender: firestore.doc(`users/${senderId}`),
+      post_title: postData.title,
+      created_at: new Date().getTime(),
+    };
+
+    firestore.doc(`users/${recieverId}`).update({
+      notification_list: admin.firestore.FieldValue.arrayUnion(notification),
+    });
+
+    if (parent_comment_id) {
+      firestore.doc(`users/${parent_comment_uid}`).update({
+        notification_list: admin.firestore.FieldValue.arrayUnion(notification),
+      });
+    }
   });
 
 export const commentDeleted = functions
@@ -151,8 +172,8 @@ export const commentDeleted = functions
 export const replyCommentDeleted = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}/comments/{commentId}')
-  .onDelete((snapshot) => {
-    const postId = snapshot.data().creator.id;
+  .onDelete((_, context) => {
+    const postId = context.params.postId;
 
     firestore.doc(`posts/${postId}`).update({
       comment_count: admin.firestore.FieldValue.increment(-1),
@@ -195,6 +216,7 @@ export const userCreated = functions
           elements: [
             {
               type: 'button',
+              action_id: 'user_auth_approve',
               text: {
                 type: 'plain_text',
                 emoji: true,
@@ -205,6 +227,7 @@ export const userCreated = functions
             },
             {
               type: 'button',
+              action_id: 'user_auth_reject',
               text: {
                 type: 'plain_text',
                 emoji: true,
