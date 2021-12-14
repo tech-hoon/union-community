@@ -5,6 +5,7 @@ import { getInitialPosts, getMorePosts } from 'api/post';
 export const postsState = atom<PostType[]>({
   key: 'posts',
   default: [],
+  dangerouslyAllowMutability: true,
 });
 
 export const postsCategoryState = atom<string>({
