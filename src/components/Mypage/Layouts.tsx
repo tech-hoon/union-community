@@ -37,6 +37,10 @@ export const Layouts = {
     display: flex;
     align-items: center;
     gap: 4px;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 1.3rem;
+    }
   `,
 
   Subtitle: styled.h2`
