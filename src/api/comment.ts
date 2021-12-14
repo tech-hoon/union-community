@@ -13,6 +13,7 @@ interface ICommentAdd {
   uid: string;
   content: string;
   parent_comment_id?: string | null;
+  parent_comment_uid?: string | null;
 }
 
 export const addComment = async ({
@@ -20,6 +21,7 @@ export const addComment = async ({
   content,
   uid,
   parent_comment_id = null,
+  parent_comment_uid = null,
 }: ICommentAdd) => {
   try {
     const res = await dbService
@@ -31,6 +33,7 @@ export const addComment = async ({
         created_at: new Date().getTime(),
         liker_list: [],
         parent_comment_id,
+        parent_comment_uid,
       });
     return res.id;
   } catch (error) {
@@ -66,6 +69,25 @@ export const deleteComment = async (postId: string, commentId: string) => {
     await dbService.doc(`posts/${postId}/comments/${commentId}`).update({
       is_deleted: true,
       is_edited: false,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteAllComments = async (postId: string) => {
+  const ref = dbService.collection(`posts/${postId}/comments`);
+
+  try {
+    ref.onSnapshot((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        ref
+          .doc(doc.id)
+          .delete()
+          .catch((error) => {
+            console.log(error);
+          });
+      });
     });
   } catch (error) {
     console.log(error);

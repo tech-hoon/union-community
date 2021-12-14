@@ -26,13 +26,20 @@ const useComment = (callback: () => void) => {
     }
   };
 
-  const onReplyComment = async (postId: string, content: string, uid: string, parentId: string) => {
+  const onReplyComment = async (
+    postId: string,
+    content: string,
+    uid: string,
+    parentId: string,
+    parentUid: string
+  ) => {
     if (content) {
       await addComment({
         post_id: postId,
         uid: uid,
         content: content,
         parent_comment_id: parentId,
+        parent_comment_uid: parentUid,
       });
       callback();
       setReplyingComment(null);

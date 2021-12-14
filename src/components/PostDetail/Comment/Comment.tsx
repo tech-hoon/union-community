@@ -117,7 +117,9 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
             />
             <S.ReplyCancleBtn onClick={onReplyCancle}>취소하기</S.ReplyCancleBtn>
             <S.ReplySubmitBtn
-              onClick={() => onReplyComment(postId, replyInputRef.current.value, loginUserId, id)}
+              onClick={() =>
+                onReplyComment(postId, replyInputRef.current.value, loginUserId, id, uid)
+              }
             >
               등록하기
             </S.ReplySubmitBtn>
