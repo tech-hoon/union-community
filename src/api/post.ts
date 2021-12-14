@@ -1,5 +1,6 @@
 import { dbService, firebaseApp } from 'service/firebase';
 import { CARD_LIMIT } from 'utils/config';
+import { deleteAllComments } from './comment';
 
 interface IgetPostParams {
   lastVisiblePost?: string;
@@ -176,6 +177,7 @@ export const updatePost = async ({ postId, postInput, uid }: IupdatePostParams) 
 export const deletePost = async (postId: string) => {
   try {
     await dbService.doc(`posts/${postId}`).delete();
+    deleteAllComments(postId);
   } catch (error) {
     console.log(error);
   }
