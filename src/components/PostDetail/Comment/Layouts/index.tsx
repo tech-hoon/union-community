@@ -12,6 +12,14 @@ const S = {
 
   CommentWrapper: styled.li`
     margin-bottom: 18px;
+    position: relative;
+  `,
+
+  CreatorWrapper: styled.div`
+    display: flex;
+    gap: 4px;
+    user-select: none;
+    cursor: pointer;
   `,
 
   ROW1: styled.div`
@@ -37,6 +45,7 @@ const S = {
     align-items: center;
     margin-left: 16px;
     gap: 4px;
+    user-select: none;
   `,
 
   Avatar: styled(Avatar)``,
