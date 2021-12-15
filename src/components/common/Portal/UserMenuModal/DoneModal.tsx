@@ -17,7 +17,7 @@ const DoneModal = ({ onCloseModal }: Props) => {
 };
 
 const Wrapper = styled(S.Wrapper)`
-  gap: 24px;
+  gap: 36px;
 `;
 
 export default DoneModal;
