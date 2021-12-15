@@ -14,11 +14,9 @@ const Aside = () => {
 
     switch (id) {
       case 'upload':
-        history.push({ pathname: 'upload', state: { mode: 'add', initialPost: null } });
+        history.push({ pathname: '/upload', state: { mode: 'add', initialPost: null } });
         break;
-      case 'messenger':
-        history.push({ pathname: '/messenger' });
-        break;
+
       case 'notification':
         setHasNewNotification(false);
         history.push({ pathname: '/notification' });
