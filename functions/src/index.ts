@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { v4 as uuidv4 } from 'uuid';
 import SlackWebhook = require('@slack/client');
 import _ = require('lodash');
 
@@ -96,6 +97,7 @@ export const commentCreated = functions
     });
 
     const notification = {
+      id: uuidv4().slice(0, 8),
       type: 'comment',
       text: content,
       link: `/post/${postId}`,

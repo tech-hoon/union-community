@@ -52,6 +52,7 @@ export interface PostFormType {
 }
 
 export interface NotificationType {
+  id: string;
   type: 'comment' | 'message';
   text: string;
   created_at: number;

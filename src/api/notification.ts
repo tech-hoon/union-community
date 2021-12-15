@@ -1,4 +1,5 @@
 import { dbService, firebaseApp } from 'service/firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 export const sendMessage = async (
   recieverUid: string,
@@ -8,6 +9,7 @@ export const sendMessage = async (
   is_secret: boolean
 ) => {
   const notification = {
+    id: uuidv4().slice(0, 8),
     type: 'message',
     text,
     created_at,
@@ -19,16 +21,3 @@ export const sendMessage = async (
     notification_list: firebaseApp.firestore.FieldValue.arrayUnion(notification),
   });
 };
-
-// export const getMyNotification = (uid: string) => {
-//   dbService.collection(`users/${uid}`).onSnapshot(async (snapshot) => {
-//     await Promise.all(
-//       snapshot.docs.map(async (doc) => {
-//         const newItem = doc.data();
-//         const userData = await newItem.senderId.get();
-
-//         return { ...newItem, sender: userData.data() };
-//       })
-//     );
-//   });
-// };
