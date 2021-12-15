@@ -14,16 +14,19 @@ import { CommentType, LoginUserType } from 'types';
 import { addComment, getComments } from 'api/comment';
 import { categoryColor } from 'utils/categoryColor';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
+import { urlParsingRegex } from 'utils/regex';
 import { debounce } from 'lodash';
+
 import { storageService } from 'service/firebase';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import CommentCount from 'components/common/Count/CommentCount';
 import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';
+
 import useModal from 'hooks/common/useModal';
-import AlertModalButton from 'components/common/Portal/AlertModalButton';
 import PortalContainer from 'components/common/Portal/PortalContainer';
-import { urlParsingRegex } from 'utils/regex';
+import AlertModal from 'components/common/Portal/AlertModal';
+import UserMenuModal from 'components/common/Portal/UserMenuModal';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -39,6 +42,11 @@ const PostDetail = () => {
   const isSecret = post?.category === '비밀';
 
   const { modalOpened, onOpenModal, onCloseModal } = useModal();
+  const {
+    modalOpened: userMenuOpened,
+    onOpenModal: onOpenUserMenu,
+    onCloseModal: onCloseUserMenu,
+  } = useModal();
 
   const onDeletePost = async (id: string) => {
     await deletePost(id);
@@ -92,6 +100,8 @@ const PostDetail = () => {
   useEffect(() => {
     fetchPostDetail(id);
     fetchComments();
+
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -99,78 +109,81 @@ const PostDetail = () => {
   }, [post]);
 
   return (
-    <Wrapper>
-      <Navbar isLoggedIn={true} />
-      {post ? (
-        <PostContainer>
-          <BackButton
-            onClick={() =>
-              history.push({
-                pathname: '/home',
-                state: history.location.state,
-              })
-            }
-          >
-            &#xE000;
-          </BackButton>
-          <ROW_1>
-            <Title>{post.title}</Title>
-            <IsEdited>{post.is_edited && `수정됨 `}</IsEdited>
-          </ROW_1>
-          <ROW_2>
-            <ProfileBox>
-              <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
-              <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
-            </ProfileBox>
-            {!!post.attachment_url && <ImageIcon size='24px' />}
-            <Category color={categoryColor(post.category)}>{post.category}</Category>
-          </ROW_2>
-          <ROW_3>
-            {isCreator && (
-              <EditBox>
-                <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
-                <DeleteBtn onClick={onOpenModal}>삭제하기</DeleteBtn>
-              </EditBox>
-            )}
-            <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
-          </ROW_3>
-          {/* <HR /> */}
-          <ContentWrapper>
-            <Content dangerouslySetInnerHTML={contentMarkup} />
-            {post.attachment_url?.length ? <Images src={post.attachment_url} alt='' /> : <></>}
-          </ContentWrapper>
-          <CountBox>
-            <ViewCount size='16px' count={post.visitor_list?.length} />
-            <CommentCount size='16px' count={post.comment_count} />
-            <LikeCount
-              size='16px'
-              count={post.liker_list?.length}
-              flag={likeOrUnlike(post.liker_list, loginUser.uid)}
-              onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 800)}
+    <>
+      <Wrapper>
+        <Navbar isLoggedIn={true} />
+        {post ? (
+          <PostContainer>
+            <BackButton
+              onClick={() =>
+                history.push({
+                  pathname: '/home',
+                  state: history.location.state,
+                })
+              }
+            >
+              &#xE000;
+            </BackButton>
+            <ROW_1>
+              <Title>{post.title}</Title>
+              <IsEdited>{post.is_edited && `수정됨 `}</IsEdited>
+            </ROW_1>
+            <ROW_2>
+              <ProfileBox onClick={onOpenUserMenu}>
+                <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
+                <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
+              </ProfileBox>
+              {!!post.attachment_url && <ImageIcon size='24px' />}
+              <Category color={categoryColor(post.category)}>{post.category}</Category>
+            </ROW_2>
+            <ROW_3>
+              {isCreator && (
+                <EditBox>
+                  <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
+                  <DeleteBtn onClick={onOpenModal}>삭제하기</DeleteBtn>
+                </EditBox>
+              )}
+              <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
+            </ROW_3>
+            {/* <HR /> */}
+            <ContentWrapper>
+              <Content dangerouslySetInnerHTML={contentMarkup} />
+              {post.attachment_url?.length ? <Images src={post.attachment_url} alt='' /> : <></>}
+            </ContentWrapper>
+            <CountBox>
+              <ViewCount size='16px' count={post.visitor_list?.length} />
+              <CommentCount size='16px' count={post.comment_count} />
+              <LikeCount
+                size='16px'
+                count={post.liker_list?.length}
+                flag={likeOrUnlike(post.liker_list, loginUser.uid)}
+                onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 800)}
+              />
+            </CountBox>
+
+            <CommentWriteWrapper>
+              <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
+              <SubmitBtn onClick={onSubmitComment} type='submit'>
+                등록하기
+              </SubmitBtn>
+            </CommentWriteWrapper>
+
+            <CommentBox
+              postId={id}
+              commentList={comments}
+              fetchComments={fetchComments}
+              category={post.category}
             />
-          </CountBox>
+          </PostContainer>
+        ) : (
+          <PostSkeleton />
+        )}
+        <Footer />
+      </Wrapper>
 
-          <CommentWriteWrapper>
-            <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
-            <SubmitBtn onClick={onSubmitComment} type='submit'>
-              등록하기
-            </SubmitBtn>
-          </CommentWriteWrapper>
-
-          <CommentBox
-            postId={id}
-            commentList={comments}
-            fetchComments={fetchComments}
-            category={post.category}
-          />
-        </PostContainer>
-      ) : (
-        <PostSkeleton />
-      )}
-      <Footer />
       {modalOpened && (
         <PortalContainer onClose={onCloseModal}>
-          <AlertModalButton
+          <AlertModal
             title='글을 삭제하시겠습니까?'
             twoButton={true}
             callback={() => onDeletePost(id)}
@@ -178,7 +191,17 @@ const PostDetail = () => {
           />
         </PortalContainer>
       )}
-    </Wrapper>
+
+      {userMenuOpened && !isCreator && post && (
+        <PortalContainer onClose={onCloseUserMenu}>
+          <UserMenuModal
+            reciever={post.creator}
+            onCloseModal={onCloseUserMenu}
+            isSecret={isSecret}
+          />
+        </PortalContainer>
+      )}
+    </>
   );
 };
 
@@ -264,7 +287,8 @@ const ProfileBox = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-  flex: 1;
+  cursor: pointer;
+  margin-right: auto;
 `;
 
 interface ICreator {

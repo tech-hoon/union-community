@@ -2,13 +2,14 @@ import S from './Layouts';
 import Avatar from 'components/common/Avatar';
 import useComment from 'hooks/comment/useComment';
 import { CommentType } from 'types';
-import { useRef, useState } from 'react';
+import { useRef, useState, memo } from 'react';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { debounce } from 'lodash';
 import { toDateStringByFormating } from 'utils/date';
 
 import useModal from 'hooks/common/useModal';
-import AlertModalButton from 'components/common/Portal/AlertModalButton';
+import AlertModal from 'components/common/Portal/AlertModal';
+import UserMenuModal from 'components/common/Portal/UserMenuModal';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 
 interface Props {
@@ -21,12 +22,13 @@ interface Props {
 
 const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Props) => {
   const replyInputRef = useRef<any>(null);
-  const isSecretPost = category === '비밀';
+  const isSecret = category === '비밀';
   const [deleteId, setDeleteId] = useState<string>('');
   const { modalOpened, onOpenModal, onCloseModal } = useModal();
 
   const {
     id,
+    creator,
     creator: { uid, nickname, avatar_id },
     content,
     is_edited,
@@ -45,19 +47,27 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
     onDeleteReplyComment,
   } = useComment(callback);
 
+  const {
+    modalOpened: userMenuOpened,
+    onOpenModal: onOpenUserMenu,
+    onCloseModal: onCloseUserMenu,
+  } = useModal();
+
   return (
     <>
       <S.ReplyWrapper>
         <S.ROW1>
-          <S.COL1>
-            <S.Avatar avatarId={is_deleted ? -1 : isSecretPost ? -1 : avatar_id} />
-          </S.COL1>
-          <S.COL2>
-            <S.Nickname is_deleted={is_deleted}>
-              {is_deleted ? '삭제' : isSecretPost ? '익명' : nickname}
-            </S.Nickname>
-            <S.CreatedAt>{toDateStringByFormating(created_at, true)}</S.CreatedAt>
-          </S.COL2>
+          <S.CreatorWrapper onClick={onOpenUserMenu}>
+            <S.COL1>
+              <S.Avatar avatarId={is_deleted ? -1 : isSecret ? -1 : avatar_id} />
+            </S.COL1>
+            <S.COL2>
+              <S.Nickname is_deleted={is_deleted}>
+                {is_deleted ? '삭제' : isSecret ? '익명' : nickname}
+              </S.Nickname>
+              <S.CreatedAt>{toDateStringByFormating(created_at, true)}</S.CreatedAt>
+            </S.COL2>
+          </S.CreatorWrapper>
           {!is_deleted && (
             <S.COL3>
               <S.LikeCount
@@ -104,7 +114,7 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
 
       {modalOpened && (
         <PortalContainer onClose={onCloseModal}>
-          <AlertModalButton
+          <AlertModal
             title='대댓글을 삭제하시겠습니까?'
             twoButton={true}
             callback={() => onDeleteReplyComment(postId, deleteId)}
@@ -112,8 +122,14 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
           />
         </PortalContainer>
       )}
+
+      {userMenuOpened && creator.uid !== loginUserId && (
+        <PortalContainer onClose={onCloseUserMenu}>
+          <UserMenuModal reciever={creator} onCloseModal={onCloseUserMenu} isSecret={isSecret} />
+        </PortalContainer>
+      )}
     </>
   );
 };
 
-export default ReplyComment;
+export default memo(ReplyComment);
