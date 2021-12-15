@@ -5,6 +5,6 @@ import PostDetail from './PostDetail';
 import UploadPost from './UploadPost';
 import MyLikes from './MyPage/MyLikes';
 import MyPosts from './MyPage/MyPosts';
-import Notification from './Notification';
+import MyNotification from './MyNotification';
 
-export { Home, About, Setting, PostDetail, UploadPost, MyLikes, MyPosts, Notification };
+export { Home, About, Setting, PostDetail, UploadPost, MyLikes, MyPosts, MyNotification };

@@ -56,6 +56,8 @@ export interface NotificationType {
   text: string;
   created_at: number;
   sender: UserType | string;
+  is_secret: boolean;
+
   link?: string;
   post_title?: string;
 }

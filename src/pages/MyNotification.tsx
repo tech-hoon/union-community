@@ -1,13 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
-import Navbar from 'components/common/Navbar';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { Notifications } from '@styled-icons/ionicons-sharp';
 import useNotification from 'hooks/comment/useNotification';
 import CommentNotification from 'components/Notification/CommentNotification';
 import MessageNofitication from 'components/Notification/MessageNofitication';
 
-const Notification = () => {
+const MyNotification = () => {
   const { notification } = useNotification();
 
   return (
@@ -42,4 +40,4 @@ const NotificationWrapper = styled.section``;
 const NotificationTitle = styled.h2``;
 const NotificationContent = styled.h3``;
 
-export default Notification;
+export default MyNotification;

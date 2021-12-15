@@ -2,19 +2,17 @@ import { dbService, firebaseApp } from 'service/firebase';
 
 export const sendMessage = async (
   recieverUid: string,
-  sender: string,
-  message: {
-    text: string;
-    createdAt: number;
-  }
+  senderUid: string,
+  text: string,
+  created_at: number,
+  is_secret: boolean
 ) => {
-  const { createdAt, text } = message;
-
   const notification = {
     type: 'message',
     text,
-    createdAt,
-    sender,
+    created_at,
+    sender: dbService.doc(`users/${senderUid}`),
+    is_secret,
   };
 
   await dbService.doc(`users/${recieverUid}`).update({
@@ -22,15 +20,15 @@ export const sendMessage = async (
   });
 };
 
-export const getMyNotification = (uid: string) => {
-  dbService.collection(`users/${uid}`).onSnapshot(async (snapshot) => {
-    const data = await Promise.all(
-      snapshot.docs.map(async (doc) => {
-        const newItem = doc.data();
-        const userData = await newItem.senderId.get();
+// export const getMyNotification = (uid: string) => {
+//   dbService.collection(`users/${uid}`).onSnapshot(async (snapshot) => {
+//     await Promise.all(
+//       snapshot.docs.map(async (doc) => {
+//         const newItem = doc.data();
+//         const userData = await newItem.senderId.get();
 
-        return { ...newItem, sender: userData.data() };
-      })
-    );
-  });
-};
+//         return { ...newItem, sender: userData.data() };
+//       })
+//     );
+//   });
+// };

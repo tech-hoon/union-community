@@ -1,16 +1,16 @@
 import { useHistory } from 'react-router-dom';
 import { NotificationType, UserType } from 'types';
-import N from './Layout';
+import N from './Layouts';
 
 interface Props {
   notification: NotificationType;
 }
 
 const CommentNotification = ({
-  notification: { text, created_at, sender, link, post_title },
+  notification: { text, created_at, sender, link, post_title, is_secret },
 }: Props) => {
   const history = useHistory();
-  const { nickname } = sender as UserType;
+  const { nickname, uid } = sender as UserType;
 
   const onClickVisit = () => {
     history.push(link as string);
@@ -26,7 +26,7 @@ const CommentNotification = ({
         <N.Button onClick={onClickVisit}>보러가기</N.Button>
       </N.Row1>
       <N.Row2>
-        <N.Creator>{nickname}</N.Creator>
+        <N.Creator>{is_secret ? `익명${uid.slice(-2)}` : nickname}</N.Creator>
         <N.Content>{text}</N.Content>
       </N.Row2>
     </N.Wrapper>
