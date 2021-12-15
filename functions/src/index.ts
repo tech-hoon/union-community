@@ -3,6 +3,9 @@ import * as admin from 'firebase-admin';
 import SlackWebhook = require('@slack/client');
 import _ = require('lodash');
 
+// TODO:
+// Post 신고 n개 이상시 slack 전송하는 trigger
+
 admin.initializeApp();
 const firestore = admin.firestore();
 const IncomingWebhook = SlackWebhook.IncomingWebhook;
@@ -23,46 +26,6 @@ export const postCreated = functions
     firestore.doc(`users/${uid}`).update({
       post_list: admin.firestore.FieldValue.arrayUnion(snapshot.id),
     });
-
-    // Slack.send({
-    //   blocks: [
-    //     {
-    //       type: 'section',
-    //       text: {
-    //         type: 'mrkdwn',
-    //         text: '💡TEST',
-    //       },
-    //     },
-    //     {
-    //       type: 'actions',
-    //       elements: [
-    //         {
-    //           type: 'button',
-    //           action_id: 'user_auth_approve',
-    //           text: {
-    //             type: 'plain_text',
-    //             emoji: true,
-    //             text: '거절하기',
-    //           },
-    //           style: 'danger',
-    //           value: 'reject',
-    //         },
-    //         {
-    //           type: 'button',
-    //           action_id: 'user_auth_reject',
-    //           text: {
-    //             type: 'plain_text',
-    //             emoji: true,
-    //             text: '동의하기',
-    //           },
-    //           url: 'https://asia-northeast3-univ-dorm-community.cloudfunctions.net/userAuthApproved',
-    //           style: 'primary',
-    //           value: 'approve',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // });
   });
 
 export const postDeleted = functions
@@ -121,15 +84,12 @@ export const commentCreated = functions
     const post: any = await firestore.doc(`posts/${postId}`).get();
 
     const postData = post.data();
-    const recieverId = await postData.creator.get().uid;
+    const recieverData = await postData.creator.get();
+    const recieverId = recieverData.data().uid;
 
     const { content, creator, parent_comment_id, parent_comment_uid } = snapshot.data();
     const senderData = await creator.get();
     const senderId = senderData.data().uid;
-
-    if (senderId === recieverId || senderId === parent_comment_uid) {
-      return;
-    }
 
     firestore.doc(`posts/${postId}`).update({
       comment_count: admin.firestore.FieldValue.increment(1),
@@ -142,13 +102,16 @@ export const commentCreated = functions
       sender: firestore.doc(`users/${senderId}`),
       post_title: postData.title,
       created_at: new Date().getTime(),
+      is_secret: postData.category === '비밀',
     };
 
-    firestore.doc(`users/${recieverId}`).update({
-      notification_list: admin.firestore.FieldValue.arrayUnion(notification),
-    });
+    if (senderId !== recieverId) {
+      firestore.doc(`users/${recieverId}`).update({
+        notification_list: admin.firestore.FieldValue.arrayUnion(notification),
+      });
+    }
 
-    if (parent_comment_id) {
+    if (parent_comment_id && senderId !== parent_comment_uid) {
       firestore.doc(`users/${parent_comment_uid}`).update({
         notification_list: admin.firestore.FieldValue.arrayUnion(notification),
       });
