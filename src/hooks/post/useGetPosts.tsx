@@ -9,6 +9,7 @@ import {
   postsState,
   lastVisiblePostState,
 } from 'store/post';
+import { useHistory } from 'react-router-dom';
 
 export const useGetPosts = () => {
   const [posts, setPosts] = useRecoilState(postsState);
@@ -68,10 +69,17 @@ export const useGetPosts = () => {
 };
 
 export const useGetPostDetail = () => {
+  const history = useHistory();
   const [post, setPost] = useState<PostType>();
 
   const fetchPostDetail = async (id: string) => {
     const __post: any = await getPostDetail(id);
+
+    if (!__post) {
+      history.push('/not-found');
+      return;
+    }
+
     __post && setPost(__post);
   };
 
