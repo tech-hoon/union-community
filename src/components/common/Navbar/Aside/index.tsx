@@ -3,11 +3,12 @@ import ProfileBox from '../../ProfileBox';
 import { memo, MouseEventHandler } from 'react';
 import { useHistory } from 'react-router';
 import { Notifications } from '@styled-icons/ionicons-sharp';
-import useNotification from 'hooks/comment/useNotification';
+import { useRecoilState } from 'recoil';
+import { newNotificationState } from 'store/notification';
 
 const Aside = () => {
   const history = useHistory();
-  const { hasNewNotification, setHasNewNotification } = useNotification();
+  const [hasNewNotification, setHasNewNotification] = useRecoilState(newNotificationState);
 
   const onClickButton: MouseEventHandler<HTMLElement> = (event) => {
     const id = (event.target as HTMLElement).id;

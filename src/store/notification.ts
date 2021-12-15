@@ -6,3 +6,8 @@ export const notificationState = atom<NotificationType[] | []>({
   default: [],
   dangerouslyAllowMutability: true,
 });
+
+export const newNotificationState = atom<boolean>({
+  key: 'new_notification',
+  default: false,
+});
