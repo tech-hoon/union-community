@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { Notifications } from '@styled-icons/ionicons-sharp';
-import useNotification from 'hooks/comment/useNotification';
-import CommentNotification from 'components/Notification/CommentNotification';
-import MessageNofitication from 'components/Notification/MessageNofitication';
+import useNotification from 'hooks/useNotification';
+import CommentNotification from 'components/MyNotification/CommentNotification';
 
 const MyNotification = () => {
   const { notification, onDeleteAllNotification, onDeleteNotification } = useNotification();
@@ -23,23 +22,15 @@ const MyNotification = () => {
         </Header>
         <NotificationContainer>
           {notification.length ? (
-            notification.map((notification, key) =>
-              notification.type === 'comment' ? (
-                <CommentNotification
-                  notification={notification}
-                  key={key}
-                  onDelete={onDeleteNotification}
-                />
-              ) : (
-                <MessageNofitication
-                  notification={notification}
-                  key={key}
-                  onDelete={onDeleteNotification}
-                />
-              )
-            )
+            notification.map((notification, key) => (
+              <CommentNotification
+                notification={notification}
+                key={key}
+                onDelete={onDeleteNotification}
+              />
+            ))
           ) : (
-            <Text>알림이 없습니다.</Text>
+            <S.Text>알림이 없습니다.</S.Text>
           )}
         </NotificationContainer>
       </S.Container>
@@ -56,11 +47,6 @@ const Header = styled.div`
   display: flex;
   gap: 32px;
   align-items: center;
-`;
-
-const Text = styled.div`
-  margin: 40px 30px;
-  font-size: 1.1rem;
 `;
 
 const DeleteAllButton = styled.button`
