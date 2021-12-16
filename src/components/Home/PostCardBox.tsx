@@ -80,7 +80,7 @@ const Wrapper = styled.ol`
   grid-template-columns: repeat(3, minmax(0, 1fr));
 
   gap: 32px;
-  margin: 40px auto;
+  margin: 30px auto;
 
   @media ${({ theme }) => theme.size.tablet} {
     grid-template-columns: 1fr 1fr;
@@ -90,7 +90,7 @@ const Wrapper = styled.ol`
   @media ${({ theme }) => theme.size.mobile} {
     grid-template-columns: 1fr;
     grid-template-columns: repeat(1, minmax(0, 1fr));
-    width: 70%;
+    width: 80%;
     padding: 0px;
   }
 `;

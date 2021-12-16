@@ -35,12 +35,14 @@ const ResidentAuthContainer = () => {
         uid,
         name: displayName,
         email,
+        resident_auth_image: attachmentUrl,
         like_list: [],
         post_list: [],
         created_at: new Date().getTime(),
-        resident_auth_image: attachmentUrl,
         auth_status: 'waiting',
         notification_list: [],
+        sent_message_list: [],
+        received_message_list: [],
         ...registerData,
       };
 

@@ -49,7 +49,7 @@ const Wrapper = styled.div`
   @media ${({ theme }) => theme.size.mobile} {
     width: 95%;
     padding: 0;
-    margin: 20px auto 28px;
+    margin: 12px auto 12px;
     font-size: 1em;
 
     overflow-x: auto;
@@ -92,6 +92,10 @@ const Menu = styled.button<IMenu>`
     height: 32px;
     font-size: 0.75em;
     flex: 0 0 auto;
+    &:hover: {
+      background-color: ${({ isClicked, theme }) => (isClicked ? theme.color.MAIN : '#fff')};
+      color: ${(props) => (props.isClicked ? '#fff' : '#000')};
+    }
   }
 `;
 

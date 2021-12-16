@@ -37,6 +37,7 @@ export const Layouts = {
     display: flex;
     align-items: center;
     gap: 4px;
+    height: 30px;
 
     @media ${({ theme }) => theme.size.mobile} {
       font-size: 1.3rem;
@@ -77,6 +78,11 @@ export const Layouts = {
     height: 2rem;
     font-size: 1rem;
     font-weight: 600;
+  `,
+
+  Text: styled.div`
+    margin: 40px 30px;
+    font-size: 1.1rem;
   `,
 
   CardSkeleton: styled(CardSkeleton)``,

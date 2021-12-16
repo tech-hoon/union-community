@@ -17,13 +17,12 @@ const LogoBox = (props: Props) => {
 const Wrapper = styled.div`
   display: flex;
   width: 100px;
-  /* padding: 3.75px 0; */
-  height: 32px;
+  padding: 0 2px 1px 1px;
   align-items: center;
   cursor: pointer;
 
   @media ${({ theme }) => theme.size.mobileS} {
-    width: 70px;
+    width: 60px;
   }
 `;
 

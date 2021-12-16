@@ -44,7 +44,7 @@ const Wrapper = styled.div`
   margin: 10px 0 4px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    gap: 4px;
+    gap: 0px;
   }
 `;
 const Button = styled.button`
@@ -61,12 +61,12 @@ const Button = styled.button`
 
 const FireIcon = styled(Fire)`
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 `;
 const CalendarIcon = styled(CalendarCheck)`
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 `;
 
@@ -76,7 +76,7 @@ const Title = styled.div`
   line-height: 1;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 `;
 

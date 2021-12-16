@@ -3,12 +3,15 @@ import ProfileBox from '../../ProfileBox';
 import { memo, MouseEventHandler } from 'react';
 import { useHistory } from 'react-router';
 import { Notifications } from '@styled-icons/ionicons-sharp';
+import { Messenger } from '@styled-icons/bootstrap';
 import { useRecoilState } from 'recoil';
 import { newNotificationState } from 'store/notification';
+import useNotification from 'hooks/useNotification';
 
 const Aside = () => {
   const history = useHistory();
-  const [hasNewNotification, setHasNewNotification] = useRecoilState(newNotificationState);
+  // const [hasNewNotification, setHasNewNotification] = useRecoilState(newNotificationState);
+  // const { hasNewNotification, setHasNewNotification } = useNotification();
 
   const onClickButton: MouseEventHandler<HTMLElement> = (event) => {
     const id = (event.target as HTMLElement).id;
@@ -18,8 +21,12 @@ const Aside = () => {
         history.push({ pathname: '/upload', state: { mode: 'add', initialPost: null } });
         break;
 
+      case 'messages':
+        history.push({ pathname: '/messages' });
+        break;
+
       case 'notification':
-        setHasNewNotification(false);
+        // setHasNewNotification(false);
         history.push({ pathname: '/notification' });
         break;
 
@@ -31,10 +38,17 @@ const Aside = () => {
   return (
     <Wrapper onClick={onClickButton}>
       <NewPostBtn id='upload'>새 글 쓰기</NewPostBtn>
-      <NotificationWrapper id='notification'>
-        <Notifications size='24px' id='notification' />
-        {hasNewNotification && <NewNotification />}
-      </NotificationWrapper>
+
+      <IconWrapper>
+        <Messenger size='18px' color='black' id='messages' />
+        {/* {hasNewMessage && <NewAlarm />} */}
+      </IconWrapper>
+
+      <IconWrapper>
+        <Notifications size='20px' color='black' id='notification' />
+        {/* {hasNewNotification && <NewAlarm />} */}
+      </IconWrapper>
+
       <ProfileBox />
     </Wrapper>
   );
@@ -43,21 +57,21 @@ const Aside = () => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
   user-select: none;
+  gap: 4px;
 `;
 
-const NotificationWrapper = styled.button`
+const IconWrapper = styled.button`
   cursor: pointer;
   position: relative;
 `;
 
-const NewNotification = styled.div`
+const NewAlarm = styled.div`
   position: absolute;
   background-color: red;
   border-radius: 50%;
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   top: 0px;
   right: 4px;
 `;
