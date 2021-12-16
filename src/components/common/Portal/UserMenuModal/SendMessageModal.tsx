@@ -4,7 +4,7 @@ import { loginUserState } from 'store/loginUser';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import S from 'components/common/Portal/AlertModal/Layouts';
-import { sendMessage } from 'api/notification';
+import { sendMessage } from 'api/message';
 
 interface Props {
   reciever: UserType;

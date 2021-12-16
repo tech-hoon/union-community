@@ -26,6 +26,8 @@ export interface UserType extends RegisterDataType {
   resident_auth_image?: string;
   auth_status?: 'waiting' | 'approved' | 'rejected';
   notification_list: Notification[] | [];
+  sent_message_list: MessageType[] | [];
+  received_message_list: MessageType[] | [];
 }
 
 export interface LoginUserType extends UserType {}
@@ -53,12 +55,18 @@ export interface PostFormType {
 
 export interface NotificationType {
   id: string;
-  type: 'comment' | 'message';
   text: string;
   created_at: number;
   sender: UserType | string;
+  link: string;
   is_secret: boolean;
+  post_title: string;
+}
 
-  link?: string;
-  post_title?: string;
+export interface MessageType {
+  id: string;
+  text: string;
+  created_at: number;
+  user: UserType | string;
+  is_secret: boolean;
 }

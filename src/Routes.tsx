@@ -9,6 +9,7 @@ import {
   MyLikes,
   MyPosts,
   MyNotification,
+  Messages,
 } from 'pages';
 import NotFound from 'pages/NotFound';
 
@@ -30,6 +31,7 @@ const Routes = ({ isLoggedIn }: Props) => (
         <PrivateRoute exact path='/setting' component={Setting} isLoggedIn={isLoggedIn} />
         <PrivateRoute exact path='/likes' component={MyLikes} isLoggedIn={isLoggedIn} />
         <PrivateRoute exact path='/myposts' component={MyPosts} isLoggedIn={isLoggedIn} />
+        <PrivateRoute exact path='/messages' component={Messages} isLoggedIn={isLoggedIn} />
         <PrivateRoute
           exact
           path='/notification'
