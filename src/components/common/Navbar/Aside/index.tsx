@@ -13,8 +13,7 @@ import useLocalStorage from 'hooks/common/useLocalStorage';
 const Aside = () => {
   const history = useHistory();
   // const [hasNewNotification, setHasNewNotification] = useRecoilState(newNotificationState);
-  const { hasNewMessage, setHasNewMessage } = useReceivedMessage();
-  const [hasNewMessageLS, setHasNewMessageLS] = useLocalStorage('has_new_message', false);
+  const { hasNewMessage, setHasNewMessage, setHasNewMessageLS } = useReceivedMessage();
 
   const onClickButton: MouseEventHandler<HTMLElement> = (event) => {
     const id = (event.target as HTMLElement).id;
