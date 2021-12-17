@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Layouts = {
   Wrapper: styled.ul``,
 
-  Message: styled.ol`
+  Message: styled.li`
     max-width: 1160px;
     margin: 24px auto;
     padding: 8px;
@@ -36,6 +36,8 @@ const Layouts = {
   Row1: styled.div`
     display: flex;
     align-items: center;
+    justify-content:space-between;
+
     margin : 16px; 0;
     gap:4px;
     line-height:1.1;
@@ -47,6 +49,11 @@ const Layouts = {
     align-items: center;
     gap:4px;
     line-height:1.1;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      flex-direction: column;
+      align-items: baseline;
+    }
   `,
 
   IconWrapper: styled.div`
@@ -58,7 +65,10 @@ const Layouts = {
   Title: styled.h2`
     font-weight: bold;
     font-size: 1.1rem;
-    line-height: 1.1;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 0.9rem;
+    }
 
     & small {
       color: #18a0fb;
@@ -72,6 +82,10 @@ const Layouts = {
     font-size: 1.1rem;
     color: gray;
 
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 0.9rem;
+    }
+
     ::after {
       content: ' : ';
     }
@@ -81,14 +95,24 @@ const Layouts = {
     font-weight: bold;
     font-size: 1.1rem;
     color: gray;
+
+    word-break: break-all;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 0.9rem;
+    }
   `,
 
   CreatedAt: styled.p`
+    margin-left: 4px;
     font-weight: bold;
     font-size: 1rem;
     color: gray;
+    flex: 3;
 
-    margin-left: auto;
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 0.8rem;
+    }
   `,
 
   Button: styled.button`
@@ -98,6 +122,10 @@ const Layouts = {
 
     padding: 0;
     margin 0 0 0 auto;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 0.9rem;
+    }
   `,
 
   Text: styled.div`

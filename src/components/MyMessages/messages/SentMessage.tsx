@@ -8,18 +8,18 @@ const SentMessage = () => {
   const { messages, onDeleteMessage, onDeleteAllMessages } = useSentMessage();
 
   return (
-    <S.Wrapper>
+    <>
       {!!messages.length && (
         <S.DeleteAllButton onClick={onDeleteAllMessages}>모두 지우기</S.DeleteAllButton>
       )}
 
-      {messages.length ? (
-        messages.map(
-          ({ text, created_at, user: { nickname, uid, avatar_id }, is_secret, id }: any, key) => (
+      <S.Wrapper>
+        {messages.length ? (
+          messages.map(({ text, created_at, user: { nickname, uid }, is_secret, id }: any, key) => (
             <>
               <S.Message key={key}>
                 <S.Row1>
-                  <S.DeleteButton id={id} onClick={onDeleteMessage} />
+                  <S.DeleteButton id={id} onClick={(e) => onDeleteMessage(e, uid)} />
                   <S.IconWrapper>
                     <Envelope size='28px' />
                   </S.IconWrapper>
@@ -34,12 +34,12 @@ const SentMessage = () => {
                 </S.Row2>
               </S.Message>
             </>
-          )
-        )
-      ) : (
-        <S.Text>보낸 메시지가 없습니다.</S.Text>
-      )}
-    </S.Wrapper>
+          ))
+        ) : (
+          <S.Text>보낸 메시지가 없습니다.</S.Text>
+        )}
+      </S.Wrapper>
+    </>
   );
 };
 
