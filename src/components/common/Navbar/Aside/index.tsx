@@ -7,11 +7,14 @@ import { Messenger } from '@styled-icons/bootstrap';
 import { useRecoilState } from 'recoil';
 import { newNotificationState } from 'store/notification';
 import useNotification from 'hooks/useNotification';
+import useReceivedMessage from 'hooks/message/useReceivedMessage';
+import useLocalStorage from 'hooks/common/useLocalStorage';
 
 const Aside = () => {
   const history = useHistory();
   // const [hasNewNotification, setHasNewNotification] = useRecoilState(newNotificationState);
-  // const { hasNewNotification, setHasNewNotification } = useNotification();
+  const { hasNewMessage, setHasNewMessage } = useReceivedMessage();
+  const [hasNewMessageLS, setHasNewMessageLS] = useLocalStorage('has_new_message', false);
 
   const onClickButton: MouseEventHandler<HTMLElement> = (event) => {
     const id = (event.target as HTMLElement).id;
@@ -22,6 +25,8 @@ const Aside = () => {
         break;
 
       case 'messages':
+        setHasNewMessage(false);
+        setHasNewMessageLS(false);
         history.push({ pathname: '/messages' });
         break;
 
@@ -41,7 +46,7 @@ const Aside = () => {
 
       <IconWrapper>
         <Messenger size='18px' color='black' id='messages' />
-        {/* {hasNewMessage && <NewAlarm />} */}
+        {hasNewMessage && <NewAlarm />}
       </IconWrapper>
 
       <IconWrapper>
@@ -72,8 +77,8 @@ const NewAlarm = styled.div`
   border-radius: 50%;
   width: 5px;
   height: 5px;
-  top: 0px;
-  right: 4px;
+  top: -3px;
+  right: 3px;
 `;
 
 const NewPostBtn = styled.button`

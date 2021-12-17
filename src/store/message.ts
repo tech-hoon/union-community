@@ -13,7 +13,7 @@ export const receivedMessageState = atom<MessageType[] | []>({
   dangerouslyAllowMutability: true,
 });
 
-export const hasNewSentMessage = atom<boolean>({
+export const hasNewReceivedMessageState = atom<boolean>({
   key: 'new_message',
   default: false,
 });

@@ -9,12 +9,14 @@ import useCountUp from 'hooks/common/useCountUp';
 import { useState, memo, useEffect } from 'react';
 import { getUserPostCount } from 'api/count';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { authService } from 'service/firebase';
+import { authService, dbService } from 'service/firebase';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { useHistory } from 'react-router';
-import { LoginUserType, UserType } from 'types';
+import { LoginUserType, UserType, MessageType } from 'types';
 import { AUTH_REJECTED_STEP, AUTH_WAITING_STEP } from 'utils/config';
+import { hasNewReceivedMessageState, receivedMessageState } from 'store/message';
+import useLocalStorage from 'hooks/common/useLocalStorage';
 
 const About = () => {
   const [count, setCount] = useState({ user: 0, post: 0 });
@@ -22,12 +24,22 @@ const About = () => {
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
   const { onLoginStepReset, onLoginStepNext, setLoginStep } = useLoginStep();
   const setLoginUser = useSetRecoilState(loginUserState);
+
   const history = useHistory();
 
   const counter = {
-    0: useCountUp(count.post, 0, 500),
-    1: useCountUp(count.user, 0, 500),
+    0: useCountUp(count.post, 0, 400),
+    1: useCountUp(count.user, 0, 400),
   };
+
+  const setReceivedMessage = useSetRecoilState(receivedMessageState);
+  const setHasNewReceivedMessage = useSetRecoilState(hasNewReceivedMessageState);
+
+  const [messageCountLS, setMessageCountLS] = useLocalStorage('received_message_count', 0);
+  const [hasNewReceivedMessageLS, setHasNewReceivedMessageLS] = useLocalStorage(
+    'has_new_message',
+    false
+  );
 
   const fetchUserData = async (uid: string) => {
     return await getUserData(uid);
@@ -38,6 +50,33 @@ const About = () => {
     setCount(count);
   };
 
+  const fetchReceivedMessage = async (uid: string) => {
+    const res: any = await dbService.doc(`users/${uid}`).get();
+    const __messages: any[] = res.data().received_message_list;
+    const newMessages: any = await Promise.all(
+      __messages.map(async (message) => {
+        const { uid, avatar_id, nickname } = (await message.user.get()).data();
+        return {
+          ...message,
+          user: { uid, avatar_id, nickname },
+        };
+      })
+    );
+
+    if (messageCountLS < newMessages.length || hasNewReceivedMessageLS) {
+      setHasNewReceivedMessage(true);
+      setHasNewReceivedMessageLS(true);
+    }
+
+    const sortedMessage = newMessages.sort(
+      (a: MessageType, b: MessageType) => b.created_at - a.created_at
+    );
+
+    console.log(sortedMessage);
+    setMessageCountLS(sortedMessage.length);
+    setReceivedMessage(sortedMessage);
+  };
+
   useEffect(() => {
     const unsubscribe = authService.onAuthStateChanged(async (user) => {
       if (user) {
@@ -46,6 +85,7 @@ const About = () => {
 
         if (res?.auth_status === 'approved') {
           setLoginUser({ ...loginUser, ...res });
+          fetchReceivedMessage(user.uid);
           history.push('/home');
           return;
         }
