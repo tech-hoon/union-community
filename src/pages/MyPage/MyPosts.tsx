@@ -35,6 +35,7 @@ const MyPosts = () => {
         </S.Header>
         {isLoading ? <S.CardSkeleton /> : <S.PostCards posts={posts} mypage={true} />}
       </S.Container>
+      <S.Footer />
     </S.Wrapper>
   );
 };

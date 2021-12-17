@@ -103,6 +103,7 @@ const Setting = () => {
           {/* <DeleteButton>회원 탈퇴</DeleteButton> */}
         </Body>
       </S.Container>
+      <S.Footer />
     </S.Wrapper>
   );
 };
