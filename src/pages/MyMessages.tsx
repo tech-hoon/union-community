@@ -19,9 +19,9 @@ const MyMessages = () => {
       <S.Container>
         <Header>
           <S.Title>
-            <IconWrapper>
-              <Messenger size='24px' />
-            </IconWrapper>
+            <S.IconWrapper>
+              <Messenger size='20px' />
+            </S.IconWrapper>
             나의 메시지
           </S.Title>
           <MenuBox onClick={onClickMenu}>
@@ -37,27 +37,27 @@ const MyMessages = () => {
           {menuId === 'received' ? <ReceivedMessage /> : <SentMessage />}
         </MessagesContainer>
       </S.Container>
+      <S.Footer />
     </S.Wrapper>
   );
 };
 
-const MessagesContainer = styled.section`
+const MessagesContainer = styled.div`
   margin: 30px 0;
 `;
 
 const Header = styled.div`
-  margin: 30px 20px;
+  margin: 30px 0px;
   display: flex;
+  gap: 16px;
   align-items: center;
-  gap: 20px;
-`;
 
-const IconWrapper = styled.div`
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @media ${({ theme }) => theme.size.mobile} {
+    /* flex-direction: column; */
+    /* align-items: baseline; */
+    margin: 16px 4px;
+    gap: 20px;
+  }
 `;
 
 const MenuBox = styled(S.Subtitle)``;
@@ -70,6 +70,10 @@ const MenuButton = styled.button<MenuType>`
   font-size: 1.1rem;
   font-weight: ${({ isClicked }) => (isClicked ? 700 : 500)};
   color: ${({ isClicked, theme }) => (isClicked ? theme.color.MAIN : 'gray')};
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.85rem;
+  }
 `;
 
 export default MyMessages;

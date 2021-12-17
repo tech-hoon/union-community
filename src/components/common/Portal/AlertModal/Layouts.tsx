@@ -9,7 +9,7 @@ const Button = styled.button`
 
 const S = {
   Wrapper: styled.div`
-    width: 350px;
+    width: 300px;
     height: 200px;
     padding: 32px 24px;
     display: flex;

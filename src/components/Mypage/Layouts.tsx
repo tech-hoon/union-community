@@ -1,6 +1,8 @@
 import Navbar from 'components/common/Navbar';
+import Footer from 'components/common/Footer';
 import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
 import PostCardBox from 'components/Home/PostCardBox';
+
 import styled from 'styled-components';
 
 export const Layouts = {
@@ -18,7 +20,7 @@ export const Layouts = {
   `,
 
   Header: styled.header`
-    margin: 30px 20px;
+    margin: 30px 0px;
     display: flex;
     gap: 32px;
     align-items: center;
@@ -26,8 +28,17 @@ export const Layouts = {
     @media ${({ theme }) => theme.size.mobile} {
       flex-direction: column;
       align-items: baseline;
+      margin: 16px 4px;
       gap: 20px;
     }
+  `,
+
+  IconWrapper: styled.div`
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 
   Title: styled.h1`
@@ -40,7 +51,7 @@ export const Layouts = {
     height: 30px;
 
     @media ${({ theme }) => theme.size.mobile} {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
   `,
 
@@ -86,4 +97,6 @@ export const Layouts = {
   `,
 
   CardSkeleton: styled(CardSkeleton)``,
+
+  Footer: styled(Footer)``,
 };

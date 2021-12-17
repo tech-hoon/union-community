@@ -13,7 +13,9 @@ const MyNotification = () => {
       <S.Container>
         <Header>
           <S.Title>
-            <Notifications size='30px' />
+            <S.IconWrapper>
+              <Notifications size='26px' />
+            </S.IconWrapper>
             나의 알림
           </S.Title>
           {!!notification.length && (
@@ -34,19 +36,27 @@ const MyNotification = () => {
           )}
         </NotificationContainer>
       </S.Container>
+      <S.Footer />
     </S.Wrapper>
   );
 };
 
-const NotificationContainer = styled.section`
+const NotificationContainer = styled.ul`
   margin: 30px 0;
 `;
 
 const Header = styled.div`
-  margin: 30px 20px;
+  margin: 30px 0px;
   display: flex;
   gap: 32px;
   align-items: center;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    /* flex-direction: column; */
+    /* align-items: baseline; */
+    margin: 16px 4px;
+    gap: 20px;
+  }
 `;
 
 const DeleteAllButton = styled.button`

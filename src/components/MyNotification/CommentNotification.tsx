@@ -1,9 +1,10 @@
-import s from 'components/NotificationLayout/Layouts';
+import S from 'components/NotificationLayout/Layouts';
 import { useHistory } from 'react-router-dom';
 import { NotificationType, UserType } from 'types';
 import { Comment } from '@styled-icons/fa-regular';
 import Avatar from 'components/common/Avatar';
 import { toDateStringByFormating } from 'utils/date';
+import styled from 'styled-components';
 
 interface Props {
   notification: NotificationType;
@@ -22,26 +23,30 @@ const CommentNotification = ({
   };
 
   return (
-    <s.Message>
-      <s.DeleteButton id={id} onClick={onDelete} />
-      <s.Row1>
-        <s.IconWrapper>
+    <S.Message>
+      <S.DeleteButton id={id} onClick={onDelete} />
+      <S.Row1>
+        <S.IconWrapper>
           <Comment size='24px' />
-        </s.IconWrapper>
-        <s.Title>
+        </S.IconWrapper>
+        <S.Title>
           <small>{post_title}</small>
           게시물에 댓글이 달렸습니다.
-        </s.Title>
-        <s.CreatedAt>{toDateStringByFormating(created_at)}</s.CreatedAt>
-      </s.Row1>
-      <s.Row2>
-        <Avatar avatarId={is_secret ? -1 : avatar_id} />
-        <s.Creator>{is_secret ? `익명${uid.slice(-2)}` : nickname}</s.Creator>
-        <s.Content>{text}</s.Content>
-        <s.Button onClick={onClickVisit}>보러가기</s.Button>
-      </s.Row2>
-    </s.Message>
+        </S.Title>
+        <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
+      </S.Row1>
+      <S.Row2>
+        <Avatar avatarId={is_secret ? -1 : avatar_id} size={28} />
+        <S.Creator>{is_secret ? `익명${uid.slice(-2)}` : nickname}</S.Creator>
+        <S.Content>{text}</S.Content>
+        <S.Button onClick={onClickVisit}>보러가기</S.Button>
+      </S.Row2>
+    </S.Message>
   );
 };
+
+const AvatarWrapper = styled.div`
+  width: 20px;
+`;
 
 export default CommentNotification;

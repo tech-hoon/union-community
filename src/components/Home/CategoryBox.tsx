@@ -92,10 +92,6 @@ const Menu = styled.button<IMenu>`
     height: 32px;
     font-size: 0.75em;
     flex: 0 0 auto;
-    &:hover: {
-      background-color: ${({ isClicked, theme }) => (isClicked ? theme.color.MAIN : '#fff')};
-      color: ${(props) => (props.isClicked ? '#fff' : '#000')};
-    }
   }
 `;
 
