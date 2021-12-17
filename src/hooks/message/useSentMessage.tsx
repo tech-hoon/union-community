@@ -31,7 +31,7 @@ const useSentMessage = () => {
     }
   };
 
-  const onDeleteMessage: React.MouseEventHandler<HTMLElement> = (e) => {
+  const onDeleteMessage = (e: React.MouseEvent<HTMLElement>, targetUid: string) => {
     const targetId = (e.target as HTMLElement).id;
     const newArray = [];
 
@@ -39,7 +39,7 @@ const useSentMessage = () => {
       if (messages[i].id === targetId) {
         continue;
       }
-      newArray.push({ ...messages[i], user: dbService.doc(`users/${uid}`) });
+      newArray.push({ ...messages[i], user: dbService.doc(`users/${targetUid}`) });
     }
 
     dbService.doc(`users/${uid}`).update({
