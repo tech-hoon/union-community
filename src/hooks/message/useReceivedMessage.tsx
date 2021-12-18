@@ -17,11 +17,11 @@ const useReceivedMessage = () => {
 
   let unsubscribe = () => {};
 
-  const onFetchReceivedMessage = async (userId: string) => {
+  const onFetchReceivedMessages = async (userId: string) => {
     const res: any = await dbService.doc(`users/${userId}`).get();
-    const __messages: any[] = res.data().received_message_list;
+    const messagesData: any[] = res.data().received_message_list;
     const newMessages: any = await Promise.all(
-      __messages.map(async (message) => {
+      messagesData.map(async (message) => {
         const { uid, avatar_id, nickname } = (await message.user.get()).data();
         return {
           ...message,
@@ -47,9 +47,9 @@ const useReceivedMessage = () => {
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach(async (change) => {
           if (change.type === 'modified') {
-            const __messages: any[] = change.doc.data().received_message_list;
+            const messagesData: any[] = change.doc.data().received_message_list;
             const newMessages: any = await Promise.all(
-              __messages.map(async (message) => {
+              messagesData.map(async (message) => {
                 const { uid, avatar_id, nickname } = (await message.user.get()).data();
                 return {
                   ...message,
@@ -68,6 +68,8 @@ const useReceivedMessage = () => {
             );
 
             setMessages(sortedMessage);
+            setMessageCountLS(sortedMessage.length);
+            setMessages(sortedMessage);
           }
         });
       });
@@ -84,11 +86,11 @@ const useReceivedMessage = () => {
       newArray.push({ ...messages[i], user: dbService.doc(`users/${targetUid}`) });
     }
 
-    dbService.doc(`users/${loginUser?.uid}`).update({ received_message_list: newArray });
+    dbService.doc(`users/${loginUser.uid}`).update({ received_message_list: newArray });
   };
 
   const onDeleteAllMessages = () => {
-    dbService.doc(`users/${loginUser?.uid}`).update({ received_message_list: [] });
+    dbService.doc(`users/${loginUser.uid}`).update({ received_message_list: [] });
   };
 
   useEffect(() => {
@@ -112,7 +114,7 @@ const useReceivedMessage = () => {
 
     onDeleteMessage,
     onDeleteAllMessages,
-    onFetchReceivedMessage,
+    onFetchReceivedMessages,
   };
 };
 

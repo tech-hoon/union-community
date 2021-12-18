@@ -5,12 +5,32 @@ import { Layouts as S } from 'components/Mypage/Layouts';
 import { useState } from 'react';
 import { Messenger } from '@styled-icons/bootstrap';
 
+import { UserType } from 'types';
+import useModal from 'hooks/common/useModal';
+import PortalContainer from 'components/common/Portal/PortalContainer';
+import UserMenuModal from 'components/common/Portal/UserMenuModal';
+
 const MyMessages = () => {
+  const {
+    modalOpened: userMenuOpened,
+    onOpenModal: onOpenUserMenu,
+    onCloseModal: onCloseUserMenu,
+  } = useModal();
+
   const [menuId, setMenuId] = useState<string>('received');
+
+  const [receiver, setReceiver] = useState<UserType>();
+  const [isSecret, setIsSecret] = useState<boolean>(false);
 
   const onClickMenu: React.MouseEventHandler<HTMLElement> = (e) => {
     const id = (e.target as HTMLElement).id;
     setMenuId(id);
+  };
+
+  const onClickModal = (user: UserType, isSecret: boolean) => {
+    setReceiver(user);
+    setIsSecret(isSecret);
+    onOpenUserMenu();
   };
 
   return (
@@ -34,16 +54,30 @@ const MyMessages = () => {
           </MenuBox>
         </Header>
         <MessagesContainer>
-          {menuId === 'received' ? <ReceivedMessage /> : <SentMessage />}
+          {menuId === 'received' ? (
+            <ReceivedMessage onClickModal={onClickModal} />
+          ) : (
+            <SentMessage />
+          )}
         </MessagesContainer>
       </S.Container>
       <S.Footer />
+
+      {userMenuOpened && (
+        <PortalContainer onClose={onCloseUserMenu}>
+          <UserMenuModal
+            reciever={receiver as UserType}
+            onCloseModal={onCloseUserMenu}
+            isSecret={isSecret}
+          />
+        </PortalContainer>
+      )}
     </S.Wrapper>
   );
 };
 
 const MessagesContainer = styled.div`
-  margin: 30px 0;
+  margin: 30px 20px;
 `;
 
 const Header = styled.div`
