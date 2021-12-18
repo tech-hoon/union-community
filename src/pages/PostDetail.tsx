@@ -8,7 +8,7 @@ import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CommentBox from 'components/PostDetail/Comment/CommentBox';
 import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { deletePost, postLike, postUnlike, viewCountUp } from 'api/post';
 import { CommentType, LoginUserType } from 'types';
 import { addComment, getComments } from 'api/comment';
@@ -27,6 +27,7 @@ import useModal from 'hooks/common/useModal';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import AlertModal from 'components/common/Portal/AlertModal';
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
+import { commentState } from 'store/comment';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -37,7 +38,8 @@ const PostDetail = () => {
   const { post, fetchPostDetail } = useGetPostDetail();
   const [isCreator, setIsCreator] = useState<boolean>();
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
-  const [comments, setComments] = useState<CommentType[]>([]);
+  // const [comments, setComments] = useState<CommentType[]>([]);
+  const [comments, setComments] = useRecoilState(commentState);
   const commentRef = useRef<any>(null);
   const isSecret = post?.category === '비밀';
 

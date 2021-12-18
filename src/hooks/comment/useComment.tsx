@@ -8,14 +8,15 @@ import {
   deleteReplyComment,
 } from 'api/comment';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
+import { CommentType } from 'types';
 
 const useComment = (callback: () => void) => {
   const [editingComment, setEditingComment] = useState<string | null>();
   const [replyingComment, setReplyingComment] = useState<string | null>();
 
   const onCancel = () => setEditingComment(null);
-  const onDelete = async (postId: string, commentId: string) => {
-    await deleteComment(postId, commentId);
+  const onDelete = async (postId: string, commentId: string, commentList: CommentType[]) => {
+    await deleteComment(postId, commentId, commentList);
     callback();
   };
   const onUpdateComment = async (postId: string, content: string, commentId: string) => {

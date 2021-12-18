@@ -64,8 +64,22 @@ export const getComments = async (postId: string) => {
   }
 };
 
-export const deleteComment = async (postId: string, commentId: string) => {
+export const deleteComment = async (
+  postId: string,
+  commentId: string,
+  commentList: CommentType[]
+) => {
+  const targetIndex = commentList.findIndex(({ id }) => id === commentId);
+  const isParentComment = !commentList[targetIndex + 1]?.parent_comment_id;
+
   try {
+    // 대댓글 없을때
+    if (targetIndex === commentList.length - 1 || isParentComment) {
+      await dbService.doc(`posts/${postId}/comments/${commentId}`).delete();
+      return;
+    }
+
+    // 대댓글 있을때
     await dbService.doc(`posts/${postId}/comments/${commentId}`).update({
       is_deleted: true,
       is_edited: false,
