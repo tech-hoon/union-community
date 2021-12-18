@@ -1,81 +1,128 @@
 import useLocalStorage from 'hooks/common/useLocalStorage';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { dbService } from 'service/firebase';
+import { dbService, firebaseApp } from 'service/firebase';
 import { loginUserState } from 'store/loginUser';
-import { notificationState, newNotificationState } from 'store/notification';
+import { notificationState, hasNewNotificationState } from 'store/notification';
 import { NotificationType, LoginUserType } from 'types';
 
 const useNotification = () => {
-  const { uid } = useRecoilValue(loginUserState) as LoginUserType;
-  const [notification, setNotification] = useRecoilState(notificationState);
-  const [hasNewNotification, setHasNewNotification] = useRecoilState(newNotificationState);
-  const [notificationCount, setNotificationCount] = useLocalStorage('notification_count', 0);
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
+
+  const [notifications, setNotifications] = useRecoilState(notificationState);
+  const [hasNewNotification, setHasNewNotification] = useRecoilState(hasNewNotificationState);
+
+  const [notificationCountLS, setNotificationCountLS] = useLocalStorage('notification_count', 0);
+  const [hasNewNotificationLS, setHasNewNotificationLS] = useLocalStorage(
+    'has_new_notification',
+    false
+  );
 
   let unsubscribe = () => {};
 
-  const onLoadNotification = () => {
-    if (uid) {
-      unsubscribe = dbService
-        .collection('users')
-        .doc(uid)
-        .onSnapshot(async (snapshot) => {
-          const res: any = snapshot.data();
-          const notificationList: any[] = res.notification_list;
-          const newNotif: any = await Promise.all(
-            notificationList.map(async (item) => {
-              const { uid, avatar_id, nickname } = (await item.sender.get()).data();
+  const onFetchNotifications = async (userId: string) => {
+    const res: any = await dbService.doc(`users/${userId}`).get();
+    const notificationsData: any[] = res.data().notification_list;
+    const newNotifications: any = await Promise.all(
+      notificationsData.map(async (item) => {
+        const { uid, avatar_id, nickname } = (await item.sender.get()).data();
 
-              return {
-                ...item,
-                sender: { uid, avatar_id, nickname },
-              };
-            })
-          );
+        return {
+          ...item,
+          sender: { uid, avatar_id, nickname },
+        };
+      })
+    );
 
-          if (newNotif.length !== 0 && newNotif.length !== notificationCount) {
-            setNotificationCount(newNotif.length);
-            setHasNewNotification(true);
-          }
-
-          setNotification(newNotif.reverse());
-        });
+    if (notificationCountLS < newNotifications.length || hasNewNotificationLS) {
+      setHasNewNotification(true);
+      setHasNewNotificationLS(true);
     }
+
+    const sortedNotification = newNotifications.sort(
+      (a: NotificationType, b: NotificationType) => b.created_at - a.created_at
+    );
+    setNotificationCountLS(sortedNotification.length);
+    setNotifications(sortedNotification);
   };
 
-  const onDeleteNotification: React.MouseEventHandler<HTMLElement> = (e) => {
+  const onSubscribeNewMessage = () => {
+    unsubscribe = dbService
+      .collection(`users`)
+      .where(firebaseApp.firestore.FieldPath.documentId(), '==', loginUser.uid)
+      .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach(async (change) => {
+          if (change.type === 'modified') {
+            const notificationsData: any[] = change.doc.data().notification_list;
+            const newNotifications: any = await Promise.all(
+              notificationsData.map(async (notification) => {
+                const { uid, avatar_id, nickname } = (await notification.sender.get()).data();
+                return {
+                  ...notification,
+                  user: { uid, avatar_id, nickname },
+                };
+              })
+            );
+
+            if (notificationCountLS < newNotifications.length) {
+              setHasNewNotification(true);
+              setHasNewNotificationLS(true);
+            }
+
+            const sortedNotifications = newNotifications.sort(
+              (a: NotificationType, b: NotificationType) => b.created_at - a.created_at
+            );
+
+            setNotifications(sortedNotifications);
+          }
+        });
+      });
+  };
+
+  const onDeleteNotification = (e: React.MouseEvent<HTMLElement>, targetUid: string) => {
     const targetId = (e.target as HTMLElement).id;
     const newArray = [];
 
-    for (let i = 0; i < notification.length; i++) {
-      if (notification[i].id === targetId) {
+    for (let i = 0; i < notifications.length; i++) {
+      if (notifications[i].id === targetId) {
         continue;
       }
-      newArray.push({ ...notification[i], sender: dbService.doc(`users/${uid}`) });
+      newArray.push({ ...notifications[i], sender: dbService.doc(`users/${targetUid}`) });
     }
 
-    dbService.doc(`users/${uid}`).update({
+    dbService.doc(`users/${loginUser.uid}`).update({
       notification_list: newArray,
     });
   };
 
   const onDeleteAllNotification = () => {
-    dbService.doc(`users/${uid}`).update({
+    dbService.doc(`users/${loginUser.uid}`).update({
       notification_list: [],
     });
   };
 
   useEffect(() => {
-    onLoadNotification();
-    return () => unsubscribe();
-  }, []);
+    if (!loginUser) return;
+
+    onSubscribeNewMessage();
+    return () => {
+      unsubscribe();
+
+      if (notifications.length) {
+        setNotificationCountLS(notifications.length);
+      }
+    };
+  }, [loginUser]);
 
   return {
-    notification,
+    notifications,
     hasNewNotification,
     setHasNewNotification,
+    setHasNewNotificationLS,
+
     onDeleteAllNotification,
     onDeleteNotification,
+    onFetchNotifications,
   };
 };
 

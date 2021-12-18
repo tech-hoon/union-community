@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { Notifications } from '@styled-icons/ionicons-sharp';
-import useNotification from 'hooks/useNotification';
 import CommentNotification from 'components/MyNotification/CommentNotification';
 
 const MyNotification = () => {
-  const { notification, onDeleteAllNotification, onDeleteNotification } = useNotification();
-
   return (
     <S.Wrapper>
       <S.Navbar />
@@ -18,22 +15,9 @@ const MyNotification = () => {
             </S.IconWrapper>
             나의 알림
           </S.Title>
-          {!!notification.length && (
-            <DeleteAllButton onClick={onDeleteAllNotification}>모두 지우기</DeleteAllButton>
-          )}
         </Header>
         <NotificationContainer>
-          {notification.length ? (
-            notification.map((notification, key) => (
-              <CommentNotification
-                notification={notification}
-                key={key}
-                onDelete={onDeleteNotification}
-              />
-            ))
-          ) : (
-            <S.Text>알림이 없습니다.</S.Text>
-          )}
+          <CommentNotification />
         </NotificationContainer>
       </S.Container>
       <S.Footer />
@@ -52,8 +36,6 @@ const Header = styled.div`
   align-items: center;
 
   @media ${({ theme }) => theme.size.mobile} {
-    /* flex-direction: column; */
-    /* align-items: baseline; */
     margin: 16px 4px;
     gap: 20px;
   }

@@ -4,16 +4,13 @@ import { memo, MouseEventHandler } from 'react';
 import { useHistory } from 'react-router';
 import { Notifications } from '@styled-icons/ionicons-sharp';
 import { Messenger } from '@styled-icons/bootstrap';
-import { useRecoilState } from 'recoil';
-import { newNotificationState } from 'store/notification';
-import useNotification from 'hooks/useNotification';
 import useReceivedMessage from 'hooks/message/useReceivedMessage';
-import useLocalStorage from 'hooks/common/useLocalStorage';
+import useNotification from 'hooks/useNotification';
 
 const Aside = () => {
   const history = useHistory();
-  // const [hasNewNotification, setHasNewNotification] = useRecoilState(newNotificationState);
   const { hasNewMessage, setHasNewMessage, setHasNewMessageLS } = useReceivedMessage();
+  const { hasNewNotification, setHasNewNotification, setHasNewNotificationLS } = useNotification();
 
   const onClickButton: MouseEventHandler<HTMLElement> = (event) => {
     const id = (event.target as HTMLElement).id;
@@ -30,7 +27,8 @@ const Aside = () => {
         break;
 
       case 'notification':
-        // setHasNewNotification(false);
+        setHasNewNotification(false);
+        setHasNewNotificationLS(false);
         history.push({ pathname: '/notification' });
         break;
 
@@ -50,7 +48,7 @@ const Aside = () => {
 
       <IconWrapper>
         <Notifications size='20px' color='black' id='notification' />
-        {/* {hasNewNotification && <NewAlarm />} */}
+        {hasNewNotification && <NewAlarm />}
       </IconWrapper>
 
       <ProfileBox />

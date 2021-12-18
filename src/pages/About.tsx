@@ -16,6 +16,7 @@ import { useHistory } from 'react-router';
 import { LoginUserType } from 'types';
 import { AUTH_REJECTED_STEP, AUTH_WAITING_STEP } from 'utils/config';
 import useReceivedMessage from 'hooks/message/useReceivedMessage';
+import useNotification from 'hooks/useNotification';
 
 const About = () => {
   const [count, setCount] = useState({ user: 0, post: 0 });
@@ -31,7 +32,8 @@ const About = () => {
     1: useCountUp(count.user, 0, 400),
   };
 
-  const { onFetchReceivedMessage } = useReceivedMessage();
+  const { onFetchReceivedMessages } = useReceivedMessage();
+  const { onFetchNotifications } = useNotification();
 
   const fetchUserData = async (uid: string) => {
     return await getUserData(uid);
@@ -50,7 +52,9 @@ const About = () => {
 
         if (res?.auth_status === 'approved') {
           setLoginUser({ ...loginUser, ...res });
-          onFetchReceivedMessage(user.uid);
+          onFetchReceivedMessages(user.uid);
+          onFetchNotifications(user.uid);
+
           history.push('/home');
           return;
         }
