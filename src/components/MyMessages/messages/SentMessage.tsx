@@ -44,7 +44,7 @@ const SentMessage = () => {
 };
 
 const Content = styled(S.Content)`
-  margin-left: 12px;
+  margin: 4px 0;
 `;
 
 export default SentMessage;

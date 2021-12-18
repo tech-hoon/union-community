@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const Layouts = {
-  Wrapper: styled.ul``,
+  Wrapper: styled.ul`
+    min-height: 50vh;
+  `,
 
   Message: styled.li`
     max-width: 888px;
@@ -39,7 +41,11 @@ const Layouts = {
     font-weight: bold;
     color: gray;
     padding: 0;
-    margin: 0 0 0 auto;
+    margin: 0 0 4px auto;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 0.9rem;
+    }
   `,
 
   Row1: styled.div`

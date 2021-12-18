@@ -26,7 +26,7 @@ const MyNotification = () => {
 };
 
 const NotificationContainer = styled.ul`
-  margin: 30px 0;
+  margin: 30px 20px;
 `;
 
 const Header = styled.div`
@@ -39,14 +39,6 @@ const Header = styled.div`
     margin: 16px 4px;
     gap: 20px;
   }
-`;
-
-const DeleteAllButton = styled.button`
-  font-size: 1rem;
-  font-weight: bold;
-  color: gray;
-  padding: 0;
-  margin: 0 0 0 auto;
 `;
 
 export default MyNotification;
