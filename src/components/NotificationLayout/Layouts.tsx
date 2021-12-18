@@ -4,20 +4,29 @@ const Layouts = {
   Wrapper: styled.ul``,
 
   Message: styled.li`
-    max-width: 1160px;
+    max-width: 888px;
     margin: 24px auto;
-    padding: 8px;
+    padding: 16px;
     background: #ffffff;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
     position: relative;
+    cursor: pointer;
+    &:hover {
+      transform: scale(102%);
+    }
+
+    @media ${({ theme }) => theme.size.mobile} {
+      padding: 4px;
+      margin: 10px auto;
+    }
   `,
 
   DeleteButton: styled.button`
     padding: 0;
     margin: 0;
     top: 3px;
-    right: 9px;
+    right: 7px;
     position: absolute;
 
     ::after {
@@ -36,28 +45,21 @@ const Layouts = {
   Row1: styled.div`
     display: flex;
     align-items: center;
-    justify-content:space-between;
 
-    margin : 16px; 0;
-    gap:4px;
-    line-height:1.1;
+    margin: 12px;
+    gap: 4px;
+    line-height: 1.1;
   `,
 
   Row2: styled.div`
     display: flex;
-    margin : 16px; 0;
+    margin: 16px 12px;
     align-items: center;
-    gap:4px;
-    line-height:1.1;
-
-    @media ${({ theme }) => theme.size.mobile} {
-      flex-direction: column;
-      align-items: baseline;
-    }
+    gap: 4px;
+    line-height: 1.1;
   `,
 
   IconWrapper: styled.div`
-    width: 32px;
     display: flex;
     justify-content: center;
   `,
@@ -67,12 +69,12 @@ const Layouts = {
     font-size: 1.1rem;
 
     @media ${({ theme }) => theme.size.mobile} {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     & small {
       color: #18a0fb;
-      margin-right: 1px;
+      margin-right: 1.5px;
       height: 100%;
     }
   `,
@@ -83,7 +85,7 @@ const Layouts = {
     color: gray;
 
     @media ${({ theme }) => theme.size.mobile} {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     ::after {
@@ -99,16 +101,16 @@ const Layouts = {
     word-break: break-all;
 
     @media ${({ theme }) => theme.size.mobile} {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
   `,
 
   CreatedAt: styled.p`
-    margin-left: 4px;
     font-weight: bold;
     font-size: 1rem;
     color: gray;
-    flex: 3;
+
+    margin-left: auto;
 
     @media ${({ theme }) => theme.size.mobile} {
       font-size: 0.8rem;
@@ -126,6 +128,11 @@ const Layouts = {
     @media ${({ theme }) => theme.size.mobile} {
       font-size: 0.9rem;
     }
+  `,
+
+  Row3: styled.div`
+    display: flex;
+    margin: 12px;
   `,
 
   Text: styled.div`
