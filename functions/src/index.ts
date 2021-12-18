@@ -92,10 +92,6 @@ export const commentCreated = functions
     const senderData = await creator.get();
     const senderId = senderData.data().uid;
 
-    firestore.doc(`posts/${postId}`).update({
-      comment_count: admin.firestore.FieldValue.increment(1),
-    });
-
     const notification = {
       id: uuidv4().slice(0, 8),
       type: 'comment',
@@ -118,31 +114,6 @@ export const commentCreated = functions
         notification_list: admin.firestore.FieldValue.arrayUnion(notification),
       });
     }
-  });
-
-export const commentDeleted = functions
-  .region('asia-northeast3')
-  .firestore.document('posts/{postId}/comments/{commentId}')
-  .onUpdate((snapshot, context) => {
-    const isDeleted = snapshot.after.data().is_deleted;
-
-    if (isDeleted) {
-      const postId = context.resource.name.split('/')[6];
-      firestore.doc(`posts/${postId}`).update({
-        comment_count: admin.firestore.FieldValue.increment(-1),
-      });
-    }
-  });
-
-export const replyCommentDeleted = functions
-  .region('asia-northeast3')
-  .firestore.document('posts/{postId}/comments/{commentId}')
-  .onDelete((_, context) => {
-    const postId = context.params.postId;
-
-    firestore.doc(`posts/${postId}`).update({
-      comment_count: admin.firestore.FieldValue.increment(-1),
-    });
   });
 
 export const userCreated = functions
