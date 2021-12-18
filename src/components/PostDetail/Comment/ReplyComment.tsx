@@ -12,6 +12,9 @@ import AlertModal from 'components/common/Portal/AlertModal';
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 
+import { useRecoilValue } from 'recoil';
+import { commentState } from 'store/comment';
+
 interface Props {
   comment: CommentType;
   postId: string;
@@ -25,6 +28,7 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
   const isSecret = category === '비밀';
   const [deleteId, setDeleteId] = useState<string>('');
   const { modalOpened, onOpenModal, onCloseModal } = useModal();
+  const commentList = useRecoilValue(commentState);
 
   const {
     id,
@@ -117,7 +121,7 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
           <AlertModal
             title='대댓글을 삭제하시겠습니까?'
             twoButton={true}
-            callback={() => onDeleteReplyComment(postId, deleteId)}
+            callback={() => onDeleteReplyComment(postId, deleteId, commentList)}
             onCloseModal={onCloseModal}
           />
         </PortalContainer>

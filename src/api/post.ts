@@ -45,8 +45,9 @@ export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => 
       res.docs.map(async (doc) => {
         const newItem = doc.data();
         const userData = await newItem.creator.get();
+        const commentCount = (await dbService.collection(`posts/${doc.id}/comments`).get()).size;
 
-        return { ...newItem, id: doc.id, creator: userData.data() };
+        return { ...newItem, id: doc.id, creator: userData.data(), comment_count: commentCount };
       })
     );
 

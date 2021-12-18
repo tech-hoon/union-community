@@ -38,7 +38,6 @@ const PostDetail = () => {
   const { post, fetchPostDetail } = useGetPostDetail();
   const [isCreator, setIsCreator] = useState<boolean>();
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
-  // const [comments, setComments] = useState<CommentType[]>([]);
   const [comments, setComments] = useRecoilState(commentState);
   const commentRef = useRef<any>(null);
   const isSecret = post?.category === '비밀';
@@ -104,7 +103,7 @@ const PostDetail = () => {
     fetchComments();
 
     return () => {};
-  }, []);
+  }, [comments]);
 
   useEffect(() => {
     onViewCountUp();
@@ -147,7 +146,6 @@ const PostDetail = () => {
               )}
               <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
             </ROW_3>
-            {/* <HR /> */}
             <ContentWrapper>
               <Content dangerouslySetInnerHTML={contentMarkup} />
               {post.attachment_url?.length ? <Images src={post.attachment_url} alt='' /> : <></>}

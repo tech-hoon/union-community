@@ -108,8 +108,22 @@ export const deleteAllComments = async (postId: string) => {
   }
 };
 
-export const deleteReplyComment = async (postId: string, commentId: string) => {
+export const deleteReplyComment = async (
+  postId: string,
+  commentId: string,
+  commentList: CommentType[]
+) => {
+  const targetIndex = commentList.findIndex(({ id }) => id === commentId);
+  const parentComment = commentList.filter(
+    ({ id }) => id === commentList[targetIndex].parent_comment_id
+  )[0];
+
   try {
+    // 부모 댓글 이미 삭제 돼있을 시,
+    if (parentComment.is_deleted) {
+      await dbService.doc(`posts/${postId}/comments/${parentComment.id}`).delete();
+    }
+
     await dbService.doc(`posts/${postId}/comments/${commentId}`).delete();
   } catch (error) {
     console.log(error);

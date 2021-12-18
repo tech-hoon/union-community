@@ -47,8 +47,12 @@ const useComment = (callback: () => void) => {
     }
   };
 
-  const onDeleteReplyComment = async (postId: string, commentId: string) => {
-    await deleteReplyComment(postId, commentId);
+  const onDeleteReplyComment = async (
+    postId: string,
+    commentId: string,
+    commentList: CommentType[]
+  ) => {
+    await deleteReplyComment(postId, commentId, commentList);
     callback();
   };
   const onEdit = (targetId: string) => {

@@ -10,6 +10,7 @@ import {
   lastVisiblePostState,
 } from 'store/post';
 import { useHistory } from 'react-router-dom';
+import { dbService } from 'service/firebase';
 
 export const useGetPosts = () => {
   const [posts, setPosts] = useRecoilState(postsState);
@@ -74,13 +75,14 @@ export const useGetPostDetail = () => {
 
   const fetchPostDetail = async (id: string) => {
     const __post: any = await getPostDetail(id);
+    const commentCount = (await dbService.collection(`posts/${id}/comments`).get()).size;
 
     if (!__post) {
       history.push('/not-found');
       return;
     }
 
-    __post && setPost(__post);
+    __post && setPost({ ...__post, comment_count: commentCount });
   };
 
   return {
