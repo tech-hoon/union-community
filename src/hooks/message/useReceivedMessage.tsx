@@ -76,6 +76,8 @@ const useReceivedMessage = () => {
   };
 
   const onDeleteMessage = (e: React.MouseEvent<HTMLElement>, targetUid: string) => {
+    e.stopPropagation();
+
     const targetId = (e.target as HTMLElement).id;
     const newArray = [];
 

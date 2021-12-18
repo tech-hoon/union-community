@@ -59,7 +59,7 @@ const useNotification = () => {
                 const { uid, avatar_id, nickname } = (await notification.sender.get()).data();
                 return {
                   ...notification,
-                  user: { uid, avatar_id, nickname },
+                  sender: { uid, avatar_id, nickname },
                 };
               })
             );

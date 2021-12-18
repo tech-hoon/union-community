@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { dbService } from 'service/firebase';
 import { loginUserState } from 'store/loginUser';
 import { sentMessageState } from 'store/message';
-import { LoginUserType } from 'types';
+import { LoginUserType, MessageType } from 'types';
 
 const useSentMessage = () => {
   const { uid } = useRecoilValue(loginUserState) as LoginUserType;
@@ -27,11 +27,16 @@ const useSentMessage = () => {
         })
       );
 
-      setMessages(newMessages.reverse());
+      const sortedMessage = newMessages.sort(
+        (a: MessageType, b: MessageType) => b.created_at - a.created_at
+      );
+
+      setMessages(sortedMessage);
     }
   };
 
   const onDeleteMessage = (e: React.MouseEvent<HTMLElement>, targetUid: string) => {
+    e.stopPropagation();
     const targetId = (e.target as HTMLElement).id;
     const newArray = [];
 
@@ -45,12 +50,16 @@ const useSentMessage = () => {
     dbService.doc(`users/${uid}`).update({
       sent_message_list: newArray,
     });
+
+    onLoadSentMessage();
   };
 
   const onDeleteAllMessages = () => {
     dbService.doc(`users/${uid}`).update({
       sent_message_list: [],
     });
+
+    onLoadSentMessage();
   };
 
   useEffect(() => {
