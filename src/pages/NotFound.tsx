@@ -29,15 +29,16 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 28px;
+  padding: 20px;
 `;
 
 const Title = styled.h1`
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 `;
 
 const ImageWrapper = styled.div`
-  width: clamp(200px, 60vw, 280px);
+  width: clamp(180px, 60vw, 220px);
 `;
 
 const HomeButton = styled.button`
