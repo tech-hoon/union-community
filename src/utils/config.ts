@@ -20,3 +20,5 @@ export const AUTH_WAITING_STEP = 4;
 export const LOGIN_DONE = 5;
 
 export const NICKNAME_LENGTH = 6;
+
+export const OPEN_KAKAOTALK_URL = 'https://open.kakao.com/o/sqksiTPd';
