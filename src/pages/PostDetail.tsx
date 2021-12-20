@@ -110,13 +110,12 @@ const PostDetail = () => {
 
   useEffect(() => {
     fetchPostDetail(id);
-
-    return () => {};
   }, [comments]);
 
   useEffect(() => {
     onViewCountUp();
-  }, [post]);
+    fetchComments();
+  }, []);
 
   return (
     <>
@@ -349,6 +348,7 @@ const CreatedAt = styled.span`
 const IsEdited = styled(CreatedAt)`
   line-height: 1.5;
   font-size: 0.8rem;
+  align-self: flex-end;
 `;
 
 const ContentWrapper = styled.section`
