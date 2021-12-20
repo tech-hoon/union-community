@@ -351,13 +351,17 @@ const IsEdited = styled(CreatedAt)`
 
 const ContentWrapper = styled.section`
   min-height: 100px;
-  margin: 20px 2px 40px;
+  margin: 20px 4px 40px;
 `;
 
 const Content = styled.div`
   font-size: 1.2rem;
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 24px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1rem;
+  }
 `;
 
 const Images = styled.img`

@@ -143,16 +143,15 @@ const ImageIcon = styled(PhotoLibrary)`
 const Content = styled.div`
   font-weight: 300;
   padding: 0px 4px;
-  flex: 1;
 
-  display: inline-block;
   white-space: nowrap;
   overflow: hidden;
   white-space: normal;
   line-height: 1.2;
   height: 6rem;
-  text-overflow: ellipsis;
 
+  display: -webkit-box;
+  text-overflow: ellipsis;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 `;
