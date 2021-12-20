@@ -33,7 +33,7 @@ const Inner = styled.nav`
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 98%;
-    padding: 6px 4px;
+    padding: 8px 6px;
   }
 
   display: flex;

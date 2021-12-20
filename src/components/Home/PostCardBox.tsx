@@ -79,7 +79,7 @@ const Wrapper = styled.ol`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 
-  gap: 32px;
+  gap: 30px;
   margin: 30px auto;
 
   @media ${({ theme }) => theme.size.tablet} {
@@ -106,11 +106,7 @@ const PostCard = styled.li`
   flex-direction: column;
 
   @media ${({ theme }) => theme.size.desktop} {
-    height: 260px;
-  }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    height: 240px;
+    height: 15rem;
   }
 
   &:hover {
@@ -149,6 +145,7 @@ const Content = styled.div`
   white-space: normal;
   line-height: 1.2;
   height: 6rem;
+  margin-bottom: 1.2rem;
 
   flex: 1;
   display: -webkit-box;
@@ -162,7 +159,6 @@ const CardBottom = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 1rem;
 `;
 
 const CreatorBox = styled.div`

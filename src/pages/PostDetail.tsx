@@ -10,7 +10,7 @@ import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { deletePost, postLike, postUnlike, viewCountUp } from 'api/post';
-import { CommentType, LoginUserType } from 'types';
+import { LoginUserType } from 'types';
 import { addComment, getComments } from 'api/comment';
 import { categoryColor } from 'utils/categoryColor';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
@@ -116,6 +116,8 @@ const PostDetail = () => {
 
   useEffect(() => {
     onViewCountUp();
+
+    return () => {};
   }, [post]);
 
   return (
@@ -244,13 +246,13 @@ const ROW_1 = styled.div`
 
 const Title = styled.h1`
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 1;
   flex: 8;
   word-break: break-all;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 `;
 
@@ -307,6 +309,7 @@ interface ICreator {
 const Creator = styled.span<ICreator>`
   font-weight: 500;
   font-size: 1.2em;
+  margin-bottom: 1.2px;
   color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.MAIN)};
 `;
 
@@ -346,12 +349,12 @@ const CreatedAt = styled.span`
 
 const IsEdited = styled(CreatedAt)`
   line-height: 1.5;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 `;
 
 const ContentWrapper = styled.section`
   min-height: 100px;
-  margin: 20px 4px 40px;
+  margin: 20px 0px;
 `;
 
 const Content = styled.div`
@@ -397,11 +400,21 @@ const CommentWrite = styled.input`
   padding: 10px 0px 10px 8px;
   width: 100%;
   flex: 1;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.9rem;
+  }
 `;
 
 const SubmitBtn = styled(Button)`
-  width: 100px;
+  width: 80px;
+  font-size: 0.8rem;
   color: #666;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 64px;
+    font-size: 0.7rem;
+  }
 `;
 
 export default PostDetail;

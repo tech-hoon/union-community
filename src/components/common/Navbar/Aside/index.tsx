@@ -61,6 +61,10 @@ const Wrapper = styled.div`
   align-items: center;
   user-select: none;
   gap: 4px;
+
+  @media ${({ theme }) => theme.size.mobileS} {
+    gap: 3.2px;
+  }
 `;
 
 const IconWrapper = styled.button`
@@ -80,11 +84,12 @@ const NewAlarm = styled.div`
 
 const NewPostBtn = styled.button`
   font-weight: 500;
-  font-size: 1em;
+  font-size: 0.9rem;
+  margin-top: 1px;
   color: black;
 
   @media ${({ theme }) => theme.size.mobileS} {
-    font-size: 0.8em;
+    font-size: 0.7em;
   }
 `;
 

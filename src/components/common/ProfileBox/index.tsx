@@ -23,7 +23,7 @@ const ProfileBox = () => {
     <Wrapper onClick={onToggleClick}>
       <Top>
         <Name>{loginUser.nickname}</Name>
-        <Avatar avatarId={loginUser?.avatar_id!!} />
+        <Avatar avatarId={loginUser?.avatar_id!!} size={28} />
         <Icon>{toggleOpened ? <CaretUp size='20' /> : <CaretDown size='20' />}</Icon>
       </Top>
       <Bottom>{toggleOpened && <MypageDropdown />}</Bottom>
@@ -33,12 +33,17 @@ const ProfileBox = () => {
 
 const Wrapper = styled.div`
   cursor: pointer;
+  margin-left: 4px;
 `;
 
 const Top = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    gap: 4px;
+  }
 `;
 
 const Icon = styled.div``;
