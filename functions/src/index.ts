@@ -33,7 +33,7 @@ export const postDeleted = functions
   .region('asia-northeast3')
   .firestore.document('posts/{postId}')
   .onDelete((snapshot) => {
-    firestore.doc(`counter/posts`).update({
+    firestore.doc(`counter/post`).update({
       count: admin.firestore.FieldValue.increment(-1),
     });
 
