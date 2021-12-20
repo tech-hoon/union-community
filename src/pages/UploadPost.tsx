@@ -1,6 +1,5 @@
 import Navbar from 'components/common/Navbar';
 import Editor from 'components/common/Editor';
-import Footer from 'components/common/Footer';
 import usePostForm from 'hooks/post/usePostForm';
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
@@ -103,7 +102,6 @@ const UploadPost = () => {
         </ButtonBox>
         <ErrorInfo>{errorInfo}</ErrorInfo>
       </PostContainer>
-      <Footer />
     </Wrapper>
   );
 };
