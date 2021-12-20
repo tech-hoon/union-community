@@ -35,6 +35,10 @@ const Home = () => {
     window.scroll({ behavior: 'smooth', top: 0 });
   };
 
+  const onScrollUp = () => {
+    window.scroll({ behavior: 'smooth', top: 0 });
+  };
+
   useLayoutEffect(() => {
     window.scrollTo({ top: scrollY });
 
@@ -77,7 +81,7 @@ const Home = () => {
       </MidWrapper>
       {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
-      <ScrollUpIcon size='56px' onClick={() => window.scroll({ behavior: 'smooth', top: 0 })} />
+      <ScrollUpIcon size='56px' onClick={onScrollUp} />
       <Observer ref={ioRef} />
       <Footer />
     </Wrapper>
@@ -88,6 +92,9 @@ const Wrapper = styled.div``;
 
 const ScrollUpIcon = styled(ChevronUpCircle)`
   position: fixed;
+  z-index: 2;
+  cursor: pointer;
+
   color: rgba(136, 136, 136, 0.8);
 
   right: 48px;
