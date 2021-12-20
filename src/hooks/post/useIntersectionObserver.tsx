@@ -11,7 +11,7 @@ function useIntersectionObserver(
   { threshold = 0.5, root = null, rootMargin = '0%' }: Args
 ): IntersectionObserverEntry | undefined {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
-  const debouncedEntry = useDebounce({ value: entry, delay: 300 });
+  const debouncedEntry = useDebounce({ value: entry, delay: 200 });
 
   const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
     setEntry(entry);
