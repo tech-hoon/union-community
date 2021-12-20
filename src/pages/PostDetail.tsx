@@ -261,7 +261,7 @@ const Category = styled.div`
   color: #eeeeee;
   border-radius: 20px;
   padding: 4px 16px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1;
 `;
 
@@ -272,7 +272,7 @@ const ImageIcon = styled(PhotoLibrary)`
 const ROW_2 = styled.div`
   display: flex;
   align-items: center;
-  margin: 20px 0 0;
+  margin: 12px 0 0;
   gap: 8px;
 
   @media ${({ theme }) => theme.size.mobile} {
@@ -285,7 +285,7 @@ const ROW_3 = styled.div`
   align-items: center;
   font-weight: 500;
   font-size: 1.3em;
-  margin: 20px 0;
+  margin: 12px 0;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1em;
@@ -335,12 +335,12 @@ const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #999;
   margin-left: auto;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 `;
 

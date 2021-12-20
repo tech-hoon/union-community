@@ -150,6 +150,7 @@ const Content = styled.div`
   line-height: 1.2;
   height: 6rem;
 
+  flex: 1;
   display: -webkit-box;
   text-overflow: ellipsis;
   -webkit-line-clamp: 5;
