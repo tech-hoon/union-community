@@ -68,6 +68,7 @@ const PostDetail = () => {
         state: {
           mode: 'update',
           initialPost: {
+            id: post.id,
             title: post.title,
             category: post.category,
             content: post.content,
