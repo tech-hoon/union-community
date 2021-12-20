@@ -249,7 +249,7 @@ const Title = styled.h1`
   word-break: break-all;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -353,13 +353,13 @@ const IsEdited = styled(CreatedAt)`
 
 const ContentWrapper = styled.section`
   min-height: 100px;
-  margin: 16px 0px;
+  margin: 12px 0 36px;
 `;
 
 const Content = styled.div`
   font-size: 1.2rem;
   line-height: 1.6;
-  margin-bottom: 24px;
+  padding: 0 4px;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1rem;
