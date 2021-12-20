@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Github } from '@styled-icons/icomoon';
 import { Email } from '@styled-icons/material-outlined';
+import { OPEN_KAKAOTALK_URL } from 'utils/config';
 
 interface Props {}
 
@@ -9,7 +10,7 @@ const Footer = (props: Props) => {
   return (
     <Wrapper>
       <Title>&copy; Nam Taekhun {new Date().getFullYear()}</Title>
-      <OpenKakao href='https://open.kakao.com/o/s3IX0aNd' target='_blank' rel='noreferrer'>
+      <OpenKakao href={OPEN_KAKAOTALK_URL} target='_blank' rel='noreferrer'>
         문의사항
       </OpenKakao>
       <GithubIcon href='https://github.com/tech-hoon' target='_blank' rel='noreferrer'>

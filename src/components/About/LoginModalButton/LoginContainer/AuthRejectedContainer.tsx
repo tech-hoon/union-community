@@ -5,6 +5,7 @@ import { LoginUserType } from 'types';
 import { Layouts as S } from '../Layouts';
 import { Warning } from '@styled-icons/fluentui-system-filled';
 import { deleteUserData } from 'api/user';
+import { OPEN_KAKAOTALK_URL } from 'utils/config';
 
 interface Props {
   loginUser: LoginUserType | null;
@@ -38,7 +39,7 @@ const AuthRejectedContainer = ({ loginUser, onLoginStepReset }: Props) => {
           <p>다시 시작하려면 하단 버튼을 눌러주세요.</p>
           <p>
             문의사항은{' '}
-            <a href='https://open.kakao.com/o/s3IX0aNd' target='_blank' rel='noreferrer'>
+            <a href={OPEN_KAKAOTALK_URL} target='_blank' rel='noreferrer'>
               여기
             </a>
             로 연락주세요.

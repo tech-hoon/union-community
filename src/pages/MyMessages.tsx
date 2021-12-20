@@ -83,14 +83,13 @@ const MessagesContainer = styled.div`
 const Header = styled.div`
   margin: 30px 0px;
   display: flex;
-  gap: 16px;
+  gap: 10px;
   align-items: center;
 
   @media ${({ theme }) => theme.size.mobile} {
     /* flex-direction: column; */
     /* align-items: baseline; */
     margin: 16px 4px;
-    gap: 20px;
   }
 `;
 

@@ -23,6 +23,7 @@ const SocialLoginContainer = () => {
           <SocialLoginButton name='google' handleErrorInfo={handleErrorInfo} />
           <SocialLoginButton name='facebook' handleErrorInfo={handleErrorInfo} />
         </ButtonBox>
+        <Text>* 카카오톡 외 다른 브라우저를 이용해주세요.</Text>
       </S.Body>
     </S.Container>
   );
@@ -33,6 +34,11 @@ const ButtonBox = styled.div`
   gap: 20px;
   width: 100%;
   justify-content: center;
+`;
+
+const Text = styled(S.Subtitle)`
+  font-size: 0.9rem;
+  margin-top: 16px;
 `;
 
 const ErrorInfo = styled.h2`
