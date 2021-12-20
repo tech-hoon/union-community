@@ -77,7 +77,7 @@ const Menu = styled.button<IMenu>`
   font-weight: 500;
   margin: 2px;
 
-  &:hover {
+  @media (hover: hover) {
     color: white;
     background-color: ${({ theme }) => theme.color.MAIN};
   }

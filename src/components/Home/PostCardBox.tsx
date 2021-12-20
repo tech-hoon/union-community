@@ -99,7 +99,7 @@ const PostCard = styled.li`
   height: 300px;
   padding: 24px;
   background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   cursor: pointer;
   display: flex;
@@ -109,7 +109,7 @@ const PostCard = styled.li`
     height: 15rem;
   }
 
-  &:hover {
+  @media (hover: hover) {
     transform: scale(103%);
   }
 `;
