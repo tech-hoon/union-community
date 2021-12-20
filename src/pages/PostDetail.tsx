@@ -110,15 +110,12 @@ const PostDetail = () => {
 
   useEffect(() => {
     fetchPostDetail(id);
-    fetchComments();
 
     return () => {};
   }, [comments]);
 
   useEffect(() => {
     onViewCountUp();
-
-    return () => {};
   }, [post]);
 
   return (
@@ -241,7 +238,7 @@ const BackButton = styled.span`
 const ROW_1 = styled.div`
   display: flex;
   gap: 4px;
-  margin-top: 24px;
+  margin-top: 18px;
   align-items: center;
 `;
 
@@ -262,9 +259,9 @@ const Category = styled.div`
   text-align: center;
   background-color: ${(props) => props.color};
   color: #eeeeee;
-  border-radius: 20px;
-  padding: 4px 16px;
-  font-size: 0.9rem;
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 1rem;
   line-height: 1;
 `;
 
@@ -275,11 +272,10 @@ const ImageIcon = styled(PhotoLibrary)`
 const ROW_2 = styled.div`
   display: flex;
   align-items: center;
-  margin: 12px 0 0;
+  margin-top: 18px;
   gap: 8px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    margin: 6px 0 0;
     font-size: 0.8em;
   }
 `;
@@ -289,10 +285,9 @@ const ROW_3 = styled.div`
   align-items: center;
   font-weight: 500;
   font-size: 1.3em;
-  margin: 12px 0;
+  margin-top: 16px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    margin: 6px 0 0;
     font-size: 1em;
   }
 `;
@@ -358,7 +353,7 @@ const IsEdited = styled(CreatedAt)`
 
 const ContentWrapper = styled.section`
   min-height: 100px;
-  margin: 20px 0px;
+  margin: 16px 0px;
 `;
 
 const Content = styled.div`
