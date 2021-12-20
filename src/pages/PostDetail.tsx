@@ -28,6 +28,7 @@ import PortalContainer from 'components/common/Portal/PortalContainer';
 import AlertModal from 'components/common/Portal/AlertModal';
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
 import { commentState } from 'store/comment';
+import { toDateStringByFormating } from 'utils/date';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -155,7 +156,7 @@ const PostDetail = () => {
                   <DeleteBtn onClick={onOpenModal}>삭제하기</DeleteBtn>
                 </EditBox>
               )}
-              <CreatedAt>{new Date(post.created_at).toLocaleDateString()}</CreatedAt>
+              <CreatedAt>{toDateStringByFormating(post.created_at, false, '.')}</CreatedAt>
             </ROW_3>
             <ContentWrapper>
               <Content dangerouslySetInnerHTML={contentMarkup} />
@@ -278,6 +279,7 @@ const ROW_2 = styled.div`
   gap: 8px;
 
   @media ${({ theme }) => theme.size.mobile} {
+    margin: 6px 0 0;
     font-size: 0.8em;
   }
 `;
@@ -290,6 +292,7 @@ const ROW_3 = styled.div`
   margin: 12px 0;
 
   @media ${({ theme }) => theme.size.mobile} {
+    margin: 6px 0 0;
     font-size: 1em;
   }
 `;
@@ -341,9 +344,10 @@ const CreatedAt = styled.span`
   font-size: 1rem;
   color: #999;
   margin-left: auto;
+  padding-right: 1.2px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 `;
 
