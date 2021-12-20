@@ -65,7 +65,15 @@ const PostDetail = () => {
     post &&
       history.push({
         pathname: '/upload',
-        state: { mode: 'update', initialPost: post },
+        state: {
+          mode: 'update',
+          initialPost: {
+            title: post.title,
+            category: post.category,
+            content: post.content,
+            attachment_url: post.attachment_url,
+          },
+        },
       });
   };
 

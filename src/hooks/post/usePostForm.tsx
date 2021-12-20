@@ -13,7 +13,7 @@ interface Props {
   categoryRef: RefObject<HTMLSelectElement | null>;
   contentRef: RefObject<any>;
   mode: 'add' | 'update';
-  prevPost: PostType | null;
+  prevPost: any | null;
 }
 
 const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Props) => {

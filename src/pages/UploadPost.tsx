@@ -13,7 +13,7 @@ import { Cancel } from '@styled-icons/material';
 
 interface ILocationState {
   mode: 'add' | 'update';
-  initialPost?: PostType;
+  initialPost?: any;
 }
 
 const UploadPost = () => {
