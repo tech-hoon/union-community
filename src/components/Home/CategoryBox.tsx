@@ -77,11 +77,6 @@ const Menu = styled.button<IMenu>`
   font-weight: 500;
   margin: 2px;
 
-  @media (hover: hover) {
-    color: white;
-    background-color: ${({ theme }) => theme.color.MAIN};
-  }
-
   @media ${({ theme }) => theme.size.mobile} {
     height: 36px;
     font-size: 0.9em;
