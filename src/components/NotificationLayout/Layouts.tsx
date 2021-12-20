@@ -61,8 +61,14 @@ const Layouts = {
     display: flex;
     margin: 16px 12px;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     line-height: 1.1;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      flex-direction: column;
+      align-items: baseline;
+      gap: 16px;
+    }
   `,
 
   IconWrapper: styled.div`
@@ -93,15 +99,10 @@ const Layouts = {
     @media ${({ theme }) => theme.size.mobile} {
       font-size: 0.85rem;
     }
-
-    ::after {
-      content: ' : ';
-    }
   `,
 
-  Content: styled.h3`
-    font-weight: bold;
-    font-size: 1.1rem;
+  Content: styled.div`
+    font-weight: 500;
     color: gray;
 
     word-break: break-all;

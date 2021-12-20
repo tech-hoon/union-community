@@ -43,18 +43,18 @@ const InputWrapper = styled.div`
 
 const Label = styled.label`
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-top: 1px;
 `;
 
 const NicknameInput = styled.input<INicknameInput>`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding: 4px 0 4px 8px;
   border: 1px solid ${({ errorInfo }) => (errorInfo ? '#f77' : '#ccc')};
   border-radius: 4px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.3em;
+    font-size: 1rem;
   }
 `;
 

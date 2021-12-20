@@ -49,8 +49,10 @@ const CommentNotification = () => {
                   </S.Title>
                 </S.Row1>
                 <S.Row2>
-                  <Avatar avatarId={is_secret ? -1 : avatar_id} size={28} />
-                  <S.Creator>{is_secret ? `익명${uid.slice(-2)}` : nickname}</S.Creator>
+                  <AvatarWrapper>
+                    <Avatar avatarId={is_secret ? -1 : avatar_id} size={28} />
+                    <S.Creator>{is_secret ? `익명${uid.slice(-2)}` : nickname}</S.Creator>
+                  </AvatarWrapper>
                   <S.Content>{text}</S.Content>
                 </S.Row2>
                 <S.Row3>
@@ -68,7 +70,9 @@ const CommentNotification = () => {
 };
 
 const AvatarWrapper = styled.div`
-  width: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `;
 
 export default CommentNotification;
