@@ -113,9 +113,12 @@ const PostDetail = () => {
   }, [comments]);
 
   useEffect(() => {
-    onViewCountUp();
     fetchComments();
   }, []);
+
+  useEffect(() => {
+    onViewCountUp();
+  }, [post]);
 
   return (
     <>
