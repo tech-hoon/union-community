@@ -82,8 +82,9 @@ export const getMorePosts = async ({ lastVisiblePost, category, orderBy }: IgetP
       res.docs.map(async (doc) => {
         const newItem = doc.data();
         const userData = await newItem.creator.get();
+        const commentCount = (await dbService.collection(`posts/${doc.id}/comments`).get()).size;
 
-        return { ...newItem, id: doc.id, creator: userData.data() };
+        return { ...newItem, id: doc.id, creator: userData.data(), comment_count: commentCount };
       })
     );
 
@@ -151,7 +152,6 @@ export const addPost = async ({ postInput, uid }: IaddPostParams) => {
       ...postInput,
       creator: dbService.doc(`users/${uid}`),
       view_count: 0,
-      comment_count: 0,
       like_count: 0,
       liker_list: [],
       visitor_list: [],
