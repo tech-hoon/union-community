@@ -95,9 +95,10 @@ const S = {
   `,
 
   Content: styled.div<IDeleted>`
-    font-size: 1rem;
+    font-size: 0.9rem;
     padding: 14px 0;
     border-bottom: solid 1.4px #e9ecef;
+    line-height: 1.2;
     word-break: break-all;
 
     font-style: ${({ is_deleted }) => is_deleted && 'italic'};
