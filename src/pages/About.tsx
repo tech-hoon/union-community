@@ -79,7 +79,7 @@ const About = () => {
     const timer = setTimeout(() => {
       fetchCount();
       setIsLoading(false);
-    }, 2000);
+    }, 0);
 
     return () => {
       clearTimeout(timer);
@@ -93,7 +93,7 @@ const About = () => {
       <Navbar isLoggedIn={false} />
       <Container>
         <Banner />
-        {isLoading ? (
+        {isLoading || !count.post ? (
           <InterWind />
         ) : (
           <>
