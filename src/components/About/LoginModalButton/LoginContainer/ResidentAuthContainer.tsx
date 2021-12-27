@@ -82,17 +82,18 @@ const ResidentAuthContainer = () => {
     <S.Container>
       <S.Title>생활관 거주 인증을 해주세요</S.Title>
       <Desception>
-        <li>거주생 인증을 위해 간단한 인증 절차를 거치고 있습니다.</li>
         <li>
-          예시 사진과 같이 사용자의 성함<small>{displayName || ''}</small>이 적힌 이름표 사진을
-          업로드해주세요.
+          거주생 인증을 위해 간단한 <b>인증 절차</b>를 거치고 있습니다.
         </li>
         <li>
-          관리자 승인 후 즉시 이용 가능하며, 기타 문의사항은{' '}
+          예시 사진과 같이 사용자의 <b>이름표 사진</b>을 업로드해주세요.
+        </li>
+        <li>
+          <b>관리자 승인 후</b> 즉시 이용 가능하며, 문의사항은{' '}
           <a href={OPEN_KAKAOTALK_URL} target='_blank' rel='noreferrer'>
             여기
           </a>
-          로 연락주세요.
+          로 문의주세요.
         </li>
       </Desception>
 
@@ -134,49 +135,51 @@ const ResidentAuthContainer = () => {
 };
 
 const Desception = styled.div`
+  margin-top: 12px;
   font-weight: 400;
   font-size: 1rem;
-  line-height: 1.4;
+  line-height: 1.7;
   text-align: left;
   color: #888;
-  padding: 0 10px;
+  padding: 0 12px;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8rem;
-    line-height: 1.7;
+    line-height: 1.9;
   }
 
   li {
     list-style: circle;
+    list-style-position: inside;
+    text-indent: -20px;
+    padding-left: 20px;
   }
 
-  small {
+  a {
     font-weight: 500;
     color: ${({ theme }) => theme.color.MAIN};
-    margin: 0 3px;
   }
 
   b {
     font-weight: 500;
-    color: #444;
   }
 `;
 
 const ImageBox = styled.div`
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 30px;
   margin-top: 6px;
 `;
 
 const Img = styled.img`
   border-radius: 8px;
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
   }
 `;
 
@@ -184,12 +187,6 @@ const ExampleImage = styled(Img)``;
 const AttachmentImage = styled(Img)``;
 
 const ImageWrapper = styled.div``;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
 
 const AttachmentWrapper = styled.div`
   position: relative;
@@ -212,12 +209,12 @@ const UploadImage = styled.label`
   cursor: pointer;
 
   border-radius: 8px;
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
   }
 `;
 
