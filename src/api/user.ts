@@ -63,7 +63,7 @@ export const verifyNickname = async (nickname: string) => {
 
 export const getMyLikes = async (uid: string) => {
   const res: any = await dbService.doc(`users/${uid}`).get();
-  const likeList = res.data().like_list;
+  const likeList = res?.data().like_list;
 
   if (!likeList.length) {
     return [];
@@ -78,10 +78,13 @@ export const getMyLikes = async (uid: string) => {
       .where(firebaseApp.firestore.FieldPath.documentId(), 'in', batch)
       .get();
 
-    const data = posts.docs.map((doc: any) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const data = await Promise.all(
+      posts.docs.map(async (doc: any) => ({
+        id: doc.id,
+        ...doc.data(),
+        comment_count: (await dbService.collection(`posts/${doc.id}/comments`).get()).size,
+      }))
+    );
 
     batches.push(...data);
   }
@@ -106,10 +109,13 @@ export const getMyPosts = async (uid: string) => {
       .where(firebaseApp.firestore.FieldPath.documentId(), 'in', batch)
       .get();
 
-    const data = posts.docs.map((doc: any) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const data = await Promise.all(
+      posts.docs.map(async (doc: any) => ({
+        id: doc.id,
+        ...doc.data(),
+        comment_count: (await dbService.collection(`posts/${doc.id}/comments`).get()).size,
+      }))
+    );
 
     batches.push(...data);
   }
