@@ -47,7 +47,7 @@ const Wrapper = styled.div`
   margin: 0px auto 12px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 95%;
+    width: 100%;
     padding: 0;
     margin: 12px auto 12px;
     font-size: 1em;
