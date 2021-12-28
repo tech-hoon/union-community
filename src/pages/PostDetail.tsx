@@ -173,7 +173,11 @@ const PostDetail = () => {
             </CountBox>
 
             <CommentWriteWrapper>
-              <CommentWrite ref={commentRef} placeholder='댓글을 입력해주세요.' />
+              <CommentWrite
+                ref={commentRef}
+                placeholder='댓글을 입력해주세요.'
+                spellCheck='false'
+              />
               <SubmitBtn onClick={onSubmitComment} type='submit'>
                 등록하기
               </SubmitBtn>
@@ -389,28 +393,38 @@ const CommentWriteWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  margin: 20px 0 30px;
   gap: 4px;
   border: 0.3px solid #666;
   border-radius: 4px;
-  padding: 0px;
+  margin: 24px 0;
 `;
 
-const CommentWrite = styled.input`
+const CommentWrite = styled.textarea`
   font-weight: 400;
-  font-size: 1rem;
-  padding: 10px 0px 10px 8px;
+  font-size: 0.95rem;
   width: 100%;
   flex: 1;
+  padding-top: 15px;
+  padding-left: 5px;
+
+  background: none;
+  border: none;
+  overflow: auto;
+  outline: none;
+  resize: none;
+
+  display: flex;
+  align-items: center;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 `;
 
 const SubmitBtn = styled(Button)`
   width: 80px;
   font-size: 0.8rem;
+  padding: 10px 0;
   color: #666;
 
   @media ${({ theme }) => theme.size.mobile} {
