@@ -75,7 +75,7 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
           {!is_deleted && (
             <S.COL3>
               <S.LikeCount
-                size='16px'
+                size='12px'
                 count={liker_list.length || 0}
                 flag={likeOrUnlike(liker_list, loginUserId)}
                 onClick={debounce(() => onLikeComment(liker_list, loginUserId, id, postId), 500)}
