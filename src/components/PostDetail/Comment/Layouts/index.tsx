@@ -43,7 +43,7 @@ const S = {
   COL3: styled.div`
     display: flex;
     align-items: center;
-    margin-left: 16px;
+    margin-left: 8px;
     gap: 4px;
     user-select: none;
   `,
@@ -51,7 +51,8 @@ const S = {
   Avatar: styled(Avatar)``,
 
   IsEdited: styled.p`
-    font-size: 0.8rem;
+    font-size: 0.5rem;
+    color: gray;
   `,
 
   COL5: styled.div`
