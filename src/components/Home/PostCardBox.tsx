@@ -23,55 +23,61 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
 
   return (
     <Wrapper>
-      {posts?.map(
-        (
-          {
-            id,
-            category,
-            title,
-            content,
-            creator,
-            visitor_list,
-            liker_list,
-            comment_count,
-            attachment_url,
-          },
-          key
-        ) => {
-          return (
-            <PostCard key={key} onClick={() => handleClick(id!!)}>
-              <Head>
-                <Title>{title}</Title>
-                {!!attachment_url && <ImageIcon size='24px' />}
-                <Category color={categoryColor(category)}>{category}</Category>
-              </Head>
-              <Content dangerouslySetInnerHTML={{ __html: content }} />
-              <CardBottom>
-                {!mypage && (
-                  <CreatorBox>
-                    <AvatarWrapper>
-                      <Avatar avatarId={category === '비밀' ? -1 : creator.avatar_id} />
-                    </AvatarWrapper>
-                    <Creator isSecret={category === '비밀'}>
-                      {category === '비밀' ? '익명' : creator.nickname}
-                    </Creator>
-                  </CreatorBox>
-                )}
-                <CountBox>
-                  <ViewCount count={visitor_list.length} />
-                  <CommentCount count={comment_count} />
-                  <LikeCount count={liker_list.length} />
-                </CountBox>
-              </CardBottom>
-            </PostCard>
-          );
-        }
+      {posts.length ? (
+        posts?.map(
+          (
+            {
+              id,
+              category,
+              title,
+              content,
+              creator,
+              visitor_list,
+              liker_list,
+              comment_count,
+              attachment_url,
+            },
+            key
+          ) => {
+            return (
+              <PostCard key={key} onClick={() => handleClick(id!!)}>
+                <Head>
+                  <Title>{title}</Title>
+                  {!!attachment_url && <ImageIcon size='24px' />}
+                  <Category color={categoryColor(category)}>{category}</Category>
+                </Head>
+                <Content dangerouslySetInnerHTML={{ __html: content }} />
+                <CardBottom>
+                  {!mypage && (
+                    <CreatorBox>
+                      <AvatarWrapper>
+                        <Avatar avatarId={category === '비밀' ? -1 : creator.avatar_id} />
+                      </AvatarWrapper>
+                      <Creator isSecret={category === '비밀'}>
+                        {category === '비밀' ? '익명' : creator.nickname}
+                      </Creator>
+                    </CreatorBox>
+                  )}
+                  <CountBox>
+                    <ViewCount count={visitor_list.length} />
+                    <CommentCount count={comment_count} />
+                    <LikeCount count={liker_list.length} />
+                  </CountBox>
+                </CardBottom>
+              </PostCard>
+            );
+          }
+        )
+      ) : (
+        <h2>게시물이 없습니다.</h2>
       )}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.ol`
+const Wrapper = styled.ul`
+  min-height: 40vh;
+
   max-width: 1120px;
   padding: 0 60px;
   user-select: none;
@@ -83,12 +89,10 @@ const Wrapper = styled.ol`
   margin: 30px auto;
 
   @media ${({ theme }) => theme.size.tablet} {
-    grid-template-columns: 1fr 1fr;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media ${({ theme }) => theme.size.mobile} {
-    grid-template-columns: 1fr;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     width: 80%;
     padding: 0px;
