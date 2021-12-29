@@ -132,7 +132,7 @@ export const userCreated = functions
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '💡 새로운 사용자가 등록되었습니다.',
+            text: '새로운 사용자가 등록되었습니다.',
           },
         },
         {
@@ -152,7 +152,6 @@ export const userCreated = functions
           elements: [
             {
               type: 'button',
-              action_id: 'user_auth_approve',
               text: {
                 type: 'plain_text',
                 emoji: true,
@@ -163,7 +162,6 @@ export const userCreated = functions
             },
             {
               type: 'button',
-              action_id: 'user_auth_reject',
               text: {
                 type: 'plain_text',
                 emoji: true,
