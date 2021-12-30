@@ -83,7 +83,12 @@ const PostDetail = () => {
     e.preventDefault();
 
     if (commentRef.current.value) {
-      addComment({ post_id: id, uid: loginUser.uid, content: commentRef.current.value });
+      addComment({
+        post_id: id,
+        uid: loginUser.uid,
+        content: commentRef.current.value,
+        is_post_creator: isCreator,
+      });
       commentRef.current.value = '';
       fetchComments();
     }

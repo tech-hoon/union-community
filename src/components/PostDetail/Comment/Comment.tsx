@@ -9,6 +9,7 @@ import useModal from 'hooks/common/useModal';
 import AlertModal from 'components/common/Portal/AlertModal';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import { urlParsingRegex } from 'utils/regex';
+import { convertNickname } from 'utils/comment';
 
 import { commentState } from 'store/comment';
 
@@ -41,7 +42,10 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
     liker_list,
     created_at,
     is_deleted,
+    is_post_creator,
   } = comment;
+
+  const convertedNickname = convertNickname(is_deleted, isSecret, is_post_creator, nickname);
 
   const {
     onCancel,
@@ -71,9 +75,7 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
               <S.Avatar avatarId={is_deleted ? -1 : isSecret ? -1 : avatar_id} />
             </S.COL1>
             <S.COL2>
-              <S.Nickname is_deleted={is_deleted}>
-                {is_deleted ? '삭제' : isSecret ? '익명' : nickname}
-              </S.Nickname>
+              <S.Nickname is_deleted={is_deleted}>{convertedNickname}</S.Nickname>
               <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
             </S.COL2>
           </S.CreatorWrapper>
@@ -128,7 +130,7 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
             <S.ReplyInput
               autoFocus
               ref={replyInputRef}
-              placeholder={`${isSecret ? '익명' : nickname}에게 답글 달기`}
+              placeholder={`${convertedNickname}에게 답글 달기`}
             />
             <S.ReplyCancleBtn onClick={onReplyCancle}>취소하기</S.ReplyCancleBtn>
             <S.ReplySubmitBtn

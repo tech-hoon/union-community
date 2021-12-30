@@ -14,6 +14,7 @@ import PortalContainer from 'components/common/Portal/PortalContainer';
 
 import { useRecoilValue } from 'recoil';
 import { commentState } from 'store/comment';
+import { convertNickname } from 'utils/comment';
 
 interface Props {
   comment: CommentType;
@@ -39,7 +40,10 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
     liker_list,
     created_at,
     is_deleted,
+    is_post_creator,
   } = comment;
+
+  const convertedNickname = convertNickname(is_deleted, isSecret, is_post_creator, nickname);
 
   const {
     onCancel,
@@ -66,9 +70,7 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
               <S.Avatar avatarId={is_deleted ? -1 : isSecret ? -1 : avatar_id} />
             </S.COL1>
             <S.COL2>
-              <S.Nickname is_deleted={is_deleted}>
-                {is_deleted ? '삭제' : isSecret ? '익명' : nickname}
-              </S.Nickname>
+              <S.Nickname is_deleted={is_deleted}>{convertedNickname}</S.Nickname>
               <S.CreatedAt>{toDateStringByFormating(created_at, true)}</S.CreatedAt>
             </S.COL2>
           </S.CreatorWrapper>

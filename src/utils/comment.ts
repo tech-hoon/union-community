@@ -28,3 +28,22 @@ export const changeReplyCommentOrder = (oldList: CommentType[]): CommentType[] =
 
   return parentList;
 };
+
+export const convertNickname = (
+  is_deleted: boolean,
+  is_secret: boolean,
+  is_post_creator: boolean,
+  nickname: string
+) => {
+  if (is_deleted) {
+    return '삭제됨';
+  }
+  if (!is_secret) {
+    return nickname;
+  }
+  if (is_post_creator) {
+    return '익명(글쓴이)';
+  }
+
+  return '익명';
+};
