@@ -44,6 +44,8 @@ export const useGetPosts = () => {
       setLastVisiblePost(__lastVisiblePost);
       return;
     }
+
+    setIsLastPost(true);
   };
 
   //첫 렌더링시, 캐싱된 post있으면 그거로 사용

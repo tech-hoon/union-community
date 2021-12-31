@@ -22,12 +22,13 @@ const Home = () => {
   const setLoginUser = useSetRecoilState(loginUserState);
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
-  const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost } = useGetPosts();
+  const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost, isLastPost } =
+    useGetPosts();
   const [isUpdated, setIsUpdated] = useState(false);
   const [scrollY, setScrollY] = useLocalStorage('scrollY', 0);
 
   const ioRef = useRef<HTMLDivElement | null>(null);
-  const entry = useIntersectionObserver(ioRef, {});
+  const entry = useIntersectionObserver(ioRef, isLastPost, {});
 
   const onRefreshClick = () => {
     setIsUpdated(false);
