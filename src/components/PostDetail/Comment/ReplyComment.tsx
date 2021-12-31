@@ -43,7 +43,7 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
     is_post_creator,
   } = comment;
 
-  const convertedNickname = convertNickname(is_deleted, isSecret, is_post_creator, nickname);
+  const convertedNickname = convertNickname(uid, is_deleted, isSecret, is_post_creator, nickname);
 
   const {
     onCancel,

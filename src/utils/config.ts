@@ -22,3 +22,5 @@ export const LOGIN_DONE = 5;
 export const NICKNAME_LENGTH = 6;
 
 export const OPEN_KAKAOTALK_URL = 'https://open.kakao.com/o/sqksiTPd';
+
+export const ADMIN_UID = 'PYuphfo1SrYQMBTxdME3Q57s1xV2';

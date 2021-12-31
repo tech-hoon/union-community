@@ -1,4 +1,5 @@
 import { CommentType } from 'types';
+import { ADMIN_UID } from './config';
 
 type ChildListType = {
   [key: string]: CommentType[];
@@ -30,6 +31,7 @@ export const changeReplyCommentOrder = (oldList: CommentType[]): CommentType[] =
 };
 
 export const convertNickname = (
+  uid: string,
   is_deleted: boolean,
   is_secret: boolean,
   is_post_creator: boolean,
@@ -43,6 +45,10 @@ export const convertNickname = (
   }
   if (is_post_creator) {
     return '익명(글쓴이)';
+  }
+
+  if (uid === ADMIN_UID) {
+    return '운영자';
   }
 
   return '익명';

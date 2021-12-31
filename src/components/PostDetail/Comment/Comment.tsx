@@ -45,7 +45,7 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
     is_post_creator,
   } = comment;
 
-  const convertedNickname = convertNickname(is_deleted, isSecret, is_post_creator, nickname);
+  const convertedNickname = convertNickname(uid, is_deleted, isSecret, is_post_creator, nickname);
 
   const {
     onCancel,
