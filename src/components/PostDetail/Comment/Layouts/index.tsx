@@ -75,10 +75,14 @@ const S = {
       font-size: 0.8rem;
     }
   `,
-  Nickname: styled.p<IDeleted>`
+  Nickname: styled.p<IComment>`
     font-weight: 700;
     font-size: 0.9rem;
-    color: ${({ is_deleted }) => is_deleted && `#666`};
+    color: ${({ is_deleted, avatar_id }) => {
+      if (is_deleted) return '#666';
+      if (avatar_id === 0) return '#18A0FB';
+      return 'black';
+    }};
   `,
 
   LikeCount: styled(LikeCount)``,
@@ -95,11 +99,11 @@ const S = {
     background-color: black;
   `,
 
-  Content: styled.div<IDeleted>`
+  Content: styled.div<IComment>`
     font-size: 0.9rem;
     padding: 14px 0;
     border-bottom: solid 1.4px #e9ecef;
-    line-height: 1.2;
+    line-height: 1.5;
     word-break: break-all;
 
     font-style: ${({ is_deleted }) => is_deleted && 'italic'};
@@ -118,8 +122,9 @@ const S = {
   `,
 };
 
-interface IDeleted {
+interface IComment {
   is_deleted: boolean;
+  avatar_id?: number;
 }
 
 export default S;

@@ -44,6 +44,7 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
   } = comment;
 
   const convertedNickname = convertNickname(uid, is_deleted, isSecret, is_post_creator, nickname);
+  const avatarId = avatar_id === 0 ? 0 : is_deleted || isSecret ? -1 : avatar_id;
 
   const {
     onCancel,
@@ -67,10 +68,12 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
         <S.ROW1>
           <S.CreatorWrapper onClick={onOpenUserMenu}>
             <S.COL1>
-              <S.Avatar avatarId={is_deleted ? -1 : isSecret ? -1 : avatar_id} />
+              <S.Avatar avatarId={avatarId} />
             </S.COL1>
             <S.COL2>
-              <S.Nickname is_deleted={is_deleted}>{convertedNickname}</S.Nickname>
+              <S.Nickname is_deleted={is_deleted} avatar_id={avatar_id}>
+                {convertedNickname}
+              </S.Nickname>
               <S.CreatedAt>{toDateStringByFormating(created_at, true)}</S.CreatedAt>
             </S.COL2>
           </S.CreatorWrapper>
