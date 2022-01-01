@@ -23,7 +23,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
 
   return (
     <Wrapper>
-      {posts.length ? (
+      {posts?.length ? (
         posts?.map(
           (
             {
