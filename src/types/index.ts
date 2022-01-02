@@ -1,3 +1,5 @@
+import { REPORT_LIST } from 'utils/config';
+
 export interface CommentType {
   id: string;
   content: string;
@@ -70,4 +72,12 @@ export interface MessageType {
   created_at: number;
   user: UserType | string;
   is_secret: boolean;
+}
+
+export interface ReportType {
+  type: typeof REPORT_LIST;
+  content: string;
+  reportee: UserType;
+  reporter: UserType;
+  created_at: number;
 }

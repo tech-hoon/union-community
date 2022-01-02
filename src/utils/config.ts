@@ -24,3 +24,13 @@ export const NICKNAME_LENGTH = 6;
 export const OPEN_KAKAOTALK_URL = 'https://open.kakao.com/o/sqksiTPd';
 
 export const ADMIN_UID = 'PYuphfo1SrYQMBTxdME3Q57s1xV2';
+
+export const REPORT_LIST = [
+  '게시판 성격에 부적절함',
+  '욕설/비하',
+  '음란물/불건전한 만남 및 대화',
+  '상업적 광고 및 판매',
+  '유출/사칭/사기',
+  '낚시/놀람/도배',
+  '정당/정치인 비하 및 선거운동',
+];
