@@ -128,7 +128,7 @@ const TitleInput = styled.input`
   }
 `;
 const HR = styled.hr`
-  margin: 20px 0;
+  margin: 12px 0;
 `;
 const Label = styled.label`
   font-weight: 700;
