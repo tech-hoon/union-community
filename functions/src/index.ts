@@ -1,18 +1,20 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import * as SlackWebhook from '@slack/client';
+import * as _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import SlackWebhook = require('@slack/client');
-import _ = require('lodash');
-
-// TODO:
-// Post 신고 n개 이상시 slack 전송하는 trigger
+import { RESIDENT_AUTH_MSG, REPORTED_USER_MSG } from './config';
 
 admin.initializeApp();
 const firestore = admin.firestore();
 const IncomingWebhook = SlackWebhook.IncomingWebhook;
 const config = functions.config();
-const slackUrl = config.slack.url;
-const Slack = new IncomingWebhook(slackUrl);
+
+const residentAuthURL = config.slack.resident_auth_url;
+const userReportURL = config.slack.report_user_url;
+
+const SlackResidentAuth = new IncomingWebhook(residentAuthURL);
+const SlackUserReport = new IncomingWebhook(userReportURL);
 
 export const postCreated = functions
   .region('asia-northeast3')
@@ -126,54 +128,7 @@ export const userCreated = functions
 
     const { email, name, resident_auth_image, uid } = snapshot.data();
 
-    Slack.send({
-      blocks: [
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: '새로운 사용자가 등록되었습니다.',
-          },
-        },
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `*이름:*\n${name}\n*아이디:*\n${uid}\n*이메일:*\n${email}\n*Firebase*:\nhttps://console.firebase.google.com/u/0/project/univ-dorm-community/firestore/data/~2Fusers~2F${uid}\n*인증 사진*:${resident_auth_image}\n`,
-          },
-          accessory: {
-            type: 'image',
-            image_url: resident_auth_image,
-            alt_text: 'resident_auth_image',
-          },
-        },
-        {
-          type: 'actions',
-          elements: [
-            {
-              type: 'button',
-              text: {
-                type: 'plain_text',
-                emoji: true,
-                text: '거절하기',
-              },
-              style: 'danger',
-              value: 'reject',
-            },
-            {
-              type: 'button',
-              text: {
-                type: 'plain_text',
-                emoji: true,
-                text: '동의하기',
-              },
-              style: 'primary',
-              value: 'approve',
-            },
-          ],
-        },
-      ],
-    });
+    SlackResidentAuth.send(RESIDENT_AUTH_MSG({ email, name, resident_auth_image, uid }));
   });
 
 export const userDeleted = functions
@@ -183,4 +138,31 @@ export const userDeleted = functions
     firestore.doc(`counter/user`).update({
       count: admin.firestore.FieldValue.increment(-1),
     });
+  });
+
+export const userReported = functions
+  .region('asia-northeast3')
+  .firestore.document('reports/{reportId}')
+  .onCreate((snapshot) => {
+    const { type, content, reporter, reportee } = snapshot.data();
+
+    functions.logger.log('@', snapshot.data());
+
+    SlackUserReport.send(
+      REPORTED_USER_MSG({
+        id: snapshot.id,
+        type,
+        content,
+        reporter: {
+          nickname: reporter.nickname,
+          name: reporter.name,
+          uid: reporter.uid,
+        },
+        reportee: {
+          nickname: reportee.nickname,
+          name: reportee.name,
+          uid: reportee.uid,
+        },
+      })
+    );
   });
