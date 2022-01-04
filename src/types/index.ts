@@ -75,7 +75,7 @@ export interface MessageType {
 }
 
 export interface ReportType {
-  type: typeof REPORT_LIST;
+  type: typeof REPORT_LIST[number];
   content: string;
   reportee: UserType;
   reporter: UserType;

@@ -5,6 +5,7 @@ import { loginUserState } from 'store/loginUser';
 import { UserType } from 'types';
 import { useState } from 'react';
 import { REPORT_LIST } from 'utils/config';
+import { reportUser } from 'api/report';
 
 interface Props {
   reciever: UserType;
@@ -14,18 +15,34 @@ interface Props {
 }
 
 const ReportModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Props) => {
-  const [value, setValue] = useState<string>();
-  const loginUser = useRecoilValue(loginUserState);
+  const [type, setType] = useState<string>();
+  const [content, setContent] = useState<string>();
 
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
+  const loginUser = useRecoilValue(loginUserState) as UserType;
+
+  const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
+  };
+
+  const onChangeType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setType(e.target.value as string);
   };
 
   const onSubmit = async () => {
-    // API 호출
+    if (!type || !content) {
+      return;
+    }
+
+    await reportUser({
+      reportee: reciever,
+      reporter: loginUser,
+      type,
+      content,
+      created_at: new Date().getTime(),
+    });
   };
 
-  const onClickOkayButton: React.MouseEventHandler<HTMLElement> = () => {
+  const onClickOkayButton: React.MouseEventHandler<HTMLElement> = (e) => {
     onSubmit();
     onClickMenu(e);
   };
@@ -37,7 +54,10 @@ const ReportModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Props) =
       </S.Title>
       <SelectWrapper>
         <Label>종류</Label>
-        <Select>
+        <Select onChange={onChangeType} defaultValue={''}>
+          <Option disabled value=''>
+            신고 유형을 선택해주세요
+          </Option>
           {REPORT_LIST.map((item, key) => (
             <Option key={key}>{item}</Option>
           ))}
@@ -45,13 +65,12 @@ const ReportModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Props) =
       </SelectWrapper>
       <InputWrapper>
         <Label>내용</Label>
-        <Input onChange={onChange} spellCheck='false' />
+        <Input onChange={onChangeContent} spellCheck='false' />
       </InputWrapper>
-      a
       <S.ButtonBox>
         <S.CancelButton onClick={onCloseModal}>취소</S.CancelButton>
-        <S.OkayButton id='done' onClick={onClickOkayButton} disabled={!value}>
-          확인
+        <S.OkayButton id='done' onClick={onClickOkayButton} disabled={!content || !type}>
+          제출
         </S.OkayButton>
       </S.ButtonBox>
     </Wrapper>
@@ -80,9 +99,12 @@ const Select = styled.select`
 
   font-size: 0.8rem;
   padding: 2px;
+  color: chocolate;
 `;
 
-const Option = styled.option``;
+const Option = styled.option`
+  text-align: center;
+`;
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -90,12 +112,17 @@ const InputWrapper = styled.div`
   align-items: center;
   gap: 8px;
   line-height: 1rem;
+
+  & Label {
+    padding-top: 6px;
+    align-self: flex-start;
+  }
 `;
 
 const Input = styled.textarea`
   width: 80%;
   font-size: 0.8rem;
-  height: 2rem;
+  height: 4rem;
   padding: 4px;
 
   background: none;
