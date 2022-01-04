@@ -23,6 +23,7 @@ interface IReportedUserMsg {
 }
 
 export const RESIDENT_AUTH_MSG = ({ name, uid, email, resident_auth_image }: IResidentAuthMsg) => ({
+  text: '💡새로운 사용자가 등록되었습니다.',
   blocks: [
     {
       type: 'header',
@@ -33,15 +34,33 @@ export const RESIDENT_AUTH_MSG = ({ name, uid, email, resident_auth_image }: IRe
     },
     {
       type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: `*이름:*\n${name}\n*아이디:*\n${uid}\n*이메일:*\n${email}\n*Firebase*:\nhttps://console.firebase.google.com/u/0/project/univ-dorm-community/firestore/data/~2Fusers~2F${uid}\n*인증 사진*:${resident_auth_image}\n`,
-      },
-      accessory: {
-        type: 'image',
-        image_url: resident_auth_image,
-        alt_text: 'resident_auth_image',
-      },
+      fields: [
+        {
+          type: 'mrkdwn',
+          text: `*이름:*\n${name}`,
+        },
+        {
+          type: 'mrkdwn',
+          text: `*아이디:*\n${uid}`,
+        },
+        {
+          type: 'mrkdwn',
+          text: `*이메일:*\n${email}`,
+        },
+      ],
+    },
+    {
+      type: 'section',
+      fields: [
+        {
+          type: 'mrkdwn',
+          text: `*Firebase*:\nhttps://console.firebase.google.com/u/0/project/univ-dorm-community/firestore/data/~2Fusers~2F${uid}`,
+        },
+        {
+          type: 'mrkdwn',
+          text: `*인증 사진*:${resident_auth_image}`,
+        },
+      ],
     },
     {
       type: 'actions',
@@ -77,6 +96,7 @@ export const REPORTED_USER_MSG = ({
   reporter,
   reportee,
 }: IReportedUserMsg) => ({
+  text: '🚨신고가 접수되었습니다.',
   blocks: [
     {
       type: 'header',
@@ -99,22 +119,16 @@ export const REPORTED_USER_MSG = ({
       type: 'section',
       fields: [
         {
-          text: {
-            type: 'mrkdwn',
-            text: `*이름:*\n${reportee.name}`,
-          },
+          type: 'mrkdwn',
+          text: `*이름:*\n${reportee.name}`,
         },
         {
-          text: {
-            type: 'mrkdwn',
-            text: `*닉네임:*\n${reportee.nickname}`,
-          },
+          type: 'mrkdwn',
+          text: `*닉네임:*\n${reportee.nickname}`,
         },
         {
-          text: {
-            type: 'mrkdwn',
-            text: `*UID:*\n${reportee.uid}`,
-          },
+          type: 'mrkdwn',
+          text: `*UID:*\n${reportee.uid}`,
         },
       ],
     },
@@ -132,16 +146,12 @@ export const REPORTED_USER_MSG = ({
       type: 'section',
       fields: [
         {
-          text: {
-            type: 'mrkdwn',
-            text: `*신고 유형:*\n${type}`,
-          },
+          type: 'mrkdwn',
+          text: `*신고 유형:*\n${type}`,
         },
         {
-          text: {
-            type: 'mrkdwn',
-            text: `*신고 내용:*\n${content}`,
-          },
+          type: 'mrkdwn',
+          text: `*신고 내용:*\n${content}`,
         },
       ],
     },
@@ -161,22 +171,16 @@ export const REPORTED_USER_MSG = ({
       type: 'section',
       fields: [
         {
-          text: {
-            type: 'mrkdwn',
-            text: `*이름:*\n${reporter.name}`,
-          },
+          type: 'mrkdwn',
+          text: `*이름:*\n${reporter.name}`,
         },
         {
-          text: {
-            type: 'mrkdwn',
-            text: `*닉네임:*\n${reporter.nickname}`,
-          },
+          type: 'mrkdwn',
+          text: `*닉네임:*\n${reporter.nickname}`,
         },
         {
-          text: {
-            type: 'mrkdwn',
-            text: `*UID:*\n${reporter.uid}`,
-          },
+          type: 'mrkdwn',
+          text: `*UID:*\n${reporter.uid}`,
         },
       ],
     },
@@ -185,3 +189,7 @@ export const REPORTED_USER_MSG = ({
     },
   ],
 });
+
+export const TestMSG = (nickname: string) => {
+  return `신고가 접수되었습니다. *${nickname}*`;
+};
