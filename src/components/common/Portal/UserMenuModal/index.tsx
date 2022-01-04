@@ -6,6 +6,7 @@ import ReportModal from './ReportModal';
 import SendMessageModal from './SendMessageModal';
 import Avatar from 'components/common/Avatar';
 import DoneModal from './DoneModal';
+import { ADMIN_UID } from 'utils/config';
 
 interface Props {
   reciever: UserType;
@@ -22,13 +23,25 @@ const UserMenuModal = ({ reciever, onCloseModal, isSecret }: Props) => {
     setMenuId(id);
   };
 
+  const convertedNickname = (function () {
+    if (reciever.uid === ADMIN_UID) return '운영자';
+    if (isSecret) return `익명${reciever.uid.slice(-2)}`;
+    return reciever.nickname;
+  })();
+
+  const avatarId = (function () {
+    if (reciever.avatar_id === 0) return 0;
+    if (isSecret) return -1;
+    return reciever.avatar_id;
+  })();
+
   switch (menuId) {
     default:
       return (
         <Wrapper>
           <Header>
-            <Avatar avatarId={isSecret ? -1 : reciever.avatar_id} />
-            <small>{isSecret ? `익명${reciever.uid.slice(-2)}` : reciever.nickname}</small>
+            <Avatar avatarId={avatarId} />
+            <Nickname isSecret={avatarId === 0 ? false : isSecret}>{convertedNickname}</Nickname>
           </Header>
           <S.ButtonBox onClick={onClickMenu}>
             <ReportButton id='report'>신고하기</ReportButton>
@@ -70,6 +83,15 @@ const Header = styled.div`
   align-items: center;
   font-size: 1.2rem;
   font-weight: 600;
+`;
+
+interface INickname {
+  isSecret: boolean;
+}
+
+const Nickname = styled.span<INickname>`
+  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.MAIN)};
+  margin-bottom: 2px;
 `;
 
 const ReportButton = styled(S.CancelButton)`

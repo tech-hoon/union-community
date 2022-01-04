@@ -46,7 +46,11 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
   } = comment;
 
   const convertedNickname = convertNickname(uid, is_deleted, isSecret, is_post_creator, nickname);
-  const avatarId = avatar_id === 0 ? 0 : is_deleted || isSecret ? -1 : avatar_id;
+  const avatarId = (function () {
+    if (avatar_id === 0) return 0;
+    if (is_deleted || isSecret) return -1;
+    return avatar_id;
+  })();
 
   const {
     onCancel,
