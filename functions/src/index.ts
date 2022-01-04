@@ -146,8 +146,6 @@ export const userReported = functions
   .onCreate((snapshot) => {
     const { type, content, reporter, reportee } = snapshot.data();
 
-    functions.logger.log('@', snapshot.data());
-
     SlackUserReport.send(
       REPORTED_USER_MSG({
         id: snapshot.id,

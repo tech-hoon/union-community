@@ -29,7 +29,6 @@ export const RESIDENT_AUTH_MSG = ({ name, uid, email, resident_auth_image }: IRe
       text: {
         type: 'plain_text',
         text: '💡 새로운 사용자가 등록되었습니다.',
-        emoji: 'true',
       },
     },
     {
@@ -51,7 +50,6 @@ export const RESIDENT_AUTH_MSG = ({ name, uid, email, resident_auth_image }: IRe
           type: 'button',
           text: {
             type: 'plain_text',
-            emoji: true,
             text: '거절하기',
           },
           style: 'danger',
@@ -61,7 +59,6 @@ export const RESIDENT_AUTH_MSG = ({ name, uid, email, resident_auth_image }: IRe
           type: 'button',
           text: {
             type: 'plain_text',
-            emoji: true,
             text: '동의하기',
           },
           style: 'primary',
@@ -86,7 +83,6 @@ export const REPORTED_USER_MSG = ({
       text: {
         type: 'plain_text',
         text: '🚨 신고가 접수되었습니다.',
-        emoji: 'true',
       },
     },
     {
