@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
-import PostCardBox from 'components/Home/PostCardBox';
+import PostCardBox from 'components/common/PostCard/PostCardBox';
 import CategoryBox from 'components/Home/CategoryBox';
 import OrderbyBox from 'components/Home/OrderbyBox';
 import Footer from 'components/common/Footer';
 import Banner from 'components/common/Banner';
-import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
+import PostCardSkeleton from 'components/common/Skeletons/PostCardSkeleton';
 import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import useLocalStorage from 'hooks/common/useLocalStorage';
 import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
@@ -80,7 +80,7 @@ const Home = () => {
       <MidWrapper>
         <OrderbyBox />
       </MidWrapper>
-      {isLoading ? <CardSkeleton /> : <PostCardBox posts={posts} />}
+      {isLoading ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
       <ScrollUpIcon size='56px' onClick={onScrollUp} />
       <Observer ref={ioRef} />

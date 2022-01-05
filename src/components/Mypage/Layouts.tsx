@@ -1,7 +1,7 @@
 import Navbar from 'components/common/Navbar';
 import Footer from 'components/common/Footer';
-import CardSkeleton from 'components/common/Skeletons/CardSkeleton';
-import PostCardBox from 'components/Home/PostCardBox';
+import PostCardSkeleton from 'components/common/Skeletons/PostCardSkeleton';
+import PostCardBox from 'components/common/PostCard/PostCardBox';
 
 import styled from 'styled-components';
 
@@ -96,7 +96,7 @@ export const Layouts = {
     font-size: 1.1rem;
   `,
 
-  CardSkeleton: styled(CardSkeleton)``,
+  PostCardSkeleton: styled(PostCardSkeleton)``,
 
   Footer: styled(Footer)``,
 };

@@ -1,22 +1,23 @@
 import styled from 'styled-components';
 import SkeletonBar from './components/SkeletonBar';
+import { Layouts as S } from 'components/common/PostCard/Layouts';
 
 interface Props {}
 
-const CardSkeleton = (props: Props) => {
+const PostCardSkeleton = (props: Props) => {
   return (
-    <Wrapper>
+    <S.Wrapper>
       {new Array(6).fill('').map((_, i) => (
-        <Card key={i}>
+        <CardSkeleton key={i}>
           <Title />
           <Content />
           <Bottom>
             <Circle />
             <Title />
           </Bottom>
-        </Card>
+        </CardSkeleton>
       ))}
-    </Wrapper>
+    </S.Wrapper>
   );
 };
 
@@ -40,6 +41,11 @@ const Wrapper = styled.ul`
     width: 80%;
     padding: 0px;
   }
+`;
+
+const CardSkeleton = styled(S.PostCard)`
+  gap: 20px;
+  cursor: default;
 `;
 
 const Card = styled.li`
@@ -76,4 +82,4 @@ const Circle = styled(SkeletonBar)`
   overflow: hidden;
 `;
 
-export default CardSkeleton;
+export default PostCardSkeleton;
