@@ -39,9 +39,9 @@ const OrderbyBox = () => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   user-select: none;
-  margin: 10px 0 4px;
+  margin: 12px 0;
 
   @media ${({ theme }) => theme.size.mobile} {
     gap: 0px;
