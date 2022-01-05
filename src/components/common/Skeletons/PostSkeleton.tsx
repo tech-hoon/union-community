@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SkeletonBar from './components/SkeletonBar';
+import SkeletonItem from './components/SkeletonItem';
 
 interface Props {}
 
@@ -28,14 +28,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const Top = styled(SkeletonBar)`
+const Top = styled(SkeletonItem)`
   height: 40px;
 `;
-const Middle = styled(SkeletonBar)`
+const Middle = styled(SkeletonItem)`
   height: 40px;
 `;
 
-const Content = styled(SkeletonBar)`
+const Content = styled(SkeletonItem)`
   height: 320px;
 `;
 

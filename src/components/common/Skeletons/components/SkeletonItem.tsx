@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SkeletonBar = styled.div`
+const SkeletonItem = styled.div`
   width: 100%;
   height: 30px;
   background-color: #f2f2f2;
@@ -12,11 +12,9 @@ const SkeletonBar = styled.div`
     0% {
       background-color: rgba(165, 165, 165, 0.1);
     }
-
     50% {
-      background-color: rgba(165, 165, 165, 0.3);
+      background-color: rgba(165, 165, 165, 0.4);
     }
-
     100% {
       background-color: rgba(165, 165, 165, 0.1);
     }
@@ -33,4 +31,4 @@ const SkeletonBar = styled.div`
   }
 `;
 
-export default SkeletonBar;
+export default SkeletonItem;
