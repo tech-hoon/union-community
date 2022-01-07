@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Content = styled.p`
+const Content = styled.h1`
   font-weight: 200;
   font-size: 2rem;
   line-height: 1.5;
