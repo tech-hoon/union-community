@@ -2,8 +2,12 @@ import { dbService, firebaseApp } from 'service/firebase';
 import { UserType } from 'types';
 
 export const getUserData = async (uid: string | UserType) => {
-  const doc = await dbService.doc(`users/${uid}`).get();
-  return doc.data() ? doc.data() : null;
+  try {
+    const doc = await dbService.doc(`users/${uid}`).get();
+    return doc.data() ? doc.data() : null;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const addUser = ({ uid, ...rest }: any) => {
@@ -62,63 +66,71 @@ export const verifyNickname = async (nickname: string) => {
 };
 
 export const getMyLikes = async (uid: string) => {
-  const res: any = await dbService.doc(`users/${uid}`).get();
-  const likeList = res?.data().like_list;
+  try {
+    const res: any = await dbService.doc(`users/${uid}`).get();
+    const likeList = res?.data().like_list;
 
-  if (!likeList.length) {
-    return [];
+    if (!likeList.length) {
+      return [];
+    }
+
+    const batches = [];
+    while (likeList.length) {
+      const batch = likeList.splice(0, 10);
+
+      const posts = await dbService
+        .collection(`posts`)
+        .where(firebaseApp.firestore.FieldPath.documentId(), 'in', batch)
+        .get();
+
+      const data = await Promise.all(
+        posts.docs.map(async (doc: any) => ({
+          id: doc.id,
+          ...doc.data(),
+          comment_count: (await dbService.collection(`posts/${doc.id}/comments`).get()).size,
+        }))
+      );
+
+      batches.push(...data);
+    }
+
+    return batches.sort((a, b) => b.created_at - a.created_at);
+  } catch (error) {
+    console.log(error);
   }
-
-  const batches = [];
-  while (likeList.length) {
-    const batch = likeList.splice(0, 10);
-
-    const posts = await dbService
-      .collection(`posts`)
-      .where(firebaseApp.firestore.FieldPath.documentId(), 'in', batch)
-      .get();
-
-    const data = await Promise.all(
-      posts.docs.map(async (doc: any) => ({
-        id: doc.id,
-        ...doc.data(),
-        comment_count: (await dbService.collection(`posts/${doc.id}/comments`).get()).size,
-      }))
-    );
-
-    batches.push(...data);
-  }
-
-  return batches.sort((a, b) => b.created_at - a.created_at);
 };
 
 export const getMyPosts = async (uid: string) => {
-  const res: any = await dbService.doc(`users/${uid}`).get();
-  const myPosts = res.data().post_list;
+  try {
+    const res: any = await dbService.doc(`users/${uid}`).get();
+    const myPosts = res.data().post_list;
 
-  if (!myPosts.length) {
-    return [];
+    if (!myPosts.length) {
+      return [];
+    }
+
+    const batches = [];
+    while (myPosts.length) {
+      const batch = myPosts.splice(0, 10);
+
+      const posts = await dbService
+        .collection(`posts`)
+        .where(firebaseApp.firestore.FieldPath.documentId(), 'in', batch)
+        .get();
+
+      const data = await Promise.all(
+        posts.docs.map(async (doc: any) => ({
+          id: doc.id,
+          ...doc.data(),
+          comment_count: (await dbService.collection(`posts/${doc.id}/comments`).get()).size,
+        }))
+      );
+
+      batches.push(...data);
+    }
+
+    return batches.sort((a, b) => b.created_at - a.created_at);
+  } catch (error) {
+    console.log(error);
   }
-
-  const batches = [];
-  while (myPosts.length) {
-    const batch = myPosts.splice(0, 10);
-
-    const posts = await dbService
-      .collection(`posts`)
-      .where(firebaseApp.firestore.FieldPath.documentId(), 'in', batch)
-      .get();
-
-    const data = await Promise.all(
-      posts.docs.map(async (doc: any) => ({
-        id: doc.id,
-        ...doc.data(),
-        comment_count: (await dbService.collection(`posts/${doc.id}/comments`).get()).size,
-      }))
-    );
-
-    batches.push(...data);
-  }
-
-  return batches.sort((a, b) => b.created_at - a.created_at);
 };
