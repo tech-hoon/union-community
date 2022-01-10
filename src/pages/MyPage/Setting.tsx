@@ -20,7 +20,7 @@ const Setting = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
-  const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 10 - prev : prev - 1));
+  const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 10 : prev - 1));
   const onAvatarIdNext = () => setAvatarId((prev) => (prev >= 10 ? (prev % 10) + 1 : prev + 1));
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
