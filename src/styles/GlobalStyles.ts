@@ -6,20 +6,25 @@ const GlobalStyle = createGlobalStyle`
   *  {
     box-sizing: border-box;
     font-size:62.5%;
+    -webkit-tap-highlight-color:transparent;
   }
+
   a {
     text-decoration-line:none;
     color:#2883f3;
   }
+
   ul {
     list-style:none;
   }
+
   button{
     border:none;
     outline:none;
     background: none;
     cursor: pointer;
   }
+  
   body{
     background-color: #f8f9fa;
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
