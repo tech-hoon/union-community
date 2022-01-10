@@ -380,6 +380,7 @@ const Content = styled.div`
 
 const Images = styled.img`
   max-width: 500px;
+  margin-top: 12px;
   margin-bottom: 24px;
 
   @media ${({ theme }) => theme.size.mobile} {
