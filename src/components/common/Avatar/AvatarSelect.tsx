@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CaretLeftFill, CaretRightFill } from '@styled-icons/bootstrap';
 import Avatar from 'components/common/Avatar';
+import { AVATAR_COUNT } from 'utils/config';
 
 interface Props {
   avatarId: number;
@@ -14,7 +15,7 @@ const AvatarSelect = ({ avatarId, onClickPrev, onClickNext, size }: Props) => {
   return (
     <Wrapper size={size || `100%`}>
       <Pagination>
-        {new Array(MAX).fill('').map((_, currentId) => (
+        {new Array(AVATAR_COUNT).fill('').map((_, currentId) => (
           <Dot selected={avatarId - 1 === currentId} key={currentId} />
         ))}
       </Pagination>
@@ -28,8 +29,6 @@ const AvatarSelect = ({ avatarId, onClickPrev, onClickNext, size }: Props) => {
     </Wrapper>
   );
 };
-
-const MAX = 10;
 
 interface IWrapper {
   size: string;

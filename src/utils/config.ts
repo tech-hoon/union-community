@@ -34,3 +34,5 @@ export const REPORT_LIST = [
   '낚시/놀람/도배',
   '정당/정치인 비하 및 선거운동',
 ];
+
+export const AVATAR_COUNT = 10;
