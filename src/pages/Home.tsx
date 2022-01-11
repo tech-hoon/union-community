@@ -16,6 +16,7 @@ import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { ChevronUpCircle } from '@styled-icons/boxicons-solid';
+import smoothscroll from 'smoothscroll-polyfill';
 
 const Home = () => {
   const location = useLocation();
@@ -60,6 +61,9 @@ const Home = () => {
       fetchPosts();
       return;
     }
+
+    // smooth scroll iOS polyfill
+    smoothscroll.polyfill();
 
     // 글 등록,수정,삭제 시 새 데이터로 fetch
     location.state && fetchPosts();
