@@ -46,19 +46,20 @@
       type="text/css"
     />
     <title>대학생 연합생활관 커뮤니티 union</title>
+    <!-- IE 대응, IE 접근 시 Edge로 Redirect -->
+    <script>
+      (function () {
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+          window.location = 'microsoft-edge:' + 'https://uni-on.me';
+          setTimeout(function () {
+            window.location = 'https://go.microsoft.com/fwlink/?linkid=2135547';
+          }, 1);
+        }
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
-
-  <!-- IE 대응 -->
-  <script>
-    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
-      window.location.pathname = 'microsoft-edge:' + 'https://uni-on.me';
-      setTimeout(function () {
-        window.location.pathname = 'https://go.microsoft.com/fwlink/?linkid=2135547';
-      }, 1);
-    }
-  </script>
 </html>
