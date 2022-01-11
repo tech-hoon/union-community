@@ -27,8 +27,8 @@ const Layouts = {
   DeleteButton: styled.button`
     padding: 0;
     margin: 0;
-    top: 3px;
-    right: 7px;
+    top: 6px;
+    right: 12px;
     position: absolute;
 
     ::after {

@@ -105,6 +105,7 @@ const S = {
     border-bottom: solid 1.4px #e9ecef;
     line-height: 1.5;
     word-break: break-all;
+    white-space: pre-line;
 
     font-style: ${({ is_deleted }) => is_deleted && 'italic'};
     color: ${({ is_deleted }) => is_deleted && `#666`};

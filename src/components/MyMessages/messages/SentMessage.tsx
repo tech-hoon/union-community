@@ -3,6 +3,7 @@ import { toDateStringByFormating } from 'utils/date';
 import styled from 'styled-components';
 import S from 'components/NotificationLayout/Layouts';
 import useSentMessage from 'hooks/message/useSentMessage';
+import { urlParsingRegex } from 'utils/regex';
 
 const SentMessage = () => {
   const { messages, onDeleteMessage, onDeleteAllMessages } = useSentMessage();
@@ -28,7 +29,7 @@ const SentMessage = () => {
                 </S.Title>
               </S.Row1>
               <S.Row2>
-                <Content>{text}</Content>
+                <S.Content dangerouslySetInnerHTML={{ __html: urlParsingRegex(text) }} />
               </S.Row2>
               <S.Row3>
                 <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>

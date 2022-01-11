@@ -5,7 +5,6 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import S from 'components/common/Portal/AlertModal/Layouts';
 import { sendMessage } from 'api/message';
-
 interface Props {
   reciever: UserType;
   onCloseModal: () => void;
@@ -15,8 +14,6 @@ interface Props {
 
 const SendMessageModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Props) => {
   const [value, setValue] = useState<string>();
-  const [okayClicked, setOkayClicked] = useState<boolean>();
-
   const sender = useRecoilValue(loginUserState) as UserType;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
