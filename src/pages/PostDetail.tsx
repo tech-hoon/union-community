@@ -372,6 +372,7 @@ const Content = styled.div`
   font-size: 1.2rem;
   line-height: 1.6;
   padding: 0 4px;
+  white-space: pre-line;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1rem;
