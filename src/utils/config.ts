@@ -1,3 +1,5 @@
+export const SITE_URL = 'https://uni-on.me';
+
 export const ERROR_MESSAGE = 'Failed to fetch data, please check your API or internet connection';
 export const PAGE_START = 1;
 export const CARD_LIMIT = 6;

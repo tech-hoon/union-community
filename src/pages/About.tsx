@@ -107,12 +107,20 @@ const About = () => {
           </>
         )}
       </Container>
+      {/* <NoticeBanner>* 본 웹 사이트는 Chrome, Android, Safari에 최적화되어 있습니다.</NoticeBanner> */}
       <Footer />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div``;
+
+const NoticeBanner = styled.p`
+  text-align: center;
+  margin: 30px auto 0;
+  font-weight: 600;
+  color: #666;
+`;
 
 const Container = styled.div`
   margin: 0 auto;
