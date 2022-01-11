@@ -26,11 +26,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="manifest.json" />
 
     <!-- 바로가기 title -->
-    <meta name="apple-mobile-web-app-title" content="Union" />
-    <meta name="application-name" content="Union" />
+    <meta name="apple-mobile-web-app-title" content="UNION" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="UNION" />
 
     <meta name="msapplication-TileColor" content="#18A0FB" />
     <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png" />
@@ -46,8 +47,8 @@
       type="text/css"
     />
     <title>대학생 연합생활관 커뮤니티 union</title>
-    <!-- IE 대응, IE 접근 시 Edge로 Redirect -->
     <script>
+      // IE 대응, IE 접근 시 Edge로 Redirect
       (function () {
         if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
           window.location = 'microsoft-edge:' + 'https://uni-on.me';
@@ -56,6 +57,13 @@
           }, 1);
         }
       })();
+
+      //PWA, serviceWorker 등록
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
     </script>
   </head>
   <body>
