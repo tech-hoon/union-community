@@ -6,6 +6,7 @@ import Avatar from 'components/common/Avatar';
 import S from 'components/NotificationLayout/Layouts';
 import useReceivedMessage from 'hooks/message/useReceivedMessage';
 import styled from 'styled-components';
+import { urlParsingRegex } from 'utils/regex';
 
 interface Props {
   onClickModal: (user: UserType, isSecret: boolean) => void;
@@ -46,7 +47,7 @@ const ReceivedMessage = ({ onClickModal }: Props) => {
                     <AvatarWrapper>
                       <Avatar avatarId={is_secret ? -1 : avatar_id} size={30} />
                     </AvatarWrapper>
-                    <S.Content>{text}</S.Content>
+                    <S.Content dangerouslySetInnerHTML={{ __html: urlParsingRegex(text) }} />
                   </ContentWrapper>
                 </S.Row2>
                 <S.Row3>
