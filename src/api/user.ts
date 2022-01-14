@@ -4,7 +4,7 @@ import { UserType } from 'types';
 export const getUserData = async (uid: string | UserType) => {
   try {
     const doc = await dbService.doc(`users/${uid}`).get();
-    return doc.data() ? doc.data() : null;
+    return doc.data() ? (doc.data() as unknown as UserType) : null;
   } catch (error) {
     console.log(error);
   }
