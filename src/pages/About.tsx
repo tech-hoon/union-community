@@ -76,13 +76,11 @@ const About = () => {
       }
     });
 
-    const timer = setTimeout(() => {
-      fetchCount();
-      setIsLoading(false);
-    }, 0);
+    (async () => await fetchCount())();
+
+    setIsLoading(false);
 
     return () => {
-      clearTimeout(timer);
       onLoginStepReset();
       unsubscribe();
     };
