@@ -23,8 +23,15 @@ const Home = () => {
   const setLoginUser = useSetRecoilState(loginUserState);
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
-  const { posts, fetchPosts, fetchMorePosts, isLoading, lastVisiblePost, isLastPost } =
-    useGetPosts();
+  const {
+    posts,
+    fetchPosts,
+    fetchMorePosts,
+    isFetching,
+    isFetchingMore,
+    lastVisiblePost,
+    isLastPost,
+  } = useGetPosts();
   const [isUpdated, setIsUpdated] = useState(false);
   const [scrollY, setScrollY] = useLocalStorage('scrollY', 0);
 
@@ -51,8 +58,8 @@ const Home = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const __user: any = await getUserData(loginUser.uid);
-      setLoginUser(__user);
+      const __user = await getUserData(loginUser.uid);
+      __user && setLoginUser(__user);
     };
 
     // 프로필 변경 시, 새 데이터로 fetch
@@ -71,8 +78,10 @@ const Home = () => {
 
   // IO 감지시 게시물 추가 fetch
   useEffect(() => {
-    entry?.isIntersecting && fetchMorePosts();
-  }, [lastVisiblePost, entry]);
+    if (entry?.isIntersecting && !isFetchingMore) {
+      fetchMorePosts();
+    }
+  }, [lastVisiblePost, entry, isFetchingMore]);
 
   return (
     <Wrapper>
@@ -84,7 +93,7 @@ const Home = () => {
       <MidWrapper>
         <OrderbyBox />
       </MidWrapper>
-      {isLoading ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
+      {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
       <ScrollUpIcon size='56px' onClick={onScrollUp} />
       <Observer ref={ioRef} />

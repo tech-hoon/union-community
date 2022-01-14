@@ -19,10 +19,11 @@ export const useGetPosts = () => {
   const orderBy = useRecoilValue(postsOrderByState);
 
   const [isLastPost, setIsLastPost] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   const fetchPosts = useCallback(async () => {
-    setIsLoading(true);
+    setIsFetching(true);
 
     const response: any = await getInitialPosts({ orderBy, category });
 
@@ -31,17 +32,20 @@ export const useGetPosts = () => {
 
     setPosts(__posts);
     setLastVisiblePost(__lastVisiblePost);
-    setIsLoading(false);
+    setIsFetching(false);
   }, [orderBy, category, lastVisiblePost]);
 
   const fetchMorePosts = async () => {
     if (lastVisiblePost) {
+      setIsFetchingMore(true);
+
       const response: any = await getMorePosts({ orderBy, category, lastVisiblePost });
       const __posts = response?.data;
       const __lastVisiblePost = response?.lastVisiblePost;
 
       __posts && setPosts((prevPosts) => [...prevPosts, ...__posts]);
       setLastVisiblePost(__lastVisiblePost);
+      setIsFetchingMore(false);
       return;
     }
 
@@ -66,7 +70,8 @@ export const useGetPosts = () => {
     fetchPosts,
     fetchMorePosts,
     setPosts,
-    isLoading,
+    isFetching,
+    isFetchingMore,
     isLastPost,
   };
 };
