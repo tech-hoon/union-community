@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   body{
+    overflow:auto;
     background-color: #f8f9fa;
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
     height:100vh;
@@ -36,6 +37,12 @@ const GlobalStyle = createGlobalStyle`
     }
 
     touch-action: pan-y;
+  }
+
+  /* modal opened, prevent scrolling */
+  body.modal_opened {
+    overflow:hidden;
+    touch-action:none;
   }
 
   input{
