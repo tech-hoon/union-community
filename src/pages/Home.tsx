@@ -17,6 +17,8 @@ import { LoginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { ChevronUpCircle } from '@styled-icons/boxicons-solid';
 import smoothscroll from 'smoothscroll-polyfill';
+import { dbService } from 'service/firebase';
+import useSessionStorage from 'hooks/common/useSessionStorage';
 
 const Home = () => {
   const location = useLocation();
@@ -32,20 +34,23 @@ const Home = () => {
     lastVisiblePost,
     isLastPost,
   } = useGetPosts();
+
   const [isUpdated, setIsUpdated] = useState(false);
   const [scrollY, setScrollY] = useLocalStorage('scrollY', 0);
 
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, isLastPost, {});
 
-  const onRefreshClick = () => {
-    setIsUpdated(false);
-    fetchPosts();
-    window.scroll({ behavior: 'smooth', top: 0 });
-  };
+  const [postCountSession, setPostCountSession] = useSessionStorage('post_count', 0);
 
   const onScrollUp = () => {
     window.scroll({ behavior: 'smooth', top: 0 });
+  };
+
+  const onRefreshClick = () => {
+    setIsUpdated(false);
+    fetchPosts();
+    onScrollUp();
   };
 
   useLayoutEffect(() => {
@@ -74,6 +79,17 @@ const Home = () => {
 
     // 글 등록,수정,삭제 시 새 데이터로 fetch
     location.state && fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = dbService.collection('posts').onSnapshot((snapshot) => {
+      if (postCountSession < snapshot.size && postCountSession) {
+        setIsUpdated(true);
+      }
+      setPostCountSession(snapshot.size);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   // IO 감지시 게시물 추가 fetch
