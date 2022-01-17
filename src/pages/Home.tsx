@@ -49,8 +49,8 @@ const Home = () => {
 
   const onRefreshClick = () => {
     setIsUpdated(false);
-    fetchPosts();
     onScrollUp();
+    fetchPosts();
   };
 
   useLayoutEffect(() => {
@@ -69,6 +69,7 @@ const Home = () => {
 
     // 프로필 변경 시, 새 데이터로 fetch
     if (location.state === 'profileUpdated') {
+      setIsUpdated(false);
       fetchUserData();
       fetchPosts();
       return;
@@ -78,12 +79,15 @@ const Home = () => {
     smoothscroll.polyfill();
 
     // 글 등록,수정,삭제 시 새 데이터로 fetch
-    location.state && fetchPosts();
+    if (location.state) {
+      setIsUpdated(false);
+      fetchPosts();
+    }
   }, []);
 
   useEffect(() => {
     const unsubscribe = dbService.collection('posts').onSnapshot((snapshot) => {
-      if (postCountSession < snapshot.size && postCountSession) {
+      if (postCountSession !== snapshot.size && postCountSession) {
         setIsUpdated(true);
       }
       setPostCountSession(snapshot.size);
@@ -173,22 +177,28 @@ const RefreshButton = styled.button`
 
     100% {
       opacity: 1;
-      top: 20%;
+      top: 18%;
     }
   }
 
+  font-size: 1rem;
+  padding: 12px 20px;
+
   top: -200%;
-  width: 100px;
-  height: 30px;
   position: fixed;
   left: 50%;
   background-color: white;
-  box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
+  color: black;
   transform: translate(-50%, -50%);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 10px 0px rgb(0 0 0 / 25%);
   border-radius: 50px;
 
   animation: popUpAnimation 0.5s ease 0s 1 normal forwards running;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 0.8rem;
+    padding: 6px 16px;
+  }
 `;
 
 export default memo(Home);
