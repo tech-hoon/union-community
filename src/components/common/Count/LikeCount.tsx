@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { memo } from 'react';
-import { ThumbsUp as Like } from '@styled-icons/fa-solid';
+import Like from 'assets/icons/Like';
+
 import { ThumbsUp as LikeCancel } from '@styled-icons/fa-regular';
 import { DebouncedFunc } from 'lodash';
 
@@ -15,13 +16,7 @@ interface Props {
 const LikeCount = ({ size = `14px`, count, color, onClick, flag }: Props) => {
   return (
     <Wrapper>
-      <Button onClick={onClick}>
-        {flag === 'unlike' ? (
-          <Like size={size} color={color || '#18A0FB'} />
-        ) : (
-          <LikeCancel size={size} color={color || '#666'} />
-        )}
-      </Button>
+      <Button onClick={onClick}>{flag === 'unlike' ? <Like color='#18A0FB' /> : <Like />}</Button>
       <Count size={size}>{count}</Count>
     </Wrapper>
   );

@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import ProfileBox from '../../ProfileBox';
 import { memo, MouseEventHandler } from 'react';
 import { useHistory } from 'react-router';
-import { Notifications } from '@styled-icons/ionicons-sharp';
-import { Messenger } from '@styled-icons/bootstrap';
+import Bell from 'assets/icons/Bell';
+import Messenger from 'assets/icons/Messenger';
+
 import useReceivedMessage from 'hooks/message/useReceivedMessage';
 import useNotification from 'hooks/useNotification';
 
@@ -42,13 +43,13 @@ const Aside = () => {
       <NewPostBtn id='upload'>새 글 쓰기</NewPostBtn>
 
       <IconWrapper>
-        <Messenger size='18px' color='black' id='messages' />
-        {hasNewMessage && <NewAlarm />}
+        <Bell id='notification' />
+        {hasNewNotification && <NewAlarm />}
       </IconWrapper>
 
       <IconWrapper>
-        <Notifications size='20px' color='black' id='notification' />
-        {hasNewNotification && <NewAlarm />}
+        <Messenger id='messages' />
+        {hasNewMessage && <NewAlarm />}
       </IconWrapper>
 
       <ProfileBox />
@@ -60,7 +61,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   user-select: none;
-  gap: 4px;
+  gap: 20px;
 
   @media ${({ theme }) => theme.size.mobileS} {
     gap: 3.2px;
@@ -70,6 +71,12 @@ const Wrapper = styled.div`
 const IconWrapper = styled.button`
   cursor: pointer;
   position: relative;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: scale(108%);
+    }
+  }
 `;
 
 const NewAlarm = styled.div`

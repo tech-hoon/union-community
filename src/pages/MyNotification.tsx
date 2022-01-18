@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Layouts as S } from 'components/Mypage/Layouts';
-import { Notifications } from '@styled-icons/ionicons-sharp';
 import CommentNotification from 'components/MyNotification/CommentNotification';
+import Bell from 'assets/icons/Bell';
 
 const MyNotification = () => {
   return (
@@ -11,7 +11,7 @@ const MyNotification = () => {
         <Header>
           <S.Title>
             <S.IconWrapper>
-              <Notifications size='26px' />
+              <Bell />
             </S.IconWrapper>
             나의 알림
           </S.Title>

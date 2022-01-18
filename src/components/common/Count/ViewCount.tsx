@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { memo } from 'react';
-import { Eye } from '@styled-icons/fa-regular';
+import Eye from 'assets/icons/Eye';
 
 interface Props {
   size?: string;
@@ -10,7 +10,7 @@ interface Props {
 const ViewCount = ({ size, count }: Props) => {
   return (
     <Wrapper>
-      <Eye size={size || `14px`} color='#666' />
+      <Eye color='#666' />
       <Count size={size || `14px`}>{count}</Count>
     </Wrapper>
   );

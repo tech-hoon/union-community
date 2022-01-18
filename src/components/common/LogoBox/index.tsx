@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import MainLogo from 'assets/mainLogo/MainLogo';
+import MainLogo from 'assets/logo/MainLogo';
 
 interface Props {}
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { memo } from 'react';
-import { Chat } from '@styled-icons/bootstrap';
+import Comment from 'assets/icons/Comment';
 
 interface Props {
   size?: string;
@@ -10,7 +10,7 @@ interface Props {
 const CommentCount = ({ size, count }: Props) => {
   return (
     <Wrapper>
-      <Chat size={size || `14px`} color='#888' />
+      <Comment width='17' height='14' />
       <Count size={size || `14px`}>{count}</Count>
     </Wrapper>
   );
@@ -29,7 +29,7 @@ interface ICount {
 
 const Count = styled.span<ICount>`
   font-size: ${({ size }) => size};
-  color: #666;
+  color: #5c5c5c;
 `;
 
 export default memo(CommentCount);

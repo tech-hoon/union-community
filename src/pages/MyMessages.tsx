@@ -3,7 +3,7 @@ import SentMessage from 'components/MyMessages/messages/SentMessage';
 import styled from 'styled-components';
 import { Layouts as S } from 'components/Mypage/Layouts';
 import { useState } from 'react';
-import { Messenger } from '@styled-icons/bootstrap';
+import Messenger from 'assets/icons/Messenger';
 
 import { UserType } from 'types';
 import useModal from 'hooks/common/useModal';
@@ -40,7 +40,7 @@ const MyMessages = () => {
         <Header>
           <S.Title>
             <S.IconWrapper>
-              <Messenger size='20px' />
+              <Messenger />
             </S.IconWrapper>
             나의 메시지
           </S.Title>
