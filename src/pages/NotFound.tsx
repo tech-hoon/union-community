@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import NotFoundIcon from 'assets/images/logo/NotFoundIcon';
+import NotFoundLogo from 'assets/logo/NotFoundLogo';
 
 interface Props {}
 
@@ -14,7 +14,7 @@ const NotFound = (props: Props) => {
   return (
     <Wrapper>
       <ImageWrapper>
-        <NotFoundIcon />
+        <NotFoundLogo />
       </ImageWrapper>
       <Title>요청하신 페이지를 찾을 수 없습니다.</Title>
       <HomeButton onClick={onClickButton}>홈으로 가기</HomeButton>

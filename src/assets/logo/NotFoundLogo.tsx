@@ -1,4 +1,4 @@
-const NotFoundIcon = () => (
+const NotFoundLogo = () => (
   <svg
     // width='366'
     // height='147'
@@ -13,4 +13,4 @@ const NotFoundIcon = () => (
   </svg>
 );
 
-export default NotFoundIcon;
+export default NotFoundLogo;

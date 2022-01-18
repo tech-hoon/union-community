@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import styled from 'styled-components';
-import googleImg from 'assets/images/logo/google-logo.png';
-import facebookImg from 'assets/images/logo/facebook-logo.png';
+import googleImg from 'assets/logo/GoogleLogo.png';
+import facebookImg from 'assets/logo/FacebookLogo.png';
 import { firebaseApp, authService } from 'service/firebase';
 
 interface SocialLoginProps {

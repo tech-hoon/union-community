@@ -3,7 +3,7 @@ import { User } from '@styled-icons/fa-solid';
 const DefaultAvatar = () => {
   return (
     <>
-      <User size='18px' color='gray' />
+      <User size='20px' color='gray' />
     </>
   );
 };
