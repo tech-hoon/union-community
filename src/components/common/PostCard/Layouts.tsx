@@ -18,7 +18,7 @@ export const Layouts = {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 
     gap: 30px;
-    margin: 30px auto;
+    margin: 0 auto;
 
     @media ${({ theme }) => theme.size.tablet} {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -35,7 +35,7 @@ export const Layouts = {
     height: 300px;
     padding: 24px;
     background: #ffffff;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
     cursor: pointer;
     display: flex;

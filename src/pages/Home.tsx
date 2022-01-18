@@ -159,11 +159,12 @@ const MidWrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
 
-  margin: 0 auto;
+  margin: 32px auto;
   justify-content: space-between;
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 95%;
+    margin: 19px auto;
     padding: 0;
   }
 `;

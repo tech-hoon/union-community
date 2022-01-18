@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { memo, useLayoutEffect, useRef } from 'react';
 import { postsCategoryState } from 'store/post';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { CATEGORY_LIST } from 'utils/config';
 import { categoryColor } from 'utils/categoryColor';
 import useLocalStorage from 'hooks/common/useLocalStorage';
@@ -39,17 +39,15 @@ const CategoryBox = (props: Props) => {
 
 const Wrapper = styled.div`
   max-width: 1120px;
-  padding: 0px 60px 20px;
+  padding: 0px 60px;
 
   display: flex;
   justify-content: space-between;
-
-  margin: 0px auto 12px;
+  margin: 12.5px auto 0;
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 100%;
     padding: 0;
-    margin: 12px auto 12px;
     font-size: 1em;
 
     overflow-x: auto;
@@ -72,7 +70,6 @@ const Menu = styled.button<IMenu>`
   background-color: ${({ isClicked, theme }) => (isClicked ? theme.color.MAIN : '#fff')};
   color: ${(props) => (props.isClicked ? '#fff' : '#000')};
 
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   font-size: 1em;
   font-weight: 500;
   margin: 2px;

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Fire } from '@styled-icons/icomoon';
-import { CalendarCheck } from '@styled-icons/bootstrap';
+
+import Calendar from 'assets/icons/Calendar';
+import Fire from 'assets/icons/Fire';
+
 import { useRecoilState } from 'recoil';
 import { postsOrderByState } from 'store/post';
 
@@ -21,7 +23,7 @@ const OrderbyBox = () => {
         id='created_at'
         color={clickedOrderby === 'created_at' ? 'black' : '#868e96'}
       >
-        <CalendarIcon size={20} />
+        <CalendarIcon color={clickedOrderby === 'created_at' ? 'black' : '#868e96'} />
         <Title>최신순</Title>
       </Button>
       <Button
@@ -29,7 +31,7 @@ const OrderbyBox = () => {
         id='like_count'
         color={clickedOrderby === 'like_count' ? 'black' : '#868e96'}
       >
-        <FireIcon size={20} />
+        <FireIcon color={clickedOrderby === 'like_count' ? 'black' : '#868e96'} />
         <Title>인기순</Title>
       </Button>
     </Wrapper>
@@ -39,24 +41,14 @@ const OrderbyBox = () => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   user-select: none;
-  margin: 12px 0;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    gap: 0px;
-  }
 `;
 const Button = styled.button`
   display: flex;
   align-items: center;
   gap: 4px;
   color: ${(props) => props.color};
-
-  &:hover {
-    transform: scale(105%);
-    transition: 0.3s;
-  }
 `;
 
 const FireIcon = styled(Fire)`
@@ -64,7 +56,7 @@ const FireIcon = styled(Fire)`
     font-size: 1rem;
   }
 `;
-const CalendarIcon = styled(CalendarCheck)`
+const CalendarIcon = styled(Calendar)`
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1rem;
   }

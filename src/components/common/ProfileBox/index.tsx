@@ -33,7 +33,6 @@ const ProfileBox = () => {
 
 const Wrapper = styled.div`
   cursor: pointer;
-  margin-left: 4px;
 `;
 
 const Top = styled.div`
@@ -54,8 +53,8 @@ const Name = styled.h3`
   font-weight: 700;
   font-size: 1em;
 
-  @media ${({ theme }) => theme.size.mobileS} {
-    font-size: 0.8em;
+  @media ${({ theme }) => theme.size.mobile} {
+    display: none;
   }
 `;
 

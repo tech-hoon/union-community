@@ -40,8 +40,7 @@ const MypageDropdown = () => {
 const Wrapper = styled.ul`
   position: absolute;
   z-index: 2000;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
+  box-shadow: 0 0 15px 1px rgb(0 0 0 / 25%);
   width: 140px;
   user-select: none;
 
@@ -57,7 +56,7 @@ const DropdownItem = styled.li`
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: #d6d6d673;
+      background-color: #eeeeee;
     }
   }
 `;

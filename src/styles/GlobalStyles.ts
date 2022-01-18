@@ -3,6 +3,7 @@ import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+
   *  {
     box-sizing: border-box;
     font-size:62.5%;
@@ -22,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
     border:none;
     outline:none;
     background: none;
+    padding:0;
     cursor: pointer;
   }
   
