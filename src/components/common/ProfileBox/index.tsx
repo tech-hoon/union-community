@@ -21,40 +21,43 @@ const ProfileBox = () => {
 
   return (
     <Wrapper onClick={onToggleClick}>
-      <Top>
-        <Name>{loginUser.nickname}</Name>
-        <Avatar avatarId={loginUser?.avatar_id!!} size={28} />
-        <Icon>{toggleOpened ? <CaretUp size='20' /> : <CaretDown size='20' />}</Icon>
-      </Top>
-      <Bottom>{toggleOpened && <MypageDropdown />}</Bottom>
+      <Name>{loginUser.nickname}</Name>
+      <Avatar avatarId={loginUser?.avatar_id!!} size={32} />
+      <IconWrapper>
+        {toggleOpened ? <CaretUp size='20' /> : <CaretDown size='20' />}
+        <Bottom>{toggleOpened && <MypageDropdown />}</Bottom>
+      </IconWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  cursor: pointer;
-`;
-
-const Top = styled.div`
   display: flex;
+  cursor: pointer;
   align-items: center;
   gap: 6px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    gap: 4px;
-  }
 `;
 
-const Icon = styled.div``;
-
-const Bottom = styled.div``;
+const IconWrapper = styled.div`
+  position: relative;
+`;
 
 const Name = styled.h3`
   font-weight: 700;
-  font-size: 1em;
+  font-size: 1.1em;
 
   @media ${({ theme }) => theme.size.mobile} {
     display: none;
+  }
+`;
+
+const Bottom = styled.div`
+  top: 30px;
+  right: 120px;
+  position: absolute;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    right: 100px;
   }
 `;
 

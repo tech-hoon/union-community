@@ -38,12 +38,12 @@ const Aside = () => {
     <Wrapper onClick={onClickButton}>
       <IconWrapper>
         <Bell id='notification' />
-        {hasNewNotification && <NewAlarm />}
+        {hasNewNotification && <NewBadge />}
       </IconWrapper>
 
       <IconWrapper>
         <Messenger id='messages' />
-        {hasNewMessage && <NewAlarm />}
+        {hasNewMessage && <NewBadge />}
       </IconWrapper>
 
       <ProfileBox />
@@ -56,10 +56,6 @@ const Wrapper = styled.div`
   align-items: center;
   user-select: none;
   gap: 20px;
-
-  @media ${({ theme }) => theme.size.mobileS} {
-    gap: 3.2px;
-  }
 `;
 
 const IconWrapper = styled.button`
@@ -73,14 +69,14 @@ const IconWrapper = styled.button`
   }
 `;
 
-const NewAlarm = styled.div`
+const NewBadge = styled.div`
   position: absolute;
   background-color: red;
   border-radius: 50%;
   width: 5px;
   height: 5px;
-  top: -3px;
-  right: 3px;
+  top: -4px;
+  right: -2.5px;
 `;
 
 export default memo(Aside);
