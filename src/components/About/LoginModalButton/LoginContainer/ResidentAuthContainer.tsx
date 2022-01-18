@@ -81,21 +81,24 @@ const ResidentAuthContainer = () => {
   return (
     <S.Container>
       <S.Title>생활관 거주 인증을 해주세요</S.Title>
-      <Desception>
+      <Description>
         <li>
-          거주생 인증을 위해 간단한 <b>인증 절차</b>를 거치고 있습니다.
+          입주생 인증을 위해 간단한 <b>인증 절차</b>를 거치고 있습니다.
         </li>
         <li>
-          예시 사진과 같이 사용자의 <b>이름표 사진</b>을 업로드해주세요.
+          예시 사진과 같이 사용자의 <b>이름표 사진</b>을 업로드해 주세요.
         </li>
         <li>
           <b>관리자 승인 후</b> 즉시 이용 가능하며, 문의사항은{' '}
           <a href={OPEN_KAKAOTALK_URL} target='_blank' rel='noreferrer'>
             여기
           </a>
-          로 문의주세요.
+          로 주세요.
         </li>
-      </Desception>
+        <li>
+          해당 사진은 <b>기숙사 거주 인증용</b>으로만 사용됩니다.
+        </li>
+      </Description>
 
       <S.Body>
         <ImageBox>
@@ -121,7 +124,7 @@ const ResidentAuthContainer = () => {
           </ImageWrapper>
         </ImageBox>
       </S.Body>
-      <S.ContainerBottom>
+      <ContainerBottom>
         {isLoading ? (
           <Loading />
         ) : (
@@ -129,23 +132,23 @@ const ResidentAuthContainer = () => {
             업로드
           </SubmitButton>
         )}
-      </S.ContainerBottom>
+      </ContainerBottom>
     </S.Container>
   );
 };
 
-const Desception = styled.div`
+const Description = styled.div`
   margin-top: 12px;
   font-weight: 400;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.8;
   text-align: left;
   color: #888;
   padding: 0 12px;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 0.8rem;
-    line-height: 1.9;
+    line-height: 2;
   }
 
   li {
@@ -162,6 +165,7 @@ const Desception = styled.div`
 
   b {
     font-weight: 500;
+    color: #666;
   }
 `;
 
@@ -169,7 +173,6 @@ const ImageBox = styled.div`
   display: flex;
   justify-content: center;
   gap: 30px;
-  margin-top: 6px;
 `;
 
 const Img = styled.img`
@@ -228,6 +231,8 @@ const Caption = styled.figcaption`
   margin-bottom: 6px;
   color: #222;
 `;
+
+const ContainerBottom = styled.div``;
 
 const SubmitButton = styled(S.NextButton)`
   &:disabled {
