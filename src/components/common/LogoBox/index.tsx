@@ -7,8 +7,16 @@ interface Props {}
 const LogoBox = (props: Props) => {
   const history = useHistory();
 
+  const onClick = () => {
+    if (history.location.pathname === '/home') {
+      window.scroll({ behavior: 'smooth', top: 0 });
+      return;
+    }
+    history.push(`/`);
+  };
+
   return (
-    <Wrapper onClick={() => history.push(`/`)}>
+    <Wrapper onClick={onClick}>
       <MainLogo />
     </Wrapper>
   );

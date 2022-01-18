@@ -10,18 +10,20 @@ import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import useLocalStorage from 'hooks/common/useLocalStorage';
 import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import { useGetPosts } from 'hooks/post/useGetPosts';
-import { useLocation } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { ChevronUpCircle } from '@styled-icons/boxicons-solid';
 import smoothscroll from 'smoothscroll-polyfill';
 import { dbService } from 'service/firebase';
 import useSessionStorage from 'hooks/common/useSessionStorage';
+import UploadIcon from 'assets/icons/UploadIcon';
 
 const Home = () => {
   const location = useLocation();
+  const history = useHistory();
+
   const setLoginUser = useSetRecoilState(loginUserState);
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
@@ -43,14 +45,14 @@ const Home = () => {
 
   const [postCountSession, setPostCountSession] = useSessionStorage('post_count', 0);
 
-  const onScrollUp = () => {
-    window.scroll({ behavior: 'smooth', top: 0 });
-  };
-
   const onRefreshClick = () => {
     setIsUpdated(false);
-    onScrollUp();
+    window.scroll({ behavior: 'smooth', top: 0 });
     fetchPosts();
+  };
+
+  const onUploadClick = () => {
+    history.push({ pathname: '/upload', state: { mode: 'add', initialPost: null } });
   };
 
   useLayoutEffect(() => {
@@ -115,7 +117,9 @@ const Home = () => {
       </MidWrapper>
       {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
-      <ScrollUpIcon size='56px' onClick={onScrollUp} />
+      <UploadButton onClick={onUploadClick}>
+        <UploadIcon />
+      </UploadButton>
       <Observer ref={ioRef} />
       <Footer />
     </Wrapper>
@@ -124,12 +128,13 @@ const Home = () => {
 
 const Wrapper = styled.div``;
 
-const ScrollUpIcon = styled(ChevronUpCircle)`
+const UploadButton = styled.div`
   position: fixed;
   z-index: 2;
   cursor: pointer;
 
-  color: rgba(136, 136, 136, 0.8);
+  width: 75px;
+  height: 75px;
 
   right: 48px;
   bottom: 64px;

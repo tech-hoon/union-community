@@ -17,10 +17,6 @@ const Aside = () => {
     const id = (event.target as HTMLElement).id;
 
     switch (id) {
-      case 'upload':
-        history.push({ pathname: '/upload', state: { mode: 'add', initialPost: null } });
-        break;
-
       case 'messages':
         setHasNewMessage(false);
         setHasNewMessageLS(false);
@@ -40,8 +36,6 @@ const Aside = () => {
 
   return (
     <Wrapper onClick={onClickButton}>
-      <NewPostBtn id='upload'>새 글 쓰기</NewPostBtn>
-
       <IconWrapper>
         <Bell id='notification' />
         {hasNewNotification && <NewAlarm />}
@@ -87,17 +81,6 @@ const NewAlarm = styled.div`
   height: 5px;
   top: -3px;
   right: 3px;
-`;
-
-const NewPostBtn = styled.button`
-  font-weight: 500;
-  font-size: 0.9rem;
-  margin-top: 1px;
-  color: black;
-
-  @media ${({ theme }) => theme.size.mobileS} {
-    font-size: 0.7em;
-  }
 `;
 
 export default memo(Aside);
