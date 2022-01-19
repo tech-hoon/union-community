@@ -29,10 +29,6 @@ const Wrapper = styled.div`
   padding: 0 2px 1px 1px;
   align-items: center;
   cursor: pointer;
-
-  @media ${({ theme }) => theme.size.mobileS} {
-    width: 68px;
-  }
 `;
 
 export default LogoBox;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import styled from 'styled-components';
 
 import Calendar from 'assets/icons/Calendar';
@@ -72,4 +72,4 @@ const Title = styled.div`
   }
 `;
 
-export default OrderbyBox;
+export default memo(OrderbyBox);
