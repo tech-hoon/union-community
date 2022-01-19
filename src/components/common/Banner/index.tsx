@@ -8,9 +8,9 @@ const Banner = (props: Props) => {
   return (
     <Wrapper>
       <Content>
-        <Bold>대학생 연합생활관 입주생</Bold>을 위한 커뮤니티입니다.
+        <b>대학생 연합기숙사 입주생</b>을 위한 커뮤니티 <Highlight>유니온</Highlight>입니다.
         <br />
-        <Bold>동아리, 스터디</Bold> 등 다양한 정보를 나누어 보세요!
+        <b>일상, 스터디</b> 등 다양한 정보를 나누어 보세요.
       </Content>
       <AvatarWrapper>
         <PeopleAvatar />
@@ -38,6 +38,10 @@ const Content = styled.h1`
   word-break: keep-all;
   flex: 1;
 
+  & > b {
+    font-weight: 400;
+  }
+
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1.7rem;
   }
@@ -51,8 +55,9 @@ const Content = styled.h1`
   }
 `;
 
-const Bold = styled.b`
-  font-weight: 500;
+const Highlight = styled.b`
+  font-weight: 600;
+  color: #18a0fb;
 `;
 
 const AvatarWrapper = styled.div`

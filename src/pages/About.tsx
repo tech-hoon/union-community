@@ -128,7 +128,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const CountBox = styled.div`
+const CountBox = styled.h3`
   font-size: 1.5rem;
 
   @media ${({ theme }) => theme.size.mobile} {
