@@ -14,7 +14,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
   const history = useHistory();
 
   const handleClick = (id: string) => {
-    history.push(`post/${id}`);
+    history.push(`posts/${id}`);
   };
 
   return (
