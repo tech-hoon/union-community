@@ -1,13 +1,14 @@
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect, memo } from 'react';
 import styled from 'styled-components';
 import Portal from './Portal';
 
 interface Props {
   onClose: () => void;
   children: any;
+  overlay?: boolean;
 }
 
-const PortalContainer = ({ onClose, children }: Props) => {
+const PortalContainer = ({ onClose, children, overlay = true }: Props) => {
   const portalRef = useRef<HTMLDivElement>(null);
 
   const onOutsideClick = useCallback(
@@ -29,7 +30,7 @@ const PortalContainer = ({ onClose, children }: Props) => {
   return (
     <Portal>
       <Background>
-        <Overlay ref={portalRef}>{children}</Overlay>
+        {overlay ? <Overlay ref={portalRef}>{children}</Overlay> : <>{children}</>}
       </Background>
     </Portal>
   );
@@ -39,7 +40,7 @@ const Background = styled.div`
   position: fixed;
   z-index: 1000;
   text-align: center;
-  background-color: rgba(145, 145, 145, 0.5);
+  background: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
   right: 0;
@@ -56,4 +57,4 @@ const Overlay = styled.div`
   box-shadow: 0 2px 12px 0 rgb(0 0 0 / 20%);
   border-radius: 8px;
 `;
-export default PortalContainer;
+export default memo(PortalContainer);
