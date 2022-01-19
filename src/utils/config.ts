@@ -13,6 +13,16 @@ export const CATEGORY_LIST = [
   { eng: 'secret', kor: '비밀', color: '#884ED9' },
 ];
 
+// export const CATEGORY_LIST = [
+//   { eng: 'all', kor: '전체', color: '#18A0FB' },
+//   { eng: 'notice', kor: '공지', color: '#0E27AC' },
+//   { eng: 'free', kor: '자유', color: '#E8581A' },
+//   { eng: 'info/ad', kor: '정보/홍보', color: '#EFBE3F' },
+//   { eng: 'store', kor: '장터/나눔', color: '#18B828' },
+//   { eng: 'study/club', kor: '스터디/동아리', color: '#F25260' },
+//   { eng: 'secret', kor: '비밀', color: '#884DD9' },
+// ];
+
 //Login Step
 export const AUTH_REJECTED_STEP = -1;
 export const SNS_LOGIN_STEP = 1;

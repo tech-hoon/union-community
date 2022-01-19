@@ -23,7 +23,7 @@ const Aside = () => {
         history.push({ pathname: '/messages' });
         break;
 
-      case 'notification':
+      case 'notifications':
         setHasNewNotification(false);
         setHasNewNotificationLS(false);
         history.push({ pathname: '/notifications' });
