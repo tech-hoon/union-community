@@ -65,7 +65,7 @@ const PostDetail = () => {
   const onUpdateClick = () => {
     post &&
       history.push({
-        pathname: '/upload',
+        pathname: '/post/upload',
         state: {
           mode: 'update',
           initialPost: {

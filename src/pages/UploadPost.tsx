@@ -6,7 +6,6 @@ import { useLocation } from 'react-router';
 import { useEffect, useRef } from 'react';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { CATEGORY_LIST } from 'utils/config';
-import { PostType } from 'types';
 import Circle from 'components/common/Loading/Circle';
 import { Cancel } from '@styled-icons/material';
 

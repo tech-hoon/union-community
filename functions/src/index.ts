@@ -98,7 +98,7 @@ export const commentCreated = functions
       id: uuidv4().slice(0, 8),
       type: 'comment',
       text: content,
-      link: `/post/${postId}`,
+      link: `/posts/${postId}`,
       sender: firestore.doc(`users/${senderId}`),
       post_title: postData.title,
       created_at: new Date().getTime(),

@@ -26,7 +26,7 @@ const Aside = () => {
       case 'notification':
         setHasNewNotification(false);
         setHasNewNotificationLS(false);
-        history.push({ pathname: '/notification' });
+        history.push({ pathname: '/notifications' });
         break;
 
       default:
@@ -37,13 +37,13 @@ const Aside = () => {
   return (
     <Wrapper onClick={onClickButton}>
       <IconWrapper>
-        <Bell id='notification' />
-        {hasNewNotification && <NewBadge />}
+        <Messenger id='messages' />
+        {hasNewMessage && <NewBadge />}
       </IconWrapper>
 
       <IconWrapper>
-        <Messenger id='messages' />
-        {hasNewMessage && <NewBadge />}
+        <Bell id='notifications' />
+        {hasNewNotification && <NewBadge />}
       </IconWrapper>
 
       <ProfileBox />

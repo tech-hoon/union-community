@@ -95,7 +95,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
       setIsUploading(true);
       const __postId = await addPost({ postInput, uid: loginUser.uid });
       history.push({
-        pathname: `/post/${__postId}`,
+        pathname: `/posts/${__postId}`,
         state: 'isAdded',
       });
       return;
@@ -105,7 +105,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
       setIsUploading(true);
       prevPost?.id && (await updatePost({ postInput, uid: loginUser.uid, postId: prevPost.id }));
       history.push({
-        pathname: `/post/${prevPost?.id}`,
+        pathname: `/posts/${prevPost?.id}`,
         state: 'isUpdated',
       });
       return;
