@@ -8,7 +8,7 @@ import Banner from 'components/common/Banner';
 import PostCardSkeleton from 'components/common/Skeletons/PostCardSkeleton';
 import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import useLocalStorage from 'hooks/common/useLocalStorage';
-import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, memo, useCallback } from 'react';
 import { useGetPosts } from 'hooks/post/useGetPosts';
 import { useLocation, useHistory } from 'react-router';
 import { getUserData } from 'api/user';
@@ -18,12 +18,12 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import smoothscroll from 'smoothscroll-polyfill';
 import { dbService } from 'service/firebase';
 import useSessionStorage from 'hooks/common/useSessionStorage';
+import PortalContainer from 'components/common/Portal/PortalContainer';
+import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
 
 const Home = () => {
   const location = useLocation();
-  const history = useHistory();
-
   const setLoginUser = useSetRecoilState(loginUserState);
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
@@ -39,28 +39,25 @@ const Home = () => {
 
   const [isUpdated, setIsUpdated] = useState(false);
   const [scrollY, setScrollY] = useLocalStorage('scrollY', 0);
+  const [postCountSession, setPostCountSession] = useSessionStorage('post_count', 0);
+  const [uploadButtonOpened, setUploadButtonOpened] = useState(false);
 
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, isLastPost, {});
 
-  const [postCountSession, setPostCountSession] = useSessionStorage('post_count', 0);
-
-  const onRefreshClick = () => {
+  const onRefreshClick = useCallback(() => {
     setIsUpdated(false);
     window.scroll({ behavior: 'smooth', top: 0 });
     fetchPosts();
-  };
+  }, []);
 
-  const onUploadClick = () => {
-    history.push({ pathname: '/upload', state: { mode: 'add', initialPost: null } });
-  };
+  const onUploadClick = useCallback(() => {
+    setUploadButtonOpened(!uploadButtonOpened);
+  }, [uploadButtonOpened]);
 
   useLayoutEffect(() => {
     window.scrollTo({ top: scrollY });
-
-    return () => {
-      setScrollY(window.scrollY);
-    };
+    return () => setScrollY(window.scrollY);
   }, []);
 
   useEffect(() => {
@@ -117,8 +114,13 @@ const Home = () => {
       </MidWrapper>
       {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
       {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
-      <UploadButton onClick={onUploadClick}>
+      <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
         <UploadIcon />
+        {uploadButtonOpened && (
+          <PortalContainer onClose={onUploadClick} overlay={false}>
+            <UploadButtonModal />
+          </PortalContainer>
+        )}
       </UploadButton>
       <Observer ref={ioRef} />
       <Footer />
@@ -128,22 +130,27 @@ const Home = () => {
 
 const Wrapper = styled.div``;
 
-const UploadButton = styled.div`
-  position: fixed;
-  z-index: 2;
-  cursor: pointer;
+interface IUploadButton {
+  isClicked: boolean;
+}
 
-  width: 75px;
-  height: 75px;
+const UploadButton = memo(styled.button<IUploadButton>`
+  position: fixed;
+  z-index: 2000;
+  cursor: pointer;
 
   right: 48px;
   bottom: 64px;
 
+  transform: ${({ isClicked }) => (isClicked ? `rotate(45deg)` : null)};
+  transform-origin: center;
+  transition: 0.3s;
+
   @media ${({ theme }) => theme.size.mobile} {
     right: 24px;
-    bottom: 52px;
+    bottom: 54px;
   }
-`;
+`);
 
 const Observer = styled.div`
   bottom: 0;
@@ -156,7 +163,7 @@ const BannerWrapper = styled.div`
   }
 `;
 
-const MidWrapper = styled.div`
+const MidWrapper = memo(styled.div`
   max-width: 1120px;
   padding: 0 60px;
 
@@ -172,9 +179,9 @@ const MidWrapper = styled.div`
     margin: 19px auto;
     padding: 0;
   }
-`;
+`);
 
-const RefreshButton = styled.button`
+const RefreshButton = memo(styled.button`
   @keyframes popUpAnimation {
     0% {
       opacity: 0;
@@ -205,6 +212,6 @@ const RefreshButton = styled.button`
     font-size: 0.8rem;
     padding: 6px 16px;
   }
-`;
+`);
 
 export default memo(Home);
