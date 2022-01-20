@@ -22,9 +22,10 @@ interface Props {
   loginUserId: string;
   category: string;
   callback: () => void;
+  postCreatorId: string;
 }
 
-const Comment = ({ comment, postId, loginUserId, category, callback }: Props) => {
+const Comment = ({ comment, postId, loginUserId, category, callback, postCreatorId }: Props) => {
   const inputRef = useRef<any>(null);
   const replyInputRef = useRef<any>(null);
   const isSecret = category === '비밀';
@@ -42,10 +43,15 @@ const Comment = ({ comment, postId, loginUserId, category, callback }: Props) =>
     liker_list,
     created_at,
     is_deleted,
-    is_post_creator,
   } = comment;
 
-  const convertedNickname = convertNickname(uid, is_deleted, isSecret, is_post_creator, nickname);
+  const convertedNickname = convertNickname(
+    uid,
+    is_deleted,
+    isSecret,
+    postCreatorId === creator.uid,
+    nickname
+  );
   const avatarId = (function () {
     if (avatar_id === 0) return 0;
     if (is_deleted || isSecret) return -1;

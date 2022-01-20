@@ -87,7 +87,6 @@ const PostDetail = () => {
         post_id: id,
         uid: loginUser.uid,
         content: commentRef.current.value,
-        is_post_creator: isCreator,
       });
       commentRef.current.value = '';
       fetchComments();
@@ -193,6 +192,7 @@ const PostDetail = () => {
               commentList={comments}
               fetchComments={fetchComments}
               category={post.category}
+              postCreatorId={post.creator.uid}
             />
           </PostContainer>
         ) : (

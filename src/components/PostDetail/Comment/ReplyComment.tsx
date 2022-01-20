@@ -22,9 +22,17 @@ interface Props {
   loginUserId: string;
   category: string;
   callback: () => void;
+  postCreatorId: string;
 }
 
-const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Props) => {
+const ReplyComment = ({
+  comment,
+  postId,
+  loginUserId,
+  category,
+  callback,
+  postCreatorId,
+}: Props) => {
   const replyInputRef = useRef<any>(null);
   const isSecret = category === '비밀';
   const [deleteId, setDeleteId] = useState<string>('');
@@ -40,10 +48,15 @@ const ReplyComment = ({ comment, postId, loginUserId, category, callback }: Prop
     liker_list,
     created_at,
     is_deleted,
-    is_post_creator,
   } = comment;
 
-  const convertedNickname = convertNickname(uid, is_deleted, isSecret, is_post_creator, nickname);
+  const convertedNickname = convertNickname(
+    uid,
+    is_deleted,
+    isSecret,
+    postCreatorId === creator.uid,
+    nickname
+  );
   const avatarId = avatar_id === 0 ? 0 : is_deleted || isSecret ? -1 : avatar_id;
 
   const {
