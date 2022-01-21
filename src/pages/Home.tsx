@@ -21,6 +21,7 @@ import useSessionStorage from 'hooks/common/useSessionStorage';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
   const location = useLocation();
@@ -103,28 +104,37 @@ const Home = () => {
   }, [lastVisiblePost, entry, isFetchingMore]);
 
   return (
-    <Wrapper>
-      <Navbar isLoggedIn={true} />
-      <BannerWrapper>
-        <Banner />
-      </BannerWrapper>
-      <CategoryBox />
-      <MidWrapper>
-        <OrderbyBox />
-      </MidWrapper>
-      {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
-      {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
-      <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
-        <UploadIcon />
-        {uploadButtonOpened && (
-          <PortalContainer onClose={onUploadClick} overlay={false}>
-            <UploadButtonModal />
-          </PortalContainer>
-        )}
-      </UploadButton>
-      <Observer ref={ioRef} />
-      <Footer />
-    </Wrapper>
+    <>
+      <Helmet>
+        <meta name='theme-color' content={uploadButtonOpened ? 'rgba(0, 0, 0, 0.5)' : `f8f9fa`} />
+      </Helmet>
+      <meta
+        name='apple-mobile-web-app-status-bar-style'
+        content={uploadButtonOpened ? 'rgba(0, 0, 0, 0.5)' : `f8f9fa`}
+      />
+      <Wrapper>
+        <Navbar isLoggedIn={true} />
+        <BannerWrapper>
+          <Banner />
+        </BannerWrapper>
+        <CategoryBox />
+        <MidWrapper>
+          <OrderbyBox />
+        </MidWrapper>
+        {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
+        {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
+        <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
+          <UploadIcon />
+          {uploadButtonOpened && (
+            <PortalContainer onClose={onUploadClick} overlay={false}>
+              <UploadButtonModal />
+            </PortalContainer>
+          )}
+        </UploadButton>
+        <Observer ref={ioRef} />
+        <Footer />
+      </Wrapper>
+    </>
   );
 };
 
