@@ -10,7 +10,7 @@ import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import useLocalStorage from 'hooks/common/useLocalStorage';
 import { useState, useRef, useEffect, useLayoutEffect, memo, useCallback } from 'react';
 import { useGetPosts } from 'hooks/post/useGetPosts';
-import { useLocation, useHistory } from 'react-router';
+import { useLocation } from 'react-router';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
@@ -106,11 +106,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <meta name='theme-color' content={uploadButtonOpened ? 'rgba(0, 0, 0, 0.5)' : `#f8f9fa`} />
-        <meta
-          name='apple-mobile-web-app-status-bar-style'
-          content={uploadButtonOpened ? 'rgba(0, 0, 0, 0.5)' : `#f8f9fa`}
-        />
+        <meta name='theme-color' content={uploadButtonOpened ? '#00000080' : '#f8f9fa'} />
       </Helmet>
 
       <Wrapper>
