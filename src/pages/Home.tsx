@@ -106,12 +106,13 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <meta name='theme-color' content={uploadButtonOpened ? 'rgba(0, 0, 0, 0.5)' : `f8f9fa`} />
+        <meta name='theme-color' content={uploadButtonOpened ? 'rgba(0, 0, 0, 0.5)' : `#f8f9fa`} />
+        <meta
+          name='apple-mobile-web-app-status-bar-style'
+          content={uploadButtonOpened ? 'rgba(0, 0, 0, 0.5)' : `#f8f9fa`}
+        />
       </Helmet>
-      <meta
-        name='apple-mobile-web-app-status-bar-style'
-        content={uploadButtonOpened ? 'rgba(0, 0, 0, 0.5)' : `f8f9fa`}
-      />
+
       <Wrapper>
         <Navbar isLoggedIn={true} />
         <BannerWrapper>
