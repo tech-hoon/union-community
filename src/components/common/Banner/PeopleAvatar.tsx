@@ -12,12 +12,7 @@ const PeopleAvatar = () => {
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
-
-  width: clamp(350px, 50vw, 500px);
-
-  @media ${({ theme }) => theme.size.mobile} {
-    width: 350px;
-  }
+  width: clamp(360px, 80vw, 500px);
 `;
 
 export default PeopleAvatar;
