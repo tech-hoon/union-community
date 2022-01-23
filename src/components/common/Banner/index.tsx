@@ -55,7 +55,7 @@ const Content = styled.h1`
   }
 `;
 
-const Highlight = styled.b`
+const Highlight = styled.span`
   font-weight: 600;
   color: #18a0fb;
 `;
