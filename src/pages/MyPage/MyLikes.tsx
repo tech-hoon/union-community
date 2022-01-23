@@ -24,7 +24,7 @@ const MyLikes = () => {
 
   return (
     <S.Wrapper>
-      <S.Navbar isLoggedIn={true} />
+      <S.Navbar />
 
       <S.Container>
         <S.Header>

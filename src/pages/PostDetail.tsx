@@ -127,7 +127,7 @@ const PostDetail = () => {
   return (
     <>
       <Wrapper>
-        <Navbar isLoggedIn={true} />
+        <Navbar  />
         {post ? (
           <PostContainer>
             <BackButton

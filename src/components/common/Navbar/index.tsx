@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import Aside from './Aside';
 import LogoBox from '../LogoBox';
-import { memo } from 'react';
+import { memo, ReactNode } from 'react';
 
-interface Props {
-  isLoggedIn?: boolean;
+interface IProps {
+  children?: ReactNode;
 }
 
-const Navbar = ({ isLoggedIn = true }: Props) => {
+const Navbar = ({ children = <Aside /> }: IProps) => {
   return (
     <Wrapper>
       <Inner>
         <LogoBox />
-        {isLoggedIn && <Aside />}
+        {children}
       </Inner>
     </Wrapper>
   );

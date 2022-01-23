@@ -106,7 +106,7 @@ const Home = () => {
       </Helmet>
 
       <Wrapper>
-        <Navbar isLoggedIn={true} />
+        <Navbar />
         <BannerWrapper>
           <Banner />
         </BannerWrapper>

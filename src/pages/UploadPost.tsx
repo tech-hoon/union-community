@@ -43,7 +43,7 @@ const UploadPost = () => {
   });
   return (
     <Wrapper>
-      <Navbar isLoggedIn={true} />
+      <Navbar />
       <PostContainer onSubmit={onSubmit}>
         <TitleInput
           ref={titleRef}
@@ -224,7 +224,7 @@ const CancleBtn = styled(Button)`
 const SubmitBtn = styled(Button)`
   background-color: skyblue;
   color: white;
-  ㅔ &:hover {
+  &:hover {
     background-color: rgb(24, 160, 251);
     transition: 0.3s ease-in-out;
   }
