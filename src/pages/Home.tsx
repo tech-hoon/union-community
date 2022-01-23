@@ -15,7 +15,6 @@ import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import smoothscroll from 'smoothscroll-polyfill';
 import { dbService } from 'service/firebase';
 import useSessionStorage from 'hooks/common/useSessionStorage';
 import PortalContainer from 'components/common/Portal/PortalContainer';
@@ -75,9 +74,6 @@ const Home = () => {
       return;
     }
 
-    // smooth scroll iOS polyfill
-    smoothscroll.polyfill();
-
     // 글 등록,수정,삭제 시 새 데이터로 fetch
     if (location.state) {
       setIsUpdated(false);
@@ -106,7 +102,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <meta name='theme-color' content={uploadButtonOpened ? '#00000080' : '#f8f9fa'} />
+        <meta name='theme-color' content={uploadButtonOpened ? '#69696a' : '#f8f9fa'} />
       </Helmet>
 
       <Wrapper>
