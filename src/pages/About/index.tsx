@@ -2,7 +2,7 @@ import LoginModalButton from 'components/About/LoginModalButton';
 import styled from 'styled-components';
 import useLoginStep from 'hooks/useLoginStep';
 import useCountUp from 'hooks/common/useCountUp';
-import { useState, memo, useEffect } from 'react';
+import { useState, memo, useEffect, ReactEventHandler } from 'react';
 import { getUserPostCount } from 'api/count';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { authService } from 'service/firebase';
@@ -18,6 +18,8 @@ import PeopleAvatar from 'components/common/Banner/PeopleAvatar';
 import DetailContainer1 from './DetailContainer1';
 import DetailContainer2 from './DetailContainer2';
 import DetailContainer3 from './DetailContainer3';
+import Navbar from 'components/common/Navbar';
+import Description from 'components/About/LoginModalButton/Description';
 
 const About = () => {
   const [count, setCount] = useState({ user: 0, post: 0 });
@@ -42,50 +44,56 @@ const About = () => {
 
   const fetchCount = async () => {
     const count = await getUserPostCount();
+    setIsLoading(false);
     setCount(count);
   };
 
-  const onClickDetailButton = () => {
-    window.scroll({ behavior: 'smooth', top: window.innerHeight });
+  const onClickScrollDown: React.MouseEventHandler<HTMLElement> = (e) => {
+    const target = e.target as HTMLElement;
+    const id = target.dataset.pageId;
+    window.scroll({ behavior: 'smooth', top: Number(id) * window.innerHeight });
+  };
+
+  const asyncHandler = async (user: any) => {
+    if (user) {
+      const res = await fetchUserData(user.uid);
+      setIsLoading(false);
+
+      switch (res?.auth_status) {
+        case 'approved': {
+          setLoginUser({ ...loginUser, ...res });
+          onFetchReceivedMessages(user.uid);
+          onFetchNotifications(user.uid);
+          history.push('/home');
+          break;
+        }
+
+        case 'rejected': {
+          setLoginUser({ ...loginUser, ...res });
+          setLoginStep(AUTH_REJECTED_STEP);
+          break;
+        }
+
+        case 'waiting': {
+          setLoginUser({ ...loginUser, ...res });
+          setLoginStep(AUTH_WAITING_STEP);
+          break;
+        }
+
+        default: {
+          onLoginStepNext();
+          break;
+        }
+      }
+    }
+
+    await fetchCount();
   };
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
 
-    const unsubscribe = authService.onAuthStateChanged(async (user) => {
-      if (user) {
-        const res = await fetchUserData(user.uid);
-        setIsLoading(false);
-
-        if (res?.auth_status === 'approved') {
-          setLoginUser({ ...loginUser, ...res });
-          onFetchReceivedMessages(user.uid);
-          onFetchNotifications(user.uid);
-
-          history.push('/home');
-          return;
-        }
-
-        if (res?.auth_status === 'rejected') {
-          setLoginUser({ ...loginUser, ...res });
-          setLoginStep(AUTH_REJECTED_STEP);
-          return;
-        }
-
-        if (res?.auth_status === 'waiting') {
-          setLoginUser({ ...loginUser, ...res });
-          setLoginStep(AUTH_WAITING_STEP);
-          return;
-        }
-
-        onLoginStepNext();
-        return;
-      }
-    });
-
-    (async () => await fetchCount())();
-
-    setIsLoading(false);
+    const unsubscribe = authService.onAuthStateChanged(asyncHandler);
 
     return () => {
       onLoginStepReset();
@@ -96,29 +104,35 @@ const About = () => {
   return (
     <Wrapper>
       <Container>
+        <NavbarWrapper>
+          <Navbar>
+            <Aside onClick={onClickScrollDown} isLoading={isLoading}>
+              <Menu data-page-id={1}>유니온이란?</Menu>
+              <Menu data-page-id={2}>기능 소개</Menu>
+              <Menu data-page-id={3}>가입 절차</Menu>
+            </Aside>
+          </Navbar>
+        </NavbarWrapper>
         <LogoWrapper>
           <MainLogo />
         </LogoWrapper>
         <Contents>
-          <Description>
-            <b>대학생 연합기숙사 입주생</b>을 위한
-            <br /> 커뮤니티 <em>유니온</em>입니다.
-            <br /> 가입하고 <b>일상, 스터디</b> 등<br />
-            다양한 정보를 나누어 보세요.
-          </Description>
+          <Description />
           <CountBalloon isLoading={isLoading || !count.post}>
             {isLoading || !count.post ? (
               <em>Loading...</em>
             ) : (
-              <>
+              <p>
                 <em {...counter[1]}>0</em>명의 사용자와 <em {...counter[0]}>0</em>개의 글이 있어요!
-              </>
+              </p>
             )}
           </CountBalloon>
           <PeopleAvatar />
         </Contents>
-        <ButtonWrapper>
-          <DetailButton onClick={onClickDetailButton}>자세히</DetailButton>
+        <ButtonWrapper isLoading={isLoading}>
+          <DetailButton data-page-id={1} onClick={onClickScrollDown}>
+            자세히
+          </DetailButton>
           <LoginModalButton />
         </ButtonWrapper>
       </Container>
@@ -130,50 +144,67 @@ const About = () => {
 };
 
 const Wrapper = styled.div`
-  /* height: 100vh; */
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: auto;
   scroll-snap-type: y mandatory;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
+const NavbarWrapper = styled.div`
+  @media ${({ theme }) => theme.size.mobile} {
+    display: none;
+  }
+`;
+
+const LogoWrapper = styled.div`
+  display: none;
+  margin: 0 auto;
+  width: 150px;
+  @media ${({ theme }) => theme.size.mobile} {
+    display: inline;
+  }
+`;
+
 const Container = styled.div`
   height: 100vh;
-  padding: 10% 0;
   flex: none;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  padding: 10% 0;
   scroll-snap-align: start;
+  padding-bottom: 40px;
 
   @media ${({ theme }) => theme.size.mobile} {
     padding: 40px 0;
   }
 `;
 
-const LogoWrapper = styled.div`
-  margin: 0 auto;
-  width: 167px;
-  height: 57px;
-`;
-
-const Contents = styled.div`
-  margin: 0 auto;
+const Aside = styled.ul<{ isLoading: boolean }>`
   display: flex;
-  flex-direction: column;
+  visibility: ${({ isLoading }) => isLoading && `hidden`};
+  gap: 20px;
   align-items: center;
 `;
 
-interface IBallon {
-  isLoading: boolean;
-}
+const Menu = styled.li`
+  cursor: pointer;
+`;
 
-const CountBalloon = styled.h3<IBallon>`
+const Contents = styled.div`
+  display: flex;
+  margin: 5% auto;
+  flex-direction: column;
+  align-items: center;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    margin: 10% auto 0;
+  }
+`;
+
+const CountBalloon = styled.h3<{ isLoading: boolean }>`
   position: relative;
   font-size: 20px;
   line-height: 25px;
@@ -182,7 +213,7 @@ const CountBalloon = styled.h3<IBallon>`
   text-align: center;
 
   background-color: #e0f0fb;
-  padding: 26px 17px;
+  padding: 26px 10px;
   border-radius: 100px;
   margin-bottom: 10px;
 
@@ -194,7 +225,7 @@ const CountBalloon = styled.h3<IBallon>`
     border-right: 10px solid transparent;
     border-bottom: 0px solid transparent;
     top: 75px;
-    left: ${({ isLoading }) => (isLoading ? `120px` : `204px`)};
+    left: ${({ isLoading }) => (isLoading ? `130px` : `220px`)};
   }
 
   & em {
@@ -203,27 +234,14 @@ const CountBalloon = styled.h3<IBallon>`
   }
 `;
 
-const Description = styled.h1`
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 35px;
-  letter-spacing: -0.05em;
-  text-align: left;
-  width: 90%;
-  margin: 0 30px 10%;
-
-  & b {
-    font-weight: 400;
-  }
-
-  & em {
-    font-weight: bold;
-    color: ${({ theme }) => theme.color.MAIN};
-  }
-`;
-
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div<{ isLoading: boolean }>`
+  visibility: ${({ isLoading }) => isLoading && `hidden`};
+  flex: 1;
   margin: 0 auto;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    margin: 5% auto 0;
+  }
 `;
 
 const DetailButton = styled.button`
