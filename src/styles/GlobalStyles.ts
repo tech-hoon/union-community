@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
     padding:0;
     cursor: pointer;
   }
-  
+
   body{
     overflow:auto;
     background-color: #f8f9fa;
@@ -37,7 +37,6 @@ const GlobalStyle = createGlobalStyle`
     @supports (-webkit-touch-callout: none) {
       height: -webkit-fill-available;
     }
-
     touch-action: pan-y;
   }
 
