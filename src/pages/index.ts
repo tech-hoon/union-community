@@ -1,5 +1,5 @@
 import Home from './Home';
-import About from './About';
+import Main from './Main';
 import Setting from './MyPage/Setting';
 import PostDetail from './PostDetail';
 import UploadPost from './UploadPost';
@@ -12,7 +12,7 @@ import UploadProduct from './MyPage/UploadProduct';
 
 export {
   Home,
-  About,
+  Main,
   Setting,
   PostDetail,
   UploadPost,

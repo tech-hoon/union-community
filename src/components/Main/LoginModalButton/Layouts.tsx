@@ -13,6 +13,7 @@ export const Layouts = {
     flex-direction: column;
 
     @media ${({ theme }) => theme.size.mobile} {
+      border-radius: 0;
       width: 100vw;
       height: 100vh;
       max-height: none;

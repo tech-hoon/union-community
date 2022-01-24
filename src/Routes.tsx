@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import {
   Home,
-  About,
+  Main,
   PostDetail,
   UploadPost,
   Setting,
@@ -24,7 +24,7 @@ const Routes = ({ isLoggedIn }: Props) => (
     <Switch>
       <>
         <Route exact path='/'>
-          {isLoggedIn ? <Redirect to={{ pathname: '/home' }} /> : <About />}
+          {isLoggedIn ? <Redirect to={{ pathname: '/home' }} /> : <Main />}
         </Route>
 
         <PrivateRoute exact path='/home' component={Home} isLoggedIn={isLoggedIn} />
