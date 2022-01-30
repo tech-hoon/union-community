@@ -10,8 +10,9 @@ export const Layouts = {
   Wrapper: styled.ul`
     min-height: 40vh;
 
-    max-width: 1120px;
-    padding: 0 60px;
+    max-width: ${({ theme }) => theme.container.maxWidth};
+    padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
+
     user-select: none;
 
     display: grid;

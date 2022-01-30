@@ -38,8 +38,8 @@ const CategoryBox = (props: Props) => {
 };
 
 const Wrapper = styled.div`
-  max-width: 1120px;
-  padding: 0px 60px;
+  max-width: ${({ theme }) => theme.container.maxWidth};
+  padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
 
   display: flex;
   justify-content: space-between;

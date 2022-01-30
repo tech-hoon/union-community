@@ -108,8 +108,9 @@ const UploadPost = () => {
 const Wrapper = styled.div``;
 
 const PostContainer = styled.form`
-  max-width: 1120px;
-  padding: 40px 60px;
+  max-width: ${({ theme }) => theme.container.maxWidth};
+  padding: ${({ theme }) => `40px ${theme.container.paddingLeftRight}`};
+
   margin: 0 auto;
 
   @media ${({ theme }) => theme.size.mobile} {

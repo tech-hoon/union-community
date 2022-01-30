@@ -15,5 +15,10 @@ const theme = {
   color: {
     MAIN: '#18A0FB',
   },
+
+  container: {
+    maxWidth: '1160px',
+    paddingLeftRight: '60px',
+  },
 };
 export default theme;

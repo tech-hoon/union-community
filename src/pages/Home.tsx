@@ -167,8 +167,8 @@ const BannerWrapper = styled.div`
 `;
 
 const MidWrapper = memo(styled.div`
-  max-width: 1120px;
-  padding: 0 60px;
+  max-width: ${({ theme }) => theme.container.maxWidth};
+  padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
 
   display: flex;
   flex-wrap: wrap;
