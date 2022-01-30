@@ -127,19 +127,9 @@ const PostDetail = () => {
   return (
     <>
       <Wrapper>
-        <Navbar  />
+        <Navbar option='post-detail' />
         {post ? (
           <PostContainer>
-            <BackButton
-              onClick={() =>
-                history.push({
-                  pathname: '/home',
-                  state: history.location.state,
-                })
-              }
-            >
-              &#xE000;
-            </BackButton>
             <ROW_1>
               <Title>{post.title}</Title>
               <IsEdited>{post.is_edited && `수정됨 `}</IsEdited>
@@ -230,20 +220,15 @@ const Wrapper = styled.div`
 `;
 
 const PostContainer = styled.section`
-  max-width: 1120px;
-  padding: 0 60px;
+  max-width: ${({ theme }) => theme.container.maxWidth};
+  padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
+
   margin: 3% auto;
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 90%;
     padding: 0 20px;
   }
-`;
-
-const BackButton = styled.span`
-  font-weight: 700;
-  font-size: 2em;
-  cursor: pointer;
 `;
 
 const ROW_1 = styled.div`

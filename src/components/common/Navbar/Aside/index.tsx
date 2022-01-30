@@ -56,6 +56,7 @@ const Wrapper = styled.div`
   align-items: center;
   user-select: none;
   gap: 20px;
+  height: 35px;
 `;
 
 const IconWrapper = styled.button`
