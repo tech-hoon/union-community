@@ -1,7 +1,7 @@
 import LoginModalButton from 'components/Main/LoginModalButton';
 import { Layouts as S, IProps } from './Layouts';
 
-const DetailContainer3 = ({ screenHeight }: IProps) => {
+const Onboarding3 = ({ screenHeight }: IProps) => {
   return (
     <S.Wrapper backgroundColor='CadetBlue'>
       <S.Container>
@@ -14,4 +14,4 @@ const DetailContainer3 = ({ screenHeight }: IProps) => {
   );
 };
 
-export default DetailContainer3;
+export default Onboarding3;
