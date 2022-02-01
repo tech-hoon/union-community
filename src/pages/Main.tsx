@@ -16,22 +16,22 @@ import useNotification from 'hooks/useNotification';
 import MainLogo from 'assets/logo/MainLogo';
 import PeopleAvatar from 'components/common/Banner/PeopleAvatar';
 import Description from 'components/Main/Description';
-import Onboarding1 from 'components/Main/OnboardingContainer/Onboarding1';
-import Onboarding2 from 'components/Main/OnboardingContainer/Onboarding2';
-import Onboarding3 from 'components/Main/OnboardingContainer/Onboarding3';
+import { Onboarding1, Onboarding2, Onboarding3 } from 'components/Main/OnboardingContainer';
 import Navbar from 'components/common/Navbar';
+import Balloon from 'components/Main/Balloon';
+import { isMobile } from 'utils/mobileCheck';
 
-const About = () => {
+const Main = () => {
   const [count, setCount] = useState({ user: 0, post: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
   const { onLoginStepReset, onLoginStepNext, setLoginStep } = useLoginStep();
   const setLoginUser = useSetRecoilState(loginUserState);
 
+  const history = useHistory();
+
   const heightRef = useRef<HTMLDivElement>(null);
   const screenHeight = heightRef.current?.clientHeight as number;
-
-  const history = useHistory();
 
   const counter = {
     0: useCountUp(count.post, 0, 400),
@@ -52,9 +52,11 @@ const About = () => {
   };
 
   const onClickScrollDown: React.MouseEventHandler<HTMLElement> = (e) => {
+    const scrollPosistion = isMobile() ? screenHeight : window.innerHeight;
     const target = e.target as HTMLElement;
     const id = target.dataset.pageId;
-    window.scroll({ behavior: 'smooth', top: Number(id) * screenHeight });
+
+    window.scroll({ behavior: 'smooth', top: Number(id) * scrollPosistion });
   };
 
   const asyncHandler = async (user: any) => {
@@ -114,20 +116,20 @@ const About = () => {
             </Aside>
           </Navbar>
         </NavbarWrapper>
-        <LogoWrapper>
+        <MobileLogoWrapper>
           <MainLogo />
-        </LogoWrapper>
+        </MobileLogoWrapper>
         <Contents>
           <Description />
-          <CountBalloon isLoading={isLoading || !count.post}>
+          <Balloon isLoading={isLoading || !count.post}>
             {isLoading || !count.post ? (
-              <em>Loading...</em>
+              <Paragraph>Loading...</Paragraph>
             ) : (
-              <p>
+              <Paragraph>
                 <em {...counter[1]}>0</em>명의 사용자와 <em {...counter[0]}>0</em>개의 글이 있어요!
-              </p>
+              </Paragraph>
             )}
-          </CountBalloon>
+          </Balloon>
           <PeopleAvatar />
         </Contents>
         <ButtonWrapper isLoading={isLoading}>
@@ -137,9 +139,13 @@ const About = () => {
           <LoginModalButton />
         </ButtonWrapper>
       </Container>
-      <Onboarding1 onClick={onClickScrollDown} screenHeight={screenHeight} />
-      <Onboarding2 onClick={onClickScrollDown} screenHeight={screenHeight} />
-      <Onboarding3 screenHeight={screenHeight} />
+      {!isLoading && (
+        <>
+          <Onboarding1 />
+          <Onboarding2 />
+          <Onboarding3 screenHeight={screenHeight} />
+        </>
+      )}
     </Wrapper>
   );
 };
@@ -158,10 +164,10 @@ const NavbarWrapper = styled.div`
   }
 `;
 
-const LogoWrapper = styled.div`
+const MobileLogoWrapper = styled.div`
   display: none;
   margin: 0 auto;
-  width: 150px;
+  width: clamp(130px, 20vw, 150px);
   margin-top: 40px;
   @media ${({ theme }) => theme.size.mobile} {
     display: inline;
@@ -174,7 +180,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  scroll-snap-align: start;
 `;
 
 const Aside = styled.ul<{ isLoading: boolean }>`
@@ -203,40 +208,6 @@ const Contents = styled.div`
   }
 `;
 
-const CountBalloon = styled.h3<{ isLoading: boolean }>`
-  position: relative;
-  font-size: 20px;
-  line-height: 25px;
-  font-weight: 300;
-  width: 100%;
-  text-align: center;
-
-  background-color: #e0f0fb;
-  padding: 26px 10px;
-  border-radius: 100px;
-  margin-bottom: 10px;
-
-  &:after {
-    content: '';
-    position: absolute;
-    border-top: 20px solid #e0f0fb;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 0px solid transparent;
-    top: 75px;
-    left: 220px;
-  }
-
-  & em {
-    color: ${({ theme }) => theme.color.MAIN};
-    font-weight: bold;
-  }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 18px;
-  }
-`;
-
 const ButtonWrapper = styled.div<{ isLoading: boolean }>`
   visibility: ${({ isLoading }) => isLoading && `hidden`};
   flex: 1;
@@ -244,6 +215,22 @@ const ButtonWrapper = styled.div<{ isLoading: boolean }>`
 
   @media ${({ theme }) => theme.size.mobile} {
     margin: 0% auto 5%;
+  }
+`;
+
+const Paragraph = styled.p`
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  line-height: 25px;
+  font-weight: 300;
+  text-align: center;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 18px;
+  }
+
+  & em {
+    color: ${({ theme }) => theme.color.MAIN};
+    font-weight: bold;
   }
 `;
 
@@ -259,4 +246,4 @@ const DetailButton = styled.button`
   margin-right: 12px;
 `;
 
-export default memo(About);
+export default memo(Main);
