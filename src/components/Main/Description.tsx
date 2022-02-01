@@ -45,7 +45,7 @@ const TextMobile = styled(Text)`
 `;
 
 const TextPC = styled(Text)`
-  font-size: 26px;
+  font-size: clamp(1rem, 2.5vw, 2rem);
   line-height: 1.8;
   margin-bottom: 5%;
 
