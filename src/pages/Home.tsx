@@ -102,7 +102,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <meta name='theme-color' content={uploadButtonOpened ? '#69696a' : '#f8f9fa'} />
+        <meta name='theme-color' content={uploadButtonOpened ? '#7C7C7C' : '#f8f9fa'} />
       </Helmet>
 
       <Wrapper>
