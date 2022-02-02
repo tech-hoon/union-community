@@ -195,7 +195,7 @@ const Menu = styled.li`
 
 const Contents = styled.div`
   display: flex;
-  margin: 5% auto;
+  margin: 3% auto;
   flex-direction: column;
   align-items: center;
 

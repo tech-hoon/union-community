@@ -115,7 +115,7 @@ const Home = () => {
           <OrderbyBox />
         </MidWrapper>
         {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
-        {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
+        {/* {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>} */}
         <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
           <UploadIcon />
           {uploadButtonOpened && (
@@ -161,9 +161,9 @@ const Observer = styled.div`
 `;
 
 const BannerWrapper = styled.div`
-  @media ${({ theme }) => theme.size.mobile} {
+  /* @media ${({ theme }) => theme.size.mobile} {
     display: none;
-  }
+  } */
 `;
 
 const MidWrapper = memo(styled.div`
