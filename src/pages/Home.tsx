@@ -4,10 +4,10 @@ import PostCardBox from 'components/common/PostCard/PostCardBox';
 import CategoryBox from 'components/Home/CategoryBox';
 import OrderbyBox from 'components/Home/OrderbyBox';
 import Footer from 'components/common/Footer';
-import Banner from 'components/common/Banner';
 import PostCardSkeleton from 'components/common/Skeletons/PostCardSkeleton';
 import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import useLocalStorage from 'hooks/common/useLocalStorage';
+import { Helmet } from 'react-helmet';
 import { useState, useRef, useEffect, useLayoutEffect, memo, useCallback } from 'react';
 import { useGetPosts } from 'hooks/post/useGetPosts';
 import { useLocation } from 'react-router';
@@ -20,7 +20,7 @@ import useSessionStorage from 'hooks/common/useSessionStorage';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
-import { Helmet } from 'react-helmet';
+import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 
 const Home = () => {
   const location = useLocation();
@@ -107,9 +107,8 @@ const Home = () => {
 
       <Wrapper>
         <Navbar />
-        <BannerWrapper>
-          <Banner />
-        </BannerWrapper>
+        <MainBannerSlider />
+
         <CategoryBox />
         <MidWrapper>
           <OrderbyBox />
@@ -158,12 +157,6 @@ const UploadButton = memo(styled.button<IUploadButton>`
 const Observer = styled.div`
   bottom: 0;
   height: 20px;
-`;
-
-const BannerWrapper = styled.div`
-  /* @media ${({ theme }) => theme.size.mobile} {
-    display: none;
-  } */
 `;
 
 const MidWrapper = memo(styled.div`
