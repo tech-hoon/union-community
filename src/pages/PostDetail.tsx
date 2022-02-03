@@ -29,6 +29,7 @@ import AlertModal from 'components/common/Portal/AlertModal';
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
 import { commentState } from 'store/comment';
 import { toDateStringByFormating } from 'utils/date';
+import BottomBanner from 'components/common/Banner/BottomBanner';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -184,6 +185,8 @@ const PostDetail = () => {
               category={post.category}
               postCreatorId={post.creator.uid}
             />
+
+            <BottomBanner />
           </PostContainer>
         ) : (
           <PostSkeleton />
