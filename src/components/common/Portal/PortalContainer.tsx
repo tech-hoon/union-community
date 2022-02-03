@@ -1,10 +1,10 @@
-import { useCallback, useRef, useEffect, memo } from 'react';
+import { useCallback, useRef, useEffect, memo, ReactNode } from 'react';
 import styled from 'styled-components';
 import Portal from './Portal';
 
 interface Props {
   onClose: () => void;
-  children: any;
+  children: ReactNode;
   overlay?: boolean;
 }
 

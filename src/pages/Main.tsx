@@ -14,7 +14,7 @@ import { AUTH_REJECTED_STEP, AUTH_WAITING_STEP } from 'utils/config';
 import useReceivedMessage from 'hooks/message/useReceivedMessage';
 import useNotification from 'hooks/useNotification';
 import MainLogo from 'assets/logo/MainLogo';
-import PeopleAvatar from 'components/common/Banner/PeopleAvatar';
+import PeopleAvatar from 'components/common/Avatar/PeopleAvatar';
 import Description from 'components/Main/Description';
 import { Onboarding1, Onboarding2, Onboarding3 } from 'components/Main/OnboardingContainer';
 import Navbar from 'components/common/Navbar';
@@ -123,7 +123,9 @@ const Main = () => {
           <Description />
           <Balloon isLoading={isLoading || !count.post}>
             {isLoading || !count.post ? (
-              <Paragraph>Loading...</Paragraph>
+              <Paragraph>
+                <em>Loading...</em>
+              </Paragraph>
             ) : (
               <Paragraph>
                 <em {...counter[1]}>0</em>명의 사용자와 <em {...counter[0]}>0</em>개의 글이 있어요!
