@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Layouts as S } from '../Layouts';
+import { Layouts as S } from './Layouts';
 
 const Banner2 = () => {
   return (
