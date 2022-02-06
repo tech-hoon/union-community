@@ -17,6 +17,7 @@ import { LoginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { dbService } from 'service/firebase';
 import useSessionStorage from 'hooks/common/useSessionStorage';
+import useGetCloudMessage from 'hooks/message/useGetCloudMessage';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
@@ -44,6 +45,10 @@ const Home = () => {
 
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, isLastPost, {});
+
+  const { data, notification, hasNotification } = useGetCloudMessage();
+
+  console.log('data', data);
 
   const onRefreshClick = useCallback(() => {
     setIsUpdated(false);
@@ -107,7 +112,7 @@ const Home = () => {
 
       <Wrapper>
         <Navbar />
-        <MainBannerSlider />
+        {/* <MainBannerSlider /> */}
 
         <CategoryBox />
         <MidWrapper>

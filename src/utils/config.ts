@@ -48,3 +48,5 @@ export const REPORT_LIST = [
 ];
 
 export const AVATAR_COUNT = 10;
+
+export const VAPID_KEY = process.env.REACT_APP_VAPID_KEY;
