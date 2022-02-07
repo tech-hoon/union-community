@@ -45,9 +45,9 @@ const TextMobile = styled(Text)`
 `;
 
 const TextPC = styled(Text)`
-  font-size: clamp(1rem, 2.5vw, 2rem);
+  font-size: clamp(1.5rem, 2vw, 1.9rem);
   line-height: 1.8;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
 
   @media ${({ theme }) => theme.size.mobile} {
     display: none;

@@ -132,7 +132,9 @@ const Main = () => {
               </Paragraph>
             )}
           </Balloon>
-          <PeopleAvatar />
+          <AvatarWrapper>
+            <PeopleAvatar />
+          </AvatarWrapper>
         </Contents>
         <ButtonWrapper isLoading={isLoading}>
           <DetailButton data-page-id={1} onClick={onClickScrollDown}>
@@ -218,6 +220,11 @@ const ButtonWrapper = styled.div<{ isLoading: boolean }>`
   @media ${({ theme }) => theme.size.mobile} {
     margin: 0% auto 5%;
   }
+`;
+
+const AvatarWrapper = styled.div`
+  /* width: clamp(360px, 30vw, 600px); */
+  width: clamp(360px, 40vw, 600px);
 `;
 
 const Paragraph = styled.p`

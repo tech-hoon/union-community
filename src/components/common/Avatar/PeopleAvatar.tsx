@@ -12,7 +12,6 @@ const PeopleAvatar = () => {
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
-  width: clamp(360px, 30vw, 800px);
 `;
 
 export default PeopleAvatar;
