@@ -1,14 +1,21 @@
 div.swiper-button-prev {
-  left: 24px;
+  left: 20%;
 }
 
 div.swiper-button-next {
-  right: 24px;
+  right: 20%;
+}
+
+@media (max-width: 768px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    display: none;
+  }
 }
 
 div.swiper-button-prev::after,
 div.swiper-button-next::after {
-  color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.4);
   font-size: 20px;
 }
 

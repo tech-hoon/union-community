@@ -186,7 +186,7 @@ const PostDetail = () => {
               postCreatorId={post.creator.uid}
             />
 
-            <BottomBanner />
+            {/* <BottomBanner /> */}
           </PostContainer>
         ) : (
           <PostSkeleton />

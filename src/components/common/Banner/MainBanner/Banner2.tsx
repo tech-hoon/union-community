@@ -4,14 +4,20 @@ import { Layouts as S } from './Layouts';
 const Banner2 = () => {
   return (
     <S.Wrapper>
-      <Container>Banner2</Container>
+      <Container>Sample Banner2</Container>
     </S.Wrapper>
   );
 };
 
 const Container = styled.div`
-  height: 300px;
-  background-color: CadetBlue;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  color: white;
+  background-color: #219f94;
 `;
 
 export default Banner2;

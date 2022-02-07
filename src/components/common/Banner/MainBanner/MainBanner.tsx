@@ -8,7 +8,7 @@ interface Props {}
 const MainBanner = (props: Props) => {
   return (
     <S.Wrapper>
-      <Container>
+      <Banner>
         <Content>
           <b>대학생 연합기숙사 입주생</b>을 위한 커뮤니티 <Highlight>유니온</Highlight>입니다.
           <br />
@@ -17,19 +17,21 @@ const MainBanner = (props: Props) => {
         <AvatarWrapper>
           <PeopleAvatar />
         </AvatarWrapper>
-      </Container>
+      </Banner>
     </S.Wrapper>
   );
 };
 
-const Container = styled.div`
-  display: flex;
+const Banner = styled.div`
   width: 100%;
+  height: 360px;
+
+  display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 16px;
   padding: 20px;
-  height: 100%;
-  background-color: #eee;
+  background-color: #e3f4ff;
 `;
 
 const Content = styled.h1`
@@ -39,7 +41,6 @@ const Content = styled.h1`
   letter-spacing: -0.05em;
   text-align: start;
   word-break: keep-all;
-  flex: 1;
 
   & > b {
     font-weight: 400;
@@ -63,6 +64,8 @@ const Highlight = styled.span`
   color: #18a0fb;
 `;
 
-const AvatarWrapper = styled.div``;
+const AvatarWrapper = styled.div`
+  width: clamp(360px, 60vw, 500px);
+`;
 
 export default memo(MainBanner);

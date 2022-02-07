@@ -18,7 +18,6 @@ const Slider = ({ children }: IProps) => {
   return (
     <Swiper
       slidesPerView={1}
-      spaceBetween={30}
       centeredSlides={true}
       autoplay={{
         delay: 4000,
