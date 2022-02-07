@@ -41,11 +41,11 @@ const Layouts = {
     user-select: none;
   `,
 
-  MenuTitle: styled.p`
-    flex: 1;
-    text-align: right;
+  MenuTitle: styled.span`
+    flex: none;
+    margin-left: auto;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     color: white;
   `,
 };
