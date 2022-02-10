@@ -324,8 +324,8 @@ const Btn = styled.button`
 const EditBox = styled.div`
   display: flex;
   align-items: center;
-  /* margin-left: auto; */
   font-size: 0.8rem;
+  gap: 12px;
 `;
 
 const UpdateBtn = styled(Btn)``;

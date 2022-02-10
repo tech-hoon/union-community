@@ -9,6 +9,7 @@ export const Layouts = {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   `,
 
   Container: styled.div``,

@@ -209,7 +209,7 @@ const Button = styled.button`
   font-weight: 500;
   font-size: 1rem;
   padding: 12px;
-  border: 0.3px solid #eee;
+  border: 1px solid rgb(24, 160, 251);
   border-radius: 4px;
 
   @media ${({ theme }) => theme.size.mobile} {
@@ -219,16 +219,12 @@ const Button = styled.button`
 `;
 
 const CancleBtn = styled(Button)`
-  background-color: gray;
-  color: white;
+  border: 1px solid gray;
+  color: gray;
 `;
 const SubmitBtn = styled(Button)`
-  background-color: skyblue;
+  background-color: rgb(24, 160, 251);
   color: white;
-  &:hover {
-    background-color: rgb(24, 160, 251);
-    transition: 0.3s ease-in-out;
-  }
 `;
 
 const ErrorInfo = styled.p`

@@ -8,7 +8,7 @@ import Avatar from 'components/common/Avatar';
 
 export const Layouts = {
   Wrapper: styled.ul`
-    min-height: 40vh;
+    min-height: 60vh;
 
     max-width: ${({ theme }) => theme.container.maxWidth};
     padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
