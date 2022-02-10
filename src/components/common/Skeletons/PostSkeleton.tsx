@@ -25,19 +25,20 @@ const Wrapper = styled.div`
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 90%;
+    margin: 5% auto;
     padding: 0 20px;
   }
 `;
 
 const Top = styled(SkeletonItem)`
-  height: 40px;
+  height: 30px;
 `;
 const Middle = styled(SkeletonItem)`
-  height: 40px;
+  height: 30px;
 `;
 
 const Content = styled(SkeletonItem)`
-  height: 320px;
+  height: 400px;
 `;
 
 export default PostSkeleton;

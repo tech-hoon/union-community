@@ -191,7 +191,6 @@ const PostDetail = () => {
         ) : (
           <PostSkeleton />
         )}
-        <Footer />
       </Wrapper>
 
       {modalOpened && (
@@ -230,6 +229,7 @@ const PostContainer = styled.section`
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 90%;
+    margin: 6% auto;
     padding: 0 20px;
   }
 `;
@@ -237,7 +237,6 @@ const PostContainer = styled.section`
 const ROW_1 = styled.div`
   display: flex;
   gap: 4px;
-  margin-top: 18px;
   align-items: center;
 `;
 
