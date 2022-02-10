@@ -1,9 +1,9 @@
 div.swiper-button-prev {
-  left: 20%;
+  left: 10%;
 }
 
 div.swiper-button-next {
-  right: 20%;
+  right: 10%;
 }
 
 @media (max-width: 768px) {

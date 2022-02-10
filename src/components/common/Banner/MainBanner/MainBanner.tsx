@@ -24,13 +24,12 @@ const MainBanner = (props: Props) => {
 
 const Banner = styled.div`
   width: 100%;
-  height: 360px;
-
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 16px;
-  padding: 20px;
+  gap: 10px;
+  padding: 16px;
   background-color: #e3f4ff;
 `;
 
@@ -47,15 +46,15 @@ const Content = styled.h1`
   }
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
 
   @media (max-width: 500px) {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   @media ${({ theme }) => theme.size.mobileS} {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 `;
 
@@ -65,7 +64,7 @@ const Highlight = styled.span`
 `;
 
 const AvatarWrapper = styled.div`
-  width: clamp(360px, 60vw, 500px);
+  width: clamp(330px, 60vw, 500px);
 `;
 
 export default memo(MainBanner);
