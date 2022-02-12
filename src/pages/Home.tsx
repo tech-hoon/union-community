@@ -6,7 +6,7 @@ import OrderbyBox from 'components/Home/OrderbyBox';
 import Footer from 'components/common/Footer';
 import PostCardSkeleton from 'components/common/Skeletons/PostCardSkeleton';
 import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
-import useLocalStorage from 'hooks/common/useLocalStorage';
+import useSessionStorage from 'hooks/common/useSessionStorage';
 import { Helmet } from 'react-helmet';
 import { useState, useRef, useEffect, useLayoutEffect, memo, useCallback } from 'react';
 import { useGetPosts } from 'hooks/post/useGetPosts';
@@ -16,7 +16,6 @@ import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { dbService } from 'service/firebase';
-import useSessionStorage from 'hooks/common/useSessionStorage';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
@@ -38,7 +37,7 @@ const Home = () => {
   } = useGetPosts();
 
   const [isUpdated, setIsUpdated] = useState(false);
-  const [scrollY, setScrollY] = useLocalStorage('scrollY', 0);
+  const [scrollY, setScrollY] = useSessionStorage('scrollY', 0);
   const [postCountSession, setPostCountSession] = useSessionStorage('post_count', 0);
   const [uploadButtonOpened, setUploadButtonOpened] = useState(false);
 
