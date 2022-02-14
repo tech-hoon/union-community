@@ -139,6 +139,7 @@ const PostDetail = () => {
               <ProfileBox onClick={onOpenUserMenu}>
                 <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
                 <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
+                <CreatedAt>{toDateStringByFormating(post.created_at, false, '.')}</CreatedAt>
               </ProfileBox>
               {!!post.attachment_url && <ImageIcon size='24px' />}
               <Category color={categoryColor(post.category)}>{post.category}</Category>
@@ -150,7 +151,6 @@ const PostDetail = () => {
                   <DeleteBtn onClick={onOpenModal}>삭제하기</DeleteBtn>
                 </EditBox>
               )}
-              <CreatedAt>{toDateStringByFormating(post.created_at, false, '.')}</CreatedAt>
             </ROW_3>
             <ContentWrapper>
               <Content dangerouslySetInnerHTML={contentMarkup} />
@@ -293,7 +293,7 @@ const ROW_3 = styled.div`
 const ProfileBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   cursor: pointer;
   margin-right: auto;
 `;
