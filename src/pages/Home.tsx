@@ -19,7 +19,8 @@ import { dbService } from 'service/firebase';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
-import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
+import { MainBanner } from 'components/common/Banner/MainBanner';
+// import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 
 const Home = () => {
   const location = useLocation();
@@ -106,7 +107,8 @@ const Home = () => {
 
       <Wrapper>
         <Navbar />
-        <MainBannerSlider />
+        {/* <MainBannerSlider /> */}
+        <MainBanner />
 
         <CategoryBox />
         <MidWrapper>
