@@ -92,10 +92,9 @@ export const Layouts = {
   NextButton: styled.button`
     background-color: ${(props) => props.theme.color.MAIN};
     font-weight: 500;
-    padding: 6px 16px;
-    font-size: 1em;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+    padding: 8px 20px;
+    font-size: 1.2em;
+    border-radius: 16px;
     color: white;
     cursor: pointer;
     line-height: 1.3rem;

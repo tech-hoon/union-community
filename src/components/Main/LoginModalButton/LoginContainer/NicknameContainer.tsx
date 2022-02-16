@@ -83,7 +83,6 @@ const NicknameContainer = (prop: Props) => {
   return (
     <S.Container>
       <Title>닉네임과 아바타를 선택해주세요.</Title>
-      <S.Subtitle>반갑습니다!</S.Subtitle>
       <Body>
         <AvatarSelect
           avatarId={avatarId}
