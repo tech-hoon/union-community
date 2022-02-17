@@ -85,7 +85,7 @@ const UploadPost = () => {
           {attachments.map((attachmentUrl, id) => (
             <ThumbnailWrapper key={id}>
               <Thumbnail src={attachmentUrl} alt='' />
-              <ThumbnailDeleteBtn data-id={id} onClick={onDeleteAttachment}>
+              <ThumbnailDeleteBtn type='button' data-id={id} onClick={onDeleteAttachment}>
                 <DeleteIcon />
               </ThumbnailDeleteBtn>
             </ThumbnailWrapper>
@@ -159,13 +159,18 @@ const Select = styled.select`
   width: 160px;
   font-size: 13px;
   line-height: 27px;
-  padding: 2px 0px;
+  padding: 2px 8px;
   border-radius: 5px;
-  text-align: center;
 `;
 const Option = styled.option``;
 
 const UploadImageBtn = styled.label`
+  flex: none;
+  height: 100px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    height: 80px;
+  }
   cursor: pointer;
 `;
 
@@ -178,6 +183,7 @@ const ThumbnailsBox = styled.ol`
   display: flex;
   gap: 5px;
   margin: 20px 0 47px;
+  overflow-x: auto;
 `;
 
 const ThumbnailDeleteBtn = styled.button`
@@ -189,12 +195,15 @@ const ThumbnailDeleteBtn = styled.button`
 `;
 
 const Thumbnail = styled.img`
-  width: 100%;
-  box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
+  height: 100px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    height: 80px;
+  }
 `;
 
 const ThumbnailWrapper = styled.li`
-  width: 100px;
+  flex: none;
   position: relative;
 `;
 
@@ -209,12 +218,13 @@ const ButtonBox = styled.div`
 const Button = styled.button`
   font-weight: 600;
   font-size: 1rem;
-  padding: 12px 46px;
+  padding: 8px 36px;
   border: 1px solid rgb(24, 160, 251);
   border-radius: 10px;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 15px;
+    padding: 12px 46px;
     width: 100%;
   }
 `;
