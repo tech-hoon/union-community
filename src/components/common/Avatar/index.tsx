@@ -11,7 +11,6 @@ import Avatar8 from './Avatar8';
 import Avatar9 from './Avatar9';
 import Avatar10 from './Avatar10';
 import DefaultAvatar from './DefaultAvatar';
-import AdminAvatar from './AdminAvatar';
 
 interface Props {
   avatarId: number;
@@ -21,7 +20,7 @@ interface Props {
 const CurrentAvatar = ({ avatarId }: Props) => {
   switch (avatarId) {
     case 0:
-      return <AdminAvatar />;
+      return <DefaultAvatar color='#18A0FB' />;
     case 1:
       return <Avatar1 />;
     case 2:
@@ -62,12 +61,12 @@ interface IWrapper {
 
 const Wrapper = styled.div<IWrapper>`
   border-radius: 50%;
-  width: ${(props) => props.size || 32}px;
-  height: ${(props) => props.size || 32}px;
+  width: ${(props) => props.size || 30}px;
+  height: ${(props) => props.size || 30}px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.3px solid ${({ avatarId }) => (avatarId === 0 ? '#18A0FB' : 'gray')};
+  border: 1px solid ${({ avatarId }) => (avatarId === 0 ? '#18A0FB' : 'black')};
   background-color: white;
   overflow: hidden;
 `;

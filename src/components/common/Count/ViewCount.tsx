@@ -11,7 +11,7 @@ const ViewCount = ({ size, count }: Props) => {
   return (
     <Wrapper>
       <Eye color='#666' />
-      <Count size={size || `14px`}>{count}</Count>
+      <Count size={size || `13px`}>{count}</Count>
     </Wrapper>
   );
 };
