@@ -17,7 +17,6 @@ import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { urlParsingRegex } from 'utils/regex';
 import { debounce } from 'lodash';
 
-import { storageService } from 'service/firebase';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import CommentCount from 'components/common/Count/CommentCount';
 import ViewCount from 'components/common/Count/ViewCount';
@@ -30,6 +29,8 @@ import UserMenuModal from 'components/common/Portal/UserMenuModal';
 import { commentState } from 'store/comment';
 import { toDateStringByFormating } from 'utils/date';
 import BottomBanner from 'components/common/Banner/BottomBanner';
+import { storageService } from 'service/firebase';
+import ImageSlider from 'components/common/Slider/ImageSlider';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -51,9 +52,19 @@ const PostDetail = () => {
     onCloseModal: onCloseUserMenu,
   } = useModal();
 
+  const [imageIndex, setImageIndex] = useState<number>(0);
+
+  const {
+    modalOpened: sliderOpened,
+    onOpenModal: onOpenSlider,
+    onCloseModal: onCloseSlider,
+  } = useModal();
+
   const onDeletePost = async (id: string) => {
     await deletePost(id);
-    post?.attachment_url!! && (await storageService.refFromURL(post?.attachment_url!!).delete());
+    (post?.attachment_url || []).forEach(async (attachmentUrl: string) => {
+      await storageService.refFromURL(attachmentUrl).delete();
+    });
     history.push({ pathname: '/home', state: 'isDeleted' });
   };
 
@@ -133,7 +144,7 @@ const PostDetail = () => {
           <PostContainer>
             <ROW_1>
               <Title>{post.title}</Title>
-              <IsEdited>{post.is_edited && `수정됨 `}</IsEdited>
+              {/* <IsEdited>{post.is_edited && `수정됨 `}</IsEdited> */}
             </ROW_1>
             <ROW_2>
               <ProfileBox onClick={onOpenUserMenu}>
@@ -141,7 +152,7 @@ const PostDetail = () => {
                 <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
                 <CreatedAt>{toDateStringByFormating(post.created_at, false, '.')}</CreatedAt>
               </ProfileBox>
-              {!!post.attachment_url && <ImageIcon size='24px' />}
+              {!!post.attachment_url.length && <ImageIcon size='24px' />}
               <Category color={categoryColor(post.category)}>{post.category}</Category>
             </ROW_2>
             <ROW_3>
@@ -154,7 +165,20 @@ const PostDetail = () => {
             </ROW_3>
             <ContentWrapper>
               <Content dangerouslySetInnerHTML={contentMarkup} />
-              {post.attachment_url?.length ? <Images src={post.attachment_url} alt='' /> : <></>}
+              <ImagesContainer>
+                {!!post.attachment_url &&
+                  (post?.attachment_url || []).map((url, id) => (
+                    <Image
+                      src={url}
+                      alt='image'
+                      key={id}
+                      onClick={() => {
+                        setImageIndex(id);
+                        onOpenSlider();
+                      }}
+                    />
+                  ))}
+              </ImagesContainer>
             </ContentWrapper>
             <CountBox>
               <ViewCount size='16px' count={post.visitor_list?.length} />
@@ -193,6 +217,7 @@ const PostDetail = () => {
         )}
       </Wrapper>
 
+      {/* 삭제 경고 모달 */}
       {modalOpened && (
         <PortalContainer onClose={onCloseModal}>
           <AlertModal
@@ -204,6 +229,7 @@ const PostDetail = () => {
         </PortalContainer>
       )}
 
+      {/* 사용자 메뉴 모달 */}
       {userMenuOpened && !isCreator && post && (
         <PortalContainer onClose={onCloseUserMenu}>
           <UserMenuModal
@@ -211,6 +237,13 @@ const PostDetail = () => {
             onCloseModal={onCloseUserMenu}
             isSecret={isSecret}
           />
+        </PortalContainer>
+      )}
+
+      {/* 이미지 슬라이더 모달 */}
+      {sliderOpened && post?.attachment_url.length && (
+        <PortalContainer onClose={onCloseSlider}>
+          <ImageSlider imageUrls={post.attachment_url as string[]} startIndex={imageIndex} />
         </PortalContainer>
       )}
     </>
@@ -253,13 +286,12 @@ const Title = styled.h1`
 `;
 
 const Category = styled.div`
-  max-width: 80px;
   text-align: center;
   background-color: ${(props) => props.color};
-  color: #eeeeee;
+  color: #fff;
   border-radius: 16px;
   padding: 4px 12px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1;
 `;
 
@@ -303,16 +335,17 @@ interface ICreator {
 }
 
 const Creator = styled.span<ICreator>`
-  font-weight: 500;
+  font-weight: bold;
   font-size: 1.2em;
   margin-bottom: 1.2px;
-  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.MAIN)};
+  color: ${({ theme, isSecret }) => (isSecret ? '#000' : theme.color.MAIN)};
+  user-select: none;
 `;
 
 const CountBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2.6px;
 `;
 
 const Btn = styled.button`
@@ -334,13 +367,13 @@ const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 12px;
   color: #999;
   margin-left: auto;
   padding-right: 1.2px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.9rem;
+    font-size: 10px;
   }
 `;
 
@@ -351,7 +384,7 @@ const IsEdited = styled(CreatedAt)`
 `;
 
 const ContentWrapper = styled.section`
-  min-height: 100px;
+  min-height: 20vh;
   margin: 12px 0 36px;
 `;
 
@@ -366,14 +399,19 @@ const Content = styled.div`
   }
 `;
 
-const Images = styled.img`
-  max-width: 500px;
-  margin-top: 12px;
-  margin-bottom: 24px;
+const ImagesContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+`;
 
-  @media ${({ theme }) => theme.size.mobile} {
-    max-width: 300px;
-  }
+const Image = styled.img`
+  flex: none;
+  height: 150px;
+  margin-top: 30px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  -webkit-user-drag: none;
 `;
 
 const Button = styled.button`
