@@ -1,5 +1,11 @@
 const EmptyImage = () => (
-  <svg width='69' height='69' viewBox='0 0 69 69' fill='none' xmlns='http://www.w3.org/2000/svg'>
+  <svg
+    width='100%'
+    height='100%'
+    viewBox='0 0 69 69'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
     <path
       d='M47 19.667H56'
       stroke='#5C5C5C'
