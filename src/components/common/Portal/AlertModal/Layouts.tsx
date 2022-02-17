@@ -17,6 +17,8 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 36px;
+    background-color: white;
+    border-radius: 8px;
 
     overflow: hidden;
   `,

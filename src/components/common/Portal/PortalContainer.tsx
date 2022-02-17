@@ -5,10 +5,10 @@ import Portal from './Portal';
 interface Props {
   onClose: () => void;
   children: ReactNode;
-  overlay?: boolean;
+  center?: boolean;
 }
 
-const PortalContainer = ({ onClose, children, overlay = true }: Props) => {
+const PortalContainer = ({ onClose, children, center = true }: Props) => {
   const portalRef = useRef<HTMLDivElement>(null);
 
   const onOutsideClick = useCallback(
@@ -30,7 +30,7 @@ const PortalContainer = ({ onClose, children, overlay = true }: Props) => {
   return (
     <Portal>
       <Background>
-        {overlay ? <Overlay ref={portalRef}>{children}</Overlay> : <>{children}</>}
+        {center ? <Overlay ref={portalRef}>{children}</Overlay> : <>{children}</>}
       </Background>
     </Portal>
   );
@@ -53,8 +53,5 @@ const Overlay = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   margin: auto;
-  background-color: white;
-  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 20%);
-  border-radius: 8px;
 `;
 export default memo(PortalContainer);

@@ -119,7 +119,7 @@ const Home = () => {
         <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
           <UploadIcon />
           {uploadButtonOpened && (
-            <PortalContainer onClose={onUploadClick} overlay={false}>
+            <PortalContainer onClose={onUploadClick} center={false}>
               <UploadButtonModal />
             </PortalContainer>
           )}
