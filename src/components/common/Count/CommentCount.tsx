@@ -11,7 +11,7 @@ const CommentCount = ({ size, count }: Props) => {
   return (
     <Wrapper>
       <Comment width='17' height='14' />
-      <Count size={size || `14px`}>{count}</Count>
+      <Count size={size || `13px`}>{count}</Count>
     </Wrapper>
   );
 };

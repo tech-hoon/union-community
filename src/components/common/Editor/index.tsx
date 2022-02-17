@@ -18,20 +18,32 @@ const Wrapper = styled.div``;
 
 const Container = styled.textarea`
   width: 100%;
-  height: 350px;
+  height: 40vh;
 
   margin: 0 auto;
-  padding: 12px;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #b0b0b0;
 
   color: #292929;
   font-size: 1rem;
   resize: none;
 
   background-color: transparent;
-  /* border: 1px solid #888; */
   overflow: auto;
   outline: none;
   box-shadow: none;
+
+  &::placeholder {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    color: #b0b0b0;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      font-size: 15px;
+    }
+  }
 `;
 
 export default Editor;

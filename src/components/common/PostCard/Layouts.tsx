@@ -8,8 +8,6 @@ import Avatar from 'components/common/Avatar';
 
 export const Layouts = {
   Wrapper: styled.ul`
-    min-height: 60vh;
-
     max-width: ${({ theme }) => theme.container.maxWidth};
     padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
 
@@ -66,6 +64,7 @@ export const Layouts = {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-right: 2px;
   `,
 
   ImageIcon: styled(PhotoLibrary)`
@@ -104,6 +103,15 @@ export const Layouts = {
     gap: 4px;
   `,
 
+  CreatedAt: styled.p`
+    font-size: 11px;
+    font-weight: 500;
+    color: #b0b0b0;
+    margin-left: 5px;
+    margin-top: 1.5px;
+    flex: 1;
+  `,
+
   CountBox: styled.div`
     display: flex;
     align-items: center;
@@ -121,7 +129,7 @@ export const Layouts = {
     flex: 1;
 
     font-weight: 500;
-    color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.MAIN)};
+    color: ${({ theme, isSecret }) => (isSecret ? '#000' : theme.color.MAIN)};
     font-size: 16px;
 
     @media ${({ theme }) => theme.size.mobile} {

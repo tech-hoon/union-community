@@ -40,7 +40,7 @@ const MypageDropdown = () => {
 const Wrapper = styled.ul`
   position: absolute;
   z-index: 2000;
-  box-shadow: 0 0 15px 1px rgb(0 0 0 / 25%);
+  box-shadow: 0 0 15px 1px rgb(0 0 0 / 5%);
   width: 140px;
   user-select: none;
 

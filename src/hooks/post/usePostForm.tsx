@@ -1,4 +1,4 @@
-import { useState, RefObject, useEffect } from 'react';
+import React, { useState, RefObject, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,42 +13,61 @@ interface Props {
   categoryRef: RefObject<HTMLSelectElement | null>;
   contentRef: RefObject<any>;
   mode: 'add' | 'update';
-  prevPost: any | null;
+  prevPost: PostType | null;
 }
 
 const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Props) => {
   const history = useHistory();
-  const [attachment, setAttachment] = useState('');
+  const [attachments, setAttachment] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [errorInfo, setErrorInfo] = useState<string | null>();
+  const [errorInfo, setErrorInfo] = useState<boolean>();
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   const onEditorCancle = () => history.push('/');
 
-  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event: any) => {
-    const file = event.target.files[0];
+  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const files = (event.target as HTMLInputElement).files;
     const reader = new FileReader();
 
-    reader.onloadend = (finishedEvent: any) => {
-      const {
-        currentTarget: { result },
-      } = finishedEvent;
+    const readFile = (index: number) => {
+      if (!!files) {
+        if (index >= files.length) {
+          return;
+        }
 
-      setAttachment(result);
+        const file = files[index];
+        reader.onloadend = (finishedEvent: any) => {
+          const {
+            currentTarget: { result },
+          } = finishedEvent;
+
+          setAttachment((prev) => [...prev, result]);
+          readFile(index + 1);
+        };
+        reader.readAsDataURL(file);
+      }
     };
-    if (!!file) {
-      reader.readAsDataURL(file);
-    }
+
+    readFile(0);
   };
 
-  const onDeleteAttachment: React.MouseEventHandler<HTMLButtonElement> = () => {
-    setAttachment('');
+  const onDeleteAttachment: React.MouseEventHandler<HTMLElement> = (event) => {
+    const target = event.target as HTMLElement;
+    const id = Number(target.dataset.id);
+    const prevArr = [...attachments];
+    prevArr.splice(id, 1);
+
+    setAttachment(prevArr);
   };
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    let attachmentUrl = '';
+    const urls: string[] = [];
+
+    const prevAttachments = (prevPost?.attachment_url || []).filter(
+      (x) => !attachments.includes(x)
+    );
 
     if (
       !checkPostValidation(
@@ -57,38 +76,38 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
         contentRef.current?.value
       )
     ) {
-      setErrorInfo('*내용을 모두 작성해주세요.');
+      setErrorInfo(true);
       return;
     }
 
     // 첨부 파일 있고,
-    if (attachment !== '') {
-      // 기존 attachment_url 있는 경우 그대로 db로
-      if (attachment.indexOf('firebasestorage') !== -1) {
-        attachmentUrl = attachment;
-      } else {
-        // 기존에 있는거 삭제
-        if (!!prevPost?.attachment_url) {
-          await storageService.refFromURL(prevPost.attachment_url).delete();
-        }
+    if (attachments.length) {
+      for (let i = 0; i < attachments.length; i++) {
+        // 기존 attachment_url 있는 경우 그대로 db로
+        if (attachments[i].indexOf('firebasestorage') !== -1) {
+          urls.push(attachments[i]);
+        } else {
+          const attachmentRef = storageService.ref().child(`${loginUser.uid}/${uuidv4()}`);
+          const response = await attachmentRef.putString(attachments[i], 'data_url');
+          const url = await response.ref.getDownloadURL();
 
-        // 새로운 attachment, url 따와서
-        const attachmentRef = storageService.ref().child(`${loginUser.uid}/${uuidv4()}`);
-        const response = await attachmentRef.putString(attachment, 'data_url');
-        attachmentUrl = await response.ref.getDownloadURL();
-      }
-    } else {
-      // 기존에 있는거 삭제
-      if (!!prevPost?.attachment_url) {
-        await storageService.refFromURL(prevPost.attachment_url).delete();
+          console.log('url', url);
+
+          urls.push(url);
+        }
       }
     }
+
+    // 새로운 첨부파일과 겹치지 않는 기존 파일 db 제거
+    prevAttachments.forEach(async (attachment) => {
+      await storageService.refFromURL(attachment).delete();
+    });
 
     const postInput = {
       title: titleRef.current?.value!!,
       category: categoryRef.current?.value!!,
       content: contentRef.current?.value.replaceAll('\n', '<br/>'),
-      attachment_url: attachmentUrl,
+      attachment_url: urls,
     };
 
     if (mode === 'add') {
@@ -110,11 +129,10 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
       });
       return;
     }
-    return;
   };
 
   return {
-    attachment,
+    attachments,
     setAttachment,
     setIsUploading,
     onEditorCancle,

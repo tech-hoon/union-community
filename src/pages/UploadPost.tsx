@@ -7,7 +7,8 @@ import { useEffect, useRef } from 'react';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { CATEGORY_LIST } from 'utils/config';
 import Circle from 'components/common/Loading/Circle';
-import { Cancel } from '@styled-icons/material';
+import DeleteIcon from 'assets/icons/DeleteIcon';
+import EmptyImage from 'assets/icons/EmptyImage';
 
 interface ILocationState {
   mode: 'add' | 'update';
@@ -27,7 +28,7 @@ const UploadPost = () => {
 
   const {
     setAttachment,
-    attachment,
+    attachments,
     errorInfo,
     onEditorCancle,
     onSubmit,
@@ -41,6 +42,7 @@ const UploadPost = () => {
     mode,
     prevPost: initialPost || null,
   });
+
   return (
     <Wrapper>
       <Navbar />
@@ -53,7 +55,7 @@ const UploadPost = () => {
         <HR />
 
         <CategoryBox>
-          <Label>카테고리: </Label>
+          <Label>카테고리 : </Label>
           <Select ref={categoryRef} name='카테고리' defaultValue={initialPost?.category || ''}>
             <Option disabled value=''>
               카테고리를 선택해주세요
@@ -68,38 +70,45 @@ const UploadPost = () => {
               );
             })}
           </Select>
-          <UploadImageBtn htmlFor='upload-image'>
-            <PhotoLibrary />
-          </UploadImageBtn>
-          <UploadInput id='upload-image' type='file' accept='image/*' onChange={onFileChange} />
+          <UploadInput
+            id='upload-image'
+            type='file'
+            accept='image/*'
+            multiple
+            onChange={onFileChange}
+          />
         </CategoryBox>
 
         <Editor ref={contentRef} value={initialPost?.content || null} />
 
-        {attachment && (
-          <ThumbnailsBox>
-            <ThumbnailTitle>첨부 사진</ThumbnailTitle>
-            <ThumbnailWrapper>
-              <Thumbnail src={attachment} alt='' />
-              <ThumbnailDeleteBtn onClick={onDeleteAttachment} type='button'>
-                <Cancel size='20px' />
+        <ThumbnailsBox>
+          {attachments.map((attachmentUrl, id) => (
+            <ThumbnailWrapper key={id}>
+              <Thumbnail src={attachmentUrl} alt='' />
+              <ThumbnailDeleteBtn type='button' data-id={id} onClick={onDeleteAttachment}>
+                <DeleteIcon />
               </ThumbnailDeleteBtn>
             </ThumbnailWrapper>
-          </ThumbnailsBox>
-        )}
+          ))}
+          <UploadImageBtn htmlFor='upload-image'>
+            <EmptyImage />
+          </UploadImageBtn>
+        </ThumbnailsBox>
+
         <ButtonBox>
           {!isUploading ? (
             <>
               <CancleBtn type='button' onClick={onEditorCancle}>
                 취소하기
               </CancleBtn>
-              <SubmitBtn type='submit'>등록하기</SubmitBtn>
+              <SubmitBtn type='submit' disabled={!!errorInfo}>
+                등록하기
+              </SubmitBtn>
             </>
           ) : (
             <Circle />
           )}
         </ButtonBox>
-        <ErrorInfo>{errorInfo}</ErrorInfo>
       </PostContainer>
     </Wrapper>
   );
@@ -131,31 +140,37 @@ const HR = styled.hr`
   margin: 12px 0;
 `;
 const Label = styled.label`
-  font-weight: 700;
-  font-size: 1em;
+  font-weight: bold;
+  font-size: 1rem;
 `;
 
 const CategoryBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 6px;
   margin: 20px 0;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.8rem;
-    gap: 12px;
+    margin: 16px 0 13px;
   }
 `;
 
 const Select = styled.select`
-  width: 200px;
-  font-size: 1em;
-  padding: 8px;
+  width: 160px;
+  font-size: 13px;
+  line-height: 27px;
+  padding: 2px 8px;
+  border-radius: 5px;
 `;
 const Option = styled.option``;
 
 const UploadImageBtn = styled.label`
-  width: 24px;
+  flex: none;
+  height: 100px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    height: 80px;
+  }
   cursor: pointer;
 `;
 
@@ -164,37 +179,32 @@ const UploadInput = styled.input`
 `;
 
 const ThumbnailsBox = styled.ol`
-  /* width: 100%; */
-  /* border: 1px solid #888; */
-  /* padding: 8px; */
-`;
-
-const ThumbnailTitle = styled.div`
-  margin: 12px 2px;
-  font-weight: 700;
-  font-size: 1em;
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  margin: 20px 0 47px;
+  overflow-x: auto;
 `;
 
 const ThumbnailDeleteBtn = styled.button`
   display: block;
-  font-size: 0.8rem;
   position: absolute;
-  top: -10px;
-  right: -14px;
+  top: 0px;
+  left: 0px;
   color: gray;
 `;
 
 const Thumbnail = styled.img`
-  width: 100%;
-  box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
+  height: 100px;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    height: 80px;
+  }
 `;
 
 const ThumbnailWrapper = styled.li`
-  width: 100px;
+  flex: none;
   position: relative;
-  /* padding: 8px; */
-  /* border: 1px solid #888; */
-  /* border-radius: 4px; */
 `;
 
 const ButtonBox = styled.div`
@@ -202,40 +212,35 @@ const ButtonBox = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-top: 1.5rem;
-  gap: 4px;
+  gap: 12px;
 `;
 
 const Button = styled.button`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1rem;
-  padding: 12px;
+  padding: 8px 36px;
   border: 1px solid rgb(24, 160, 251);
-  border-radius: 4px;
+  border-radius: 10px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.8rem;
-    padding: 8px;
+    font-size: 15px;
+    padding: 12px 46px;
+    width: 100%;
   }
 `;
 
 const CancleBtn = styled(Button)`
-  border: 1px solid gray;
-  color: gray;
+  border: 1px solid #b0b0b0;
+  color: #b0b0b0;
 `;
 const SubmitBtn = styled(Button)`
   background-color: rgb(24, 160, 251);
   color: white;
-`;
 
-const ErrorInfo = styled.p`
-  font-weight: 500;
-  font-size: 1rem;
-  color: #f77;
-  float: right;
-  margin-top: 12px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.8rem;
+  &:disabled {
+    background-color: #b0b0b0;
+    border: 1px solid #b0b0b0;
+    cursor: not-allowed;
   }
 `;
 

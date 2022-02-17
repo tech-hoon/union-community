@@ -13,7 +13,7 @@ interface IaddPostParams {
     title: string;
     category: string;
     content: string;
-    attachment_url: string;
+    attachment_url: string[];
   };
   uid: string;
 }
@@ -24,7 +24,7 @@ interface IupdatePostParams {
     title: string;
     category: string;
     content: string;
-    attachment_url: string;
+    attachment_url: string[];
   };
   uid: string;
 }

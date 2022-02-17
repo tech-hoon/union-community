@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Avatar from '../Avatar';
-import { CaretDown, CaretUp } from '@styled-icons/boxicons-regular';
+import ArrowUp from 'assets/icons/ArrowUp';
+import ArrowDown from 'assets/icons/ArrowDown';
+
 import { useState, memo, useEffect, useRef } from 'react';
 import MypageDropdown from './MypageDropdown';
 import { useRecoilValue } from 'recoil';
@@ -24,7 +26,7 @@ const ProfileBox = () => {
       <Name>{loginUser.nickname}</Name>
       <Avatar avatarId={loginUser?.avatar_id!!} size={32} />
       <IconWrapper>
-        {toggleOpened ? <CaretUp size='20' /> : <CaretDown size='20' />}
+        {toggleOpened ? <ArrowUp /> : <ArrowDown />}
         <Bottom>{toggleOpened && <MypageDropdown />}</Bottom>
       </IconWrapper>
     </Wrapper>
@@ -44,7 +46,7 @@ const IconWrapper = styled.div`
 
 const Name = styled.h3`
   font-weight: 700;
-  font-size: 1.1em;
+  font-size: 1.1rem;
 
   @media ${({ theme }) => theme.size.mobile} {
     display: none;

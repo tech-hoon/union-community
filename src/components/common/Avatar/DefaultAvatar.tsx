@@ -1,11 +1,24 @@
-import styled from 'styled-components';
-import { User } from '@styled-icons/fa-solid';
-const DefaultAvatar = () => {
-  return (
-    <>
-      <User size='20px' color='gray' />
-    </>
-  );
-};
+interface IProps {
+  color?: string;
+}
+
+const DefaultAvatar = ({ color = 'black' }: IProps) => (
+  <svg
+    width='100%'
+    height='100%'
+    viewBox='0 -3.2 16.3 19'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M8.17198 7.39473C10.214 7.39473 11.8693 5.73937 11.8693 3.69737C11.8693 1.65537 10.214 0 8.17198 0C6.12998 0 4.47461 1.65537 4.47461 3.69737C4.47461 5.73937 6.12998 7.39473 8.17198 7.39473Z'
+      fill={color}
+    />
+    <path
+      d='M8.15197 8.33691C4.09647 8.33691 0.72476 11.4714 0 15.6183C2.22106 17.7148 5.12832 18.8784 8.14567 18.8784C11.163 18.8784 14.0703 17.7148 16.2913 15.6183C15.5823 11.4714 12.2075 8.33691 8.15197 8.33691Z'
+      fill={color}
+    />
+  </svg>
+);
 
 export default DefaultAvatar;

@@ -41,7 +41,7 @@ export interface PostType {
   content: string;
   creator: UserType;
   created_at: number;
-  attachment_url: string | '';
+  attachment_url: [] | '';
   like_count: number;
   liker_list: string[];
   visitor_list: string[];
