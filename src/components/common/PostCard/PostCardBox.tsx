@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { PostType } from 'types';
 import { useHistory } from 'react-router-dom';
 import { categoryColor } from 'utils/categoryColor';
+import { toDateStringByFormating } from 'utils/date';
 
 import { Layouts as S } from './Layouts';
 
@@ -28,6 +29,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
               title,
               content,
               creator,
+              created_at,
               visitor_list,
               liker_list,
               comment_count,
@@ -39,7 +41,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
               <S.PostCard key={key} onClick={() => handleClick(id!!)}>
                 <S.Head>
                   <S.Title>{title}</S.Title>
-                  {!!attachment_url && <S.ImageIcon size='24px' />}
+                  {!!attachment_url.length && <S.ImageIcon size='24px' />}
                   <S.Category color={categoryColor(category)}>{category}</S.Category>
                 </S.Head>
                 <S.Content dangerouslySetInnerHTML={{ __html: content }} />
@@ -54,6 +56,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
                       </S.Creator>
                     </S.CreatorBox>
                   )}
+                  <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
                   <S.CountBox>
                     <S.ViewCount count={visitor_list.length} />
                     <S.CommentCount count={comment_count} />
@@ -65,7 +68,7 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
           }
         )
       ) : (
-        <h2>게시물이 없습니다.</h2>
+        <h2 style={{ height: '60vh' }}>게시물이 없습니다.</h2>
       )}
     </S.Wrapper>
   );

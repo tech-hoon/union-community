@@ -11,6 +11,7 @@ export const toDateStringByFormating = (
   const HOUR = 60 * MIN;
   const DAY = 24 * HOUR;
   const MONTH = 31 * DAY;
+  const YEAR = 12 * MONTH;
 
   if (timeDiff < 60) {
     return `방금전`;
@@ -26,6 +27,10 @@ export const toDateStringByFormating = (
 
   if (timeDiff < MONTH) {
     return `${Math.floor(timeDiff / DAY)}일전`;
+  }
+
+  if (timeDiff >= MONTH) {
+    return `${Math.floor(timeDiff / MONTH)}달전`;
   }
 
   const dateInstance = new Date(timestamp);
