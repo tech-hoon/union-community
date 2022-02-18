@@ -25,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
     background: none;
     padding:0;
     cursor: pointer;
+    user-select:none;
   }
 
   body{

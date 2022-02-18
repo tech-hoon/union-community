@@ -167,13 +167,12 @@ const MidWrapper = memo(styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-
   margin: 32px auto;
   justify-content: space-between;
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 95%;
-    margin: 19px auto;
+    margin: 24px auto 40px;
     padding: 0;
   }
 `);
