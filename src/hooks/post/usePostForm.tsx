@@ -20,10 +20,12 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   const history = useHistory();
   const [attachments, setAttachment] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [errorInfo, setErrorInfo] = useState<boolean>();
+  const [errorInfo, setErrorInfo] = useState<string>('');
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   const onEditorCancle = () => history.push('/');
+
+  const onErrorInfoReset = () => setErrorInfo('');
 
   const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const files = (event.target as HTMLInputElement).files;
@@ -41,7 +43,13 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
             currentTarget: { result },
           } = finishedEvent;
 
-          setAttachment((prev) => [...prev, result]);
+          setAttachment((prev) => {
+            if (prev.length >= 5) {
+              setErrorInfo('⚠️ 최대 5개까지 업로드할 수 있습니다.');
+              return prev;
+            }
+            return [...prev, result];
+          });
           readFile(index + 1);
         };
         reader.readAsDataURL(file);
@@ -76,7 +84,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
         contentRef.current?.value
       )
     ) {
-      setErrorInfo(true);
+      setErrorInfo('⚠️ 내용을 모두 입력해 주세요.');
       return;
     }
 
@@ -141,6 +149,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     onSubmit,
     isUploading,
     errorInfo,
+    onErrorInfoReset,
   };
 };
 

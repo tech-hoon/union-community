@@ -4,11 +4,13 @@ import usePostForm from 'hooks/post/usePostForm';
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
 import { useEffect, useRef } from 'react';
-import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { CATEGORY_LIST } from 'utils/config';
 import Circle from 'components/common/Loading/Circle';
 import DeleteIcon from 'assets/icons/DeleteIcon';
 import EmptyImage from 'assets/icons/EmptyImage';
+import useModal from 'hooks/common/useModal';
+import PortalContainer from 'components/common/Portal/PortalContainer';
+import AlertModal from 'components/common/Portal/AlertModal';
 
 interface ILocationState {
   mode: 'add' | 'update';
@@ -30,6 +32,7 @@ const UploadPost = () => {
     setAttachment,
     attachments,
     errorInfo,
+    onErrorInfoReset,
     onEditorCancle,
     onSubmit,
     onFileChange,
@@ -44,73 +47,80 @@ const UploadPost = () => {
   });
 
   return (
-    <Wrapper>
-      <Navbar />
-      <PostContainer onSubmit={onSubmit}>
-        <TitleInput
-          ref={titleRef}
-          placeholder='제목을 입력하세요'
-          defaultValue={initialPost?.title || ''}
-        />
-        <HR />
-
-        <CategoryBox>
-          <Label>카테고리 : </Label>
-          <Select ref={categoryRef} name='카테고리' defaultValue={initialPost?.category || ''}>
-            <Option disabled value=''>
-              카테고리를 선택해주세요
-            </Option>
-            {CATEGORY_LIST.map(({ kor }, id) => {
-              return (
-                kor !== '전체' && (
-                  <Option value={kor} key={id}>
-                    {kor}
-                  </Option>
-                )
-              );
-            })}
-          </Select>
-          <UploadInput
-            id='upload-image'
-            type='file'
-            accept='image/*'
-            multiple
-            onChange={onFileChange}
+    <>
+      <Wrapper>
+        <Navbar />
+        <PostContainer onSubmit={onSubmit}>
+          <TitleInput
+            ref={titleRef}
+            placeholder='제목을 입력하세요'
+            defaultValue={initialPost?.title || ''}
           />
-        </CategoryBox>
+          <HR />
 
-        <Editor ref={contentRef} value={initialPost?.content || null} />
+          <CategoryBox>
+            <Label>카테고리 : </Label>
+            <Select ref={categoryRef} name='카테고리' defaultValue={initialPost?.category || ''}>
+              <Option disabled value=''>
+                카테고리를 선택해주세요
+              </Option>
+              {CATEGORY_LIST.map(({ kor }, id) => {
+                return (
+                  kor !== '전체' && (
+                    <Option value={kor} key={id}>
+                      {kor}
+                    </Option>
+                  )
+                );
+              })}
+            </Select>
+            <UploadInput
+              id='upload-image'
+              type='file'
+              accept='image/*'
+              multiple
+              onChange={onFileChange}
+            />
+          </CategoryBox>
 
-        <ThumbnailsBox>
-          {attachments.map((attachmentUrl, id) => (
-            <ThumbnailWrapper key={id}>
-              <Thumbnail src={attachmentUrl} alt='' />
-              <ThumbnailDeleteBtn type='button' data-id={id} onClick={onDeleteAttachment}>
-                <DeleteIcon />
-              </ThumbnailDeleteBtn>
-            </ThumbnailWrapper>
-          ))}
-          <UploadImageBtn htmlFor='upload-image'>
-            <EmptyImage />
-          </UploadImageBtn>
-        </ThumbnailsBox>
+          <Editor ref={contentRef} value={initialPost?.content || null} />
 
-        <ButtonBox>
-          {!isUploading ? (
-            <>
-              <CancleBtn type='button' onClick={onEditorCancle}>
-                취소하기
-              </CancleBtn>
-              <SubmitBtn type='submit' disabled={!!errorInfo}>
-                등록하기
-              </SubmitBtn>
-            </>
-          ) : (
-            <Circle />
-          )}
-        </ButtonBox>
-      </PostContainer>
-    </Wrapper>
+          <ThumbnailsBox>
+            {attachments.map((attachmentUrl, id) => (
+              <ThumbnailWrapper key={id}>
+                <Thumbnail src={attachmentUrl} alt='' />
+                <ThumbnailDeleteBtn type='button' data-id={id} onClick={onDeleteAttachment}>
+                  <DeleteIcon />
+                </ThumbnailDeleteBtn>
+              </ThumbnailWrapper>
+            ))}
+            <UploadImageBtn htmlFor='upload-image'>
+              <EmptyImage />
+            </UploadImageBtn>
+          </ThumbnailsBox>
+
+          <ButtonBox>
+            {!isUploading ? (
+              <>
+                <CancleBtn type='button' onClick={onEditorCancle}>
+                  취소하기
+                </CancleBtn>
+                <SubmitBtn type='submit'>등록하기</SubmitBtn>
+              </>
+            ) : (
+              <Circle />
+            )}
+          </ButtonBox>
+        </PostContainer>
+      </Wrapper>
+
+      {/* 알림 모달 */}
+      {errorInfo && (
+        <PortalContainer onClose={onErrorInfoReset}>
+          <AlertModal title={errorInfo} onCloseModal={onErrorInfoReset} />
+        </PortalContainer>
+      )}
+    </>
   );
 };
 
@@ -166,9 +176,11 @@ const Option = styled.option``;
 
 const UploadImageBtn = styled.label`
   flex: none;
+  width: 100px;
   height: 100px;
 
   @media ${({ theme }) => theme.size.mobile} {
+    width: 80px;
     height: 80px;
   }
   cursor: pointer;
@@ -184,6 +196,7 @@ const ThumbnailsBox = styled.ol`
   gap: 5px;
   margin: 20px 0 47px;
   overflow-x: auto;
+  overflow-y: hidden;
 `;
 
 const ThumbnailDeleteBtn = styled.button`

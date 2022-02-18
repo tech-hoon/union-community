@@ -3,7 +3,7 @@ import S from './Layouts';
 interface Props {
   title: string;
   twoButton?: boolean;
-  callback: () => void;
+  callback?: () => void;
   onCloseModal: () => void;
 }
 
@@ -15,7 +15,7 @@ const AlertModal = ({ title, twoButton = false, callback, onCloseModal }: Props)
         {twoButton && <S.CancelButton onClick={onCloseModal}>취소</S.CancelButton>}
         <S.OkayButton
           onClick={() => {
-            callback();
+            callback && callback();
             onCloseModal();
           }}
         >
