@@ -10,7 +10,6 @@ export const CATEGORY_LIST = [
   { eng: 'free', kor: '자유', color: '#E8581A' },
   { eng: 'info/ad', kor: '정보/홍보', color: '#EFBE3F' },
   { eng: 'store', kor: '장터/나눔', color: '#18B828' },
-  { eng: 'study', kor: '스터디', color: '#F03D4E' },
   { eng: 'study/club', kor: '스터디/동아리', color: '#F03D4E' },
   { eng: 'secret', kor: '비밀', color: '#884DD9' },
 ];
