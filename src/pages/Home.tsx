@@ -115,7 +115,7 @@ const Home = () => {
           <OrderbyBox />
         </MidWrapper>
         {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
-        {/* {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>} */}
+        {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
         <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
           <UploadIcon />
           {uploadButtonOpened && (
@@ -172,7 +172,7 @@ const MidWrapper = memo(styled.div`
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 95%;
-    margin: 24px auto 40px;
+    margin: 20px auto;
     padding: 0;
   }
 `);
@@ -186,11 +186,11 @@ const RefreshButton = memo(styled.button`
 
     100% {
       opacity: 1;
-      top: 18%;
+      top: 15%;
     }
   }
 
-  font-size: 1rem;
+  font-size: 15px;
   padding: 12px 20px;
 
   top: -200%;
@@ -199,15 +199,10 @@ const RefreshButton = memo(styled.button`
   background-color: white;
   color: black;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px 0px rgb(0 0 0 / 25%);
+  box-shadow: 0 0 10px 0px rgb(0 0 0 / 20%);
   border-radius: 50px;
 
   animation: popUpAnimation 0.5s ease 0s 1 normal forwards running;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.8rem;
-    padding: 6px 16px;
-  }
 `);
 
 export default memo(Home);
