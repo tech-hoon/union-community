@@ -29,7 +29,13 @@ const CategoryBox = (props: Props) => {
   return (
     <Wrapper ref={ref}>
       {CATEGORY_LIST.map(({ kor }, id) => (
-        <Menu onClick={() => onMenuClick(kor)} key={id} value={kor} isClicked={category === kor}>
+        <Menu
+          onClick={() => onMenuClick(kor)}
+          key={id}
+          value={kor}
+          isClicked={category === kor}
+          categoryColor={categoryColor(kor)}
+        >
           {kor}
         </Menu>
       ))}
@@ -44,46 +50,50 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 12.5px auto 0;
+  gap: 10px;
+  user-select: none;
 
-  @media ${({ theme }) => theme.size.mobile} {
-    width: 100%;
-    padding: 0;
-    font-size: 1em;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
+  @media ${({ theme }) => theme.size.tablet} {
     overflow-x: auto;
   }
 
-  user-select: none;
-  &::-webkit-scrollbar {
-    display: none;
+  @media ${({ theme }) => theme.size.mobile} {
+    font-size: 1em;
+    padding: 0 20px;
+    overflow-x: auto;
   }
 `;
 
 interface IMenu {
   isClicked: boolean;
+  categoryColor: string;
 }
 
 const Menu = styled.button<IMenu>`
-  width: 100%;
-  height: 40px;
-  border-radius: 16px;
-  background-color: ${({ isClicked, theme }) => (isClicked ? theme.color.MAIN : '#fff')};
-  color: ${(props) => (props.isClicked ? '#fff' : '#000')};
+  flex: none;
+  font-size: 16px;
+  border-radius: 100px;
+  padding: 12px 40px;
 
-  font-size: 1em;
-  font-weight: 500;
-  margin: 2px;
+  ${({ isClicked, categoryColor }) =>
+    isClicked
+      ? css`
+          font-weight: bold;
+          color: white;
+          background-color: ${categoryColor};
+        `
+      : css`
+          color: black;
+          background-color: #fff;
+        `}
 
   @media ${({ theme }) => theme.size.mobile} {
-    height: 36px;
-    font-size: 0.9em;
-  }
-
-  @media ${({ theme }) => theme.size.mobileS} {
-    width: 60px;
-    height: 32px;
-    font-size: 0.75em;
-    flex: 0 0 auto;
+    font-size: 13px;
+    padding: 10px 20px;
   }
 `;
 

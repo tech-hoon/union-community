@@ -66,7 +66,8 @@ const UploadPost = () => {
               </Option>
               {CATEGORY_LIST.map(({ kor }, id) => {
                 return (
-                  kor !== '전체' && (
+                  kor !== '전체' &&
+                  kor !== '공지' && (
                     <Option value={kor} key={id}>
                       {kor}
                     </Option>
