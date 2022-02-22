@@ -39,3 +39,8 @@ export const REPORT_LIST = [
 ];
 
 export const AVATAR_COUNT = 10;
+
+//Product
+export const PRODUCT_TYPE = ['구매', '판매', '물물교환', '나눔'];
+
+export const PRODUCT_STATUS = ['판매중', '예약중', '거래완료'];
