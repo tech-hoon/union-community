@@ -1,4 +1,4 @@
-import { Layouts as S } from 'components/Mypage/Layouts';
+import { Layouts as S } from 'pages/MyPage/Layouts';
 import { BookHeart } from '@styled-icons/boxicons-regular';
 import { useState, useEffect } from 'react';
 import { getMyLikes } from 'api/user';

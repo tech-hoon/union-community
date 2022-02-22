@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Layouts as S } from 'components/Mypage/Layouts';
+import { Layouts as S } from 'pages/MyPage/Layouts';
 import CommentNotification from 'components/MyNotification/CommentNotification';
 import Bell from 'assets/icons/Bell';
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Layouts as S } from 'components/Mypage/Layouts';
+import { Layouts as S } from 'pages/MyPage/Layouts';
 import { Book } from '@styled-icons/boxicons-regular';
 import { getMyPosts } from 'api/user';
 import { useState, useEffect } from 'react';

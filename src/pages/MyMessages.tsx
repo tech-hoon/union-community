@@ -1,7 +1,7 @@
 import ReceivedMessage from 'components/MyMessages/messages/ReceivedMessage';
 import SentMessage from 'components/MyMessages/messages/SentMessage';
 import styled from 'styled-components';
-import { Layouts as S } from 'components/Mypage/Layouts';
+import { Layouts as S } from 'pages/MyPage/Layouts';
 import { useState } from 'react';
 import Messenger from 'assets/icons/Messenger';
 

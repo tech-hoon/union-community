@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import AvatarSelect from 'components/common/Avatar/AvatarSelect';
 import CustomInput from 'components/common/CustomInput';
 import { useRef, useState } from 'react';
-import { Layouts as S } from 'components/Mypage/Layouts';
+import { Layouts as S } from 'pages/MyPage/Layouts';
 import { SettingsOutline } from '@styled-icons/evaicons-outline';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { loginUserState } from 'store/loginUser';
