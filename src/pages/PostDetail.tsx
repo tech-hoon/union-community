@@ -31,6 +31,7 @@ import { toDateStringByFormating } from 'utils/date';
 import BottomBanner from 'components/common/Banner/BottomBanner';
 import { storageService } from 'service/firebase';
 import ImageSlider from 'components/common/Slider/ImageSlider';
+import CategoryLabel from 'components/common/CategoryLabel';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -153,7 +154,9 @@ const PostDetail = () => {
                 <CreatedAt>{toDateStringByFormating(post.created_at, false, '.')}</CreatedAt>
               </ProfileBox>
               {!!post.attachment_url.length && <ImageIcon size='24px' />}
-              <Category color={categoryColor(post.category)}>{post.category}</Category>
+              <Category size='sm' color={categoryColor(post.category)} isClicked={true}>
+                {post.category}
+              </Category>
             </ROW_2>
             <ROW_3>
               {isCreator && (
@@ -283,16 +286,6 @@ const Title = styled.h1`
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1.5rem;
   }
-`;
-
-const Category = styled.div`
-  text-align: center;
-  background-color: ${(props) => props.color};
-  color: #fff;
-  border-radius: 16px;
-  padding: 4px 12px;
-  font-size: 0.9rem;
-  line-height: 1;
 `;
 
 const ImageIcon = styled(PhotoLibrary)`
@@ -452,6 +445,10 @@ const CommentWrite = styled.textarea`
     font-size: 0.8rem;
   }
 `;
+
+const Category = styled(CategoryLabel)`
+  font-weight : 500;
+`
 
 const SubmitBtn = styled(Button)`
   width: 80px;

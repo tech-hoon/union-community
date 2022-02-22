@@ -42,7 +42,9 @@ const PostCardBox = ({ posts, mypage = false }: Props) => {
                 <S.Head>
                   <S.Title>{title}</S.Title>
                   {!!attachment_url.length && <S.ImageIcon size='24px' />}
-                  <S.Category color={categoryColor(category)}>{category}</S.Category>
+                  <S.Category size='sm' isClicked={true} color={categoryColor(category)}>
+                    {category}
+                  </S.Category>
                 </S.Head>
                 <S.Content dangerouslySetInnerHTML={{ __html: content }} />
                 <S.CardBottom>

@@ -5,6 +5,7 @@ import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';
 import CommentCount from 'components/common/Count/CommentCount';
 import Avatar from 'components/common/Avatar';
+import CategoryLabel from '../CategoryLabel';
 
 export const Layouts = {
   Wrapper: styled.ul`
@@ -137,12 +138,8 @@ export const Layouts = {
     }
   `,
 
-  Category: styled.span<ICategory>`
-    background-color: ${(props) => props.color};
-    color: #eeeeee;
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 0.9em;
+  Category: styled(CategoryLabel)`
+    font-weight: 500;
     float: right;
   `,
 };
@@ -151,8 +148,4 @@ export default Layouts;
 
 interface ICreator {
   isSecret: boolean;
-}
-
-interface ICategory {
-  color: string;
 }

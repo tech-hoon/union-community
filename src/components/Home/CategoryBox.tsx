@@ -1,10 +1,11 @@
 import { useRecoilState } from 'recoil';
 import { memo, useLayoutEffect, useRef } from 'react';
 import { postsCategoryState } from 'store/post';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { CATEGORY_LIST } from 'utils/config';
 import { categoryColor } from 'utils/categoryColor';
 import useLocalStorage from 'hooks/common/useLocalStorage';
+import CategoryLabel from 'components/common/CategoryLabel';
 
 interface Props {}
 
@@ -29,15 +30,16 @@ const CategoryBox = (props: Props) => {
   return (
     <Wrapper ref={ref}>
       {CATEGORY_LIST.map(({ kor }, id) => (
-        <Menu
+        <Category
+          size='lg'
           onClick={() => onMenuClick(kor)}
           key={id}
           value={kor}
           isClicked={category === kor}
-          categoryColor={categoryColor(kor)}
+          color={categoryColor(kor)}
         >
           {kor}
-        </Menu>
+        </Category>
       ))}
     </Wrapper>
   );
@@ -68,29 +70,7 @@ const Wrapper = styled.div`
   }
 `;
 
-interface IMenu {
-  isClicked: boolean;
-  categoryColor: string;
-}
-
-const Menu = styled.button<IMenu>`
-  flex: none;
-  font-size: 16px;
-  border-radius: 100px;
-  padding: 12px 40px;
-
-  ${({ isClicked, categoryColor }) =>
-    isClicked
-      ? css`
-          font-weight: bold;
-          color: white;
-          background-color: ${categoryColor};
-        `
-      : css`
-          color: black;
-          background-color: #fff;
-        `}
-
+const Category = styled(CategoryLabel)`
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 13px;
     padding: 10px 20px;
