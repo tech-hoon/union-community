@@ -1,3 +1,5 @@
+import * as SlackWebhook from '@slack/client';
+
 interface IResidentAuthMsg {
   name: string;
   uid: string;
@@ -22,14 +24,19 @@ interface IReportedUserMsg {
   };
 }
 
-export const RESIDENT_AUTH_MSG = ({ name, uid, email, resident_auth_image }: IResidentAuthMsg) => ({
-  text: '💡새로운 사용자가 등록되었습니다.',
+export const RESIDENT_AUTH_MSG = ({
+  name,
+  uid,
+  email,
+  resident_auth_image,
+}: IResidentAuthMsg): SlackWebhook.IncomingWebhookSendArguments => ({
+  text: `💡새로운 사용자가 등록되었습니다`,
   blocks: [
     {
       type: 'header',
       text: {
         type: 'plain_text',
-        text: '💡 새로운 사용자가 등록되었습니다.',
+        text: `💡 새로운 사용자가 등록되었습니다:${uid}`,
       },
     },
     {
@@ -95,7 +102,7 @@ export const REPORTED_USER_MSG = ({
 
   reporter,
   reportee,
-}: IReportedUserMsg) => ({
+}: IReportedUserMsg): SlackWebhook.IncomingWebhookSendArguments => ({
   text: '🚨신고가 접수되었습니다.',
   blocks: [
     {
@@ -189,7 +196,3 @@ export const REPORTED_USER_MSG = ({
     },
   ],
 });
-
-export const TestMSG = (nickname: string) => {
-  return `신고가 접수되었습니다. *${nickname}*`;
-};

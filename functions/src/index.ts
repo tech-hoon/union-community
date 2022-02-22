@@ -164,3 +164,14 @@ export const userReported = functions
       })
     );
   });
+
+export const userAuthApproved = functions
+  .region('asia-northeast3')
+  .https.onRequest((req, res): any => {
+    const data = JSON.parse(req.body.payload).message.blocks[0].text.text.split(':');
+    const uid = data[data.length - 1];
+
+    firestore.doc(`users/${uid}`).update({ auth_status: 'approved' });
+
+    res.status(200).send({ text: 'user authentication approved' });
+  });
