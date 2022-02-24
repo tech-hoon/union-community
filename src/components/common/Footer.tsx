@@ -9,7 +9,7 @@ interface Props {}
 const Footer = (props: Props) => {
   return (
     <Wrapper>
-      <Title>&copy; Nam Taekhun {new Date().getFullYear()}</Title>
+      <Title>&copy;tech-hoon {new Date().getFullYear()}</Title>
       <OpenKakao href={OPEN_KAKAOTALK_URL} target='_blank' rel='noreferrer'>
         문의사항
       </OpenKakao>
