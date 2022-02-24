@@ -6,44 +6,81 @@ interface Props {}
 
 const PostCardSkeleton = (props: Props) => {
   return (
-    <S.Wrapper>
+    <S.Container>
       {new Array(6).fill('').map((_, i) => (
         <CardSkeleton key={i}>
           <Title />
-          <Content />
+          <Content>
+            {new Array(5).fill('').map((_, i) => (
+              <Line key={i} />
+            ))}
+          </Content>
           <Bottom>
             <Circle />
-            <Title />
+            <Nickname />
           </Bottom>
         </CardSkeleton>
       ))}
-    </S.Wrapper>
+    </S.Container>
   );
 };
 
 const CardSkeleton = styled(S.PostCard)`
-  gap: 20px;
   cursor: default;
+  display: flex;
+  justify-content: space-between;
 `;
 
-const Title = styled(SkeletonItem)``;
+const Title = styled(SkeletonItem)`
+  height: 28px;
+`;
 
-const Content = styled(SkeletonItem)`
-  height: 130px;
+const Content = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  gap: 8px;
+`;
+
+const Line = styled(SkeletonItem)`
+  height: 12px;
+
+  width: 90%;
+  &:nth-child(2) {
+    width: 95%;
+  }
+  &:nth-child(3) {
+    width: 75%;
+  }
+  &:nth-child(4) {
+    width: 80%;
+  }
+  &:nth-child(5) {
+    width: 90%;
+  }
 `;
 
 const Bottom = styled.div`
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
+  height: 30px;
 `;
 
 const Circle = styled(SkeletonItem)`
-  width: 35px;
+  flex: none;
+  width: 30px;
   height: 30px;
   border-radius: 50%;
   background-color: #f2f2f2;
   position: relative;
   overflow: hidden;
+`;
+
+const Nickname = styled(SkeletonItem)`
+  width: 80%;
+  height: 24px;
 `;
 
 export default PostCardSkeleton;
