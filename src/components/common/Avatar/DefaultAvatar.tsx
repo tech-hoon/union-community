@@ -6,7 +6,7 @@ const DefaultAvatar = ({ color = 'black' }: IProps) => (
   <svg
     width='100%'
     height='100%'
-    viewBox='0 -3.2 16.3 19'
+    viewBox='0 -4.2 16.3 19'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >

@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 const S = {
   SideButton: styled.button`
-    color: gray;
-    padding: 4px 4px;
-    font-size: 0.7rem;
+    color: black;
+    padding: 10px 12px;
+    font-size: 14px;
 
     @media ${({ theme }) => theme.size.mobile} {
-      font-size: 0.5rem;
+      font-size: 12px;
     }
   `,
 

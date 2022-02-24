@@ -66,7 +66,7 @@ const Wrapper = styled.div<IWrapper>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid ${({ avatarId }) => (avatarId === 0 ? '#18A0FB' : 'black')};
+  border: 1px solid ${({ avatarId }) => (avatarId === 0 ? '#18A0FB' : '#F1F3F5')};
   background-color: white;
   overflow: hidden;
 `;

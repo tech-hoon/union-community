@@ -21,6 +21,7 @@ const S = {
     border-radius: 8px;
 
     overflow: hidden;
+    user-select: none;
   `,
 
   Input: styled.input`

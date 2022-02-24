@@ -20,7 +20,7 @@ export const Layouts = {
   `,
 
   Header: styled.header`
-    margin: 30px 0px;
+    margin: 30px 0px 60px;
     display: flex;
     gap: 32px;
     align-items: center;
@@ -28,7 +28,7 @@ export const Layouts = {
     @media ${({ theme }) => theme.size.mobile} {
       flex-direction: column;
       align-items: baseline;
-      margin: 16px 4px;
+      margin: 16px 4px 30px;
       gap: 20px;
     }
   `,
