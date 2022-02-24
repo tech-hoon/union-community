@@ -102,7 +102,7 @@ type MenuType = {
 const MenuButton = styled.button<MenuType>`
   font-size: 1.1rem;
   font-weight: ${({ isClicked }) => (isClicked ? 700 : 500)};
-  color: ${({ isClicked, theme }) => (isClicked ? theme.color.MAIN : 'gray')};
+  color: ${({ isClicked, theme }) => (isClicked ? theme.color.main : 'gray')};
   margin: 0 4px;
 
   @media ${({ theme }) => theme.size.mobile} {

@@ -13,7 +13,8 @@ const theme = {
     desktop: `(max-width:${size.desktop})`,
   },
   color: {
-    MAIN: '#18A0FB',
+    main: '#18A0FB',
+    backgroundColor: '#f8f9fa',
   },
 
   container: {

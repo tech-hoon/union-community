@@ -28,7 +28,7 @@ const Text = styled.h1`
 
   & em {
     font-weight: bold;
-    color: ${({ theme }) => theme.color.MAIN};
+    color: ${({ theme }) => theme.color.main};
   }
 `;
 

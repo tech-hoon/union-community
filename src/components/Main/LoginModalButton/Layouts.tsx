@@ -90,7 +90,7 @@ export const Layouts = {
   `,
 
   NextButton: styled.button`
-    background-color: ${(props) => props.theme.color.MAIN};
+    background-color: ${(props) => props.theme.color.main};
     font-weight: 500;
     padding: 8px 20px;
     font-size: 1.2em;

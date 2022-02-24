@@ -90,7 +90,7 @@ interface INickname {
 }
 
 const Nickname = styled.span<INickname>`
-  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.MAIN)};
+  color: ${({ theme, isSecret }) => (isSecret ? 'gray' : theme.color.main)};
   margin-bottom: 2px;
 `;
 

@@ -160,7 +160,7 @@ const Description = styled.div`
 
   a {
     font-weight: 500;
-    color: ${({ theme }) => theme.color.MAIN};
+    color: ${({ theme }) => theme.color.main};
   }
 
   b {

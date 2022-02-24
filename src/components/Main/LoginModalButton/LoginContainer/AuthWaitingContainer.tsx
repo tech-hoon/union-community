@@ -48,7 +48,7 @@ const Description = styled.section`
   }
 
   & small {
-    color: ${(props) => props.theme.color.MAIN};
+    color: ${(props) => props.theme.color.main};
   }
 `;
 

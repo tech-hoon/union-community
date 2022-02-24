@@ -238,7 +238,7 @@ const Paragraph = styled.p`
   }
 
   & em {
-    color: ${({ theme }) => theme.color.MAIN};
+    color: ${({ theme }) => theme.color.main};
     font-weight: bold;
   }
 `;
@@ -250,8 +250,8 @@ const DetailButton = styled.button`
   padding: 10px 45px;
   border-radius: 113.374px;
   background-color: white;
-  color: ${({ theme }) => theme.color.MAIN};
-  border: 1.13374px solid ${({ theme }) => theme.color.MAIN};
+  color: ${({ theme }) => theme.color.main};
+  border: 1.13374px solid ${({ theme }) => theme.color.main};
   margin-right: 12px;
 `;
 
