@@ -32,6 +32,8 @@ import BottomBanner from 'components/common/Banner/BottomBanner';
 import { storageService } from 'service/firebase';
 import ImageSlider from 'components/common/Slider/ImageSlider';
 import CategoryLabel from 'components/common/CategoryLabel';
+import CommentTextarea from 'components/PostDetail/Textarea/CommentTextarea';
+import KebabMenu from 'components/common/KebabMenu';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -143,6 +145,9 @@ const PostDetail = () => {
         <Navbar option='post-detail' />
         {post ? (
           <PostContainer>
+            <Category size='sm' color={categoryColor(post.category)} isClicked={true}>
+              {post.category}
+            </Category>
             <ROW_1>
               <Title>{post.title}</Title>
               {/* <IsEdited>{post.is_edited && `수정됨 `}</IsEdited> */}
@@ -151,21 +156,18 @@ const PostDetail = () => {
               <ProfileBox onClick={onOpenUserMenu}>
                 <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
                 <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
-                <CreatedAt>{toDateStringByFormating(post.created_at, false, '.')}</CreatedAt>
               </ProfileBox>
+              <CreatedAt>{toDateStringByFormating(post.created_at, false, '.')}</CreatedAt>
               {!!post.attachment_url.length && <ImageIcon size='24px' />}
-              <Category size='sm' color={categoryColor(post.category)} isClicked={true}>
-                {post.category}
-              </Category>
-            </ROW_2>
-            <ROW_3>
+
               {isCreator && (
-                <EditBox>
+                <KebabMenu>
                   <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
                   <DeleteBtn onClick={onOpenModal}>삭제하기</DeleteBtn>
-                </EditBox>
+                </KebabMenu>
               )}
-            </ROW_3>
+            </ROW_2>
+            <ROW_3></ROW_3>
             <ContentWrapper>
               <Content dangerouslySetInnerHTML={contentMarkup} />
               <ImagesContainer>
@@ -194,16 +196,7 @@ const PostDetail = () => {
               />
             </CountBox>
 
-            <CommentWriteWrapper>
-              <CommentWrite
-                ref={commentRef}
-                placeholder='댓글을 입력해주세요.'
-                spellCheck='false'
-              />
-              <SubmitBtn onClick={onSubmitComment} type='submit'>
-                등록하기
-              </SubmitBtn>
-            </CommentWriteWrapper>
+            <CommentTextarea onSubmitComment={onSubmitComment} ref={commentRef} />
 
             <CommentBox
               postId={id}
@@ -264,7 +257,7 @@ const PostContainer = styled.section`
   margin: 3% auto;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 90%;
+    width: 100%;
     margin: 6% auto;
     padding: 0 20px;
   }
@@ -274,6 +267,7 @@ const ROW_1 = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
+  margin: 18px 0;
 `;
 
 const Title = styled.h1`
@@ -295,7 +289,6 @@ const ImageIcon = styled(PhotoLibrary)`
 const ROW_2 = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 18px;
   gap: 8px;
 
   @media ${({ theme }) => theme.size.mobile} {
@@ -320,7 +313,6 @@ const ProfileBox = styled.div`
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  margin-right: auto;
 `;
 
 interface ICreator {
@@ -331,7 +323,7 @@ const Creator = styled.span<ICreator>`
   font-weight: bold;
   font-size: 1.2em;
   margin-bottom: 1.2px;
-  color: ${({ theme, isSecret }) => (isSecret ? '#000' : theme.color.MAIN)};
+  color: ${({ theme, isSecret }) => (isSecret ? '#000' : theme.color.main)};
   user-select: none;
 `;
 
@@ -342,16 +334,10 @@ const CountBox = styled.div`
 `;
 
 const Btn = styled.button`
-  font-size: 1em;
-  font-weight: 500;
-  color: #999;
-`;
-
-const EditBox = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 0.8rem;
-  gap: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: black;
+  padding: 12px 14px;
 `;
 
 const UpdateBtn = styled(Btn)``;
@@ -360,9 +346,9 @@ const DeleteBtn = styled(Btn)``;
 
 const CreatedAt = styled.span`
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   color: #999;
-  margin-left: auto;
+  margin-right: auto;
   padding-right: 1.2px;
 
   @media ${({ theme }) => theme.size.mobile} {
@@ -414,52 +400,8 @@ const Button = styled.button`
   border-radius: 4px;
 `;
 
-const CommentWriteWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  border: 0.3px solid #666;
-  border-radius: 4px;
-  margin: 24px 0;
-`;
-
-const CommentWrite = styled.textarea`
-  font-weight: 400;
-  font-size: 0.95rem;
-  width: 100%;
-  flex: 1;
-  padding-top: 15px;
-  padding-left: 5px;
-
-  background: none;
-  border: none;
-  overflow: auto;
-  outline: none;
-  resize: none;
-
-  display: flex;
-  align-items: center;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.8rem;
-  }
-`;
-
 const Category = styled(CategoryLabel)`
-  font-weight : 500;
-`
-
-const SubmitBtn = styled(Button)`
-  width: 80px;
-  font-size: 0.8rem;
-  padding: 10px 0;
-  color: #666;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    width: 64px;
-    font-size: 0.7rem;
-  }
+  font-weight: 500;
 `;
 
 export default PostDetail;
