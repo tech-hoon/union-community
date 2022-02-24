@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { memo } from 'react';
+import { Layouts as S } from './Layouts';
 import Eye from 'assets/icons/Eye';
 
 interface Props {
@@ -9,27 +9,11 @@ interface Props {
 
 const ViewCount = ({ size, count }: Props) => {
   return (
-    <Wrapper>
+    <S.Wrapper>
       <Eye color='#666' />
-      <Count size={size || `13px`}>{count}</Count>
-    </Wrapper>
+      <S.Count size={size || `13px`}>{count}</S.Count>
+    </S.Wrapper>
   );
 };
-
-const Wrapper = styled.div`
-  padding: 0 4px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-`;
-
-interface ICount {
-  size: string;
-}
-
-const Count = styled.span<ICount>`
-  font-size: ${({ size }) => size};
-  color: #666;
-`;
 
 export default memo(ViewCount);

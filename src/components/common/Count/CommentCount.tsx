@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import { memo } from 'react';
 import Comment from 'assets/icons/Comment';
+import { Layouts as S } from './Layouts';
 
 interface Props {
   size?: string;
@@ -9,27 +9,11 @@ interface Props {
 
 const CommentCount = ({ size, count }: Props) => {
   return (
-    <Wrapper>
+    <S.Wrapper>
       <Comment width='17' height='14' />
-      <Count size={size || `13px`}>{count}</Count>
-    </Wrapper>
+      <S.Count size={size || `13px`}>{count}</S.Count>
+    </S.Wrapper>
   );
 };
-
-const Wrapper = styled.div`
-  padding: 0 4px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-`;
-
-interface ICount {
-  size: string;
-}
-
-const Count = styled.span<ICount>`
-  font-size: ${({ size }) => size};
-  color: #5c5c5c;
-`;
 
 export default memo(CommentCount);
