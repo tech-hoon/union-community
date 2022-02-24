@@ -8,7 +8,10 @@ import Avatar from 'components/common/Avatar';
 import CategoryLabel from '../CategoryLabel';
 
 export const Layouts = {
-  Wrapper: styled.ul`
+  Wrapper: styled.div`
+    min-height: 60vh;
+  `,
+  Container: styled.ul`
     max-width: ${({ theme }) => theme.container.maxWidth};
     padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
 
@@ -32,7 +35,7 @@ export const Layouts = {
   `,
 
   PostCard: styled.li`
-    height: 300px;
+    height: 15rem;
     padding: 24px;
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
@@ -40,13 +43,16 @@ export const Layouts = {
     cursor: pointer;
     display: flex;
     flex-direction: column;
-
+    /* 
     @media ${({ theme }) => theme.size.desktop} {
       height: 15rem;
-    }
+    } */
 
-    @media (hover: hover) {
-      transform: scale(103%);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        transform: scale(104%);
+        transition: 0.3s;
+      }
     }
   `,
 
@@ -130,7 +136,7 @@ export const Layouts = {
     flex: 1;
 
     font-weight: 500;
-    color: ${({ theme, isSecret }) => (isSecret ? '#000' : theme.color.MAIN)};
+    color: ${({ theme, isSecret }) => (isSecret ? '#000' : theme.color.main)};
     font-size: 16px;
 
     @media ${({ theme }) => theme.size.mobile} {
@@ -141,6 +147,13 @@ export const Layouts = {
   Category: styled(CategoryLabel)`
     font-weight: 500;
     float: right;
+  `,
+
+  NoPost: styled.span`
+    font-weight: 500;
+    margin-top: 4px;
+    font-size: 16px;
+    color: gray;
   `,
 };
 
