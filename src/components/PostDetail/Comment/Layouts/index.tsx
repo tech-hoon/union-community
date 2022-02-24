@@ -1,17 +1,27 @@
 import styled from 'styled-components';
 import { SideButton, SubmitButton } from './Buttons';
-import CommentInput from './CommentInput';
 import LikeCount from 'components/common/Count/LikeCount';
 import Avatar from 'components/common/Avatar';
+import ReplyArrow from 'assets/icons/ReplyArrow';
+import CustomTextarea from 'components/PostDetail/Textarea/CustomTextarea';
 
 const S = {
-  ReplyWrapper: styled.li`
-    margin-bottom: 18px;
-    margin-left: 24px;
+  CommentWrapper: styled.li`
+    margin-bottom: 28px;
+    position: relative;
   `,
 
-  CommentWrapper: styled.li`
+  ReplyWrapper: styled.li`
     margin-bottom: 18px;
+    display: flex;
+    gap: 9px;
+    padding-left: 16px;
+  `,
+
+  ReplyArrow: styled(ReplyArrow)``,
+
+  ReplyContainer: styled.div`
+    width: 100%;
     position: relative;
   `,
 
@@ -26,11 +36,10 @@ const S = {
     display: flex;
     align-items: center;
     width: 100%;
-    gap: 4px;
+    gap: 18px;
   `,
-  ROW2: styled.div`
-    margin: 0 4px;
-  `,
+
+  ROW2: styled.div``,
 
   COL1: styled.div`
     margin-right: 2px;
@@ -43,7 +52,6 @@ const S = {
   COL3: styled.div`
     display: flex;
     align-items: center;
-    margin-left: 8px;
     gap: 4px;
     user-select: none;
   `,
@@ -62,34 +70,46 @@ const S = {
     gap: 4px;
   `,
 
-  ReplyBtn: styled(SideButton)``,
+  ReplyBtn: styled.div`
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 500;
+    font-size: 12px;
+    color: gray;
+    cursor: pointer;
+    user-select: none;
+  `,
+
   EditBtn: styled(SideButton)``,
   DelBtn: styled(SideButton)``,
 
   CreatedAt: styled.p`
     max-width: 82px;
-    font-size: 0.9rem;
+    font-size: 11px;
     color: gray;
-
-    @media ${({ theme }) => theme.size.mobile} {
-      font-size: 0.8rem;
-    }
+    margin-top: 2px;
   `,
+
   Nickname: styled.p<IComment>`
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 15px;
     color: ${({ is_deleted, avatar_id }) => {
       if (is_deleted) return '#666';
       if (avatar_id === 0) return '#18A0FB';
       return 'black';
     }};
+    margin: auto 0;
   `,
 
   LikeCount: styled(LikeCount)``,
 
-  EditContent: styled.div``,
+  EditContent: styled.div`
+    margin: 20px 0;
+  `,
 
-  EditInput: styled(CommentInput)``,
+  CustomTextarea: styled(CustomTextarea)``,
 
   EditCancelBtn: styled(SubmitButton)`
     background-color: #888;
@@ -102,7 +122,7 @@ const S = {
   Content: styled.div<IComment>`
     font-size: 0.9rem;
     padding: 14px 0;
-    border-bottom: solid 1.4px #e9ecef;
+    /* border-bottom: solid 1.4px #e9ecef; */
     line-height: 1.5;
     word-break: break-all;
     white-space: pre-line;
@@ -111,9 +131,10 @@ const S = {
     color: ${({ is_deleted }) => is_deleted && `#666`};
   `,
 
-  ROW3: styled.div``,
+  ROW3: styled.div`
+    margin-bottom: 20px;
+  `,
 
-  ReplyInput: styled(CommentInput)``,
   ReplySubmitBtn: styled(SubmitButton)`
     background-color: black;
   `,

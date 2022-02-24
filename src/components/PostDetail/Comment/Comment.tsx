@@ -15,6 +15,9 @@ import { commentState } from 'store/comment';
 
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
 import { useRecoilValue } from 'recoil';
+import PlusBox from 'assets/icons/PlusBox';
+import MinusBox from 'assets/icons/MinusBox';
+import KebabMenu from 'components/common/KebabMenu';
 
 interface Props {
   comment: CommentType;
@@ -104,26 +107,27 @@ const Comment = ({ comment, postId, loginUserId, category, callback, postCreator
             </S.COL3>
           )}
           <S.COL5>
-            {!is_deleted && <S.ReplyBtn onClick={() => onReplyOpen(id)}>답글</S.ReplyBtn>}
             {uid === loginUserId && !is_deleted && (
-              <>
-                <S.EditBtn onClick={() => onEdit(id)}>수정</S.EditBtn>
+              <KebabMenu>
+                <S.EditBtn onClick={() => onEdit(id)}>수정하기</S.EditBtn>
                 <S.DelBtn
                   onClick={() => {
                     setDeleteId(id);
                     onOpenModal();
                   }}
                 >
-                  삭제
+                  삭제하기
                 </S.DelBtn>
-              </>
+              </KebabMenu>
             )}
           </S.COL5>
         </S.ROW1>
+
+        {/* 수정 Input */}
         <S.ROW2>
           {uid === loginUserId && editingComment === id ? (
             <S.EditContent>
-              <S.EditInput autoFocus defaultValue={content} ref={inputRef} />
+              <S.CustomTextarea autoFocus defaultValue={content} ref={inputRef} />
               <S.EditCancelBtn onClick={onCancel}>취소하기</S.EditCancelBtn>
               <S.EditSubmitBtn onClick={() => onUpdateComment(postId, inputRef.current.value, id)}>
                 등록하기
@@ -138,9 +142,23 @@ const Comment = ({ comment, postId, loginUserId, category, callback, postCreator
             ></S.Content>
           )}
         </S.ROW2>
+        {!is_deleted &&
+          (!!replyingComment ? (
+            <S.ReplyBtn onClick={onReplyCancle}>
+              <MinusBox />
+              <span>숨기기</span>
+            </S.ReplyBtn>
+          ) : (
+            <S.ReplyBtn onClick={() => onReplyOpen(id)}>
+              <PlusBox />
+              <span>답글 달기</span>
+            </S.ReplyBtn>
+          ))}
+
+        {/* 답글 Input */}
         {replyingComment === id && (
           <S.ROW3>
-            <S.ReplyInput
+            <S.CustomTextarea
               autoFocus
               ref={replyInputRef}
               placeholder={`${convertedNickname}에게 답글 달기`}

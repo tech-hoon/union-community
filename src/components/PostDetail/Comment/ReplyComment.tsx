@@ -1,5 +1,4 @@
 import S from './Layouts';
-import Avatar from 'components/common/Avatar';
 import useComment from 'hooks/comment/useComment';
 import { CommentType } from 'types';
 import { useRef, useState, memo } from 'react';
@@ -11,6 +10,7 @@ import useModal from 'hooks/common/useModal';
 import AlertModal from 'components/common/Portal/AlertModal';
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
 import PortalContainer from 'components/common/Portal/PortalContainer';
+import KebabMenu from 'components/common/KebabMenu';
 
 import { useRecoilValue } from 'recoil';
 import { commentState } from 'store/comment';
@@ -78,60 +78,67 @@ const ReplyComment = ({
   return (
     <>
       <S.ReplyWrapper>
-        <S.ROW1>
-          <S.CreatorWrapper onClick={onOpenUserMenu}>
-            <S.COL1>
-              <S.Avatar avatarId={avatarId} />
-            </S.COL1>
-            <S.COL2>
-              <S.Nickname is_deleted={is_deleted} avatar_id={avatar_id}>
-                {convertedNickname}
-              </S.Nickname>
-              <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
-            </S.COL2>
-          </S.CreatorWrapper>
-          {!is_deleted && (
-            <S.COL3>
-              <S.LikeCount
-                size='12px'
-                count={liker_list.length || 0}
-                flag={likeOrUnlike(liker_list, loginUserId)}
-                onClick={debounce(() => onLikeComment(liker_list, loginUserId, id, postId), 500)}
-              />
-              <S.IsEdited>{is_edited ? '수정됨' : ''}</S.IsEdited>
-            </S.COL3>
-          )}
-          {uid === loginUserId && !is_deleted && (
-            <S.COL5>
-              <S.EditBtn onClick={() => onEdit(id)}>수정</S.EditBtn>
-              <S.DelBtn
-                onClick={() => {
-                  setDeleteId(id);
-                  onOpenModal();
-                }}
-              >
-                삭제
-              </S.DelBtn>
-            </S.COL5>
-          )}
-        </S.ROW1>
-        <S.ROW2>
-          {uid === loginUserId && editingComment === id ? (
-            <S.EditContent>
-              <S.EditInput autoFocus defaultValue={content} ref={replyInputRef} />
-              <S.EditCancelBtn onClick={onCancel}>취소하기</S.EditCancelBtn>
-              <S.EditSubmitBtn
-                onClick={() => onUpdateComment(postId, replyInputRef.current.value, id)}
-              >
-                등록하기
-              </S.EditSubmitBtn>
-            </S.EditContent>
-          ) : (
-            <S.Content is_deleted={is_deleted}>
-              {is_deleted ? '삭제된 댓글입니다' : content}
-            </S.Content>
-          )}
-        </S.ROW2>
+        <S.ReplyArrow />
+        <S.ReplyContainer>
+          <S.ROW1>
+            <S.CreatorWrapper onClick={onOpenUserMenu}>
+              <S.COL1>
+                <S.Avatar avatarId={avatarId} />
+              </S.COL1>
+              <S.COL2>
+                <S.Nickname is_deleted={is_deleted} avatar_id={avatar_id}>
+                  {convertedNickname}
+                </S.Nickname>
+                <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
+              </S.COL2>
+            </S.CreatorWrapper>
+            {!is_deleted && (
+              <S.COL3>
+                <S.LikeCount
+                  size='12px'
+                  count={liker_list.length || 0}
+                  flag={likeOrUnlike(liker_list, loginUserId)}
+                  onClick={debounce(() => onLikeComment(liker_list, loginUserId, id, postId), 500)}
+                />
+                <S.IsEdited>{is_edited ? '수정됨' : ''}</S.IsEdited>
+              </S.COL3>
+            )}
+            {uid === loginUserId && !is_deleted && (
+              <S.COL5>
+                {uid === loginUserId && !is_deleted && (
+                  <KebabMenu>
+                    <S.EditBtn onClick={() => onEdit(id)}>수정하기</S.EditBtn>
+                    <S.DelBtn
+                      onClick={() => {
+                        setDeleteId(id);
+                        onOpenModal();
+                      }}
+                    >
+                      삭제하기
+                    </S.DelBtn>
+                  </KebabMenu>
+                )}
+              </S.COL5>
+            )}
+          </S.ROW1>
+          <S.ROW2>
+            {uid === loginUserId && editingComment === id ? (
+              <S.EditContent>
+                <S.CustomTextarea autoFocus defaultValue={content} ref={replyInputRef} />
+                <S.EditCancelBtn onClick={onCancel}>취소하기</S.EditCancelBtn>
+                <S.EditSubmitBtn
+                  onClick={() => onUpdateComment(postId, replyInputRef.current.value, id)}
+                >
+                  등록하기
+                </S.EditSubmitBtn>
+              </S.EditContent>
+            ) : (
+              <S.Content is_deleted={is_deleted}>
+                {is_deleted ? '삭제된 댓글입니다' : content}
+              </S.Content>
+            )}
+          </S.ROW2>
+        </S.ReplyContainer>
       </S.ReplyWrapper>
 
       {modalOpened && (
