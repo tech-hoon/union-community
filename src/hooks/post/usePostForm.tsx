@@ -23,7 +23,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   const [errorInfo, setErrorInfo] = useState<string>('');
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
-  const onEditorCancle = () => history.push('/');
+  const onEditorCancle = () => history.goBack();
 
   const onErrorInfoReset = () => setErrorInfo('');
 
