@@ -11,8 +11,8 @@ import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { CommentType } from 'types';
 
 const useComment = (callback: () => void) => {
-  const [editingComment, setEditingComment] = useState<string | null>();
-  const [replyingComment, setReplyingComment] = useState<string | null>();
+  const [editingComment, setEditingComment] = useState<string | null>(null);
+  const [replyingComment, setReplyingComment] = useState<string | null>(null);
 
   const onCancel = () => setEditingComment(null);
   const onDelete = async (postId: string, commentId: string, commentList: CommentType[]) => {
