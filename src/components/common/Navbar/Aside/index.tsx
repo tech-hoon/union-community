@@ -66,6 +66,7 @@ const IconWrapper = styled.button`
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       transform: scale(108%);
+      transition: 0.3s;
     }
   }
 `;

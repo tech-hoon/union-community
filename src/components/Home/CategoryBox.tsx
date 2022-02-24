@@ -75,6 +75,13 @@ const Category = styled(CategoryLabel)`
     font-size: 13px;
     padding: 10px 20px;
   }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: scale(105%);
+      transition: 0.3s;
+    }
+  }
 `;
 
 export default memo(CategoryBox);

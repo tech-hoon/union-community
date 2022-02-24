@@ -53,6 +53,13 @@ const Button = styled.button`
   align-items: center;
   gap: 4px;
   color: ${(props) => props.color};
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: scale(105%);
+      transition: 0.3s;
+    }
+  }
 `;
 
 const FireIcon = styled(Fire)`
