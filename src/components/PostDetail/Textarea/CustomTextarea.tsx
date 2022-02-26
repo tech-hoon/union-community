@@ -3,21 +3,29 @@ import styled from 'styled-components';
 
 const CustomTextarea = forwardRef((props: any, ref: any) => {
   const onChange = useCallback(() => {
-    ref.current.style.height = '1px';
     ref.current.style.height = ref.current.scrollHeight + 'px';
   }, [ref]);
 
-  return <TextArea onChange={onChange} {...props} ref={ref} />;
+  return (
+    <Wrapper>
+      <TextArea onChange={onChange} {...props} ref={ref} />
+    </Wrapper>
+  );
 });
 
-const TextArea = styled.textarea`
-  font-size: 14px;
+const Wrapper = styled.div`
   padding: 8px;
   border: 1px solid gray;
   border-radius: 4px;
-  margin-bottom: 12px;
-  width: 100%;
+  margin-bottom: 8px;
+  background-color: white;
+  margin: 16px 0;
+`;
 
+const TextArea = styled.textarea`
+  width: 100%;
+  font-size: 14px;
+  border: none;
   overflow: auto;
   outline: none;
   resize: none;
