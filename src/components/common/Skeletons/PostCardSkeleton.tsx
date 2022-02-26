@@ -11,7 +11,7 @@ const PostCardSkeleton = (props: Props) => {
         <CardSkeleton key={i}>
           <Title />
           <Content>
-            {new Array(5).fill('').map((_, i) => (
+            {new Array(7).fill('').map((_, i) => (
               <Line key={i} />
             ))}
           </Content>
@@ -40,24 +40,51 @@ const Content = styled.ul`
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  gap: 8px;
+  gap: 10px;
+
+  @media (min-width: 1440px) {
+    gap: 12px;
+  }
 `;
 
 const Line = styled(SkeletonItem)`
   height: 12px;
+  margin-left: 4px;
 
-  width: 90%;
-  &:nth-child(2) {
+  &:nth-child(1) {
     width: 95%;
+  }
+
+  &:nth-child(2) {
+    width: 90%;
   }
   &:nth-child(3) {
     width: 75%;
   }
   &:nth-child(4) {
-    width: 80%;
+    width: 85%;
   }
   &:nth-child(5) {
-    width: 90%;
+    width: 80%;
+  }
+
+  &:nth-child(6) {
+    display: none;
+    width: 70%;
+  }
+
+  &:nth-child(7) {
+    display: none;
+    width: 85%;
+  }
+
+  @media (min-width: 1441px) {
+    &:nth-child(6) {
+      display: inline;
+    }
+    &:nth-child(7) {
+      display: inline;
+    }
   }
 `;
 
@@ -79,7 +106,7 @@ const Circle = styled(SkeletonItem)`
 `;
 
 const Nickname = styled(SkeletonItem)`
-  width: 80%;
+  width: 100%;
   height: 24px;
 `;
 
