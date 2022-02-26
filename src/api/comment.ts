@@ -23,8 +23,6 @@ export const addComment = async ({
   parent_comment_id = null,
   parent_comment_uid = null,
 }: ICommentAdd) => {
-  console.log(dbService.doc(`users/${uid}`));
-
   try {
     const res = await dbService
       .doc(`posts/${post_id}`)
