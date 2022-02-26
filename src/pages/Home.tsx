@@ -20,6 +20,7 @@ import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
 import { MainBanner } from 'components/common/Banner/MainBanner';
+import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 // import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 
 const Home = () => {
@@ -107,7 +108,6 @@ const Home = () => {
 
       <Wrapper>
         <Navbar />
-        {/* <MainBannerSlider /> */}
         <MainBanner />
 
         <CategoryBox />
@@ -171,9 +171,9 @@ const MidWrapper = memo(styled.div`
   justify-content: space-between;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 95%;
-    margin: 20px auto;
-    padding: 0;
+    width: 100%;
+    margin: 20px;
+    padding: 0px;
   }
 `);
 
