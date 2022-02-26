@@ -43,10 +43,6 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 10px;
   user-select: none;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    padding: 0 20px;
-  }
 `;
 const Button = styled.button`
   display: flex;

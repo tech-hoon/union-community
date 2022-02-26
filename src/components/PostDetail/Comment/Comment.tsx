@@ -86,7 +86,7 @@ const Comment = ({ comment, postId, loginUserId, category, callback, postCreator
         <S.ROW1>
           <S.CreatorWrapper onClick={onOpenUserMenu}>
             <S.COL1>
-              <S.Avatar avatarId={avatarId} />
+              <S.Avatar avatarId={avatarId} size={40} />
             </S.COL1>
             <S.COL2>
               <S.Nickname is_deleted={is_deleted} avatar_id={avatar_id}>
