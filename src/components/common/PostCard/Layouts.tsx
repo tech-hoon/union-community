@@ -35,7 +35,7 @@ export const Layouts = {
   `,
 
   PostCard: styled.li`
-    height: 300px;
+    height: 240px;
     padding: 24px;
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
@@ -45,10 +45,6 @@ export const Layouts = {
     flex-direction: column;
 
     transition: 0.3s;
-
-    @media ${({ theme }) => theme.size.desktop} {
-      height: 240px;
-    }
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {

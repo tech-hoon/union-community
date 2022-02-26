@@ -11,7 +11,7 @@ const PostCardSkeleton = (props: Props) => {
         <CardSkeleton key={i}>
           <Title />
           <Content>
-            {new Array(7).fill('').map((_, i) => (
+            {new Array(5).fill('').map((_, i) => (
               <Line key={i} />
             ))}
           </Content>
@@ -66,25 +66,6 @@ const Line = styled(SkeletonItem)`
   }
   &:nth-child(5) {
     width: 80%;
-  }
-
-  &:nth-child(6) {
-    display: none;
-    width: 70%;
-  }
-
-  &:nth-child(7) {
-    display: none;
-    width: 85%;
-  }
-
-  @media (min-width: 1441px) {
-    &:nth-child(6) {
-      display: inline;
-    }
-    &:nth-child(7) {
-      display: inline;
-    }
   }
 `;
 
