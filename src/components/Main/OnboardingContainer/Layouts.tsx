@@ -17,12 +17,46 @@ export const Layouts = {
   Container: styled.div`
     height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 50px 0;
+    justify-content: space-evenly;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      flex-direction: column;
+      justify-content: center;
+      gap: 5%;
+    }
+
+    margin: auto;
   `,
 
-  Contents: styled.article``,
+  Contents: styled.article`
+    flex: none;
+    font-size: 20px;
+    white-space: pre-line;
+    line-height: 32px;
+    font-weight: 300;
+
+    & strong {
+      font-weight: 500;
+      color: ${({ theme }) => theme.color.main};
+    }
+
+    & b {
+      font-weight: 400;
+    }
+  `,
+
+  ImageWrapper: styled.div`
+    flex: none;
+
+    width: 283px;
+    height: 534px;
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 50px;
+  `,
+
+  Image: styled.img``,
 
   ButtonWrapper: styled.div<{ screenHeight: number }>`
     position: absolute;
