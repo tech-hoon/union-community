@@ -67,15 +67,11 @@
           }, 1);
         }
       })();
-
-      //PWA, serviceWorker 등록
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js');
-        });
-      }
     </script>
+
+    <!-- smooth scroll polyfill -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js"></script>
+    <!-- PWA setting -->
     <script type="module">
       import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
       const el = document.createElement('pwa-update');
