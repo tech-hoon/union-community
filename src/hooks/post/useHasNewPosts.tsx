@@ -42,6 +42,10 @@ const useHasNewPosts = ({ fetchPosts, fetchUserData }: Props) => {
       });
     });
 
+    if (postHasUpdated) {
+      unsubscribe();
+    }
+
     return () => unsubscribe();
   }, []);
 
