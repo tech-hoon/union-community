@@ -1,6 +1,8 @@
 {
   "name": "유니온",
-  "images": [
+  "short_name": "유니온",
+  "lang": "ko",
+  "icons": [
     {
       "src": "/images/android-icon-36x36.png",
       "sizes": "36x36",
