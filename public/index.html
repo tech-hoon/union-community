@@ -21,19 +21,19 @@
     <meta charset="utf-8" />
 
     <!-- icon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png" />
-    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-icon-192x192.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
     <link rel="manifest" href="manifest.json" />
 
     <!-- 바로가기 title -->
@@ -42,7 +42,7 @@
     <meta name="application-name" content="유니온" />
 
     <meta name="msapplication-TileColor" content="#18A0FB" />
-    <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png" />
+    <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png" />
 
     <!-- IE Edge -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -57,8 +57,9 @@
       type="text/css"
     />
     <title>대학생 연합기숙사 커뮤니티, 유니온</title>
+
+    <!-- IE 대응, IE 접근 시 Edge로 Redirect -->
     <script>
-      // IE 대응, IE 접근 시 Edge로 Redirect
       (function () {
         if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
           window.location = 'microsoft-edge:' + 'https://uni-on.me';
@@ -67,15 +68,17 @@
           }, 1);
         }
       })();
-
-      //PWA, serviceWorker 등록
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js');
-        });
-      }
     </script>
+
+    <!-- smooth-scroll polyfill -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js"></script>
+
+    <!-- PWA setting -->
+    <script type="module">
+      import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+      const el = document.createElement('pwa-update');
+      document.body.appendChild(el);
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
