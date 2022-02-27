@@ -57,8 +57,9 @@
       type="text/css"
     />
     <title>대학생 연합기숙사 커뮤니티, 유니온</title>
+
+    <!-- IE 대응, IE 접근 시 Edge로 Redirect -->
     <script>
-      // IE 대응, IE 접근 시 Edge로 Redirect
       (function () {
         if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
           window.location = 'microsoft-edge:' + 'https://uni-on.me';
@@ -69,8 +70,9 @@
       })();
     </script>
 
-    <!-- smooth scroll polyfill -->
+    <!-- smooth-scroll polyfill -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js"></script>
+
     <!-- PWA setting -->
     <script type="module">
       import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
