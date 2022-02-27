@@ -10,21 +10,18 @@ import useSessionStorage from 'hooks/common/useSessionStorage';
 import { Helmet } from 'react-helmet';
 import { useState, useRef, useEffect, useLayoutEffect, memo, useCallback } from 'react';
 import { useGetPosts } from 'hooks/post/useGetPosts';
-import { useLocation } from 'react-router';
 import { getUserData } from 'api/user';
 import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { dbService } from 'service/firebase';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
 import { MainBanner } from 'components/common/Banner/MainBanner';
-import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
+import useHasNewPosts from 'hooks/post/useHasNewPosts';
 // import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 
 const Home = () => {
-  const location = useLocation();
   const setLoginUser = useSetRecoilState(loginUserState);
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
@@ -38,16 +35,21 @@ const Home = () => {
     isLastPost,
   } = useGetPosts();
 
-  const [isUpdated, setIsUpdated] = useState(false);
+  const fetchUserData = async () => {
+    const __user = await getUserData(loginUser.uid);
+    __user && setLoginUser(__user);
+  };
+
+  const { postHasUpdated, setPostHasUpdated } = useHasNewPosts({ fetchPosts, fetchUserData });
+
   const [scrollY, setScrollY] = useSessionStorage('scrollY', 0);
-  const [postCountSession, setPostCountSession] = useSessionStorage('post_count', 0);
   const [uploadButtonOpened, setUploadButtonOpened] = useState(false);
 
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, isLastPost, {});
 
   const onRefreshClick = useCallback(() => {
-    setIsUpdated(false);
+    setPostHasUpdated(false);
     window.scroll({ behavior: 'smooth', top: 0 });
     fetchPosts();
   }, []);
@@ -59,38 +61,6 @@ const Home = () => {
   useLayoutEffect(() => {
     window.scrollTo({ top: scrollY });
     return () => setScrollY(window.scrollY);
-  }, []);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const __user = await getUserData(loginUser.uid);
-      __user && setLoginUser(__user);
-    };
-
-    // 프로필 변경 시, 새 데이터로 fetch
-    if (location.state === 'profileUpdated') {
-      setIsUpdated(false);
-      fetchUserData();
-      fetchPosts();
-      return;
-    }
-
-    // 글 등록,수정,삭제 시 새 데이터로 fetch
-    if (location.state) {
-      setIsUpdated(false);
-      fetchPosts();
-    }
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = dbService.collection('posts').onSnapshot((snapshot) => {
-      if (postCountSession !== snapshot.size && postCountSession) {
-        setIsUpdated(true);
-      }
-      setPostCountSession(snapshot.size);
-    });
-
-    return () => unsubscribe();
   }, []);
 
   // IO 감지시 게시물 추가 fetch
@@ -115,7 +85,7 @@ const Home = () => {
           <OrderbyBox />
         </MidWrapper>
         {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
-        {isUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
+        {postHasUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
         <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
           <UploadIcon />
           {uploadButtonOpened && (
