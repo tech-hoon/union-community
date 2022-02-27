@@ -171,7 +171,6 @@ const MidWrapper = memo(styled.div`
   justify-content: space-between;
 
   @media ${({ theme }) => theme.size.mobile} {
-    width: 100%;
     margin: 20px;
     padding: 0px;
   }

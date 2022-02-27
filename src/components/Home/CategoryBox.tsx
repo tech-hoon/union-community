@@ -65,8 +65,9 @@ const Wrapper = styled.div`
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1em;
-    padding: 0 20px;
+    padding: 0;
     overflow-x: auto;
+    margin: 12.5px 20px 0;
   }
 `;
 
