@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface ICount {
   size: string;
+  color?: string;
 }
 
 export const Layouts = {
@@ -14,6 +15,6 @@ export const Layouts = {
 
   Count: styled.span<ICount>`
     font-size: ${({ size }) => size};
-    color: #5c5c5c;
+    color: ${({ color }) => color || `#5c5c5c`};
   `,
 };

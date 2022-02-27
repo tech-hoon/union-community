@@ -15,8 +15,12 @@ interface Props {
 const LikeCount = ({ size = `13px`, count, color, onClick, flag }: Props) => {
   return (
     <S.Wrapper>
-      <Button onClick={onClick}>{flag === 'unlike' ? <Like color='#18A0FB' /> : <Like />}</Button>
-      <S.Count size={size}>{count}</S.Count>
+      <Button onClick={onClick}>
+        <Like color={flag === 'unlike' ? '#18A0FB' : '#5C5C5C'} />
+      </Button>
+      <S.Count size={size} color={flag === 'unlike' ? '#18A0FB' : '#5C5C5C'}>
+        {count}
+      </S.Count>
     </S.Wrapper>
   );
 };

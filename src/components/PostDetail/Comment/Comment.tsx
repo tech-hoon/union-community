@@ -1,4 +1,3 @@
-import S from './Layouts';
 import { CommentType, UserType } from 'types';
 import { useRef, useState, memo } from 'react';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
@@ -10,11 +9,11 @@ import AlertModal from 'components/common/Portal/AlertModal';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import { urlParsingRegex } from 'utils/regex';
 import { convertNickname } from 'utils/comment';
-
+import { useRecoilValue } from 'recoil';
 import { commentState } from 'store/comment';
 
+import S from './Layouts';
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
-import { useRecoilValue } from 'recoil';
 import PlusBox from 'assets/icons/PlusBox';
 import MinusBox from 'assets/icons/MinusBox';
 import KebabMenu from 'components/common/KebabMenu';
@@ -86,7 +85,7 @@ const Comment = ({ comment, postId, loginUserId, category, callback, postCreator
         <S.ROW1>
           <S.CreatorWrapper onClick={onOpenUserMenu}>
             <S.COL1>
-              <S.Avatar avatarId={avatarId} size={40} />
+              <S.Avatar avatarId={avatarId} />
             </S.COL1>
             <S.COL2>
               <S.Nickname is_deleted={is_deleted} avatar_id={avatar_id}>

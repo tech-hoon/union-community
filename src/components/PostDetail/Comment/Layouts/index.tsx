@@ -36,7 +36,7 @@ const S = {
     display: flex;
     align-items: center;
     width: 100%;
-    gap: 18px;
+    gap: 16px;
   `,
 
   ROW2: styled.div``,
@@ -47,7 +47,7 @@ const S = {
   COL2: styled.div`
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: space-between;
   `,
   COL3: styled.div`
     display: flex;
@@ -89,7 +89,6 @@ const S = {
     max-width: 82px;
     font-size: 11px;
     color: gray;
-    margin-top: 2px;
   `,
 
   Nickname: styled.p<IComment>`
@@ -100,7 +99,6 @@ const S = {
       if (avatar_id === 0) return '#18A0FB';
       return 'black';
     }};
-    margin: auto 0;
   `,
 
   LikeCount: styled(LikeCount)``,
