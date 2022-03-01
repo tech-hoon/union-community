@@ -60,10 +60,6 @@ export const Layouts = {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 24px;
-
-    @media ${({ theme }) => theme.size.mobile} {
-      margin-bottom: 20px;
-    }
   `,
   Title: styled.p`
     flex: 8;
