@@ -59,7 +59,7 @@ export const Layouts = {
     overflow: hidden;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
   `,
   Title: styled.p`
     flex: 8;
