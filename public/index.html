@@ -74,10 +74,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js"></script>
 
     <!-- PWA setting -->
-    <script type="module">
-      import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-      const el = document.createElement('pwa-update');
-      document.body.appendChild(el);
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker
+            .register('worker.js')
+            .then(
+              function (registration) {
+                console.log('Worker registration successful', registration.scope);
+              },
+              function (err) {
+                console.log('Worker registration failed', err);
+              }
+            )
+            .catch(function (err) {
+              console.log(err);
+            });
+        });
+      } else {
+        console.log('Service Worker is not supported by browser.');
+      }
     </script>
   </head>
   <body>
