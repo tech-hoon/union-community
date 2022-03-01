@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf ./build && react-scripts build",
     "eject": "react-scripts eject",
     "deploy": "npm install && npm run build && npm run firebase",
     "firebase": "firebase login && firebase deploy"
