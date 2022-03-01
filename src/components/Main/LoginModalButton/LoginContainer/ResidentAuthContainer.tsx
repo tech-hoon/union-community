@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import exampleImgSrc from 'assets/images/resident1.jpeg';
+// import exampleImgSrc from 'assets/images/resident1.jpeg';
 import { useState, useEffect } from 'react';
 import { authService, storageService } from 'service/firebase';
 import { Layouts as S } from '../Layouts';
@@ -12,6 +12,7 @@ import { LoginUserType, RegisterDataType } from 'types';
 import { Cancel } from '@styled-icons/material';
 import Loading from 'components/common/Loading/CircleSmall';
 import { OPEN_KAKAOTALK_URL } from 'utils/config';
+import NameTagSample from 'assets/images/NameTagSample';
 
 const ResidentAuthContainer = () => {
   const { displayName, uid }: any = authService.currentUser;
@@ -80,16 +81,16 @@ const ResidentAuthContainer = () => {
 
   return (
     <S.Container>
-      <S.Title>생활관 거주 인증을 해주세요</S.Title>
+      <Title>생활관 거주 인증을 해주세요</Title>
       <Description>
         <li>
-          입주생 인증을 위해 간단한 <b>인증 절차</b>를 거치고 있습니다.
+          <b>입주생 인증</b>을 위해 간단한 <b>인증 절차</b>를 거치고 있습니다.
         </li>
         <li>
-          예시 사진과 같이 사용자의 <b>이름표 사진</b>을 업로드해 주세요.
+          예시 사진과 같이 방 앞의 <b>이름표 사진</b>을 업로드해 주세요.
         </li>
         <li>
-          <b>관리자 승인 후</b> 즉시 이용 가능하며, 문의사항은{' '}
+          <b>관리자 승인 후</b> 이용 가능하며, 문의사항은{' '}
           <a href={OPEN_KAKAOTALK_URL} target='_blank' rel='noreferrer'>
             여기
           </a>
@@ -104,7 +105,9 @@ const ResidentAuthContainer = () => {
         <ImageBox>
           <ImageWrapper>
             <Caption>예시 사진</Caption>
-            <ExampleImage src={exampleImgSrc} />
+            <ExampleImage>
+              <NameTagSample />
+            </ExampleImage>
           </ImageWrapper>
           <ImageWrapper>
             <Caption>업로드 사진</Caption>
@@ -117,7 +120,7 @@ const ResidentAuthContainer = () => {
               </AttachmentWrapper>
             ) : (
               <UploadImage htmlFor='upload-image'>
-                <PlusLg size='48px' color='#ddd' />
+                <PlusLg size='48px' color='white' />
               </UploadImage>
             )}
             <UploadInput id='upload-image' type='file' accept='image/*' onChange={onFileChange} />
@@ -137,6 +140,10 @@ const ResidentAuthContainer = () => {
   );
 };
 
+const Title = styled(S.Title)`
+  margin-bottom: 10px;
+`;
+
 const Description = styled.div`
   margin-top: 12px;
   font-weight: 400;
@@ -152,20 +159,20 @@ const Description = styled.div`
   }
 
   li {
-    list-style: circle;
+    /* list-style: circle; */
     list-style-position: inside;
     text-indent: -20px;
     padding-left: 20px;
   }
 
   a {
-    font-weight: 500;
+    font-weight: 700;
     color: ${({ theme }) => theme.color.main};
   }
 
   b {
     font-weight: 500;
-    color: #666;
+    color: ${({ theme }) => theme.color.main};
   }
 `;
 
@@ -186,14 +193,11 @@ const Img = styled.img`
   }
 `;
 
-const ExampleImage = styled(Img)``;
-const AttachmentImage = styled(Img)``;
+const AttachmentImage = styled(Img)`
+  object-fit: contain;
+`;
 
 const ImageWrapper = styled.div``;
-
-const AttachmentWrapper = styled.div`
-  position: relative;
-`;
 
 const ThumbnailDeleteBtn = styled.button`
   display: block;
@@ -208,7 +212,8 @@ const UploadImage = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #aaa;
+  background-color: #ccc;
+  padding: 8px;
   cursor: pointer;
 
   border-radius: 8px;
@@ -220,6 +225,13 @@ const UploadImage = styled.label`
     height: 140px;
   }
 `;
+
+const AttachmentWrapper = styled(UploadImage)`
+  background-color: #ccc;
+  position: relative;
+`;
+
+const ExampleImage = styled(UploadImage)``;
 
 const UploadInput = styled.input`
   display: none;
