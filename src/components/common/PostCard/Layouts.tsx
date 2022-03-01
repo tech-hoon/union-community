@@ -59,7 +59,7 @@ export const Layouts = {
     overflow: hidden;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 23px;
   `,
   Title: styled.p`
     flex: 8;
@@ -79,7 +79,7 @@ export const Layouts = {
   `,
   Content: styled.div`
     font-weight: 300;
-    padding: 0px 4px;
+    padding: 0px;
 
     white-space: nowrap;
     overflow: hidden;
