@@ -85,8 +85,8 @@ export const Layouts = {
     overflow: hidden;
     white-space: normal;
     line-height: 1.2;
-    height: 6rem;
-    margin-bottom: 1.2rem;
+    height: 95px;
+    margin-bottom: 17px;
 
     flex: 1;
     display: -webkit-box;

@@ -67,7 +67,7 @@ const Wrapper = styled.div`
     font-size: 1em;
     padding: 0;
     overflow-x: auto;
-    margin: 12.5px 20px 0;
+    margin: 12.5px 0px 0px 20px;
   }
 `;
 

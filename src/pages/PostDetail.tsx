@@ -211,6 +211,7 @@ const PostDetail = () => {
         ) : (
           <PostSkeleton />
         )}
+        <Footer />
       </Wrapper>
 
       {/* 삭제 경고 모달 */}
