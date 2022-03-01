@@ -7,7 +7,7 @@ import Footer from 'components/common/Footer';
 import PostCardSkeleton from 'components/common/Skeletons/PostCardSkeleton';
 import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import useSessionStorage from 'hooks/common/useSessionStorage';
-import { Helmet } from 'react-helmet';
+
 import { useState, useRef, useEffect, useLayoutEffect, memo, useCallback } from 'react';
 import { useGetPosts } from 'hooks/post/useGetPosts';
 import { getUserData } from 'api/user';
@@ -71,33 +71,27 @@ const Home = () => {
   }, [lastVisiblePost, entry, isFetchingMore]);
 
   return (
-    <>
-      <Helmet>
-        <meta name='theme-color' content={uploadButtonOpened ? '#7C7C7C' : '#f8f9fa'} />
-      </Helmet>
+    <Wrapper>
+      <Navbar />
+      <MainBanner />
 
-      <Wrapper>
-        <Navbar />
-        <MainBanner />
-
-        <CategoryBox />
-        <MidWrapper>
-          <OrderbyBox />
-        </MidWrapper>
-        {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
-        {postHasUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
-        <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
-          <UploadIcon />
-          {uploadButtonOpened && (
-            <PortalContainer onClose={onUploadClick} center={false}>
-              <UploadButtonModal />
-            </PortalContainer>
-          )}
-        </UploadButton>
-        <Observer ref={ioRef} />
-        <Footer />
-      </Wrapper>
-    </>
+      <CategoryBox />
+      <MidWrapper>
+        <OrderbyBox />
+      </MidWrapper>
+      {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
+      {postHasUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
+      <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
+        <UploadIcon />
+        {uploadButtonOpened && (
+          <PortalContainer onClose={onUploadClick} center={false}>
+            <UploadButtonModal />
+          </PortalContainer>
+        )}
+      </UploadButton>
+      <Footer />
+      <Observer ref={ioRef} />
+    </Wrapper>
   );
 };
 

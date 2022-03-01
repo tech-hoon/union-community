@@ -1,4 +1,5 @@
-import { useCallback, useRef, useEffect, memo, ReactNode } from 'react';
+import { useState, useCallback, useRef, useEffect, memo, ReactNode } from 'react';
+import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import Portal from './Portal';
 
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const PortalContainer = ({ onClose, children, center = true }: Props) => {
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+
   const portalRef = useRef<HTMLDivElement>(null);
 
   const onOutsideClick = useCallback(
@@ -18,21 +21,28 @@ const PortalContainer = ({ onClose, children, center = true }: Props) => {
   const onEscClick = useCallback((e) => e.key === 'Escape' && onClose(), [onClose]);
 
   useEffect(() => {
+    setIsOpened(true);
     window.addEventListener('click', onOutsideClick);
     window.addEventListener('keydown', onEscClick);
 
     return () => {
+      setIsOpened(false);
       window.removeEventListener('click', onOutsideClick);
       window.removeEventListener('keydown', onEscClick);
     };
   }, []);
 
   return (
-    <Portal>
-      <Background>
-        {center ? <Overlay ref={portalRef}>{children}</Overlay> : <>{children}</>}
-      </Background>
-    </Portal>
+    <>
+      <Helmet>
+        <meta name='theme-color' content={isOpened ? '#7C7C7C' : '#f8f9fa'} />
+      </Helmet>
+      <Portal>
+        <Background>
+          {center ? <Overlay ref={portalRef}>{children}</Overlay> : <>{children}</>}
+        </Background>
+      </Portal>
+    </>
   );
 };
 
