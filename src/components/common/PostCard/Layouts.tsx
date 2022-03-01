@@ -59,7 +59,11 @@ export const Layouts = {
     overflow: hidden;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 18px;
+    margin-bottom: 24px;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      margin-bottom: 20px;
+    }
   `,
   Title: styled.p`
     flex: 8;
@@ -85,7 +89,7 @@ export const Layouts = {
     overflow: hidden;
     white-space: normal;
     line-height: 1.2;
-    height: 95px;
+    height: 6em;
     margin-bottom: 17px;
 
     flex: 1;
