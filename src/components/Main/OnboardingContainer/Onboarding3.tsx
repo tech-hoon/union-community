@@ -16,22 +16,22 @@ const Onboarding3 = () => {
             <p>편리하게 즐길 수 있어요!</p>
           </S.Content>
           <ButtonWrapper>
-            <Button isSelected={false}>Android</Button>
             <Button isSelected={true}>iOS</Button>
+            <Button isSelected={false}>Android</Button>
           </ButtonWrapper>
         </ContentWrapper>
 
         <ImageContainer>
           <ImageWrapper>
-            <Caption>1. 하단 공유버튼을 클릭</Caption>
+            <Caption>1. 임시 텍스트1</Caption>
             <Image src={ImgSrc} alt='iOS 앱 설치 방법 이미지 1' />
           </ImageWrapper>
           <ImageWrapper>
-            <Caption>2. 홈 화면에 추가 클릭</Caption>
+            <Caption>2. 임시 텍스트1</Caption>
             <Image src={ImgSrc} alt='iOS 앱 설치 방법 이미지 2' />
           </ImageWrapper>
           <ImageWrapper>
-            <Caption>3. 추가 버튼 클릭</Caption>
+            <Caption>3. 임시 텍스트3</Caption>
             <Image src={ImgSrc} alt='iOS 앱 설치 방법 이미지 3' />
           </ImageWrapper>
         </ImageContainer>
@@ -70,7 +70,7 @@ const ButtonWrapper = styled.div`
 
 const Button = styled.button<{ isSelected: boolean }>`
   font-weight: 700;
-  font-size: clamp(1rem, 1.3vw, 1.5rem);
+  font-size: clamp(1rem, 1.2vw, 1.4rem);
   border-radius: 100px;
   width: 120px;
   padding: 6px 12px;
