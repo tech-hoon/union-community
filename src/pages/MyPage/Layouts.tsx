@@ -55,16 +55,6 @@ export const Layouts = {
     }
   `,
 
-  Subtitle: styled.h2`
-    font-size: 1.2rem;
-    color: gray;
-    font-weight: 500;
-
-    @media ${({ theme }) => theme.size.mobile} {
-      font-size: 1rem;
-    }
-  `,
-
   Body: styled.div`
     margin-top: 50px;
     float: left;

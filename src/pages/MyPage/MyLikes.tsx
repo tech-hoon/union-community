@@ -32,7 +32,6 @@ const MyLikes = () => {
             <BookHeart size='30px' />
             좋아요 목록
           </S.Title>
-          <S.Subtitle>* 반영되는 데에는 최대 1분 정도 소요될 수 있습니다.</S.Subtitle>
         </S.Header>
         {isLoading ? <S.PostCardSkeleton /> : <S.PostCards posts={posts} mypage={true} />}
       </S.Container>
