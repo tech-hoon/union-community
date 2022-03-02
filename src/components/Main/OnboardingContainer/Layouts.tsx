@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import withReveal from 'react-reveal/withReveal';
+import Fade from 'react-reveal/Fade';
 
 export interface IProps {
   onClick?: React.MouseEventHandler;
@@ -8,55 +10,66 @@ export interface IProps {
 export const Layouts = {
   Wrapper: styled.section<{ backgroundColor?: string }>`
     height: 100vh;
-    background-color: ${({ backgroundColor }) => backgroundColor};
+    background: ${({ backgroundColor }) => backgroundColor};
     position: relative;
     flex: none;
     scroll-snap-align: start;
   `,
 
-  Container: styled.div`
+  Container: styled.div<{ reverse?: boolean }>`
+    width: 80%;
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    flex-direction: ${({ reverse }) => (reverse ? 'row-reverse' : 'row')};
+    margin: 0 auto;
 
     @media ${({ theme }) => theme.size.mobile} {
       flex-direction: column;
       justify-content: center;
-      gap: 5%;
+      gap: 30px;
     }
 
     margin: auto;
   `,
 
-  Contents: styled.article`
-    flex: none;
-    font-size: 20px;
-    white-space: pre-line;
-    line-height: 32px;
-    font-weight: 300;
+  Content: withReveal(
+    styled.article`
+      flex: none;
+      font-size: clamp(1.3rem, 2vw, 2rem);
+      letter-spacing: -0.05em;
+      white-space: pre-line;
+      line-height: 1.7;
+      font-weight: 300;
 
-    & strong {
-      font-weight: 500;
-      color: ${({ theme }) => theme.color.main};
-    }
+      & b {
+        font-weight: 500;
+      }
 
-    & b {
-      font-weight: 400;
-    }
-  `,
+      & em {
+        font-weight: 600;
+        color: ${({ theme }) => theme.color.main};
+      }
 
-  ImageWrapper: styled.div`
-    flex: none;
+      @media ${({ theme }) => theme.size.mobile} {
+        width: 100%;
+      }
+    `,
+    <Fade bottom delay={150} />
+  ),
 
-    width: 283px;
-    height: 534px;
-    background: #ffffff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
-    border-radius: 50px;
-  `,
+  Image: withReveal(
+    styled.img`
+      height: 80vh;
+      scroll-snap-align: center;
 
-  Image: styled.img``,
+      @media ${({ theme }) => theme.size.mobile} {
+        height: 65vh;
+      }
+    `,
+    <Fade delay={150} />
+  ),
 
   ButtonWrapper: styled.div<{ screenHeight: number }>`
     position: absolute;

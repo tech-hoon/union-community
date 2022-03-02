@@ -108,13 +108,7 @@ const Main = () => {
     <Wrapper>
       <Container ref={heightRef}>
         <NavbarWrapper>
-          <Navbar>
-            <Aside onClick={onClickScrollDown} isLoading={isLoading}>
-              <Menu data-page-id={1}>유니온이란?</Menu>
-              <Menu data-page-id={2}>기능 소개</Menu>
-              <Menu data-page-id={3}>가입 절차</Menu>
-            </Aside>
-          </Navbar>
+          <Navbar children={null} />
         </NavbarWrapper>
         <MobileLogoWrapper>
           <MainLogo />
@@ -147,7 +141,7 @@ const Main = () => {
         <>
           <Onboarding1 />
           <Onboarding2 />
-          <Onboarding3 screenHeight={screenHeight} />
+          <Onboarding3 />
         </>
       )}
     </Wrapper>
@@ -186,20 +180,9 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Aside = styled.ul<{ isLoading: boolean }>`
-  display: flex;
-  visibility: ${({ isLoading }) => isLoading && `hidden`};
-  gap: 20px;
-  align-items: center;
-`;
-
-const Menu = styled.li`
-  cursor: pointer;
-`;
-
 const Contents = styled.div`
   display: flex;
-  margin: 3% auto;
+  margin: 20px auto;
   flex-direction: column;
   align-items: center;
 
@@ -214,12 +197,8 @@ const Contents = styled.div`
 
 const ButtonWrapper = styled.div<{ isLoading: boolean }>`
   visibility: ${({ isLoading }) => isLoading && `hidden`};
-  flex: 1;
-  margin: 0 auto;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    margin: 0% auto 5%;
-  }
+  /* flex: 1; */
+  margin: 0 auto 10%;
 `;
 
 const AvatarWrapper = styled.div`

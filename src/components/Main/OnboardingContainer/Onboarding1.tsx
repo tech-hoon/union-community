@@ -1,13 +1,18 @@
-import { Layouts as S, IProps } from './Layouts';
+import { Layouts as S } from './Layouts';
+import ImgSrc from 'assets/images/onboarding/onboarding1.svg';
 
 const Onboarding1 = () => {
   return (
-    <S.Wrapper backgroundColor='pink'>
+    <S.Wrapper backgroundColor='#DFF2FF'>
       <S.Container>
-        <S.Contents>상세 페이지 1(준비중)</S.Contents>
-        {/* <S.ButtonWrapper screenHeight={screenHeight}> */}
-        {/* <S.ScrollDownButton onClick={onClick} data-page-id={2} /> */}
-        {/* </S.ButtonWrapper> */}
+        <S.Content>
+          <p>기숙사에 생필품이 너무 많나요?</p>
+          <p>
+            <em>유니온</em>을 통해
+            <br /> 입주생들과 <b>물물교환</b>을 해보세요!
+          </p>
+        </S.Content>
+        <S.Image src={ImgSrc} />
       </S.Container>
     </S.Wrapper>
   );
