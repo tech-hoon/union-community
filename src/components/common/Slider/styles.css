@@ -22,3 +22,9 @@ div.swiper-button-next::after {
 .swiper-pagination-bullet-active {
   background-color: #18a0fb;
 }
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

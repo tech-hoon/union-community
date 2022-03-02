@@ -17,9 +17,9 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
-import { MainBanner } from 'components/common/Banner/MainBanner';
+
 import useHasNewPosts from 'hooks/post/useHasNewPosts';
-// import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
+import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 
 const Home = () => {
   const setLoginUser = useSetRecoilState(loginUserState);
@@ -73,7 +73,7 @@ const Home = () => {
   return (
     <Wrapper>
       <Navbar />
-      <MainBanner />
+      <MainBannerSlider />
 
       <CategoryBox />
       <MidWrapper>
