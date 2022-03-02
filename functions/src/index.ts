@@ -46,38 +46,38 @@ export const postDeleted = functions
     });
   });
 
-export const postLiked = functions
-  .region('asia-northeast3')
-  .firestore.document('posts/{postId}')
-  .onUpdate((change: functions.Change<functions.firestore.QueryDocumentSnapshot>, context) => {
-    const liker_list_before = change.before.data().liker_list;
-    const liker_list_after = change.after.data().liker_list;
-    const postId = change.after.id;
+// export const postLiked = functions
+//   .region('asia-northeast3')
+//   .firestore.document('posts/{postId}')
+//   .onUpdate((change: functions.Change<functions.firestore.QueryDocumentSnapshot>, context) => {
+//     const liker_list_before = change.before.data().liker_list;
+//     const liker_list_after = change.after.data().liker_list;
+//     const postId = change.after.id;
 
-    // liker_list 변경이 없으면 리턴
-    if (_.isEqual(liker_list_before, liker_list_after)) {
-      return;
-    }
+//     // liker_list 변경이 없으면 리턴
+//     if (_.isEqual(liker_list_before, liker_list_after)) {
+//       return;
+//     }
 
-    // after - before -> 좋아요
-    // before - after -> 좋아요 취소
-    const uid_like = liker_list_after.filter((x: string) => !liker_list_before.includes(x))?.[0];
-    const uid_unlike =
-      !uid_like && liker_list_before.filter((x: string) => !liker_list_before.includes(x))?.[0];
+//     // after - before -> 좋아요
+//     // before - after -> 좋아요 취소
+//     const uid_like = liker_list_after.filter((x: string) => !liker_list_before.includes(x))?.[0];
+//     const uid_unlike =
+//       !uid_like && liker_list_before.filter((x: string) => !liker_list_before.includes(x))?.[0];
 
-    // user.like_list에 postId 추가
-    if (uid_like.length) {
-      firestore.doc(`users/${uid_like}`).update({
-        like_list: admin.firestore.FieldValue.arrayUnion(postId),
-      });
-      return;
-    }
+//     // user.like_list에 postId 추가
+//     if (uid_like.length) {
+//       firestore.doc(`users/${uid_like}`).update({
+//         like_list: admin.firestore.FieldValue.arrayUnion(postId),
+//       });
+//       return;
+//     }
 
-    // user.like_list에 postId 제거
-    firestore.doc(`users/${uid_unlike}`).update({
-      like_list: admin.firestore.FieldValue.arrayRemove(postId),
-    });
-  });
+//     // user.like_list에 postId 제거
+//     firestore.doc(`users/${uid_unlike}`).update({
+//       like_list: admin.firestore.FieldValue.arrayRemove(postId),
+//     });
+//   });
 
 export const commentCreated = functions
   .region('asia-northeast3')
