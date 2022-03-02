@@ -29,8 +29,8 @@ export const Layouts = {
 
     @media ${({ theme }) => theme.size.mobile} {
       grid-template-columns: repeat(1, minmax(0, 1fr));
-      width: 80%;
-      padding: 0px;
+      width: 100%;
+      padding: 0 20px;
     }
   `,
 
