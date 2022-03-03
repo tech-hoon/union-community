@@ -79,7 +79,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
           navigator.serviceWorker
-            .register('worker.js')
+            .register('/service-worker.js')
             .then(
               function (registration) {
                 console.log('Worker registration successful', registration.scope);
