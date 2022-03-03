@@ -71,15 +71,6 @@
       })();
     </script>
 
-    <script>
-      //PWA, serviceWorker 등록
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js');
-        });
-      }
-    </script>
-
     <!-- smooth-scroll polyfill -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js"></script>
   </head>

@@ -5,6 +5,7 @@ import GlobalStyles from 'styles/GlobalStyles';
 import theme from 'styles/theme';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 ReactDOM.render(
   <RecoilRoot>
@@ -15,3 +16,5 @@ ReactDOM.render(
   </RecoilRoot>,
   document.getElementById('root')
 );
+
+serviceWorkerRegistration.register();
