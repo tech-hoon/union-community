@@ -71,31 +71,17 @@
       })();
     </script>
 
-    <!-- smooth-scroll polyfill -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js"></script>
-
-    <!-- PWA setting -->
     <script>
+      //PWA, serviceWorker 등록
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker
-            .register('/service-worker.js')
-            .then(
-              function (registration) {
-                console.log('Worker registration successful', registration.scope);
-              },
-              function (err) {
-                console.log('Worker registration failed', err);
-              }
-            )
-            .catch(function (err) {
-              console.log(err);
-            });
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js');
         });
-      } else {
-        console.log('Service Worker is not supported by browser.');
       }
     </script>
+
+    <!-- smooth-scroll polyfill -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

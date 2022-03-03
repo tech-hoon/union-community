@@ -1,37 +1,36 @@
-/* eslint-disable array-callback-return */
 /* eslint-disable no-restricted-globals */
 
-var CACHE_NAME = 'pwa-task-manager';
-var urlsToCache = ['/', '/offline.html'];
+// 캐시 이름
+const CACHE_NAME = 'cache-v3';
 
-// Install a service worker
+// 캐싱할 파일
+const FILES_TO_CACHE = ['/offline.html', '/favicon.ico'];
+
+// 상술한 파일 캐싱
 self.addEventListener('install', (event) => {
-  // Perform install steps
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE)));
+});
+
+// CACHE_NAME이 변경되면 오래된 캐시 삭제
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      console.log('Opened cache');
-      return cache.addAll(urlsToCache);
-    })
+    caches.keys().then((keyList) =>
+      Promise.all(
+        keyList.map((key) => {
+          if (CACHE_NAME !== key) return caches.delete(key);
+        })
+      )
+    )
   );
 });
 
-// Network Only
+// 요청에 실패하면 오프라인 페이지 표시
 self.addEventListener('fetch', (event) => {
-  event.respondWith(fetch(event.request));
-});
+  if ('navigate' !== event.request.mode) return;
 
-// Update a service worker
-self.addEventListener('activate', (event) => {
-  var cacheWhitelist = ['pwa-task-manager'];
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+  event.respondWith(
+    fetch(event.request).catch(() =>
+      caches.open(CACHE_NAME).then((cache) => cache.match('./offline.html'))
+    )
   );
 });
