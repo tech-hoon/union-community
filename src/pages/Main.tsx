@@ -185,20 +185,15 @@ const Contents = styled.div`
   margin: 20px auto;
   flex-direction: column;
   align-items: center;
-
-  @media ${({ theme }) => theme.size.tablet} {
-    margin: 30px auto;
-  }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    margin: 20px auto;
-  }
 `;
 
 const ButtonWrapper = styled.div<{ isLoading: boolean }>`
   visibility: ${({ isLoading }) => isLoading && `hidden`};
-  /* flex: 1; */
   margin: 0 auto 10%;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    margin: 0 auto 30%;
+  }
 `;
 
 const AvatarWrapper = styled.div`
