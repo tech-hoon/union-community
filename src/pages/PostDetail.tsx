@@ -132,6 +132,7 @@ const PostDetail = () => {
   }, [comments]);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     fetchComments();
   }, []);
 
