@@ -1,5 +1,7 @@
 import { Layouts as S } from './Layouts';
 import ImgSrc from 'assets/images/onboarding/onboarding2.svg';
+import MockImageSrc from 'assets/images/onboarding/mock-image.png';
+
 import styled, { css } from 'styled-components';
 import LoginModalButton from 'components/Main/LoginModalButton';
 import Fade from 'react-reveal/Fade';
@@ -23,16 +25,16 @@ const Onboarding3 = () => {
 
         <ImageContainer>
           <ImageWrapper>
-            <Caption>1. 임시 텍스트1</Caption>
-            <Image src={ImgSrc} alt='iOS 앱 설치 방법 이미지 1' />
+            <Caption>1. 임시 이미지1</Caption>
+            <Image src={MockImageSrc} alt='iOS 앱 설치 방법 이미지 1' />
           </ImageWrapper>
           <ImageWrapper>
-            <Caption>2. 임시 텍스트1</Caption>
-            <Image src={ImgSrc} alt='iOS 앱 설치 방법 이미지 2' />
+            <Caption>2. 임시 이미지2</Caption>
+            <Image src={MockImageSrc} alt='iOS 앱 설치 방법 이미지 2' />
           </ImageWrapper>
           <ImageWrapper>
-            <Caption>3. 임시 텍스트3</Caption>
-            <Image src={ImgSrc} alt='iOS 앱 설치 방법 이미지 3' />
+            <Caption>3. 임시 이미지3</Caption>
+            <Image src={MockImageSrc} alt='iOS 앱 설치 방법 이미지 3' />
           </ImageWrapper>
         </ImageContainer>
         <LoginModalButton />
@@ -97,10 +99,10 @@ const ImageContainer = styled.div`
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
   padding: 0 10%;
+  gap: 20px;
 
   @media ${({ theme }) => theme.size.mobile} {
-    justify-content: auto;
-    gap: 20px;
+    padding: 0 0 0 10%;
   }
 `;
 
