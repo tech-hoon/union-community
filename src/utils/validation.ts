@@ -1,9 +1,8 @@
-export const checkPostValidation = (
-  title: string | null,
-  category: string | null,
-  content: string | null
-) => {
-  const contentHTML = document.createElement('div');
-  contentHTML.innerHTML = content!!;
-  return !!title && !!category && !!content;
+export const checkContentValidation = (content = '') => {
+  const el = document.createElement('div');
+  el.innerHTML = content;
+  return !!el.textContent?.trim();
 };
+
+export const checkNullArgsValidation = (...args: any[]) =>
+  ![...args].filter((arg) => !Boolean(arg)).length;
