@@ -1,11 +1,14 @@
 import usePostForm from 'hooks/post/usePostForm';
 import { useLocation } from 'react-router';
 import { useEffect, useRef } from 'react';
-import { CATEGORY_LIST } from 'utils/config';
+import { ADMIN_UID, CATEGORY_LIST } from 'utils/config';
 
 import { Layouts as S } from './Layouts';
 import PortalContainer from 'components/common/Portal/PortalContainer';
 import AlertModal from 'components/common/Portal/AlertModal';
+import { useRecoilValue } from 'recoil';
+import { loginUserState } from 'store/loginUser';
+import { LoginUserType } from 'types';
 
 interface ILocationState {
   mode: 'add' | 'update';
@@ -18,6 +21,13 @@ const UploadPost = () => {
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const location = useLocation();
   const { mode, initialPost } = location.state as ILocationState;
+
+  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
+  const CategoryList = [...CATEGORY_LIST].filter(
+    ({ kor }) =>
+      (kor !== '전체' && kor !== '공지' && kor !== '장터/나눔') ||
+      (kor === '공지' && loginUser.uid === ADMIN_UID)
+  );
 
   useEffect(() => {
     initialPost?.attachment_url && setAttachment(initialPost.attachment_url);
@@ -59,16 +69,11 @@ const UploadPost = () => {
               <S.Option disabled value=''>
                 카테고리를 선택해주세요
               </S.Option>
-              {CATEGORY_LIST.map(({ kor }, id) => {
-                return (
-                  kor !== '전체' &&
-                  kor !== '공지' && (
-                    <S.Option value={kor} key={id}>
-                      {kor}
-                    </S.Option>
-                  )
-                );
-              })}
+              {CategoryList.map(({ kor }, id) => (
+                <S.Option value={kor} key={id}>
+                  {kor}
+                </S.Option>
+              ))}
             </S.Select>
           </S.SelectBox>
 

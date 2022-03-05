@@ -5,6 +5,7 @@ import { getMyLikes } from 'api/user';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
+import CardContainer from 'components/common/PostCardLayout/CardContainer';
 
 const MyLikes = () => {
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
@@ -33,7 +34,7 @@ const MyLikes = () => {
             좋아요 목록
           </S.Title>
         </S.Header>
-        {isLoading ? <S.PostCardSkeleton /> : <S.PostCards posts={posts} mypage={true} />}
+        {isLoading ? <S.PostCardSkeleton /> : <CardContainer posts={posts} />}
       </S.Container>
       <S.Footer />
     </S.Wrapper>

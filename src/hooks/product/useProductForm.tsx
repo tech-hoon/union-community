@@ -4,19 +4,30 @@ import { useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import { addPost, updatePost } from 'api/post';
 import { loginUserState } from 'store/loginUser';
-import { LoginUserType, PostType } from 'types';
+import { LoginUserType, ProductPostType } from 'types';
 import { checkContentValidation, checkNullArgsValidation } from 'utils/validation';
 import { storageService } from 'service/firebase';
+import { PRODUCT_STATUS, PRODUCT_TYPE } from 'utils/config';
 
 interface Props {
   titleRef: RefObject<HTMLInputElement | null>;
-  categoryRef: RefObject<HTMLSelectElement | null>;
+  statusRef: RefObject<HTMLSelectElement | null>;
   contentRef: RefObject<HTMLTextAreaElement | null>;
+  type: typeof PRODUCT_TYPE[number];
+  price: string;
   mode: 'add' | 'update';
-  prevPost: PostType | null;
+  prevProduct: ProductPostType | null;
 }
 
-const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Props) => {
+const useProductForm = ({
+  titleRef,
+  statusRef,
+  contentRef,
+  type,
+  price,
+  mode,
+  prevProduct,
+}: Props) => {
   const history = useHistory();
   const [attachments, setAttachment] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -73,20 +84,21 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
 
     const urls: string[] = [];
 
-    const prevAttachments = (prevPost?.attachment_url || []).filter(
+    const prevAttachments = (prevProduct?.attachment_url || []).filter(
       (x) => !attachments.includes(x)
     );
 
     if (
-      !checkNullArgsValidation(titleRef.current?.value!!, categoryRef.current?.value!!) ||
-      !checkContentValidation(contentRef.current?.value)
+      !checkContentValidation(contentRef.current?.value) ||
+      !checkNullArgsValidation(statusRef.current?.value, attachments.length) ||
+      (type === '판매' && !price)
     ) {
       setErrorInfo('⚠️ 내용을 모두 입력해 주세요.');
       return;
     }
 
-    // 첨부 파일 있고,
     if (attachments.length) {
+      // 첨부 파일 있고,
       for (let i = 0; i < attachments.length; i++) {
         // 기존 attachment_url 있는 경우 그대로 db로
         if (attachments[i].indexOf('firebasestorage') !== -1) {
@@ -105,16 +117,19 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
       await storageService.refFromURL(attachment).delete();
     });
 
-    const postInput = {
+    const inputArgs = {
       title: titleRef.current?.value!!,
-      category: categoryRef.current?.value!!,
+      status: statusRef.current?.value!!,
       content: contentRef.current?.value.replaceAll('\n', '<br/>') || '',
+      type: type,
+      price: price,
       attachment_url: urls,
+      category: '장터/나눔',
     };
 
     if (mode === 'add') {
       setIsUploading(true);
-      const __postId = await addPost({ postInput, uid: loginUser.uid });
+      const __postId = await addPost({ postInput: inputArgs, uid: loginUser.uid });
       history.push({
         pathname: `/posts/${__postId}`,
         state: 'isAdded',
@@ -124,9 +139,14 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
 
     if (mode === 'update') {
       setIsUploading(true);
-      prevPost?.id && (await updatePost({ postInput, uid: loginUser.uid, postId: prevPost.id }));
+      prevProduct?.id &&
+        (await updatePost({
+          postInput: inputArgs,
+          uid: loginUser.uid,
+          postId: prevProduct?.id,
+        }));
       history.push({
-        pathname: `/posts/${prevPost?.id}`,
+        pathname: `/posts/${prevProduct?.id}`,
         state: 'isUpdated',
       });
       return;
@@ -147,4 +167,4 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   };
 };
 
-export default usePostForm;
+export default useProductForm;

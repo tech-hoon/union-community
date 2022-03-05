@@ -1,6 +1,7 @@
 import { dbService, firebaseApp } from 'service/firebase';
 import { CARD_LIMIT } from 'utils/config';
 import { deleteAllComments } from './comment';
+import { PRODUCT_STATUS, PRODUCT_TYPE } from 'utils/config';
 
 interface IgetPostParams {
   lastVisiblePost?: string;
@@ -8,25 +9,30 @@ interface IgetPostParams {
   orderBy: string;
 }
 
+type PostInput = {
+  title: string;
+  category: string;
+  content: string;
+  attachment_url: string[];
+};
+
+type ProductInput = {
+  title: string;
+  category: string;
+  content: string;
+  status: typeof PRODUCT_STATUS[number];
+  type: typeof PRODUCT_TYPE[number];
+  price: string;
+  attachment_url: string[];
+};
+
 interface IaddPostParams {
-  postInput: {
-    title: string;
-    category: string;
-    content: string;
-    attachment_url: string[];
-  };
+  postInput: PostInput | ProductInput;
   uid: string;
 }
 
-interface IupdatePostParams {
+interface IupdatePostParams extends IaddPostParams {
   postId: string;
-  postInput: {
-    title: string;
-    category: string;
-    content: string;
-    attachment_url: string[];
-  };
-  uid: string;
 }
 
 export const getInitialPosts = async ({ orderBy, category }: IgetPostParams) => {

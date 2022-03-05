@@ -7,6 +7,10 @@ import CommentCount from 'components/common/Count/CommentCount';
 import Avatar from 'components/common/Avatar';
 import CategoryLabel from '../CategoryLabel';
 
+interface ICreator {
+  isSecret: boolean;
+}
+
 export const Layouts = {
   Wrapper: styled.div`
     min-height: 60vh;
@@ -154,9 +158,3 @@ export const Layouts = {
     color: gray;
   `,
 };
-
-export default Layouts;
-
-interface ICreator {
-  isSecret: boolean;
-}
