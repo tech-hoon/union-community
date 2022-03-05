@@ -25,11 +25,11 @@ const Layouts = {
     @keyframes popUpAnimationMobile {
       0% {
         opacity: 0;
-        bottom: 54px;
+        bottom: 40px;
       }
       100% {
         opacity: 1;
-        bottom: 124px;
+        bottom: 110px;
       }
     }
   `,

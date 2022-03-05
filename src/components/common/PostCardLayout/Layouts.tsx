@@ -74,6 +74,7 @@ export const Layouts = {
     overflow: hidden;
     text-overflow: ellipsis;
     margin-right: 2px;
+    line-height: 1.15;
   `,
 
   ImageIcon: styled(PhotoLibrary)`
