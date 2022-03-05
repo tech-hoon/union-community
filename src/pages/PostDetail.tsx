@@ -3,21 +3,18 @@ import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import Avatar from 'components/common/Avatar';
 import PostSkeleton from 'components/common/Skeletons/PostSkeleton';
 import CommentBox from 'components/PostDetail/Comment/CommentBox';
 import { useGetPostDetail } from 'hooks/post/useGetPosts';
 import { loginUserState } from 'store/loginUser';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { deletePost, postLike, postUnlike, viewCountUp } from 'api/post';
-import { LoginUserType } from 'types';
+import { LoginUserType, PostType, ProductPostType } from 'types';
 import { addComment, getComments } from 'api/comment';
-import { categoryColor } from 'utils/categoryColor';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { urlParsingRegex } from 'utils/regex';
 import { debounce } from 'lodash';
 
-import { PhotoLibrary } from '@styled-icons/material-outlined';
 import CommentCount from 'components/common/Count/CommentCount';
 import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';
@@ -27,13 +24,14 @@ import PortalContainer from 'components/common/Portal/PortalContainer';
 import AlertModal from 'components/common/Portal/AlertModal';
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
 import { commentState } from 'store/comment';
-import { toDateStringByFormating } from 'utils/date';
-import BottomBanner from 'components/common/Banner/BottomBanner';
 import { storageService } from 'service/firebase';
 import ImageSlider from 'components/common/Slider/ImageSlider';
-import CategoryLabel from 'components/common/CategoryLabel';
+
+import BottomBanner from 'components/common/Banner/BottomBanner';
 import CommentTextarea from 'components/PostDetail/Textarea/CommentTextarea';
-import KebabMenu from 'components/common/KebabMenu';
+
+import ProductContainer from 'components/PostDetail/ProductContainer';
+import PostContainer from 'components/PostDetail/PostContainer';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -42,7 +40,7 @@ const PostDetail = () => {
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   const { post, fetchPostDetail } = useGetPostDetail();
-  const [isCreator, setIsCreator] = useState<boolean>();
+  const [isCreator, setIsCreator] = useState<boolean>(false);
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
   const [comments, setComments] = useRecoilState(commentState);
   const commentRef = useRef<any>(null);
@@ -77,7 +75,12 @@ const PostDetail = () => {
     }
   };
 
-  const onUpdateClick = () => {
+  const onOpenImageSlider = (id: number) => {
+    setImageIndex(id);
+    onOpenSlider();
+  };
+
+  const onUpdatePostClick = () => {
     post &&
       history.push({
         pathname: '/post/upload',
@@ -89,6 +92,27 @@ const PostDetail = () => {
             category: post.category,
             content: post.content,
             attachment_url: post.attachment_url,
+          },
+        },
+      });
+  };
+
+  const onUpdateProductClick = () => {
+    const __post = JSON.parse(JSON.stringify(post)) as ProductPostType;
+
+    __post &&
+      history.push({
+        pathname: '/product/upload',
+        state: {
+          mode: 'update',
+          initialProduct: {
+            id: __post.id,
+            title: __post.title,
+            type: __post.type,
+            status: __post.status,
+            price: __post.price,
+            content: __post.content,
+            attachment_url: __post.attachment_url,
           },
         },
       });
@@ -121,23 +145,20 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    if (post) {
-      !!loginUser && !!post.creator && setIsCreator(loginUser.uid === post.creator.uid);
-      setContentMarkup({ __html: urlParsingRegex(post.content) });
-    }
-  }, [post]);
+    window.scrollTo({ top: 0 });
+    fetchComments();
+  }, []);
 
   useEffect(() => {
     fetchPostDetail(id);
   }, [comments]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
-    fetchComments();
-  }, []);
-
-  useEffect(() => {
-    onViewCountUp();
+    if (post) {
+      !!loginUser && !!post.creator && setIsCreator(loginUser.uid === post.creator.uid);
+      setContentMarkup({ __html: urlParsingRegex(post.content) });
+      onViewCountUp();
+    }
   }, [post]);
 
   return (
@@ -145,47 +166,28 @@ const PostDetail = () => {
       <Wrapper>
         <Navbar option='post-detail' />
         {post ? (
-          <PostContainer>
-            <Category size='sm' color={categoryColor(post.category)} isClicked={true}>
-              {post.category}
-            </Category>
-            <ROW_1>
-              <Title>{post.title}</Title>
-              {/* <IsEdited>{post.is_edited && `수정됨 `}</IsEdited> */}
-            </ROW_1>
-            <ROW_2>
-              <ProfileBox onClick={onOpenUserMenu}>
-                <Avatar avatarId={isSecret ? -1 : post.creator.avatar_id} />
-                <Creator isSecret={isSecret}>{isSecret ? '익명' : post.creator.nickname}</Creator>
-              </ProfileBox>
-              <CreatedAt>{toDateStringByFormating(post.created_at, false, '.')}</CreatedAt>
-              {!!post.attachment_url.length && <ImageIcon size='24px' />}
-
-              {isCreator && (
-                <KebabMenu>
-                  <UpdateBtn onClick={onUpdateClick}>수정하기</UpdateBtn>
-                  <DeleteBtn onClick={onOpenModal}>삭제하기</DeleteBtn>
-                </KebabMenu>
-              )}
-            </ROW_2>
-            <ROW_3></ROW_3>
-            <ContentWrapper>
-              <Content dangerouslySetInnerHTML={contentMarkup} />
-              <ImagesContainer>
-                {!!post.attachment_url &&
-                  (post?.attachment_url || []).map((url, id) => (
-                    <Image
-                      src={url}
-                      alt='image'
-                      key={id}
-                      onClick={() => {
-                        setImageIndex(id);
-                        onOpenSlider();
-                      }}
-                    />
-                  ))}
-              </ImagesContainer>
-            </ContentWrapper>
+          <Container>
+            {post.category === '장터/나눔' ? (
+              <ProductContainer
+                post={post as ProductPostType}
+                contentMarkup={contentMarkup}
+                isCreator={isCreator}
+                onOpenModal={onOpenModal}
+                onOpenUserMenu={onOpenUserMenu}
+                onOpenImageSlider={onOpenImageSlider}
+                onUpdateProductClick={onUpdateProductClick}
+              />
+            ) : (
+              <PostContainer
+                post={post as PostType}
+                contentMarkup={contentMarkup}
+                isCreator={isCreator}
+                onOpenModal={onOpenModal}
+                onOpenUserMenu={onOpenUserMenu}
+                onOpenImageSlider={onOpenImageSlider}
+                onUpdatePostClick={onUpdatePostClick}
+              />
+            )}
             <CountBox>
               <ViewCount size='16px' count={post.visitor_list?.length} />
               <CommentCount size='16px' count={post.comment_count} />
@@ -208,7 +210,7 @@ const PostDetail = () => {
             />
 
             {/* <BottomBanner /> */}
-          </PostContainer>
+          </Container>
         ) : (
           <PostSkeleton />
         )}
@@ -252,7 +254,7 @@ const Wrapper = styled.div`
   overflow-y: hidden;
 `;
 
-const PostContainer = styled.section`
+const Container = styled.section`
   max-width: ${({ theme }) => theme.container.maxWidth};
   padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
 
@@ -265,145 +267,10 @@ const PostContainer = styled.section`
   }
 `;
 
-const ROW_1 = styled.div`
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  margin: 18px 0;
-`;
-
-const Title = styled.h1`
-  font-weight: 700;
-  font-size: 1.8rem;
-  line-height: 1;
-  flex: 8;
-  word-break: break-all;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1.5rem;
-  }
-`;
-
-const ImageIcon = styled(PhotoLibrary)`
-  color: #333;
-`;
-
-const ROW_2 = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 0.8em;
-  }
-`;
-
-const ROW_3 = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  font-size: 1.3em;
-  margin-top: 16px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1em;
-  }
-`;
-
-const ProfileBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-`;
-
-interface ICreator {
-  isSecret: boolean;
-}
-
-const Creator = styled.span<ICreator>`
-  font-weight: bold;
-  font-size: 1.2em;
-  margin-bottom: 1.2px;
-  color: ${({ theme, isSecret }) => (isSecret ? '#000' : theme.color.main)};
-  user-select: none;
-`;
-
 const CountBox = styled.div`
   display: flex;
   align-items: center;
   gap: 2.6px;
-`;
-
-const Btn = styled.button`
-  font-size: 14px;
-  font-weight: 400;
-  color: black;
-  padding: 12px 14px;
-`;
-
-const UpdateBtn = styled(Btn)``;
-
-const DeleteBtn = styled(Btn)``;
-
-const CreatedAt = styled.span`
-  font-weight: 500;
-  font-size: 14px;
-  color: #999;
-  margin-right: auto;
-  padding-right: 1.2px;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 10px;
-  }
-`;
-
-const IsEdited = styled(CreatedAt)`
-  line-height: 1.5;
-  font-size: 0.8rem;
-  align-self: flex-end;
-`;
-
-const ContentWrapper = styled.section`
-  min-height: 20vh;
-  margin: 12px 0 36px;
-`;
-
-const Content = styled.div`
-  font-size: 1.2rem;
-  line-height: 1.6;
-  padding: 0 4px;
-  white-space: pre-line;
-
-  @media ${({ theme }) => theme.size.mobile} {
-    font-size: 1rem;
-  }
-`;
-
-const ImagesContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-`;
-
-const Image = styled.img`
-  flex: none;
-  height: 150px;
-  margin-top: 30px;
-  margin-bottom: 24px;
-  cursor: pointer;
-  -webkit-user-drag: none;
-`;
-
-const Button = styled.button`
-  font-weight: 500;
-  font-size: 1rem;
-  padding: 4px 0px;
-  border-radius: 4px;
-`;
-
-const Category = styled(CategoryLabel)`
-  font-weight: 500;
 `;
 
 export default PostDetail;

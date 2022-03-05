@@ -6,7 +6,6 @@ import MyLikes from './MyPage/MyLikes';
 import MyPosts from './MyPage/MyPosts';
 import MyNotification from './MyNotification';
 import Messages from './MyMessages';
-import ProductDetail from './ProductDetail';
 import UploadProduct from './UploadPage/UploadProduct';
 import UploadPost from './UploadPage/UploadPost';
 
@@ -20,6 +19,5 @@ export {
   MyPosts,
   MyNotification,
   Messages,
-  ProductDetail,
   UploadProduct,
 };

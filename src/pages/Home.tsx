@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
-import PostCardBox from 'components/common/PostCard/PostCardBox';
+import CardContainer from 'components/common/PostCardLayout/CardContainer';
 import CategoryBox from 'components/Home/CategoryBox';
 import OrderbyBox from 'components/Home/OrderbyBox';
 import Footer from 'components/common/Footer';
@@ -79,7 +79,7 @@ const Home = () => {
       <MidWrapper>
         <OrderbyBox />
       </MidWrapper>
-      {isFetching ? <PostCardSkeleton /> : <PostCardBox posts={posts} />}
+      {isFetching ? <PostCardSkeleton /> : <CardContainer posts={posts} />}
       {postHasUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
       <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
         <UploadIcon />

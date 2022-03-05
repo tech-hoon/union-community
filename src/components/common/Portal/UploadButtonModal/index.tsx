@@ -13,7 +13,7 @@ const UploadButtonModal = () => {
 
     switch (id) {
       case 'store':
-        history.push({ pathname: '/product/upload', state: { mode: 'add', initialProduct: null } });
+        // history.push({ pathname: '/product/upload', state: { mode: 'add', initialProduct: null } });
         break;
 
       case 'post':

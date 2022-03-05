@@ -15,3 +15,10 @@ export const nicknameRegex = (rawData: string) => {
   const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
   return regex.test(rawData);
 };
+
+export const priceCommaRegex = (str: string): string => {
+  if (Number(str) === 0) return '';
+
+  const parsedStr = str.replace(/[^\d]+/g, '');
+  return parsedStr.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+};

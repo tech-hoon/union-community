@@ -74,6 +74,18 @@ export const Layouts = {
   `,
   Option: styled.option``,
 
+  PriceInput: styled.input`
+    width: 160px;
+    font-weight: bold;
+    font-size: 1rem;
+
+    &[type='number']::-webkit-outer-spin-button,
+    &[type='number']::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  `,
+
   UploadImageBtn: styled.label`
     flex: none;
     width: 100px;

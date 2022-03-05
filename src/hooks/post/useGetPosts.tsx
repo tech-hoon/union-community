@@ -1,7 +1,7 @@
 import { getPostDetail, getInitialPosts, getMorePosts } from 'api/post';
 import useDidUpdateEffect from 'hooks/common/useDidUpdateEffect';
 import { useState, useEffect, useCallback } from 'react';
-import { PostType } from 'types';
+import { PostType, ProductPostType } from 'types';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   postsCategoryState,
@@ -83,7 +83,7 @@ export const useGetPosts = () => {
 
 export const useGetPostDetail = () => {
   const history = useHistory();
-  const [post, setPost] = useState<PostType>();
+  const [post, setPost] = useState<PostType | ProductPostType>();
 
   const fetchPostDetail = async (id: string) => {
     const __post: any = await getPostDetail(id);

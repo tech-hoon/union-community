@@ -1,4 +1,4 @@
-import { REPORT_LIST } from 'utils/config';
+import { PRODUCT_STATUS, PRODUCT_TYPE, REPORT_LIST } from 'utils/config';
 
 export interface CommentType {
   id: string;
@@ -47,6 +47,12 @@ export interface PostType {
   visitor_list: string[];
   comment_count: number;
   is_edited: boolean;
+}
+
+export interface ProductPostType extends PostType {
+  status: typeof PRODUCT_STATUS[number];
+  type: typeof PRODUCT_TYPE[number];
+  price?: string;
 }
 
 export interface PostFormType {

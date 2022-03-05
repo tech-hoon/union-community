@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SkeletonItem from './components/SkeletonItem';
-import { Layouts as S } from 'components/common/PostCard/Layouts';
+import { Layouts as S } from 'components/common/PostCardLayout/Layouts';
 
 interface Props {}
 

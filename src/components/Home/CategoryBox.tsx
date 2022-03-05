@@ -67,7 +67,8 @@ const Wrapper = styled.div`
     font-size: 1em;
     padding: 0;
     overflow-x: auto;
-    margin: 12.5px 0px 0px 20px;
+    /* margin: 12.5px 0px 0px 20px; */
+    margin: 12.5px 0px 0px 0px;
   }
 `;
 
@@ -75,6 +76,9 @@ const Category = styled(CategoryLabel)`
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 13px;
     padding: 10px 20px;
+    &:nth-child(1) {
+      margin-left: 20px;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {

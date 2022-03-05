@@ -1,7 +1,7 @@
 import Navbar from 'components/common/Navbar';
 import Footer from 'components/common/Footer';
 import PostCardSkeleton from 'components/common/Skeletons/PostCardSkeleton';
-import PostCardBox from 'components/common/PostCard/PostCardBox';
+import PostCardBox from 'components/common/PostCardLayout/CardContainer';
 
 import styled from 'styled-components';
 
