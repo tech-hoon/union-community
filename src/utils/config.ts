@@ -8,9 +8,10 @@ export const CATEGORY_LIST = [
   { eng: 'all', kor: '전체', color: '#18A0FB' },
   { eng: 'notice', kor: '공지', color: '#0E27AC' },
   { eng: 'free', kor: '자유', color: '#E8581A' },
-  { eng: 'info/ad', kor: '정보/홍보', color: '#EFBE3F' },
   { eng: 'store', kor: '장터/나눔', color: '#18B828' },
+  { eng: 'delivery', kor: '배달/공동구매', color: '#2AC1BC' },
   { eng: 'study/club', kor: '스터디/동아리', color: '#F03D4E' },
+  { eng: 'info/ad', kor: '정보/홍보', color: '#EFBE3F' },
   { eng: 'secret', kor: '비밀', color: '#884DD9' },
 ];
 
@@ -41,6 +42,6 @@ export const REPORT_LIST = [
 export const AVATAR_COUNT = 10;
 
 //Product
-export const PRODUCT_TYPE = ['구매', '판매', '물물교환', '나눔'];
+export const PRODUCT_TYPE = ['판매', '물물교환', '나눔'];
 
 export const PRODUCT_STATUS = ['판매중', '예약중', '거래완료'];
