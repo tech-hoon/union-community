@@ -8,7 +8,7 @@ const NotFound = (props: Props) => {
   const history = useHistory();
 
   const onClickButton = () => {
-    history.push('/');
+    history.push({ pathname: '/home', state: 'isDeleted' });
   };
 
   return (
