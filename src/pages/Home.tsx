@@ -18,8 +18,8 @@ import PortalContainer from 'components/common/Portal/PortalContainer';
 import UploadButtonModal from 'components/common/Portal/UploadButtonModal';
 import UploadIcon from 'assets/icons/UploadIcon';
 
-import useHasNewPosts from 'hooks/post/useHasNewPosts';
 import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
+import { useHistory } from 'react-router-dom';
 
 const Home = () => {
   const setLoginUser = useSetRecoilState(loginUserState);
@@ -40,16 +40,17 @@ const Home = () => {
     __user && setLoginUser(__user);
   };
 
-  const { postHasUpdated, setPostHasUpdated } = useHasNewPosts({ fetchPosts, fetchUserData });
-
   const [scrollY, setScrollY] = useSessionStorage('scrollY', 0);
   const [uploadButtonOpened, setUploadButtonOpened] = useState(false);
+  const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
 
   const ioRef = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ioRef, isLastPost, {});
+  const history = useHistory();
+  const historyState = history.location.state;
 
   const onRefreshClick = useCallback(() => {
-    setPostHasUpdated(false);
+    setRefreshButtonClicked(!refreshButtonClicked);
     window.scroll({ behavior: 'smooth', top: 0 });
     fetchPosts();
   }, []);
@@ -63,12 +64,32 @@ const Home = () => {
     return () => setScrollY(window.scrollY);
   }, []);
 
+  useEffect(() => {
+    if (historyState === 'profileUpdated') {
+      fetchUserData();
+      history.replace({ state: '' });
+      onRefreshClick();
+    }
+
+    // 글 등록,수정,삭제일 경우, fetch만
+    if (historyState) {
+      history.replace({ state: '' });
+      onRefreshClick();
+    }
+  }, []);
+
   // IO 감지시 게시물 추가 fetch
   useEffect(() => {
     if (entry?.isIntersecting && !isFetchingMore) {
       fetchMorePosts();
     }
   }, [lastVisiblePost, entry, isFetchingMore]);
+
+  useEffect(() => {
+    if (!isFetching && refreshButtonClicked) {
+      setRefreshButtonClicked(false);
+    }
+  }, [isFetching]);
 
   return (
     <Wrapper>
@@ -80,7 +101,10 @@ const Home = () => {
         <OrderbyBox />
       </MidWrapper>
       {isFetching ? <PostCardSkeleton /> : <CardContainer posts={posts} />}
-      {postHasUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>}
+      {/* {postHasUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>} */}
+      <RefreshButton onClick={onRefreshClick} isClicked={refreshButtonClicked}>
+        ↪
+      </RefreshButton>
       <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
         <UploadIcon />
         {uploadButtonOpened && (
@@ -115,7 +139,7 @@ const UploadButton = memo(styled.button<IUploadButton>`
 
   @media ${({ theme }) => theme.size.mobile} {
     right: 24px;
-    bottom: 54px;
+    bottom: 40px;
   }
 `);
 
@@ -140,32 +164,34 @@ const MidWrapper = memo(styled.div`
   }
 `);
 
-const RefreshButton = memo(styled.button`
-  @keyframes popUpAnimation {
-    0% {
-      opacity: 0;
-      top: -50%;
-    }
+const RefreshButton = styled(UploadButton)`
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: white;
 
-    100% {
-      opacity: 1;
-      top: 15%;
-    }
+  font-size: 16px;
+  font-weight: 500;
+
+  color: ${({ theme }) => theme.color.main};
+  border: 1px solid ${({ theme }) => theme.color.main};
+
+  left: 48px;
+  bottom: 64px;
+
+  transform: ${({ isClicked }) => (isClicked ? `rotate(360deg)` : null)};
+  transform-origin: center;
+  transition: 0.5s;
+
+  @media ${({ theme }) => theme.size.mobile} {
+    left: 24px;
+    bottom: 40px;
   }
 
-  font-size: 15px;
-  padding: 12px 20px;
-
-  top: -200%;
-  position: fixed;
-  left: 50%;
-  background-color: white;
-  color: black;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px 0px rgb(0 0 0 / 20%);
-  border-radius: 50px;
-
-  animation: popUpAnimation 0.5s ease 0s 1 normal forwards running;
-`);
+  display: none;
+  @media all and (display-mode: standalone) {
+    display: inline;
+  }
+`;
 
 export default memo(Home);

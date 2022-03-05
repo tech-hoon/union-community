@@ -11,7 +11,6 @@ import {
 } from 'store/post';
 import { useHistory } from 'react-router-dom';
 import { dbService } from 'service/firebase';
-import { postHasUpdatedState } from 'store/newPosts';
 
 export const useGetPosts = () => {
   const [posts, setPosts] = useRecoilState(postsState);
@@ -22,8 +21,6 @@ export const useGetPosts = () => {
   const [isLastPost, setIsLastPost] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
-
-  const setPostHasUpdated = useSetRecoilState(postHasUpdatedState);
 
   const fetchPosts = useCallback(async () => {
     setIsFetching(true);
@@ -36,8 +33,6 @@ export const useGetPosts = () => {
     setPosts(__posts);
     setLastVisiblePost(__lastVisiblePost);
     setIsFetching(false);
-
-    setPostHasUpdated(false);
   }, [orderBy, category, lastVisiblePost]);
 
   const fetchMorePosts = async () => {
