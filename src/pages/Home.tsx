@@ -20,6 +20,7 @@ import UploadIcon from 'assets/icons/UploadIcon';
 
 import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 import { useHistory } from 'react-router-dom';
+import RefreshIcon from 'assets/icons/RefreshIcon';
 
 const Home = () => {
   const setLoginUser = useSetRecoilState(loginUserState);
@@ -101,9 +102,9 @@ const Home = () => {
         <OrderbyBox />
       </MidWrapper>
       {isFetching ? <PostCardSkeleton /> : <CardContainer posts={posts} />}
-      {/* {postHasUpdated && <RefreshButton onClick={onRefreshClick}>새 게시물</RefreshButton>} */}
+
       <RefreshButton onClick={onRefreshClick} isClicked={refreshButtonClicked}>
-        ↪
+        <RefreshIcon />
       </RefreshButton>
       <UploadButton onClick={onUploadClick} isClicked={uploadButtonOpened}>
         <UploadIcon />
@@ -164,24 +165,16 @@ const MidWrapper = memo(styled.div`
   }
 `);
 
-const RefreshButton = styled(UploadButton)`
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  background-color: white;
-
-  font-size: 16px;
-  font-weight: 500;
-
-  color: ${({ theme }) => theme.color.main};
-  border: 1px solid ${({ theme }) => theme.color.main};
+const RefreshButton = styled.button<IUploadButton>`
+  position: fixed;
+  z-index: 1000;
+  cursor: pointer;
 
   left: 48px;
   bottom: 64px;
 
-  transform: ${({ isClicked }) => (isClicked ? `rotate(360deg)` : null)};
-  transform-origin: center;
-  transition: 0.5s;
+  transform: ${({ isClicked }) => (isClicked ? `rotate(300deg)` : null)};
+  transition: 0.3s;
 
   @media ${({ theme }) => theme.size.mobile} {
     left: 24px;

@@ -100,17 +100,17 @@ const UploadProduct = () => {
             </S.SelectBox>
           </SelectWrapper>
           {type === '판매' && (
-            <>
-              <S.Label>￦</S.Label>
+            <S.PriceBox>
+              <S.PriceLabel>￦</S.PriceLabel>
               <S.PriceInput
                 type='text'
                 defaultValue={initialProduct?.price || ''}
                 value={price}
                 onChange={handlePrice}
                 placeholder='0'
-                maxLength={9}
+                maxLength={11}
               />
-            </>
+            </S.PriceBox>
           )}
           <S.Editor ref={contentRef} value={initialProduct?.content || null} />
 

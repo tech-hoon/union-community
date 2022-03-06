@@ -37,6 +37,8 @@ const FlexCenter = css`
 `;
 
 const Wrapper = styled.div`
+  width: 75px;
+  height: 75px;
   ${FlexCenter};
 `;
 

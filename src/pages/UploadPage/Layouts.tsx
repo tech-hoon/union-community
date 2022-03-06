@@ -74,10 +74,19 @@ export const Layouts = {
   `,
   Option: styled.option``,
 
+  PriceBox: styled.div`
+    margin: 10px 0;
+  `,
+
+  PriceLabel: styled.label`
+    font-size: 1.5rem;
+    font-weight: bold;
+  `,
+
   PriceInput: styled.input`
     width: 160px;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.5rem;
 
     &[type='number']::-webkit-outer-spin-button,
     &[type='number']::-webkit-inner-spin-button {
