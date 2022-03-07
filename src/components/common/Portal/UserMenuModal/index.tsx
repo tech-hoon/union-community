@@ -40,7 +40,7 @@ const UserMenuModal = ({ reciever, onCloseModal, isSecret }: Props) => {
       return (
         <Wrapper>
           <Header>
-            <Avatar avatarId={avatarId} />
+            <Avatar avatarId={avatarId} size={55} />
             <Nickname isSecret={avatarId === 0 ? false : isSecret}>{convertedNickname}</Nickname>
           </Header>
           <S.ButtonBox onClick={onClickMenu}>
@@ -75,11 +75,14 @@ const UserMenuModal = ({ reciever, onCloseModal, isSecret }: Props) => {
 
 const Wrapper = styled(S.Wrapper)`
   gap: 24px;
+  width: 320px;
+  height: 240px;
 `;
 
 const Header = styled.div`
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  gap: 15px;
   align-items: center;
   font-size: 1.2rem;
   font-weight: 600;
@@ -94,16 +97,8 @@ const Nickname = styled.span<INickname>`
   margin-bottom: 2px;
 `;
 
-const ReportButton = styled(S.CancelButton)`
-  background-color: transparent;
-  border: 1px solid red;
-  border-radius: 4px;
-  color: red;
-`;
+const ReportButton = styled(S.CancelButton)``;
 
-const MessageButton = styled(S.CancelButton)`
-  background-color: black;
-  color: white;
-`;
+const MessageButton = styled(S.OkayButton)``;
 
 export default UserMenuModal;

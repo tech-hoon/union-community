@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-  font-size: 1rem;
-  height: 2rem;
-  padding: 0 20px;
-  border-radius: 4px;
+  font-weight: bold;
+  font-size: 13px;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
 `;
 
 const S = {
@@ -32,6 +33,26 @@ const S = {
     font-size: 1rem;
   `,
 
+  Textarea: styled.textarea`
+    width: 100%;
+    font-size: 14px;
+    border: none;
+    overflow: auto;
+    outline: none;
+    resize: none;
+
+    padding: 8px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    background-color: white;
+    margin: 16px 0;
+
+    &::placeholder {
+      color: gray;
+    }
+  `,
+
   Title: styled.h2`
     font-size: 1rem;
     font-weight: 600;
@@ -43,20 +64,25 @@ const S = {
   ButtonBox: styled.div`
     display: flex;
     gap: 12px;
+    width: 80%;
+    justify-content: center;
   `,
 
   OkayButton: styled(Button)`
-    background-color: #262626;
+    background-color: #18a0fb;
+    border: 1px solid #18a0fb;
     color: white;
 
     &:disabled {
       cursor: default;
-      background-color: #ccc;
+      opacity: 0.5;
     }
   `,
   CancelButton: styled(Button)`
-    background-color: #e9ecef;
-    color: black;
+    background-color: white;
+    border: 1px solid #ff0000;
+    color: #ff0000;
+    font-weight: 400;
   `,
 };
 

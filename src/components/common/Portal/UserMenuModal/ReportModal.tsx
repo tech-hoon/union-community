@@ -70,7 +70,7 @@ const ReportModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Props) =
       <S.ButtonBox>
         <S.CancelButton onClick={onCloseModal}>취소</S.CancelButton>
         <S.OkayButton id='done' onClick={onClickOkayButton} disabled={!content || !type}>
-          제출
+          신고하기
         </S.OkayButton>
       </S.ButtonBox>
     </Wrapper>

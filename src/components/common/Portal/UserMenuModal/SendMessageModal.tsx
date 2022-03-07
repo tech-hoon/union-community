@@ -5,6 +5,7 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import S from 'components/common/Portal/AlertModal/Layouts';
 import { sendMessage } from 'api/message';
+
 interface Props {
   reciever: UserType;
   onCloseModal: () => void;
@@ -16,7 +17,7 @@ const SendMessageModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Pro
   const [value, setValue] = useState<string>();
   const sender = useRecoilValue(loginUserState) as UserType;
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
   };
 
@@ -35,11 +36,13 @@ const SendMessageModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Pro
         <small>{isSecret ? `익명${reciever.uid.slice(-2)}` : reciever.nickname}</small>님에게 메시지
         보내기
       </S.Title>
-      <S.Input onChange={onChange} />
+      <TextareaWrapper>
+        <S.Textarea onChange={onChange} />
+      </TextareaWrapper>
       <S.ButtonBox>
         <S.CancelButton onClick={onCloseModal}>취소</S.CancelButton>
         <S.OkayButton id='done' onClick={onClickOkayButton} disabled={!value}>
-          확인
+          메시지 보내기
         </S.OkayButton>
       </S.ButtonBox>
     </Wrapper>
@@ -47,7 +50,11 @@ const SendMessageModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Pro
 };
 
 const Wrapper = styled(S.Wrapper)`
-  gap: 24px;
+  gap: 12px;
+`;
+
+const TextareaWrapper = styled.div`
+  width: 100%;
 `;
 
 export default SendMessageModal;
