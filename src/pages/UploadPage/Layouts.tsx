@@ -36,10 +36,10 @@ export const Layouts = {
   TitleInput: styled.input`
     width: 100%;
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 29px;
 
     @media ${({ theme }) => theme.size.mobile} {
-      font-size: 1.5rem;
+      font-size: 25px;
     }
   `,
   HR: styled.hr`
