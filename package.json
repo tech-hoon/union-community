@@ -52,7 +52,6 @@
     "deploy": "npm install && npm run build && npm run firebase",
     "firebase": "firebase login && firebase deploy"
   },
-  "homepage": "https://uni-on.me",
   "eslintConfig": {
     "extends": [
       "react-app",
