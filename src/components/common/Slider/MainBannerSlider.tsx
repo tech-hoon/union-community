@@ -12,39 +12,34 @@ import './styles.css';
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 const MainBannerSlider = () => (
-  // <Swiper
-  //   slidesPerView={1}
-  //   autoplay={{
-  //     delay: 4000,
-  //     disableOnInteraction: false,
-  //   }}
-  //   observer={true}
-  //   observeParents={true}
-  //   loop
-  //   pagination={{
-  //     clickable: true,
-  //   }}
-  //   navigation={true}
-  // >
-  //   <SwiperSlide>
-  //     <Picture>
-  //       <source media='(max-width:768px)' srcSet={MainBanner1M} />
-  //       <img src={MainBanner1L} alt='메인 배너1' />
-  //     </Picture>
-  //   </SwiperSlide>
+  <Swiper
+    slidesPerView={1}
+    autoplay={{
+      delay: 4000,
+      disableOnInteraction: false,
+    }}
+    observer={true}
+    observeParents={true}
+    loop
+    pagination={{
+      clickable: true,
+    }}
+    navigation={true}
+  >
+    <SwiperSlide>
+      <Picture>
+        <source media='(max-width:768px)' srcSet={MainBanner1M} />
+        <img src={MainBanner1L} alt='메인 배너1' />
+      </Picture>
+    </SwiperSlide>
 
-  //   <SwiperSlide>
-  //     <Picture>
-  //       <source media='(max-width:768px)' srcSet={MainBanner2M} />
-  //       <img src={MainBanner2L} alt='메인 배너2' />
-  //     </Picture>
-  //   </SwiperSlide>
-  // </Swiper>
-
-  <Picture>
-    <source media='(max-width:768px)' srcSet={MainBanner1M} />
-    <img src={MainBanner1L} alt='메인 배너1' />
-  </Picture>
+    <SwiperSlide>
+      <Picture>
+        <source media='(max-width:768px)' srcSet={MainBanner2M} />
+        <img src={MainBanner2L} alt='메인 배너2' />
+      </Picture>
+    </SwiperSlide>
+  </Swiper>
 );
 
 const Picture = styled.picture`
