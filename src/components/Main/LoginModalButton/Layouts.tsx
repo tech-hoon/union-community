@@ -91,13 +91,15 @@ export const Layouts = {
 
   NextButton: styled.button`
     background-color: ${(props) => props.theme.color.main};
+    border: 1px solid ${(props) => props.theme.color.main};
     font-weight: 500;
     padding: 8px 20px;
     font-size: 1.2em;
-    border-radius: 16px;
+    border-radius: 20px;
     color: white;
     cursor: pointer;
     line-height: 1.3rem;
+    margin: 0 4px;
 
     &:disabled {
       cursor: default;

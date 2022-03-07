@@ -59,7 +59,7 @@ const Main = () => {
     window.scroll({ behavior: 'smooth', top: Number(id) * scrollPosistion });
   };
 
-  const asyncHandler = async (user: any) => {
+  const loginStatusHandler = async (user: any) => {
     if (user) {
       const res = await fetchUserData(user.uid);
       setIsLoading(false);
@@ -96,7 +96,7 @@ const Main = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = authService.onAuthStateChanged(asyncHandler);
+    const unsubscribe = authService.onAuthStateChanged(loginStatusHandler);
 
     return () => {
       onLoginStepReset();
@@ -130,6 +130,11 @@ const Main = () => {
             <PeopleAvatar />
           </AvatarWrapper>
         </Contents>
+
+        {loginUser?.auth_status === 'waiting' && (
+          <AuthWaitingText>가입 승인 대기중입니다.</AuthWaitingText>
+        )}
+
         <ButtonWrapper isLoading={isLoading}>
           <DetailButton data-page-id={1} onClick={onClickScrollDown}>
             자세히
@@ -194,6 +199,13 @@ const ButtonWrapper = styled.div<{ isLoading: boolean }>`
   @media ${({ theme }) => theme.size.mobile} {
     margin: 0 auto 30%;
   }
+`;
+
+const AuthWaitingText = styled.p`
+  color: ${({ theme }) => theme.color.main};
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 16px;
 `;
 
 const AvatarWrapper = styled.div`
