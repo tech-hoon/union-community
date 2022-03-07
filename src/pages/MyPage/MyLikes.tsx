@@ -34,7 +34,7 @@ const MyLikes = () => {
             좋아요 목록
           </S.Title>
         </S.Header>
-        {isLoading ? <S.PostCardSkeleton /> : <CardContainer posts={posts} />}
+        {isLoading ? <S.PostCardSkeleton /> : <CardContainer posts={posts} hideNickname={true} />}
       </S.Container>
       <S.Footer />
     </S.Wrapper>

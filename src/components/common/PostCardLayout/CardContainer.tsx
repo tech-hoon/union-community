@@ -8,9 +8,10 @@ import ProductCard from './ProductCard';
 
 interface Props {
   posts: (PostType | ProductPostType)[] | [];
+  hideNickname?: boolean;
 }
 
-const CardContainer = ({ posts }: Props) => {
+const CardContainer = ({ posts, hideNickname = false }: Props) => {
   const history = useHistory();
 
   const handleClick = (id: string) => {
@@ -23,9 +24,19 @@ const CardContainer = ({ posts }: Props) => {
         {posts?.length ? (
           posts.map((post, key) =>
             post.category === '장터/나눔' ? (
-              <ProductCard post={post as ProductPostType} onClick={handleClick} key={key} />
+              <ProductCard
+                post={post as ProductPostType}
+                onClick={handleClick}
+                key={key}
+                hideNickname={hideNickname}
+              />
             ) : (
-              <PostCard post={post as PostType} onClick={handleClick} key={key} />
+              <PostCard
+                post={post as PostType}
+                onClick={handleClick}
+                key={key}
+                hideNickname={hideNickname}
+              />
             )
           )
         ) : (

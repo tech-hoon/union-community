@@ -6,9 +6,10 @@ import { Layouts as S } from './Layouts';
 interface IProps {
   post: ProductPostType;
   onClick: (id: string) => void;
+  hideNickname?: boolean;
 }
 
-const ProductCard = ({ post, onClick }: IProps) => {
+const ProductCard = ({ post, onClick, hideNickname }: IProps) => {
   const {
     id,
     category,
@@ -37,9 +38,11 @@ const ProductCard = ({ post, onClick }: IProps) => {
           <S.AvatarWrapper>
             <S.Avatar avatarId={category === '비밀' ? -1 : creator.avatar_id} />
           </S.AvatarWrapper>
-          <S.Creator isSecret={category === '비밀'}>
-            {category === '비밀' ? '익명' : creator.nickname}
-          </S.Creator>
+          {!hideNickname && (
+            <S.Creator isSecret={category === '비밀'}>
+              {category === '비밀' ? '익명' : creator.nickname}
+            </S.Creator>
+          )}
         </S.CreatorBox>
         <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
         <S.CountBox>
