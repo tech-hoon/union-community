@@ -13,7 +13,7 @@ const UploadButtonModal = () => {
 
     switch (id) {
       case 'store':
-        // history.push({ pathname: '/product/upload', state: { mode: 'add', initialProduct: null } });
+        history.push({ pathname: '/product/upload', state: { mode: 'add', initialProduct: null } });
         break;
 
       case 'post':
@@ -28,7 +28,7 @@ const UploadButtonModal = () => {
   return (
     <S.List onClick={onClickMenu}>
       <S.Menu id='store'>
-        <S.MenuTitle>장터/나눔 글쓰기(준비중)</S.MenuTitle>
+        <S.MenuTitle>장터/나눔 글쓰기</S.MenuTitle>
         <StoreUpload />
       </S.Menu>
 

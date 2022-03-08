@@ -109,7 +109,8 @@ const UploadProduct = () => {
                 <S.Label>제품 금액 : </S.Label>
                 <S.PriceInput
                   type='text'
-                  defaultValue={initialProduct?.price || ''}
+                  // value={initialProduct?.price || price}
+                  defaultValue={initialProduct?.price || price}
                   value={price}
                   onChange={handlePrice}
                   placeholder='0'

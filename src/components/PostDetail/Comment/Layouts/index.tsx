@@ -7,12 +7,12 @@ import CustomTextarea from 'components/PostDetail/Textarea/CustomTextarea';
 
 const S = {
   CommentWrapper: styled.li`
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     position: relative;
   `,
 
   ReplyWrapper: styled.li`
-    margin-bottom: 18px;
+    margin-bottom: 12px;
     display: flex;
     gap: 9px;
     padding-left: 16px;
@@ -36,7 +36,7 @@ const S = {
     display: flex;
     align-items: center;
     width: 100%;
-    gap: 16px;
+    gap: 12px;
   `,
 
   ROW2: styled.div``,
@@ -71,7 +71,6 @@ const S = {
   `,
 
   ReplyBtn: styled.div`
-    margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 3px;
