@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-// import exampleImgSrc from 'assets/images/resident1.jpeg';
 import { useState, useEffect } from 'react';
 import { authService, storageService } from 'service/firebase';
 import { Layouts as S } from '../Layouts';
 import { PlusLg } from '@styled-icons/bootstrap';
+import imageCompression from 'browser-image-compression';
 import useLoginStep from 'hooks/useLoginStep';
 import { addUser } from 'api/user';
 import { loginUserState, registerDataState } from 'store/loginUser';
@@ -56,28 +56,18 @@ const ResidentAuthContainer = () => {
     }
   };
 
-  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event: any) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = (finishedEvent: any) => {
-      const {
-        currentTarget: { result },
-      } = finishedEvent;
-      setAttachment(result);
-    };
-    if (!!file) {
-      reader.readAsDataURL(file);
-    }
+  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
+    const files = e.target.files as FileList;
+    const newImage = await imageCompression.getDataUrlFromFile(
+      await imageCompression(files[0], { maxSizeMB: 1 })
+    );
+    setAttachment(newImage);
   };
 
   const onDeleteAttachment: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
     setAttachment('');
   };
-
-  useEffect(() => {
-    attachment && setAttachment(attachment);
-  }, [attachment]);
 
   return (
     <S.Container>
@@ -250,6 +240,7 @@ const SubmitButton = styled(S.NextButton)`
   &:disabled {
     cursor: default;
     background-color: #ccc;
+    border: 1px solid #ccc;
   }
 `;
 

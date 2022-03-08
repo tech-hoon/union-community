@@ -1,4 +1,5 @@
 import React, { useState, RefObject, useEffect } from 'react';
+import imageCompression from 'browser-image-compression';
 import { useHistory } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,7 +8,6 @@ import { loginUserState } from 'store/loginUser';
 import { LoginUserType, ProductPostType } from 'types';
 import { checkContentValidation, checkNullArgsValidation } from 'utils/validation';
 import { storageService } from 'service/firebase';
-import { PRODUCT_STATUS, PRODUCT_TYPE } from 'utils/config';
 
 interface Props {
   titleRef: RefObject<HTMLInputElement | null>;
@@ -38,36 +38,24 @@ const useProductForm = ({
 
   const onErrorInfoReset = () => setErrorInfo('');
 
-  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const files = (event.target as HTMLInputElement).files;
-    const reader = new FileReader();
+  const onFileChange: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
+    const MAX_FILE_LENGTH = 5;
 
-    const readFile = (index: number) => {
-      if (!!files) {
-        if (index >= files.length) {
-          return;
-        }
+    const files = Array.from(event.target.files as FileList);
 
-        const file = files[index];
-        reader.onloadend = (finishedEvent: any) => {
-          const {
-            currentTarget: { result },
-          } = finishedEvent;
+    const newImages = await Promise.all(
+      [...files.slice(0, MAX_FILE_LENGTH)].map(async (file) =>
+        imageCompression.getDataUrlFromFile(await imageCompression(file, { maxSizeMB: 1 }))
+      )
+    );
 
-          setAttachment((prev) => {
-            if (prev.length >= 5) {
-              setErrorInfo('⚠️ 최대 5개까지 업로드할 수 있습니다.');
-              return prev;
-            }
-            return [...prev, result];
-          });
-          readFile(index + 1);
-        };
-        reader.readAsDataURL(file);
+    setAttachment((prev) => {
+      if (prev.length + newImages.length > MAX_FILE_LENGTH) {
+        setErrorInfo(`⚠️ 최대 ${MAX_FILE_LENGTH}개까지 업로드할 수 있습니다.`);
+        return [...prev, ...newImages].splice(0, 5);
       }
-    };
-
-    readFile(0);
+      return [...prev, ...newImages];
+    });
   };
 
   const onDeleteAttachment: React.MouseEventHandler<HTMLElement> = (event) => {
