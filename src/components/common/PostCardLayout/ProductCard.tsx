@@ -27,7 +27,6 @@ const ProductCard = ({ post, onClick, hideNickname }: IProps) => {
     <S.PostCard key={id} onClick={() => onClick(id!!)}>
       <S.Head>
         <S.Title>{title}</S.Title>
-        {!!attachment_url.length && <S.ImageIcon size='24px' />}
         <S.Category size='sm' isClicked={true} color={categoryColor(category)}>
           {category}
         </S.Category>

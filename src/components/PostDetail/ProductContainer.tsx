@@ -31,15 +31,14 @@ const ProductContainer = ({
 
   return (
     <Wrapper>
-      <Category size='sm' color={productTypeColor(type)} isClicked={true}>
-        {type}
-      </Category>
-
-      <Category size='sm' color={productStatusColor(status)} isClicked={true}>
-        {status}
-      </Category>
-
-      {!!price && <h3>￦{price}</h3>}
+      <CategoryBox>
+        <Category size='sm' color={productTypeColor(type)} isClicked={true}>
+          {type}
+        </Category>
+        <Category size='sm' color={productStatusColor(status)} isClicked={true}>
+          {status}
+        </Category>
+      </CategoryBox>
 
       <ROW_1>
         <Title>{title}</Title>
@@ -50,7 +49,6 @@ const ProductContainer = ({
           <Creator>{creator.nickname}</Creator>
         </ProfileBox>
         <CreatedAt>{toDateStringByFormating(created_at, false, '.')}</CreatedAt>
-        {!!attachment_url.length && <ImageIcon size='24px' />}
 
         {isCreator && (
           <KebabMenu>
@@ -61,11 +59,18 @@ const ProductContainer = ({
       </ROW_2>
       <ContentWrapper>
         <Content dangerouslySetInnerHTML={contentMarkup} />
+
+        {!!price && (
+          <PriceBox>
+            <PriceLabel>판매 가격</PriceLabel>
+            <PriceTag>{price}</PriceTag>
+          </PriceBox>
+        )}
+
         <ImagesContainer>
-          {!!attachment_url &&
-            (attachment_url || []).map((url, id) => (
-              <Image src={url} alt='image' key={id} onClick={() => onOpenImageSlider(id)} />
-            ))}
+          {(attachment_url || []).map((url, id) => (
+            <Image src={url} alt='image' key={id} onClick={() => onOpenImageSlider(id)} />
+          ))}
         </ImagesContainer>
       </ContentWrapper>
     </Wrapper>
@@ -73,6 +78,8 @@ const ProductContainer = ({
 };
 
 const Wrapper = styled.div``;
+
+const CategoryBox = styled.div``;
 
 const ROW_1 = styled.div`
   display: flex;
@@ -91,10 +98,6 @@ const Title = styled.h1`
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1.5rem;
   }
-`;
-
-const ImageIcon = styled(PhotoLibrary)`
-  color: #333;
 `;
 
 const ROW_2 = styled.div`
@@ -165,17 +168,37 @@ const IsEdited = styled(CreatedAt)`
 
 const ContentWrapper = styled.section`
   min-height: 20vh;
-  margin: 12px 0 36px;
+  margin: 26px 0 36px;
 `;
 
 const Content = styled.div`
   font-size: 1.2rem;
   line-height: 1.6;
-  padding: 0 4px;
   white-space: pre-line;
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1rem;
+  }
+`;
+
+const PriceBox = styled.div`
+  margin-top: 30px;
+`;
+const PriceLabel = styled.span`
+  font-size: 15px;
+  color: #5c5c5c;
+  font-weight: 400;
+
+  &:after {
+    content: ' | ';
+  }
+`;
+const PriceTag = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+
+  &:after {
+    content: '원';
   }
 `;
 
@@ -203,6 +226,9 @@ const Button = styled.button`
 
 const Category = styled(CategoryLabel)`
   font-weight: 500;
+  &:nth-child(1) {
+    margin-right: 5px;
+  }
 `;
 
 export default ProductContainer;
