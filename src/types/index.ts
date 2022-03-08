@@ -50,8 +50,8 @@ export interface PostType {
 }
 
 export interface ProductPostType extends PostType {
-  status: typeof PRODUCT_STATUS[number];
-  type: typeof PRODUCT_TYPE[number];
+  status: string;
+  type: string;
   price?: string;
 }
 

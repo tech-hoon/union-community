@@ -20,8 +20,8 @@ type ProductInput = {
   title: string;
   category: string;
   content: string;
-  status: typeof PRODUCT_STATUS[number];
-  type: typeof PRODUCT_TYPE[number];
+  status: string;
+  type: string;
   price: string;
   attachment_url: string[];
 };

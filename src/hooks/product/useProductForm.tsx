@@ -13,7 +13,7 @@ interface Props {
   titleRef: RefObject<HTMLInputElement | null>;
   statusRef: RefObject<HTMLSelectElement | null>;
   contentRef: RefObject<HTMLTextAreaElement | null>;
-  type: typeof PRODUCT_TYPE[number];
+  type: string;
   price: string;
   mode: 'add' | 'update';
   prevProduct: ProductPostType | null;

@@ -42,6 +42,15 @@ export const REPORT_LIST = [
 export const AVATAR_COUNT = 10;
 
 //Product
-export const PRODUCT_TYPE = ['판매', '물물교환', '나눔'];
 
-export const PRODUCT_STATUS = ['판매중', '예약중', '거래완료'];
+export const PRODUCT_TYPE = [
+  { kor: '판매', color: '#00229B' },
+  { kor: '교환', color: '#007458' },
+  { kor: '나눔', color: '#FFC700' },
+];
+
+export const PRODUCT_STATUS = [
+  { kor: '판매중', color: '#18A0FB' },
+  { kor: '거래완료', color: '#9A9A9A' },
+  { kor: '예약중', color: '#FF0000' },
+];
