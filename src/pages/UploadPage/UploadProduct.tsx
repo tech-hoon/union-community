@@ -20,7 +20,7 @@ const UploadProduct = () => {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const statusRef = useRef<HTMLSelectElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
-  const [type, setType] = useState<string>(initialProduct?.type || '판매');
+  const [type, setType] = useState<string>(initialProduct?.type || '');
   const [price, setPrice] = useState<string>(initialProduct?.price || '');
 
   const handleType = useCallback(
@@ -73,45 +73,51 @@ const UploadProduct = () => {
           />
           <S.HR />
           <SelectWrapper>
-            <S.SelectBox>
+            <S.ProductSelectBox>
               <S.Label>거래 유형 : </S.Label>
-              <TypeSelect onChange={handleType} name='거래유형'>
-                {PRODUCT_TYPE.map((type, id) => (
-                  <S.Option value={type} key={id}>
-                    {type}
+              <TypeSelect onChange={handleType} name='거래유형' defaultValue={type}>
+                <S.Option disabled value=''>
+                  거래 유형을 선택해주세요.
+                </S.Option>
+                {PRODUCT_TYPE.map(({ kor }, id) => (
+                  <S.Option value={kor} key={id}>
+                    {kor}
                   </S.Option>
                 ))}
               </TypeSelect>
-            </S.SelectBox>
+            </S.ProductSelectBox>
 
-            <S.SelectBox>
+            <S.ProductSelectBox>
               <S.Label>거래 상태 : </S.Label>
               <StatusSelect
                 ref={statusRef}
                 name='거래상태'
                 defaultValue={initialProduct?.status || '판매중'}
               >
-                {PRODUCT_STATUS.map((status, id) => (
-                  <S.Option value={status} key={id}>
-                    {status}
+                <S.Option disabled value=''>
+                  거래 상태를 선택해주세요.
+                </S.Option>
+                {PRODUCT_STATUS.map(({ kor }, id) => (
+                  <S.Option value={kor} key={id}>
+                    {kor}
                   </S.Option>
                 ))}
               </StatusSelect>
-            </S.SelectBox>
+            </S.ProductSelectBox>
+            {type === '판매' && (
+              <S.PriceBox>
+                <S.Label>제품 금액 : </S.Label>
+                <S.PriceInput
+                  type='text'
+                  defaultValue={initialProduct?.price || ''}
+                  value={price}
+                  onChange={handlePrice}
+                  placeholder='0'
+                  maxLength={11}
+                />
+              </S.PriceBox>
+            )}
           </SelectWrapper>
-          {type === '판매' && (
-            <S.PriceBox>
-              <S.PriceLabel>￦</S.PriceLabel>
-              <S.PriceInput
-                type='text'
-                defaultValue={initialProduct?.price || ''}
-                value={price}
-                onChange={handlePrice}
-                placeholder='0'
-                maxLength={11}
-              />
-            </S.PriceBox>
-          )}
           <S.Editor ref={contentRef} value={initialProduct?.content || null} />
 
           <S.UploadInput
@@ -163,15 +169,16 @@ const UploadProduct = () => {
 
 const SelectWrapper = styled.div`
   display: flex;
-  gap: 24px;
+  gap: 15px;
+  margin: 20px 0;
+
+  @media ${({ theme }) => theme.size.tablet} {
+    flex-direction: column;
+  }
 `;
 
-const TypeSelect = styled(S.Select)`
-  width: 100px;
-`;
+const TypeSelect = styled(S.Select)``;
 
-const StatusSelect = styled(S.Select)`
-  width: 100px;
-`;
+const StatusSelect = styled(S.Select)``;
 
 export default UploadProduct;

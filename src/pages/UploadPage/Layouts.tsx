@@ -1,6 +1,6 @@
 import Editor from 'components/common/Editor';
 import Navbar from 'components/common/Navbar';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import DeleteIcon from 'assets/icons/DeleteIcon';
 import EmptyImage from 'assets/icons/EmptyImage';
 import Circle from 'components/common/Loading/Circle';
@@ -16,6 +16,16 @@ const Button = styled.button`
     font-size: 15px;
     padding: 12px 46px;
     width: 100%;
+  }
+`;
+
+const SelectBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 20px 0;
+  @media ${({ theme }) => theme.size.mobile} {
+    margin: 16px 0 13px;
   }
 `;
 
@@ -54,28 +64,26 @@ export const Layouts = {
 
   Circle: styled(Circle)``,
 
-  SelectBox: styled.div`
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin: 20px 0;
-
-    @media ${({ theme }) => theme.size.mobile} {
-      margin: 16px 0 13px;
-    }
-  `,
-
   Select: styled.select`
-    width: 160px;
+    width: 150px;
     font-size: 13px;
     line-height: 27px;
     padding: 2px 8px;
     border-radius: 5px;
+    background-color: white;
   `,
   Option: styled.option``,
 
-  PriceBox: styled.div`
-    margin: 10px 0;
+  SelectBox: styled(SelectBox)``,
+
+  ProductSelectBox: styled(SelectBox)`
+    gap: 6px;
+    margin: 0;
+  `,
+
+  PriceBox: styled(SelectBox)`
+    gap: 6px;
+    margin: 0;
   `,
 
   PriceLabel: styled.label`
@@ -84,9 +92,12 @@ export const Layouts = {
   `,
 
   PriceInput: styled.input`
-    width: 160px;
-    font-weight: bold;
-    font-size: 1.5rem;
+    width: 150px;
+    font-size: 15px;
+    line-height: 27px;
+    padding: 2px 8px;
+    /* border-radius: 5px; */
+    border-bottom: 1px solid #b0b0b0;
 
     &[type='number']::-webkit-outer-spin-button,
     &[type='number']::-webkit-inner-spin-button {

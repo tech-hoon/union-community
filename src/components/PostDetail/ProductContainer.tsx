@@ -6,7 +6,7 @@ import { toDateStringByFormating } from 'utils/date';
 import CategoryLabel from 'components/common/CategoryLabel';
 import KebabMenu from 'components/common/KebabMenu';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
-import { categoryColor } from 'utils/categoryColor';
+import { categoryColor, productStatusColor, productTypeColor } from 'utils/categoryColor';
 
 interface IProps {
   post: ProductPostType;
@@ -31,11 +31,11 @@ const ProductContainer = ({
 
   return (
     <Wrapper>
-      <Category size='sm' color={categoryColor(category)} isClicked={true}>
+      <Category size='sm' color={productTypeColor(type)} isClicked={true}>
         {type}
       </Category>
 
-      <Category size='sm' color={'black'} isClicked={true}>
+      <Category size='sm' color={productStatusColor(status)} isClicked={true}>
         {status}
       </Category>
 
