@@ -76,7 +76,6 @@ const Setting = () => {
             <SettingsOutline size='30px' />
             나의 정보 수정
           </S.Title>
-          {/* <S.Subtitle>* 닉네임은 1회만 변경 가능합니다.</S.Subtitle> */}
         </S.Header>
         <Body>
           <AvatarSelect
@@ -103,7 +102,6 @@ const Setting = () => {
           {/* <DeleteButton>회원 탈퇴</DeleteButton> */}
         </Body>
       </S.Container>
-      <S.Footer />
     </S.Wrapper>
   );
 };

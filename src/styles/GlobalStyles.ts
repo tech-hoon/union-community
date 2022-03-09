@@ -53,6 +53,15 @@ const GlobalStyle = createGlobalStyle`
     background:none;
   }
 
+  /* webkit input padding off */
+  form input #submit { 
+   -webkit-appearance:none;  
+   -webkit-border-radius:0px;
+   margin:0;  
+   padding:0;  
+   display:block;
+}
+
   textarea{
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
   }

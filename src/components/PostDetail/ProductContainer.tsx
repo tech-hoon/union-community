@@ -229,6 +229,7 @@ const Category = styled(CategoryLabel)`
   &:nth-child(1) {
     margin-right: 5px;
   }
+  cursor: default;
 `;
 
 export default ProductContainer;
