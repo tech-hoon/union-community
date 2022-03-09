@@ -38,7 +38,9 @@ const Navbar = ({ children = <Aside />, option = 'home' }: IProps) => {
 const Wrapper = styled.div`
   background-color: #f8f9fa;
   position: sticky;
-  top: 0px;
+  /* top: constant(safe-area-inset-bottom); */
+  /* top: env(safe-area-inset-top); */
+  top: 0;
   z-index: 111;
   border-bottom: 1px solid #ededed;
 `;
