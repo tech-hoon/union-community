@@ -28,12 +28,14 @@ const MainBannerSlider = () => (
   >
     <SwiperSlide>
       <Picture>
+        <Text>곧 오픈 예정입니다</Text>
         <source media='(max-width:768px)' srcSet={MainBanner1M} />
         <img src={MainBanner1L} alt='메인 배너1' />
       </Picture>
     </SwiperSlide>
 
     <SwiperSlide>
+      <Text>곧 오픈 예정입니다</Text>
       <Picture>
         <source media='(max-width:768px)' srcSet={MainBanner2M} />
         <img src={MainBanner2L} alt='메인 배너2' />
@@ -43,11 +45,24 @@ const MainBannerSlider = () => (
 );
 
 const Picture = styled.picture`
-  & > * {
+  & > *:not(div) {
     width: 100%;
     max-width: 1680px;
     margin: 0 auto;
+    opacity: 0.1;
   }
+`;
+
+const Text = styled.div`
+  font-size: 20px;
+  font-weight: 500;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  color: ${({ theme }) => theme.color.main};
 `;
 
 export default MainBannerSlider;
