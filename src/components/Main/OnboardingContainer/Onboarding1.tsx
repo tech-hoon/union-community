@@ -1,5 +1,5 @@
 import { Layouts as S } from './Layouts';
-import ImgSrc from 'assets/images/onboarding/onboarding1.png';
+import ImgSrc from 'assets/images/onboarding/onboarding1.gif';
 
 const Onboarding1 = () => {
   return (

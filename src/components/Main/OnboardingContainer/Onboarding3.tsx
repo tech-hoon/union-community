@@ -1,12 +1,29 @@
 import { Layouts as S } from './Layouts';
-import ImgSrc from 'assets/images/onboarding/onboarding2.svg';
-import MockImageSrc from 'assets/images/onboarding/mock-image.png';
-
 import styled, { css } from 'styled-components';
 import LoginModalButton from 'components/Main/LoginModalButton';
 import Fade from 'react-reveal/Fade';
+import withReveal from 'react-reveal/withReveal';
+
+import {
+  IosImageSrc1,
+  IosImageSrc2,
+  IosImageSrc3,
+  AndroidImageSrc1,
+  AndroidImageSrc2,
+  AndroidImageSrc3,
+} from '.';
+import { useCallback, useState } from 'react';
 
 const Onboarding3 = () => {
+  const [selectedOS, setSelectedOS] = useState<'iOS' | 'android'>('iOS');
+
+  const onClickButton = useCallback(
+    (e) => {
+      setSelectedOS(e.target.dataset.id);
+    },
+    [selectedOS]
+  );
+
   return (
     <S.Wrapper backgroundColor='linear-gradient(180deg, #DFF2FF 50%, #F8F9FA 50%)'>
       <Container>
@@ -17,26 +34,47 @@ const Onboarding3 = () => {
             </p>
             <p>편리하게 즐길 수 있어요!</p>
           </S.Content>
-          <ButtonWrapper>
-            <Button isSelected={true}>iOS</Button>
-            <Button isSelected={false}>Android</Button>
+          <ButtonWrapper onClick={onClickButton}>
+            <Button data-id='iOS' isSelected={selectedOS === 'iOS'}>
+              iOS
+            </Button>
+            <Button data-id='android' isSelected={selectedOS === 'android'}>
+              Android
+            </Button>
           </ButtonWrapper>
         </ContentWrapper>
 
-        <ImageContainer>
-          <ImageWrapper>
-            <Caption>1. 임시 이미지1</Caption>
-            <Image src={MockImageSrc} alt='iOS 앱 설치 방법 이미지 1' />
-          </ImageWrapper>
-          <ImageWrapper>
-            <Caption>2. 임시 이미지2</Caption>
-            <Image src={MockImageSrc} alt='iOS 앱 설치 방법 이미지 2' />
-          </ImageWrapper>
-          <ImageWrapper>
-            <Caption>3. 임시 이미지3</Caption>
-            <Image src={MockImageSrc} alt='iOS 앱 설치 방법 이미지 3' />
-          </ImageWrapper>
-        </ImageContainer>
+        {selectedOS === 'iOS' ? (
+          <IOSImageContainer>
+            <ImageWrapper>
+              <Caption>1. 하단 공유버튼 클릭</Caption>
+              <Image src={IosImageSrc1} alt='iOS 앱 설치 방법 이미지 1' />
+            </ImageWrapper>
+            <ImageWrapper>
+              <Caption>2. "홈 화면에 추가" 클릭</Caption>
+              <Image src={IosImageSrc2} alt='iOS 앱 설치 방법 이미지 2' />
+            </ImageWrapper>
+            <ImageWrapper>
+              <Caption>3. 추가 버튼 클릭</Caption>
+              <Image src={IosImageSrc3} alt='iOS 앱 설치 방법 이미지 3' />
+            </ImageWrapper>
+          </IOSImageContainer>
+        ) : (
+          <AndroidImageContainer>
+            <ImageWrapper>
+              <Caption>1. Chrome 앱 실행</Caption>
+              <Image src={AndroidImageSrc1} alt='android 앱 설치 방법 이미지 1' />
+            </ImageWrapper>
+            <ImageWrapper>
+              <Caption>2. 설치 배너 클릭</Caption>
+              <Image src={AndroidImageSrc2} alt='android 앱 설치 방법 이미지 2' />
+            </ImageWrapper>
+            <ImageWrapper>
+              <Caption>3. 설치 버튼 클릭</Caption>
+              <Image src={AndroidImageSrc3} alt='android 앱 설치 방법 이미지 3' />
+            </ImageWrapper>
+          </AndroidImageContainer>
+        )}
         <LoginModalButton />
       </Container>
     </S.Wrapper>
@@ -106,6 +144,9 @@ const ImageContainer = styled.div`
   }
 `;
 
+const AndroidImageContainer = styled(ImageContainer)``;
+const IOSImageContainer = styled(ImageContainer)``;
+
 const ImageWrapper = styled.figure`
   display: flex;
   flex-direction: column;
@@ -123,6 +164,8 @@ const Caption = styled.figcaption`
 
 const Image = styled.img`
   height: 50vh;
+  -webkit-user-drag: none;
+  user-drag: none;
 `;
 
 export default Onboarding3;
