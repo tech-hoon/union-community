@@ -156,7 +156,9 @@ const PostDetail = () => {
   useEffect(() => {
     if (post) {
       !!loginUser && !!post.creator && setIsCreator(loginUser.uid === post.creator.uid);
-      setContentMarkup({ __html: urlParsingRegex(post.content) });
+      setContentMarkup({
+        __html: post.category === '공지' ? post.content : urlParsingRegex(post.content),
+      });
       onViewCountUp();
     }
   }, [post]);

@@ -8,48 +8,55 @@ import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 import './styles.css';
+import { useHistory } from 'react-router-dom';
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
-const MainBannerSlider = () => (
-  <Swiper
-    slidesPerView={1}
-    autoplay={{
-      delay: 4000,
-      disableOnInteraction: false,
-    }}
-    observer={true}
-    observeParents={true}
-    loop
-    pagination={{
-      clickable: true,
-    }}
-    navigation={true}
-  >
-    <SwiperSlide>
-      <Picture>
-        <Text>곧 오픈 예정입니다</Text>
-        <source media='(max-width:768px)' srcSet={MainBanner1M} />
-        <img src={MainBanner1L} alt='메인 배너1' />
-      </Picture>
-    </SwiperSlide>
+const MainBannerSlider = () => {
+  const history = useHistory();
 
-    <SwiperSlide>
-      <Text>곧 오픈 예정입니다</Text>
-      <Picture>
-        <source media='(max-width:768px)' srcSet={MainBanner2M} />
-        <img src={MainBanner2L} alt='메인 배너2' />
-      </Picture>
-    </SwiperSlide>
-  </Swiper>
-);
+  const onClickBanner: React.MouseEventHandler<HTMLElement> = (e) => {
+    const path = (e.target as HTMLElement).dataset.id;
+    history.push(`/posts/${path}`);
+  };
+
+  return (
+    <Swiper
+      slidesPerView={1}
+      autoplay={{
+        delay: 4000,
+        disableOnInteraction: false,
+      }}
+      observer={true}
+      observeParents={true}
+      loop
+      pagination={{
+        clickable: true,
+      }}
+      navigation={true}
+    >
+      <SwiperSlide onClick={onClickBanner}>
+        <Picture>
+          <source media='(max-width:768px)' srcSet={MainBanner1M} />
+          <img src={MainBanner1L} alt='메인 배너1' data-id={`HqfwQwVCMqAinR6aIGzi`} />
+        </Picture>
+      </SwiperSlide>
+
+      <SwiperSlide onClick={onClickBanner}>
+        <Picture>
+          <source media='(max-width:768px)' srcSet={MainBanner2M} />
+          <img src={MainBanner2L} alt='메인 배너2' data-id={`XhUnOsJrh7FR95CtFXuM`} />
+        </Picture>
+      </SwiperSlide>
+    </Swiper>
+  );
+};
 
 const Picture = styled.picture`
   & > *:not(div) {
     width: 100%;
     max-width: 1680px;
     margin: 0 auto;
-    opacity: 0.1;
   }
 `;
 
