@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PostType } from 'types';
 import Avatar from 'components/common/Avatar';
 import { toDateStringByFormating } from 'utils/date';
-import CategoryLabel from 'components/common/CategoryLabel';
+import CategoryLabel from 'components/common/PillLabel/CategoryLabel';
 import KebabMenu from 'components/common/KebabMenu';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { categoryColor } from 'utils/categoryColor';

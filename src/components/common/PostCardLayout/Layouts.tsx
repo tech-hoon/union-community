@@ -5,7 +5,7 @@ import ViewCount from 'components/common/Count/ViewCount';
 import LikeCount from 'components/common/Count/LikeCount';
 import CommentCount from 'components/common/Count/CommentCount';
 import Avatar from 'components/common/Avatar';
-import CategoryLabel from '../CategoryLabel';
+import CategoryLabel from '../PillLabel/CategoryLabel';
 
 interface ICreator {
   isSecret: boolean;

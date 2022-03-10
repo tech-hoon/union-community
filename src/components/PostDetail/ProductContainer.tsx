@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PostType, ProductPostType } from 'types';
 import Avatar from 'components/common/Avatar';
 import { toDateStringByFormating } from 'utils/date';
-import CategoryLabel from 'components/common/CategoryLabel';
+import CategoryLabel from 'components/common/PillLabel/CategoryLabel';
 import KebabMenu from 'components/common/KebabMenu';
 import { PhotoLibrary } from '@styled-icons/material-outlined';
 import { categoryColor, productStatusColor, productTypeColor } from 'utils/categoryColor';
@@ -181,10 +181,10 @@ const Content = styled.div`
   }
 `;
 
-const PriceBox = styled.div`
+export const PriceBox = styled.div`
   margin-top: 30px;
 `;
-const PriceLabel = styled.span`
+export const PriceLabel = styled.span`
   font-size: 15px;
   color: #5c5c5c;
   font-weight: 400;
@@ -193,7 +193,7 @@ const PriceLabel = styled.span`
     content: ' | ';
   }
 `;
-const PriceTag = styled.span`
+export const PriceTag = styled.span`
   font-size: 20px;
   font-weight: bold;
 

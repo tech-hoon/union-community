@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { CATEGORY_LIST } from 'utils/config';
 import { categoryColor } from 'utils/categoryColor';
 import useLocalStorage from 'hooks/common/useLocalStorage';
-import CategoryLabel from 'components/common/CategoryLabel';
+import CategoryLabel from 'components/common/PillLabel/CategoryLabel';
 
 interface Props {}
 

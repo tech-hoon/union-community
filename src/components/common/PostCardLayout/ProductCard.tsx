@@ -1,7 +1,10 @@
+import styled from 'styled-components';
+import { PriceBox, PriceLabel, PriceTag } from 'components/PostDetail/ProductContainer';
 import { ProductPostType } from 'types';
-import { categoryColor } from 'utils/categoryColor';
+import { categoryColor, productStatusColor, productTypeColor } from 'utils/categoryColor';
 import { toDateStringByFormating } from 'utils/date';
 import { Layouts as S } from './Layouts';
+import StatusLabel from '../PillLabel/StatusLabel';
 
 interface IProps {
   post: ProductPostType;
@@ -20,6 +23,9 @@ const ProductCard = ({ post, onClick, hideNickname }: IProps) => {
     visitor_list,
     liker_list,
     comment_count,
+    status,
+    type,
+    price,
     attachment_url,
   } = post;
 
@@ -31,7 +37,26 @@ const ProductCard = ({ post, onClick, hideNickname }: IProps) => {
           {category}
         </S.Category>
       </S.Head>
-      <S.Content dangerouslySetInnerHTML={{ __html: content }} />
+
+      <ContentBox>
+        <ContentLeft>
+          <Content dangerouslySetInnerHTML={{ __html: content }} />
+          {price && (
+            <StyledPriceBox>
+              <StyledPriceLabel>판매가격</StyledPriceLabel>
+              <StyledPriceTag>{price}</StyledPriceTag>
+            </StyledPriceBox>
+          )}
+          <StatusBox>
+            <StatusLabel color={productTypeColor(type)}>{type}</StatusLabel>
+            <StatusLabel color={productStatusColor(status)}>{status}</StatusLabel>
+          </StatusBox>
+        </ContentLeft>
+        <ContentRight>
+          <AttachmentImage src={attachment_url[0]} />
+        </ContentRight>
+      </ContentBox>
+
       <S.CardBottom>
         <S.CreatorBox>
           <S.AvatarWrapper>
@@ -53,5 +78,45 @@ const ProductCard = ({ post, onClick, hideNickname }: IProps) => {
     </S.PostCard>
   );
 };
+
+const ContentBox = styled.div`
+  display: flex;
+  margin-bottom: 12px;
+  flex: 1;
+`;
+
+const Content = styled(S.Content)`
+  flex: 1;
+  height: 2.4em;
+`;
+
+const ContentLeft = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+const ContentRight = styled.div`
+  align-self: flex-end;
+`;
+const StatusBox = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+const AttachmentImage = styled.img`
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+`;
+
+const StyledPriceBox = styled(PriceBox)`
+  margin: 0 0 7px 0;
+`;
+const StyledPriceLabel = styled(PriceLabel)`
+  font-size: 10px;
+`;
+const StyledPriceTag = styled(PriceTag)`
+  font-size: 16px;
+`;
 
 export default ProductCard;
