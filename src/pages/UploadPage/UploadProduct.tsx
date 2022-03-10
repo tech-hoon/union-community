@@ -41,6 +41,12 @@ const UploadProduct = () => {
     initialProduct?.attachment_url && setAttachment(initialProduct.attachment_url);
   }, []);
 
+  useEffect(() => {
+    if (type !== '판매') {
+      setPrice('');
+    }
+  }, [type]);
+
   const {
     setAttachment,
     attachments,
