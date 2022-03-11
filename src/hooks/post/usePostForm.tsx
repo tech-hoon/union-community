@@ -59,6 +59,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    setIsUploading(true);
 
     const urls: string[] = [];
 
@@ -102,7 +103,6 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     };
 
     if (mode === 'add') {
-      setIsUploading(true);
       const __postId = await addPost({ postInput, uid: loginUser.uid });
       history.push({
         pathname: `/posts/${__postId}`,
@@ -112,7 +112,6 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     }
 
     if (mode === 'update') {
-      setIsUploading(true);
       prevPost?.id && (await updatePost({ postInput, uid: loginUser.uid, postId: prevPost.id }));
       history.push({
         pathname: `/posts/${prevPost?.id}`,

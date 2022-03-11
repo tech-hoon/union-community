@@ -69,6 +69,7 @@ const useProductForm = ({
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    setIsUploading(true);
 
     const urls: string[] = [];
 
@@ -116,7 +117,6 @@ const useProductForm = ({
     };
 
     if (mode === 'add') {
-      setIsUploading(true);
       const __postId = await addPost({ postInput: inputArgs, uid: loginUser.uid });
       history.push({
         pathname: `/posts/${__postId}`,
@@ -126,7 +126,6 @@ const useProductForm = ({
     }
 
     if (mode === 'update') {
-      setIsUploading(true);
       prevProduct?.id &&
         (await updatePost({
           postInput: inputArgs,
