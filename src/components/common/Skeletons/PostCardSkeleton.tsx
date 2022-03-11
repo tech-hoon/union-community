@@ -2,17 +2,15 @@ import styled from 'styled-components';
 import SkeletonItem from './components/SkeletonItem';
 import { Layouts as S } from 'components/common/PostCardLayout/Layouts';
 
-interface Props {}
-
-const PostCardSkeleton = (props: Props) => {
+const PostCardSkeleton = () => {
   return (
     <S.Container>
       {new Array(6).fill('').map((_, i) => (
         <CardSkeleton key={i}>
           <Title />
           <Content>
-            {new Array(5).fill('').map((_, i) => (
-              <Line key={i} />
+            {[95, 90, 75, 85, 80].map((width, key) => (
+              <Line width={width} key={key} />
             ))}
           </Content>
           <Bottom>
@@ -32,7 +30,7 @@ const CardSkeleton = styled(S.PostCard)`
 `;
 
 const Title = styled(SkeletonItem)`
-  height: 28px;
+  height: 24px;
 `;
 
 const Content = styled.ul`
@@ -47,26 +45,10 @@ const Content = styled.ul`
   }
 `;
 
-const Line = styled(SkeletonItem)`
+const Line = styled(SkeletonItem)<{ width: number }>`
+  width: ${({ width }) => `${width}%`};
   height: 12px;
   margin-left: 4px;
-
-  &:nth-child(1) {
-    width: 95%;
-  }
-
-  &:nth-child(2) {
-    width: 90%;
-  }
-  &:nth-child(3) {
-    width: 75%;
-  }
-  &:nth-child(4) {
-    width: 85%;
-  }
-  &:nth-child(5) {
-    width: 80%;
-  }
 `;
 
 const Bottom = styled.div`
