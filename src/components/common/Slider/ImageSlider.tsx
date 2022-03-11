@@ -47,14 +47,18 @@ const Wrapper = styled.div<{ imageAmount: number }>`
   scroll-snap-type: x mandatory;
 
   margin: 0 auto;
-  gap: 10px;
+  gap: 20px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Slide = styled.div``;
 
 const Image = styled.img<{ imageAmount: number }>`
   max-width: ${({ imageAmount }) => (imageAmount === 1 ? '80vw' : '90vw')};
-  max-height: ${({ imageAmount }) => (imageAmount === 1 ? '80vh' : '220px')};
+  max-height: ${({ imageAmount }) => (imageAmount === 1 ? '80vh' : '60vh')};
 
   object-fit: contain;
   scroll-snap-align: center;
