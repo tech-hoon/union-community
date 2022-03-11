@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper';
-import { MainBanner1M, MainBanner1L, MainBanner2M, MainBanner2L } from 'assets/banner';
+import {
+  MainBanner1M,
+  MainBanner1L,
+  MainBanner2M,
+  MainBanner2L,
+  MainBanner3M,
+  MainBanner3L,
+} from 'assets/banner';
 
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
@@ -48,6 +55,13 @@ const MainBannerSlider = () => {
           <img src={MainBanner2L} alt='메인 배너2' data-id={`XhUnOsJrh7FR95CtFXuM`} />
         </Picture>
       </SwiperSlide>
+
+      <SwiperSlide onClick={onClickBanner}>
+        <Picture>
+          <source media='(max-width:768px)' srcSet={MainBanner3M} />
+          <img src={MainBanner3L} alt='메인 배너3' data-id={`mxTPUcchv77LlWXtrSpZ`} />
+        </Picture>
+      </SwiperSlide>
     </Swiper>
   );
 };
@@ -57,6 +71,7 @@ const Picture = styled.picture`
     width: 100%;
     max-width: 1680px;
     margin: 0 auto;
+    cursor: pointer;
   }
 `;
 
