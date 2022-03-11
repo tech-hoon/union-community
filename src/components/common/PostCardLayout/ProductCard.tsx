@@ -88,6 +88,9 @@ const ContentBox = styled.div`
 const Content = styled(S.Content)`
   flex: 1;
   height: 2.4em;
+  margin-bottom: 19px;
+  margin-right: 8px;
+  -webkit-line-clamp: 2;
 `;
 
 const ContentLeft = styled.div`
