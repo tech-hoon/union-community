@@ -54,7 +54,7 @@ const Slide = styled.div``;
 
 const Image = styled.img<{ imageAmount: number }>`
   max-width: ${({ imageAmount }) => (imageAmount === 1 ? '70vw' : '90vw')};
-  max-height: ${({ imageAmount }) => (imageAmount === 1 ? '70vw' : '220px')};
+  max-height: ${({ imageAmount }) => (imageAmount === 1 ? '70vh' : '220px')};
 
   object-fit: contain;
   scroll-snap-align: center;
