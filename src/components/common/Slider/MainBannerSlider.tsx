@@ -31,7 +31,7 @@ const MainBannerSlider = () => {
     <Swiper
       slidesPerView={1}
       autoplay={{
-        delay: 4000,
+        delay: 3000,
         disableOnInteraction: false,
       }}
       observer={true}
@@ -44,8 +44,8 @@ const MainBannerSlider = () => {
     >
       <SwiperSlide onClick={onClickBanner}>
         <Picture>
-          <source media='(max-width:768px)' srcSet={MainBanner1M} />
-          <img src={MainBanner1L} alt='메인 배너1' data-id={`HqfwQwVCMqAinR6aIGzi`} />
+          <source media='(max-width:768px)' srcSet={MainBanner3M} />
+          <img src={MainBanner3L} alt='메인 배너3' data-id={`mxTPUcchv77LlWXtrSpZ`} />
         </Picture>
       </SwiperSlide>
 
@@ -58,8 +58,8 @@ const MainBannerSlider = () => {
 
       <SwiperSlide onClick={onClickBanner}>
         <Picture>
-          <source media='(max-width:768px)' srcSet={MainBanner3M} />
-          <img src={MainBanner3L} alt='메인 배너3' data-id={`mxTPUcchv77LlWXtrSpZ`} />
+          <source media='(max-width:768px)' srcSet={MainBanner1M} />
+          <img src={MainBanner1L} alt='메인 배너1' data-id={`HqfwQwVCMqAinR6aIGzi`} />
         </Picture>
       </SwiperSlide>
     </Swiper>
@@ -72,6 +72,8 @@ const Picture = styled.picture`
     max-width: 1680px;
     margin: 0 auto;
     cursor: pointer;
+    user-drag: none;
+    -webkit-user-drag: none;
   }
 `;
 
