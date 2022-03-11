@@ -53,8 +53,8 @@ const Wrapper = styled.div<{ imageAmount: number }>`
 const Slide = styled.div``;
 
 const Image = styled.img<{ imageAmount: number }>`
-  max-width: ${({ imageAmount }) => (imageAmount === 1 ? '70vw' : '90vw')};
-  max-height: ${({ imageAmount }) => (imageAmount === 1 ? '70vh' : '220px')};
+  max-width: ${({ imageAmount }) => (imageAmount === 1 ? '80vw' : '90vw')};
+  max-height: ${({ imageAmount }) => (imageAmount === 1 ? '80vh' : '220px')};
 
   object-fit: contain;
   scroll-snap-align: center;
