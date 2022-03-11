@@ -72,6 +72,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
       !checkContentValidation(contentRef.current?.value)
     ) {
       setErrorInfo('⚠️ 내용을 모두 입력해 주세요.');
+      setIsUploading(false);
       return;
     }
 
@@ -108,6 +109,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
         pathname: `/posts/${__postId}`,
         state: 'isAdded',
       });
+      setIsUploading(false);
       return;
     }
 
@@ -117,6 +119,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
         pathname: `/posts/${prevPost?.id}`,
         state: 'isUpdated',
       });
+      setIsUploading(false);
       return;
     }
   };

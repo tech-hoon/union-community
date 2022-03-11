@@ -83,6 +83,7 @@ const useProductForm = ({
       (type === '판매' && !price)
     ) {
       setErrorInfo('⚠️ 내용을 모두 입력해 주세요.');
+      setIsUploading(false);
       return;
     }
 
@@ -122,6 +123,7 @@ const useProductForm = ({
         pathname: `/posts/${__postId}`,
         state: 'isAdded',
       });
+      setIsUploading(false);
       return;
     }
 
@@ -136,6 +138,7 @@ const useProductForm = ({
         pathname: `/posts/${prevProduct?.id}`,
         state: 'isUpdated',
       });
+      setIsUploading(false);
       return;
     }
   };
