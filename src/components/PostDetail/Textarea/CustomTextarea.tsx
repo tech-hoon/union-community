@@ -19,7 +19,6 @@ const Wrapper = styled.div`
   border-radius: 4px;
   margin-bottom: 8px;
   background-color: white;
-  margin: 16px 0;
 `;
 
 const TextArea = styled.textarea`

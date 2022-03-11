@@ -7,12 +7,10 @@ import CustomTextarea from 'components/PostDetail/Textarea/CustomTextarea';
 
 const S = {
   CommentWrapper: styled.li`
-    margin-bottom: 24px;
     position: relative;
   `,
 
   ReplyWrapper: styled.li`
-    margin-bottom: 12px;
     display: flex;
     gap: 9px;
     padding-left: 16px;
@@ -28,6 +26,7 @@ const S = {
   CreatorWrapper: styled.div`
     display: flex;
     gap: 4px;
+    align-items: center;
     user-select: none;
     cursor: pointer;
   `,
@@ -36,10 +35,12 @@ const S = {
     display: flex;
     align-items: center;
     width: 100%;
-    gap: 12px;
+    gap: 5px;
   `,
 
-  ROW2: styled.div``,
+  ROW2: styled.div`
+    margin: 12px 0 20px;
+  `,
 
   COL1: styled.div`
     margin-right: 2px;
@@ -70,13 +71,11 @@ const S = {
     gap: 4px;
   `,
 
-  ReplyBtn: styled.div`
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    font-weight: 500;
+  ReplyBtn: styled.span`
+    margin-left: 7px;
+    font-weight: 400;
     font-size: 12px;
-    color: gray;
+    color: #5c5c5c80;
     cursor: pointer;
     user-select: none;
   `,
@@ -85,9 +84,10 @@ const S = {
   DelBtn: styled(SideButton)``,
 
   CreatedAt: styled.p`
-    max-width: 82px;
     font-size: 11px;
-    color: gray;
+    font-weight: 600;
+    margin-top: 4px;
+    color: #b0b0b0;
   `,
 
   Nickname: styled.p<IComment>`
@@ -106,17 +106,21 @@ const S = {
     margin: 20px 0;
   `,
 
-  CustomTextarea: styled(CustomTextarea)``,
+  CustomTextarea: styled(CustomTextarea)`
+    margin: 0 0 12px 0;
+  `,
 
   EditCancelBtn: styled(SubmitButton)`
-    background-color: #888;
+    background-color: #white;
+    border: 1px solid #888;
+    color: #888;
     margin-right: 8px;
   `,
   EditSubmitBtn: styled(SubmitButton)`
     background-color: black;
   `,
 
-  Content: styled.div<IComment>`
+  Content: styled.span<IComment>`
     font-size: 0.9rem;
     padding: 14px 0;
     /* border-bottom: solid 1.4px #e9ecef; */
@@ -136,7 +140,9 @@ const S = {
     background-color: black;
   `,
   ReplyCancleBtn: styled(SubmitButton)`
-    background-color: #888;
+    background-color: white;
+    border: 1px solid #888;
+    color: #888;
     margin-right: 8px;
   `,
 };

@@ -89,9 +89,10 @@ const ReplyComment = ({
                 <S.Nickname is_deleted={is_deleted} avatar_id={avatar_id}>
                   {convertedNickname}
                 </S.Nickname>
-                <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
               </S.COL2>
             </S.CreatorWrapper>
+            <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
+
             {!is_deleted && (
               <S.COL3>
                 <S.LikeCount

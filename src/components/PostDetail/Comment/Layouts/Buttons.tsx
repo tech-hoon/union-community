@@ -14,6 +14,8 @@ const S = {
   SubmitButton: styled.button`
     font-size: 0.8rem;
     padding: 6px 10px;
+    border: 1px solid black;
+    font-weight: 500;
     border-radius: 4px;
     color: white;
   `,

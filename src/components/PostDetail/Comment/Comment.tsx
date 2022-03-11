@@ -14,8 +14,6 @@ import { commentState } from 'store/comment';
 
 import S from './Layouts';
 import UserMenuModal from 'components/common/Portal/UserMenuModal';
-import PlusBox from 'assets/icons/PlusBox';
-import MinusBox from 'assets/icons/MinusBox';
 import KebabMenu from 'components/common/KebabMenu';
 
 interface Props {
@@ -91,9 +89,10 @@ const Comment = ({ comment, postId, loginUserId, category, callback, postCreator
               <S.Nickname is_deleted={is_deleted} avatar_id={avatar_id}>
                 {convertedNickname}
               </S.Nickname>
-              <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
             </S.COL2>
           </S.CreatorWrapper>
+          <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
+
           {!is_deleted && (
             <S.COL3>
               <S.LikeCount
@@ -133,26 +132,17 @@ const Comment = ({ comment, postId, loginUserId, category, callback, postCreator
               </S.EditSubmitBtn>
             </S.EditContent>
           ) : (
-            <S.Content
-              is_deleted={is_deleted}
-              dangerouslySetInnerHTML={{
-                __html: is_deleted ? '삭제된 댓글입니다.' : urlParsingRegex(content),
-              }}
-            ></S.Content>
+            <>
+              <S.Content
+                is_deleted={is_deleted}
+                dangerouslySetInnerHTML={{
+                  __html: is_deleted ? '삭제된 댓글입니다.' : urlParsingRegex(content),
+                }}
+              />
+              {!is_deleted && <S.ReplyBtn onClick={() => onReplyOpen(id)}>답글</S.ReplyBtn>}
+            </>
           )}
         </S.ROW2>
-        {!is_deleted &&
-          (!!replyingComment ? (
-            <S.ReplyBtn onClick={onReplyCancle}>
-              <MinusBox />
-              <span>숨기기</span>
-            </S.ReplyBtn>
-          ) : (
-            <S.ReplyBtn onClick={() => onReplyOpen(id)}>
-              <PlusBox />
-              <span>답글 달기</span>
-            </S.ReplyBtn>
-          ))}
 
         {/* 답글 Input */}
         {replyingComment === id && (
