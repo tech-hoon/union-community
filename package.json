@@ -36,6 +36,7 @@
     "workbox-background-sync": "^6.5.0",
     "workbox-broadcast-update": "^6.5.0",
     "workbox-cacheable-response": "^6.5.0",
+    "workbox-cli": "^6.5.1",
     "workbox-core": "^6.5.0",
     "workbox-expiration": "^6.5.0",
     "workbox-google-analytics": "^6.5.0",
@@ -49,9 +50,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "rm -rf ./build && react-scripts build",
+    "workbox": "workbox generateSW workbox-config.js",
+    "prod": "npm run build && npm run workbox",
     "eject": "react-scripts eject",
     "deploy": "npm install && npm run build && npm run firebase",
-    "firebase": "firebase login && firebase deploy"
+    "firebase": "firebase login && firebase deploy",
+    "hosting": "firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": [
