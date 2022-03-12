@@ -50,10 +50,10 @@ const Home = () => {
   const history = useHistory();
   const historyState = history.location.state;
 
-  const onRefreshClick = useCallback(() => {
+  const onRefreshClick = useCallback(async () => {
     setRefreshButtonClicked(!refreshButtonClicked);
+    await fetchPosts();
     window.scroll({ behavior: 'smooth', top: 0 });
-    fetchPosts();
   }, []);
 
   const onUploadClick = useCallback(() => {
