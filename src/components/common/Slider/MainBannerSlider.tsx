@@ -31,7 +31,7 @@ const MainBannerSlider = () => {
     <Swiper
       slidesPerView={1}
       autoplay={{
-        delay: 3000,
+        delay: 3500,
         disableOnInteraction: false,
       }}
       observer={true}
