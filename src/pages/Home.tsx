@@ -21,6 +21,7 @@ import UploadIcon from 'assets/icons/UploadIcon';
 import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 import { useHistory } from 'react-router-dom';
 import RefreshIcon from 'assets/icons/RefreshIcon';
+import TopBanner from 'components/common/Banner/BottomBanner/TopBanner';
 
 const Home = () => {
   const setLoginUser = useSetRecoilState(loginUserState);
@@ -94,6 +95,7 @@ const Home = () => {
 
   return (
     <Wrapper>
+      <TopBanner />
       <Navbar />
       <MainBannerSlider />
 
