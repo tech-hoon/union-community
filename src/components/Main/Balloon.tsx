@@ -2,17 +2,16 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  isLoading: boolean;
   children: ReactNode;
 };
 
-const Balloon = ({ isLoading, children }: Props) => {
-  return <Background isLoading={isLoading}>{children}</Background>;
+const Balloon = ({ children }: Props) => {
+  return <Background>{children}</Background>;
 };
 
 export default Balloon;
 
-const Background = styled.h3<{ isLoading: boolean }>`
+const Background = styled.h3`
   width: 90%;
   position: relative;
   background-color: #e0f0fb;

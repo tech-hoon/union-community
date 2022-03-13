@@ -115,7 +115,7 @@ const Main = () => {
         </MobileLogoWrapper>
         <Contents>
           <Description />
-          <Balloon isLoading={isLoading || !count.post}>
+          <Balloon>
             {isLoading || !count.post ? (
               <Paragraph>
                 <em>Loading...</em>
