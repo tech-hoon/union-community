@@ -21,6 +21,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
   const history = useHistory();
   const [attachments, setAttachment] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [hasUploaded, setHasUploaded] = useState<boolean>(false);
   const [errorInfo, setErrorInfo] = useState<string>('');
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
@@ -105,21 +106,27 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
 
     if (mode === 'add') {
       const __postId = await addPost({ postInput, uid: loginUser.uid });
+
+      setIsUploading(false);
+      setHasUploaded(true);
+
       history.push({
         pathname: `/posts/${__postId}`,
         state: 'isAdded',
       });
-      setIsUploading(false);
       return;
     }
 
     if (mode === 'update') {
       prevPost?.id && (await updatePost({ postInput, uid: loginUser.uid, postId: prevPost.id }));
+
+      setIsUploading(false);
+      setHasUploaded(true);
+
       history.push({
         pathname: `/posts/${prevPost?.id}`,
         state: 'isUpdated',
       });
-      setIsUploading(false);
       return;
     }
   };
@@ -133,6 +140,7 @@ const usePostForm = ({ titleRef, categoryRef, contentRef, mode, prevPost }: Prop
     onDeleteAttachment,
     onSubmit,
     isUploading,
+    hasUploaded,
     errorInfo,
     onErrorInfoReset,
   };

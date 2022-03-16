@@ -9,6 +9,8 @@ import AlertModal from 'components/common/Portal/AlertModal';
 import { useRecoilValue } from 'recoil';
 import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
+import useRecoilCacheRefresh from 'hooks/comment/useRecoilCacheRefresh';
+import { myPostsState } from 'store/myPosts';
 
 interface ILocationState {
   mode: 'add' | 'update';
@@ -21,6 +23,7 @@ const UploadPost = () => {
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const location = useLocation();
   const { mode, initialPost } = location.state as ILocationState;
+  const cacheRefresher = useRecoilCacheRefresh(myPostsState);
 
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
   const CategoryList = [...CATEGORY_LIST].filter(
@@ -28,10 +31,6 @@ const UploadPost = () => {
       (kor !== '전체' && kor !== '공지' && kor !== '장터/나눔') ||
       (kor === '공지' && loginUser.uid === ADMIN_UID)
   );
-
-  useEffect(() => {
-    initialPost?.attachment_url && setAttachment(initialPost.attachment_url);
-  }, []);
 
   const {
     setAttachment,
@@ -43,6 +42,7 @@ const UploadPost = () => {
     onFileChange,
     onDeleteAttachment,
     isUploading,
+    hasUploaded,
   } = usePostForm({
     titleRef,
     categoryRef,
@@ -50,6 +50,16 @@ const UploadPost = () => {
     mode,
     prevPost: initialPost || null,
   });
+
+  useEffect(() => {
+    initialPost?.attachment_url && setAttachment(initialPost.attachment_url);
+  }, []);
+
+  useEffect(() => {
+    if (hasUploaded) {
+      cacheRefresher();
+    }
+  }, [hasUploaded]);
 
   return (
     <>

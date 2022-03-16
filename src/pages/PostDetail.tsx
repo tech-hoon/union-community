@@ -32,6 +32,8 @@ import CommentTextarea from 'components/PostDetail/Textarea/CommentTextarea';
 
 import ProductContainer from 'components/PostDetail/ProductContainer';
 import PostContainer from 'components/PostDetail/PostContainer';
+import useRecoilCacheRefresh from 'hooks/comment/useRecoilCacheRefresh';
+import { myLikesState, myPostsState } from 'store/myPosts';
 
 const PostDetail = () => {
   const location = useLocation();
@@ -45,6 +47,9 @@ const PostDetail = () => {
   const [comments, setComments] = useRecoilState(commentState);
   const commentRef = useRef<any>(null);
   const isSecret = post?.category === '비밀';
+
+  const myLikesCacheRefresher = useRecoilCacheRefresh(myLikesState);
+  const myPostsCacheRefresher = useRecoilCacheRefresh(myPostsState);
 
   const { modalOpened, onOpenModal, onCloseModal } = useModal();
   const {
@@ -66,6 +71,7 @@ const PostDetail = () => {
     (post?.attachment_url || []).forEach(async (attachmentUrl: string) => {
       await storageService.refFromURL(attachmentUrl).delete();
     });
+    myPostsCacheRefresher();
     history.push({ pathname: '/home', state: 'isDeleted' });
   };
 
@@ -137,6 +143,7 @@ const PostDetail = () => {
       ? await postUnlike(id, loginUserUid)
       : await postLike(id, loginUserUid);
     fetchPostDetail(id);
+    myLikesCacheRefresher();
   };
 
   const fetchComments = async () => {

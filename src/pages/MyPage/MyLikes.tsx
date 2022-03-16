@@ -1,27 +1,11 @@
 import { Layouts as S } from 'pages/MyPage/Layouts';
 import { BookHeart } from '@styled-icons/boxicons-regular';
-import { useState, useEffect } from 'react';
-import { getMyLikes } from 'api/user';
-import { useRecoilValue } from 'recoil';
-import { loginUserState } from 'store/loginUser';
-import { LoginUserType } from 'types';
+import { useRecoilValueLoadable } from 'recoil';
 import CardContainer from 'components/common/PostCardLayout/CardContainer';
+import { myLikesState } from 'store/myPosts';
 
 const MyLikes = () => {
-  const loginUser = useRecoilValue(loginUserState) as LoginUserType;
-  const [posts, setPosts] = useState<any>();
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchMyLikes = async () => {
-      const __posts = await getMyLikes(loginUser.uid);
-      setPosts(__posts);
-      setIsLoading(false);
-    };
-
-    fetchMyLikes();
-  }, []);
+  const postsLoadable = useRecoilValueLoadable(myLikesState);
 
   return (
     <S.Wrapper>
@@ -34,7 +18,11 @@ const MyLikes = () => {
             좋아요 목록
           </S.Title>
         </S.Header>
-        {isLoading ? <S.PostCardSkeleton /> : <CardContainer posts={posts} hideNickname={true} />}
+        {postsLoadable.state === 'loading' ? (
+          <S.PostCardSkeleton />
+        ) : (
+          <CardContainer posts={postsLoadable.contents} hideNickname={true} />
+        )}
       </S.Container>
       <S.Footer />
     </S.Wrapper>
