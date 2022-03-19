@@ -171,7 +171,7 @@ const MobileLogoWrapper = styled.div`
   display: none;
   margin: 0 auto;
   width: clamp(130px, 20vw, 150px);
-  margin-top: 40px;
+  margin-top: 24px;
   @media ${({ theme }) => theme.size.mobile} {
     display: inline;
   }
@@ -231,7 +231,7 @@ const Paragraph = styled.p`
 
 const DetailButton = styled.button`
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   padding: 10px 36px;
   border-radius: 113.374px;
   background-color: white;

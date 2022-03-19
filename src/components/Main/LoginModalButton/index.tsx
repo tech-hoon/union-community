@@ -22,7 +22,7 @@ const LoginModalButton = (props: Props) => {
 
 const Button = styled.button`
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   padding: 10px 36px;
   background-color: #18a0fb;
   border-radius: 113.374px;

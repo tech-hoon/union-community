@@ -20,7 +20,7 @@ const Text = styled.h1`
   font-weight: 300;
   letter-spacing: -0.05em;
   width: 100%;
-  padding: 20px;
+  padding: 8px 20px;
 
   & b {
     font-weight: 400;
