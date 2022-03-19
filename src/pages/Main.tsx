@@ -230,10 +230,9 @@ const Paragraph = styled.p`
 `;
 
 const DetailButton = styled.button`
-  width: 160px;
   font-weight: 400;
   font-size: 20px;
-  padding: 10px 45px;
+  padding: 10px 36px;
   border-radius: 113.374px;
   background-color: white;
   color: ${({ theme }) => theme.color.main};

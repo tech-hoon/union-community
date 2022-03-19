@@ -138,6 +138,9 @@ const ImageContainer = styled.div`
   scroll-snap-type: x mandatory;
   padding: 0 10%;
   gap: 20px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media ${({ theme }) => theme.size.mobile} {
     padding: 0 0 0 10%;
