@@ -33,7 +33,6 @@ const GlobalStyle = createGlobalStyle`
     overflow:auto;
     background-color: #f8f9fa;
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
-    height:100vh;
 
     /* ios vh issue fix */
     @supports (-webkit-touch-callout: none) {
