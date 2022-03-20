@@ -31,7 +31,7 @@ const AuthWaitingContainer = ({ loginUser, onLoginStepReset }: Props) => {
           <ClockHistory size='64px' />
         </LogoWrapper>
         <Description>
-          <li>{name && <small>{name}님, </small>}현재 가입 승인 대기중입니다.</li>
+          <li>현재 가입 승인 대기중입니다.</li>
           <li>관리자의 승인을 기다리고 있습니다.</li>
           <li>최대 30분 정도 소요될 수 있습니다.</li>
           <li>
