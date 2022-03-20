@@ -44,6 +44,7 @@ const Wrapper = styled.div<{ imageAmount: number }>`
   width: ${({ imageAmount }) => (imageAmount === 1 ? '100%' : '90vw')};
   overflow-x: auto;
   display: flex;
+  justify-content: center;
   scroll-snap-type: x mandatory;
 
   margin: 0 auto;
@@ -57,8 +58,9 @@ const Wrapper = styled.div<{ imageAmount: number }>`
 const Slide = styled.div``;
 
 const Image = styled.img<{ imageAmount: number }>`
+  min-width: 300px;
   max-width: ${({ imageAmount }) => (imageAmount === 1 ? '80vw' : '90vw')};
-  max-height: ${({ imageAmount }) => (imageAmount === 1 ? '80vh' : '60vh')};
+  max-height: ${({ imageAmount }) => (imageAmount === 1 ? '70vh' : '60vh')};
 
   object-fit: contain;
   scroll-snap-align: center;
