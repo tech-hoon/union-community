@@ -204,7 +204,7 @@ const PostDetail = () => {
                 size='16px'
                 count={post.liker_list?.length}
                 flag={likeOrUnlike(post.liker_list, loginUser.uid)}
-                onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 800)}
+                onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 300)}
               />
             </CountBox>
 
