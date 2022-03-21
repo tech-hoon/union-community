@@ -39,7 +39,10 @@ export const REPORT_LIST = [
   '정당/정치인 비하 및 선거운동',
 ];
 
-export const AVATAR_COUNT = 10;
+// export const AVATAR_COUNT = 10;
+
+export const AVATAR_ARRAY_MALE = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112];
+export const AVATAR_ARRAY_FEMALE = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212];
 
 //Product
 

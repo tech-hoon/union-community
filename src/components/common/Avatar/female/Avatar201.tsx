@@ -1,4 +1,4 @@
-const Avatar6 = () => (
+const Avatar201 = () => (
   <svg
     width='100%'
     height='100%'
@@ -39,4 +39,4 @@ const Avatar6 = () => (
   </svg>
 );
 
-export default Avatar6;
+export default Avatar201;

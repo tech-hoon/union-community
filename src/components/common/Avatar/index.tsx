@@ -1,55 +1,93 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import Avatar1 from './Avatar1';
-import Avatar2 from './Avatar2';
-import Avatar3 from './Avatar3';
-import Avatar4 from './Avatar4';
-import Avatar5 from './Avatar5';
-import Avatar6 from './Avatar6';
-import Avatar7 from './Avatar7';
-import Avatar8 from './Avatar8';
-import Avatar9 from './Avatar9';
-import Avatar10 from './Avatar10';
-import DefaultAvatar from './DefaultAvatar';
+import {
+  DefaultAvatar,
+  Avatar101,
+  Avatar102,
+  Avatar103,
+  Avatar104,
+  Avatar105,
+  Avatar106,
+  Avatar107,
+  Avatar108,
+  Avatar109,
+  Avatar110,
+  Avatar111,
+  Avatar112,
+  Avatar201,
+  Avatar202,
+  Avatar203,
+  Avatar204,
+  Avatar205,
+  Avatar206,
+  Avatar207,
+  Avatar208,
+  Avatar209,
+  Avatar210,
+  Avatar211,
+  Avatar212,
+} from './AvatarList';
 
 interface Props {
   avatarId: number;
   size?: number;
 }
 
-const CurrentAvatar = ({ avatarId }: Props) => {
-  switch (avatarId) {
-    case 0:
-      return <DefaultAvatar color='#18A0FB' />;
-    case 1:
-      return <Avatar1 />;
-    case 2:
-      return <Avatar2 />;
-    case 3:
-      return <Avatar3 />;
-    case 4:
-      return <Avatar4 />;
-    case 5:
-      return <Avatar5 />;
-    case 6:
-      return <Avatar6 />;
-    case 7:
-      return <Avatar7 />;
-    case 8:
-      return <Avatar8 />;
-    case 9:
-      return <Avatar9 />;
-    case 10:
-      return <Avatar10 />;
-    default:
-      return <DefaultAvatar />;
-  }
-};
-
 const Avatar = ({ avatarId, size }: Props) => {
+  const MaleAvatarHandler = {
+    0: <DefaultAvatar color='#18A0FB' />,
+    '-1': <DefaultAvatar />,
+
+    1: <Avatar101 />,
+    2: <Avatar102 />,
+    3: <Avatar103 />,
+    4: <Avatar104 />,
+    5: <Avatar105 />,
+
+    101: <Avatar101 />,
+    102: <Avatar102 />,
+    103: <Avatar103 />,
+    104: <Avatar104 />,
+    105: <Avatar105 />,
+    106: <Avatar106 />,
+    107: <Avatar107 />,
+    108: <Avatar108 />,
+    109: <Avatar109 />,
+    110: <Avatar110 />,
+    111: <Avatar111 />,
+    112: <Avatar112 />,
+  }[avatarId];
+
+  const FemaleAvatarHandler = {
+    6: <Avatar201 />,
+    7: <Avatar202 />,
+    8: <Avatar203 />,
+    9: <Avatar204 />,
+    10: <Avatar205 />,
+
+    201: <Avatar201 />,
+    202: <Avatar202 />,
+    203: <Avatar203 />,
+    204: <Avatar204 />,
+    205: <Avatar205 />,
+    206: <Avatar206 />,
+    207: <Avatar207 />,
+    208: <Avatar208 />,
+    209: <Avatar209 />,
+    210: <Avatar210 />,
+    211: <Avatar211 />,
+    212: <Avatar212 />,
+  }[avatarId];
+
+  const AvatarHandler = () => {
+    if ((avatarId >= -1 && avatarId <= 5) || (avatarId > 100 && avatarId < 200)) {
+      return MaleAvatarHandler;
+    } else return FemaleAvatarHandler;
+  };
+
   return (
     <Wrapper size={size} avatarId={avatarId}>
-      <CurrentAvatar avatarId={avatarId} />
+      {AvatarHandler()}
     </Wrapper>
   );
 };

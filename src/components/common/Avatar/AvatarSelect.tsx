@@ -1,31 +1,48 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CaretLeftFill, CaretRightFill } from '@styled-icons/bootstrap';
-import Avatar from 'components/common/Avatar';
-import { AVATAR_COUNT } from 'utils/config';
+import Avatar from '.';
+import { AVATAR_ARRAY_FEMALE, AVATAR_ARRAY_MALE } from 'utils/config';
 
 interface Props {
   avatarId: number;
+  gender: string;
   onClickPrev: () => void;
   onClickNext: () => void;
+  onClickGender: React.MouseEventHandler<HTMLElement>;
   size?: string;
 }
 
-const AvatarSelect = ({ avatarId, onClickPrev, onClickNext, size }: Props) => {
+const AvatarSelect = ({
+  gender,
+  avatarId,
+  size,
+  onClickGender,
+  onClickPrev,
+  onClickNext,
+}: Props) => {
   return (
     <Wrapper size={size || `100%`}>
+      <GenderBox onClick={onClickGender}>
+        <GenderButton data-id='male' isSelected={gender === 'male'}>
+          ♂
+        </GenderButton>
+        <GenderButton data-id='female' isSelected={gender === 'female'}>
+          ♀
+        </GenderButton>
+      </GenderBox>
       <Pagination>
-        {new Array(AVATAR_COUNT).fill('').map((_, currentId) => (
-          <Dot selected={avatarId - 1 === currentId} key={currentId} />
+        {(gender === 'male' ? AVATAR_ARRAY_MALE : AVATAR_ARRAY_FEMALE).map((v) => (
+          <Dot selected={avatarId === v} key={v} />
         ))}
       </Pagination>
-      <Box>
+      <AvatarSelectWrapper>
         <PrevBtn onClick={onClickPrev} size='20px' />
         <AvatarWrapper>
           <Avatar avatarId={avatarId} size={128} />
         </AvatarWrapper>
         <NextBtn onClick={onClickNext} size='20px' />
-      </Box>
+      </AvatarSelectWrapper>
     </Wrapper>
   );
 };
@@ -39,11 +56,39 @@ const Wrapper = styled.div<IWrapper>`
   margin: 0 auto;
   user-select: none;
 `;
-const Box = styled.div`
+
+const AvatarSelectWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
+`;
+
+const GenderBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
+const GenderButton = styled.button<{ isSelected: boolean }>`
+  font-size: 20px;
+  border-radius: 4px;
+  padding: 4px 20px;
+  font-weight: bold;
+
+  &:nth-child(1) {
+    border: 1px solid rgb(84, 119, 245);
+    color: ${({ isSelected }) => (isSelected ? 'white' : 'rgb(84, 119, 245)')};
+    background-color: ${({ isSelected }) => (isSelected ? 'rgb(84, 119, 245)' : 'transparent')};
+  }
+
+  &:nth-child(2) {
+    border: 1px solid rgb(234, 118, 136);
+    color: ${({ isSelected }) => (isSelected ? 'white' : 'rgb(234, 118, 136)')};
+    background-color: ${({ isSelected }) => (isSelected ? 'rgb(234, 118, 136)' : 'transparent')};
+  }
 `;
 
 const AvatarWrapper = styled.div`

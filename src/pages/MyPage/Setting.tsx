@@ -11,17 +11,16 @@ import { updateProfile, verifyNickname } from 'api/user';
 import { LoginUserType } from 'types';
 import { NICKNAME_LENGTH } from 'utils/config';
 import { nicknameRegex } from 'utils/regex';
+import useAvatarSelect from 'hooks/avatar/useAvatarSelect';
 
 const Setting = () => {
   const user = useRecoilValue(loginUserState) as LoginUserType;
   const setLoginUser = useSetRecoilState(loginUserState);
-  const [avatarId, setAvatarId] = useState<number>(user.avatar_id);
   const [errorInfo, setErrorInfo] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
-  const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 10 : prev - 1));
-  const onAvatarIdNext = () => setAvatarId((prev) => (prev >= 10 ? (prev % 10) + 1 : prev + 1));
+  const { gender, avatarId, onAvatarIdNext, onAvatarIdPrev, onClickGender } = useAvatarSelect();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const __value = event.target.value;
@@ -81,6 +80,8 @@ const Setting = () => {
           <AvatarSelect
             onClickNext={onAvatarIdNext}
             onClickPrev={onAvatarIdPrev}
+            onClickGender={onClickGender}
+            gender={gender}
             avatarId={avatarId}
             size={`80%`}
           />
@@ -128,7 +129,8 @@ const ButtonWrapper = styled.div`
 `;
 
 const CancleButton = styled(S.Button)`
-  background-color: #888;
+  border: 1px solid #888;
+  color: #888;
 `;
 
 const SubmitButton = styled(S.Button)`
