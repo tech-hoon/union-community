@@ -32,7 +32,7 @@ const Popup = ({ imgSrc, url }: IProps) => {
     popupOpenedLS && (
       <PortalContainer onClose={onClickClose} zIndex={2000}>
         <Wrapper>
-          <PopupImage src={imgSrc} onClick={onClickPopup} />
+          <PopupImage src={imgSrc} onClick={onClickPopup} isClickable={!!url} />
           <ButtonBox>
             <Button onClick={onClickCloseLS}>이 팝업 그만 보기</Button>
             <Divider />
@@ -46,10 +46,11 @@ const Popup = ({ imgSrc, url }: IProps) => {
 
 const Wrapper = styled.div``;
 
-const PopupImage = styled.img`
+const PopupImage = styled.img<{ isClickable: boolean }>`
   width: 300px;
   height: 300px;
   margin-bottom: 12px;
+  cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
 `;
 
 const ButtonBox = styled.div`
@@ -58,14 +59,15 @@ const ButtonBox = styled.div`
 `;
 
 const Button = styled.button`
-  color: white;
+  color: #eee;
+  font-weight: 600;
   font-size: 16px;
 `;
 
 const Divider = styled.span`
   height: auto;
-  width: 1px;
-  background-color: white;
+  width: 1.5px;
+  background-color: #eee;
 `;
 
 export default Popup;
