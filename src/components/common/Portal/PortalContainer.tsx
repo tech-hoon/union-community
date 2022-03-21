@@ -7,9 +7,10 @@ interface Props {
   onClose: () => void;
   children: ReactNode;
   center?: boolean;
+  zIndex?: number;
 }
 
-const PortalContainer = ({ onClose, children, center = true }: Props) => {
+const PortalContainer = ({ onClose, children, center = true, zIndex = 1000 }: Props) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   const portalRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,7 @@ const PortalContainer = ({ onClose, children, center = true }: Props) => {
         <meta name='theme-color' content={isOpened ? '#7C7C7C' : '#f8f9fa'} />
       </Helmet>
       <Portal>
-        <Background>
+        <Background zIndex={zIndex}>
           {center ? <Overlay ref={portalRef}>{children}</Overlay> : <>{children}</>}
         </Background>
       </Portal>
@@ -46,9 +47,9 @@ const PortalContainer = ({ onClose, children, center = true }: Props) => {
   );
 };
 
-const Background = styled.div`
+const Background = styled.div<{ zIndex: number }>`
   position: fixed;
-  z-index: 1000;
+  z-index: ${({ zIndex }) => zIndex};
   text-align: center;
   background: rgba(0, 0, 0, 0.5);
   top: 0;
