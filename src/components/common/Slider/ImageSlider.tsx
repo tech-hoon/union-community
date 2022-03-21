@@ -44,7 +44,6 @@ const Wrapper = styled.div<{ imageAmount: number }>`
   width: ${({ imageAmount }) => (imageAmount === 1 ? '100%' : '90vw')};
   overflow-x: auto;
   display: flex;
-  justify-content: center;
   scroll-snap-type: x mandatory;
 
   margin: 0 auto;

@@ -79,6 +79,7 @@ export const Layouts = {
     height: 2rem;
     font-size: 1rem;
     font-weight: 600;
+    border: 1px solid black;
   `,
 
   Text: styled.div`

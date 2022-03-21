@@ -69,9 +69,9 @@ const ProductContainer = ({
 
         <ImagesContainer>
           {(attachment_url || []).map((url, id) => (
-            <ImageWrapper status={status}>
+            <ImageWrapper status={status} key={id}>
               <ImageText status={status}>판매 완료</ImageText>
-              <Image src={url} alt='image' key={id} onClick={() => onOpenImageSlider(id)} />
+              <Image src={url} alt='image' onClick={() => onOpenImageSlider(id)} />
             </ImageWrapper>
           ))}
         </ImagesContainer>
