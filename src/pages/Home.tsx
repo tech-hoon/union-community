@@ -22,6 +22,8 @@ import MainBannerSlider from 'components/common/Slider/MainBannerSlider';
 import { useHistory } from 'react-router-dom';
 import RefreshIcon from 'assets/icons/RefreshIcon';
 import TopBanner from 'components/common/Banner/BottomBanner/TopBanner';
+import Popup from 'components/Popup';
+import { NEW_AVATAR_POPUP_IMG_SRC } from 'utils/config';
 
 const Home = () => {
   const setLoginUser = useSetRecoilState(loginUserState);
@@ -116,6 +118,9 @@ const Home = () => {
           </PortalContainer>
         )}
       </UploadButton>
+
+      <Popup imgSrc={NEW_AVATAR_POPUP_IMG_SRC} url='/setting' />
+
       <Footer />
       <Observer ref={ioRef} />
     </Wrapper>
