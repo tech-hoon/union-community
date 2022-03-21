@@ -69,7 +69,10 @@ const ProductContainer = ({
 
         <ImagesContainer>
           {(attachment_url || []).map((url, id) => (
-            <Image src={url} alt='image' key={id} onClick={() => onOpenImageSlider(id)} />
+            <ImageWrapper status={status} key={id}>
+              <ImageText status={status}>판매 완료</ImageText>
+              <Image src={url} alt='image' onClick={() => onOpenImageSlider(id)} />
+            </ImageWrapper>
           ))}
         </ImagesContainer>
       </ContentWrapper>
@@ -208,6 +211,13 @@ const ImagesContainer = styled.div`
   overflow-x: auto;
 `;
 
+const ImageWrapper = styled.div<{ status: string }>`
+  & > *:not(div) {
+    filter: ${({ status }) => status === '판매완료' && 'brightness(50%)'};
+  }
+  position: relative;
+`;
+
 const Image = styled.img`
   flex: none;
   height: 150px;
@@ -217,11 +227,19 @@ const Image = styled.img`
   -webkit-user-drag: none;
 `;
 
-const Button = styled.button`
+const ImageText = styled.div<{ status: string }>`
+  &:nth-child(1) {
+    display: ${({ status }) => (status === '판매완료' ? 'block' : 'none')};
+  }
+  font-size: 16px;
   font-weight: 500;
-  font-size: 1rem;
-  padding: 4px 0px;
-  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  color: white;
+  z-index: 3;
 `;
 
 const Category = styled(CategoryLabel)`

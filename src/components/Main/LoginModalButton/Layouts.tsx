@@ -105,6 +105,7 @@ export const Layouts = {
     &:disabled {
       cursor: default;
       background-color: #ccc;
+      border: 1px solid #ccc;
     }
   `,
 

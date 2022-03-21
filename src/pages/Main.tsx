@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import LoginModalButton from 'components/Main/LoginModalButton';
 import styled from 'styled-components';
 import useLoginStep from 'hooks/useLoginStep';
@@ -20,6 +21,10 @@ import { Onboarding1, Onboarding2, Onboarding3 } from 'components/Main/Onboardin
 import Navbar from 'components/common/Navbar';
 import Balloon from 'components/Main/Balloon';
 import { isMobile } from 'utils/mobileCheck';
+
+const OnboardingPage1 = React.lazy(() => import('components/Main/OnboardingContainer/Onboarding1'));
+const OnboardingPage2 = React.lazy(() => import('components/Main/OnboardingContainer/Onboarding2'));
+const OnboardingPage3 = React.lazy(() => import('components/Main/OnboardingContainer/Onboarding3'));
 
 const Main = () => {
   const [count, setCount] = useState({ user: 0, post: 0 });
@@ -143,11 +148,11 @@ const Main = () => {
         </ButtonWrapper>
       </Container>
       {!isLoading && (
-        <>
-          <Onboarding1 />
-          <Onboarding2 />
-          <Onboarding3 />
-        </>
+        <Suspense fallback={<></>}>
+          <OnboardingPage1 />
+          <OnboardingPage2 />
+          <OnboardingPage3 />
+        </Suspense>
       )}
     </Wrapper>
   );

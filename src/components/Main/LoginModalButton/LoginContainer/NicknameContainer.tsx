@@ -12,20 +12,18 @@ import { RegisterDataType } from 'types';
 import { authService } from 'service/firebase';
 import Loading from 'components/common/Loading/CircleSmall';
 import { nicknameRegex } from 'utils/regex';
+import useAvatarSelect from 'hooks/avatar/useAvatarSelect';
 
 interface Props {}
 
 const NicknameContainer = (prop: Props) => {
   const setRegisterData = useSetRecoilState(registerDataState);
-  const [avatarId, setAvatarId] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorInfo, setErrorInfo] = useState<string | null>(null);
   const { onLoginStepNext } = useLoginStep();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { displayName }: any = authService.currentUser;
 
-  const onAvatarIdPrev = () => setAvatarId((prev) => (prev <= 1 ? 11 - prev : prev - 1));
-  const onAvatarIdNext = () => setAvatarId((prev) => (prev >= 10 ? (prev % 10) + 1 : prev + 1));
+  const { gender, avatarId, onAvatarIdNext, onAvatarIdPrev, onClickGender } = useAvatarSelect();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const __value = event.target.value;
@@ -86,6 +84,8 @@ const NicknameContainer = (prop: Props) => {
       <Body>
         <AvatarSelect
           avatarId={avatarId}
+          gender={gender}
+          onClickGender={onClickGender}
           onClickPrev={onAvatarIdPrev}
           onClickNext={onAvatarIdNext}
         />
@@ -112,7 +112,7 @@ const Title = styled(S.Title)`
 `;
 
 const Body = styled(S.Body)`
-  margin: 1.5rem 0;
+  margin: 0.5rem 0;
 `;
 
 export default NicknameContainer;
