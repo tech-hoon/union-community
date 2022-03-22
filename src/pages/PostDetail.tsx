@@ -44,6 +44,8 @@ const PostDetail = () => {
   const { post, fetchPostDetail } = useGetPostDetail();
   const [isCreator, setIsCreator] = useState<boolean>(false);
   const [contentMarkup, setContentMarkup] = useState({ __html: '' });
+  const [imageIndex, setImageIndex] = useState<number>(0);
+
   const [comments, setComments] = useRecoilState(commentState);
   const commentRef = useRef<any>(null);
   const isSecret = post?.category === '비밀';
@@ -57,8 +59,6 @@ const PostDetail = () => {
     onOpenModal: onOpenUserMenu,
     onCloseModal: onCloseUserMenu,
   } = useModal();
-
-  const [imageIndex, setImageIndex] = useState<number>(0);
 
   const {
     modalOpened: sliderOpened,
@@ -204,7 +204,7 @@ const PostDetail = () => {
                 size='16px'
                 count={post.liker_list?.length}
                 flag={likeOrUnlike(post.liker_list, loginUser.uid)}
-                onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 300)}
+                onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 1000)}
               />
             </CountBox>
 

@@ -205,6 +205,9 @@ export const postLike = async (postId: string, uid: string) => {
   try {
     await dbService.doc(`posts/${postId}`).update({
       liker_list: firebaseApp.firestore.FieldValue.arrayUnion(uid),
+    });
+
+    await dbService.doc(`posts/${postId}`).update({
       like_count: firebaseApp.firestore.FieldValue.increment(1),
     });
 
@@ -219,6 +222,9 @@ export const postUnlike = async (postId: string, uid: string) => {
   try {
     await dbService.doc(`posts/${postId}`).update({
       liker_list: firebaseApp.firestore.FieldValue.arrayRemove(uid),
+    });
+
+    await dbService.doc(`posts/${postId}`).update({
       like_count: firebaseApp.firestore.FieldValue.increment(-1),
     });
 
