@@ -1,14 +1,18 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
-import useSessionStorage from 'hooks/common/useSessionStorage';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getUserPostCount } from 'api/count';
+import useLocalStorage from 'hooks/common/useLocalStorage';
 
 const TopBanner = () => {
-  const [count, setCount] = useSessionStorage('user-count', 0);
-  const [topBannerOpened, setTopBannerOpened] = useSessionStorage('top_banner_opened', true);
+  const [count, setCount] = useState();
+  const [topBannerOpened, setTopBannerOpened] = useLocalStorage('top_banner_opened', false);
+  const [topBannerOpenedDate, setTopBannerOpenedDate] = useLocalStorage(
+    'top_banner_opened_date',
+    null
+  );
 
   const onTopBannerClick = useCallback(() => {
-    setTopBannerOpened(!topBannerOpened);
+    setTopBannerOpened(false);
   }, [topBannerOpened]);
 
   const fetchCount = async () => {
@@ -17,7 +21,15 @@ const TopBanner = () => {
   };
 
   useLayoutEffect(() => {
-    fetchCount();
+    const currentDate = new Date().getDate();
+    if (topBannerOpenedDate !== currentDate) {
+      fetchCount();
+      setTopBannerOpened(true);
+      setTopBannerOpenedDate(currentDate);
+      return;
+    }
+
+    setTopBannerOpened(false);
   }, []);
 
   return (
@@ -53,7 +65,7 @@ const TopCountBanner = styled.div`
     color: ${({ theme }) => theme.color.main};
   }
 
-  animation: popUpAnimation 0.5s ease 1.5s 1 normal forwards running;
+  animation: popUpAnimation 0.5s ease 1s 1 normal forwards running;
   @keyframes popUpAnimation {
     0% {
       margin-top: -36px;

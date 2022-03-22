@@ -64,6 +64,6 @@ const Overlay = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   margin: auto;
-  overflow-y: hidden;
+  touch-action: none;
 `;
 export default memo(PortalContainer);
