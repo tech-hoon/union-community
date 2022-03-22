@@ -89,6 +89,7 @@ const Content = styled(S.Content)`
   flex: 1;
   height: 2.4em;
   margin-bottom: 19px;
+  line-height: 1.3;
   margin-right: 8px;
   -webkit-line-clamp: 2;
 `;
