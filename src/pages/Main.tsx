@@ -17,7 +17,6 @@ import useNotification from 'hooks/useNotification';
 import MainLogo from 'assets/logo/MainLogo';
 import PeopleAvatar from 'components/common/Avatar/PeopleAvatar';
 import Description from 'components/Main/Description';
-import { Onboarding1, Onboarding2, Onboarding3 } from 'components/Main/OnboardingContainer';
 import Navbar from 'components/common/Navbar';
 import Balloon from 'components/Main/Balloon';
 import { isMobile } from 'utils/mobileCheck';
