@@ -34,16 +34,24 @@ const PostCard = ({ post, onClick, hideNickname }: IProps) => {
       </S.Head>
       <S.Content dangerouslySetInnerHTML={{ __html: content }} />
       <S.CardBottom>
-        <S.CreatorBox>
-          <S.AvatarWrapper>
-            <S.Avatar avatarId={category === '비밀' ? -1 : creator.avatar_id} />
-          </S.AvatarWrapper>
-          {!hideNickname && (
+        {hideNickname ? (
+          <S.CreatorBox>
+            <S.AvatarWrapper>
+              <S.Avatar avatarId={-1} />
+            </S.AvatarWrapper>
+          </S.CreatorBox>
+        ) : (
+          <S.CreatorBox>
+            <S.AvatarWrapper>
+              <S.Avatar avatarId={category === '비밀' ? -1 : creator.avatar_id} />
+            </S.AvatarWrapper>
+
             <S.Creator isSecret={category === '비밀'}>
               {category === '비밀' ? '익명' : creator.nickname}
             </S.Creator>
-          )}
-        </S.CreatorBox>
+          </S.CreatorBox>
+        )}
+
         <S.CreatedAt>{toDateStringByFormating(created_at)}</S.CreatedAt>
         <S.CountBox>
           <S.ViewCount count={visitor_list.length} />

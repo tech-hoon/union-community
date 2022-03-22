@@ -21,7 +21,7 @@ const MyPosts = () => {
         {postsLoadable.state === 'loading' ? (
           <S.PostCardSkeleton />
         ) : (
-          <CardContainer posts={postsLoadable.contents} />
+          <CardContainer posts={postsLoadable.contents} hideNickname={true} />
         )}
       </S.Container>
       <S.Footer />
