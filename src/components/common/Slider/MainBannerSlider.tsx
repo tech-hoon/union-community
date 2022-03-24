@@ -24,14 +24,14 @@ const MainBannerSlider = () => {
 
   const onClickBanner: React.MouseEventHandler<HTMLElement> = (e) => {
     const path = (e.target as HTMLElement).dataset.id;
-    history.push(`/posts/${path}`);
+    path && history.push(`/posts/${path}`);
   };
 
   return (
     <Swiper
       slidesPerView={1}
       autoplay={{
-        delay: 3500,
+        delay: 3800,
         disableOnInteraction: false,
       }}
       observer={true}
