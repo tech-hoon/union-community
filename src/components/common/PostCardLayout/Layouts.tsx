@@ -89,14 +89,13 @@ export const Layouts = {
     white-space: nowrap;
     overflow: hidden;
     white-space: normal;
-    line-height: 1.2;
-    height: 6em;
-    margin-bottom: 17px;
+    line-height: 1.4;
+    margin-bottom: 48px;
 
     flex: 1;
     display: -webkit-box;
     text-overflow: ellipsis;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   `,
 
