@@ -261,6 +261,7 @@ const PostDetail = () => {
 
 const Wrapper = styled.div`
   overflow-y: hidden;
+  min-height: 100vh;
 `;
 
 const Container = styled.section`
