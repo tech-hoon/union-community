@@ -57,7 +57,7 @@ const MyMessages = () => {
           {menuId === 'received' ? (
             <ReceivedMessage onClickModal={onClickModal} />
           ) : (
-            <SentMessage />
+            <SentMessage onClickModal={onClickModal} />
           )}
         </MessagesContainer>
       </S.Container>
