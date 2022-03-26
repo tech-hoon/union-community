@@ -55,13 +55,14 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   user-select: none;
-  gap: 20px;
+  gap: 16px;
   height: 35px;
 `;
 
 const IconWrapper = styled.button`
   cursor: pointer;
   position: relative;
+  padding: 4px;
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
