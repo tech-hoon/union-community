@@ -59,3 +59,5 @@ export const PRODUCT_STATUS = [
 ];
 
 export const NEW_AVATAR_POPUP_IMG_SRC = `https://firebasestorage.googleapis.com/v0/b/univ-dorm-community.appspot.com/o/00__STATIC_POST%2Fnew_avatar_popup.png?alt=media&token=f653d74b-2517-4e89-a65a-f8561685329e`;
+
+export const BANNED_USER_ID = 'J41IeOTMPdXdgQDm5V1FNjpyYJ23';

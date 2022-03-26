@@ -18,18 +18,22 @@ const useSentMessage = () => {
       const messages: any[] = data.sent_message_list;
       const newMessages: any = await Promise.all(
         messages.map(async (message) => {
-          const { uid, avatar_id, nickname } = (await message.user.get()).data();
+          const userData = (await message?.user?.get()!!)?.data()!!;
 
-          return {
-            ...message,
-            user: { uid, avatar_id, nickname },
-          };
+          if (userData) {
+            const { uid, avatar_id, nickname } = userData;
+
+            return {
+              ...message,
+              user: { uid, avatar_id, nickname },
+            };
+          }
         })
       );
 
-      const sortedMessage = newMessages.sort(
-        (a: MessageType, b: MessageType) => b.created_at - a.created_at
-      );
+      const sortedMessage = newMessages
+        .sort((a: MessageType, b: MessageType) => b.created_at - a.created_at)
+        .filter(Boolean);
 
       setMessages(sortedMessage);
     }
