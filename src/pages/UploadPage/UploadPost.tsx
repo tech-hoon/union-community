@@ -1,6 +1,6 @@
 import usePostForm from 'hooks/post/usePostForm';
 import { useLocation } from 'react-router';
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ADMIN_UID, CATEGORY_LIST } from 'utils/config';
 
 import { Layouts as S } from './Layouts';
@@ -11,6 +11,8 @@ import { loginUserState } from 'store/loginUser';
 import { LoginUserType } from 'types';
 import useRecoilCacheRefresh from 'hooks/comment/useRecoilCacheRefresh';
 import { myPostsState } from 'store/myPosts';
+import useDebounce from 'hooks/common/useDebounce';
+import { universityList } from 'utils/universityList';
 
 interface ILocationState {
   mode: 'add' | 'update';
@@ -21,6 +23,12 @@ const UploadPost = () => {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const categoryRef = useRef<HTMLSelectElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const [isUnivCategory, setIsUnivCategory] = useState<boolean>();
+  const [, setUnivInput] = useState<string>();
+
+  const [univList, setUnivList] = useState<string[]>();
+
   const location = useLocation();
   const { mode, initialPost } = location.state as ILocationState;
   const cacheRefresher = useRecoilCacheRefresh(myPostsState);
@@ -31,6 +39,29 @@ const UploadPost = () => {
       (kor !== '전체' && kor !== '공지' && kor !== '장터/나눔') ||
       (kor === '공지' && loginUser.uid === ADMIN_UID)
   );
+
+  const onChangeUnivInput: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+
+    if (!value) {
+      setUnivList([]);
+      return;
+    }
+
+    setUnivList(universityList.filter((univ) => univ.startsWith(value)));
+  };
+
+  const onChangeCategory: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    if (e.target.value === '대학교') {
+      setIsUnivCategory(true);
+      return;
+    }
+
+    setIsUnivCategory(false);
+    setUnivInput('');
+  };
+
+  const onDebouncedUnivList = useDebounce(onChangeUnivInput, 500);
 
   const {
     setAttachment,
@@ -75,7 +106,12 @@ const UploadPost = () => {
 
           <S.SelectBox>
             <S.Label>카테고리 : </S.Label>
-            <S.Select ref={categoryRef} name='카테고리' defaultValue={initialPost?.category || ''}>
+            <S.Select
+              ref={categoryRef}
+              name='카테고리'
+              defaultValue={initialPost?.category || ''}
+              onChange={onChangeCategory}
+            >
               <S.Option disabled value=''>
                 카테고리를 선택해주세요
               </S.Option>
@@ -85,6 +121,17 @@ const UploadPost = () => {
                 </S.Option>
               ))}
             </S.Select>
+            {isUnivCategory && (
+              <S.UnivWrapper>
+                <S.UnivInput placeholder={`유니온대학교`} onChange={onDebouncedUnivList} />
+
+                <S.UnivPreviewList>
+                  {univList?.map((item, key) => (
+                    <S.UnivPreviewItem key={key}>{item}</S.UnivPreviewItem>
+                  ))}
+                </S.UnivPreviewList>
+              </S.UnivWrapper>
+            )}
           </S.SelectBox>
 
           <S.Editor ref={contentRef} value={initialPost?.content || null} />
