@@ -109,7 +109,7 @@ const Setting = () => {
 
 const Body = styled.div`
   width: 100%;
-  margin: 80px auto;
+  margin: 60px auto;
 `;
 
 const NicknameWrapper = styled.div`
