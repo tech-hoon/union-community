@@ -61,22 +61,26 @@ const useNotification = () => {
             const notificationsData: any[] = change.doc.data().notification_list;
             const newNotifications: any = await Promise.all(
               notificationsData.map(async (notification) => {
-                const { uid, avatar_id, nickname } = (await notification.sender.get()).data();
-                return {
-                  ...notification,
-                  sender: { uid, avatar_id, nickname },
-                };
+                const userData = (await notification.sender.get()).data();
+
+                if (userData) {
+                  const { uid, avatar_id, nickname } = userData;
+                  return {
+                    ...notification,
+                    sender: { uid, avatar_id, nickname },
+                  };
+                }
               })
             );
 
-            if (notificationCountLS < newNotifications.length) {
+            const sortedNotifications = newNotifications
+              .sort((a: NotificationType, b: NotificationType) => b.created_at - a.created_at)
+              .filter(Boolean);
+
+            if (notificationCountLS < sortedNotifications.length) {
               setHasNewNotification(true);
               setHasNewNotificationLS(true);
             }
-
-            const sortedNotifications = newNotifications.sort(
-              (a: NotificationType, b: NotificationType) => b.created_at - a.created_at
-            );
 
             setNotifications(sortedNotifications);
           }
