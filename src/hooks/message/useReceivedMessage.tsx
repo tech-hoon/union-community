@@ -34,14 +34,14 @@ const useReceivedMessage = () => {
         }
       })
     );
-
-    if (messageCountLS < newMessages.length || hasNewMessageLS) {
-      setHasNewMessage(true);
-      setHasNewMessageLS(true);
-    }
     const sortedMessage = newMessages
       .sort((a: MessageType, b: MessageType) => b.created_at - a.created_at)
       .filter(Boolean);
+
+    if (messageCountLS < sortedMessage.length || hasNewMessageLS) {
+      setHasNewMessage(true);
+      setHasNewMessageLS(true);
+    }
 
     setMessageCountLS(sortedMessage.length);
     setMessages(sortedMessage);
@@ -57,22 +57,27 @@ const useReceivedMessage = () => {
             const messagesData: any[] = change.doc.data().received_message_list;
             const newMessages: any = await Promise.all(
               messagesData.map(async (message) => {
-                const { uid, avatar_id, nickname } = (await message.user.get()).data();
-                return {
-                  ...message,
-                  user: { uid, avatar_id, nickname },
-                };
+                const userData = (await message.user.get())?.data()!!;
+
+                if (userData) {
+                  const { uid, avatar_id, nickname } = userData;
+
+                  return {
+                    ...message,
+                    user: { uid, avatar_id, nickname },
+                  };
+                }
               })
             );
+
+            const sortedMessage = newMessages
+              .sort((a: MessageType, b: MessageType) => b.created_at - a.created_at)
+              .filter(Boolean);
 
             if (messageCountLS < newMessages.length) {
               setHasNewMessage(true);
               setHasNewMessageLS(true);
             }
-
-            const sortedMessage = newMessages.sort(
-              (a: MessageType, b: MessageType) => b.created_at - a.created_at
-            );
 
             setMessages(sortedMessage);
             setMessageCountLS(sortedMessage.length);
