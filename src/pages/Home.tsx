@@ -53,11 +53,11 @@ const Home = () => {
   const history = useHistory();
   const historyState = history.location.state;
 
-  const onRefreshClick = useCallback(async () => {
+  const onRefreshClick = async () => {
     setRefreshButtonClicked(!refreshButtonClicked);
     await fetchPosts();
     window.scroll({ behavior: 'smooth', top: 0 });
-  }, []);
+  };
 
   const onUploadClick = useCallback(() => {
     setUploadButtonOpened(!uploadButtonOpened);
