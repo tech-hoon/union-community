@@ -48,10 +48,22 @@ const Home = () => {
   const [uploadButtonOpened, setUploadButtonOpened] = useState(false);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
 
-  const ioRef = useRef<HTMLDivElement>(null);
-  const entry = useIntersectionObserver(ioRef, isLastPost, {});
   const history = useHistory();
   const historyState = history.location.state;
+
+  const observer = useRef<any>(null);
+
+  const lastElemRef = useCallback(
+    (node) => {
+      if (isFetching || isFetchingMore) return;
+      if (isLastPost) observer?.current?.disconnect();
+      observer.current = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) fetchMorePosts();
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isFetching, isFetchingMore]
+  );
 
   const onRefreshClick = async () => {
     setRefreshButtonClicked(!refreshButtonClicked);
@@ -82,13 +94,6 @@ const Home = () => {
     }
   }, []);
 
-  // IO 감지시 게시물 추가 fetch
-  useEffect(() => {
-    if (entry?.isIntersecting && !isFetching && !isFetchingMore) {
-      fetchMorePosts();
-    }
-  }, [entry]);
-
   useEffect(() => {
     if (!isFetching && refreshButtonClicked) {
       setRefreshButtonClicked(false);
@@ -105,7 +110,11 @@ const Home = () => {
       <MidWrapper>
         <OrderbyBox />
       </MidWrapper>
-      {isFetching ? <PostCardSkeleton /> : <CardContainer posts={posts} />}
+      {isFetching ? (
+        <PostCardSkeleton />
+      ) : (
+        <CardContainer posts={posts} lastElemRef={lastElemRef} />
+      )}
 
       <RefreshButton onClick={onRefreshClick} isClicked={refreshButtonClicked}>
         <RefreshIcon />
@@ -121,7 +130,6 @@ const Home = () => {
 
       <Popup imgSrc={NEW_AVATAR_POPUP_IMG_SRC} url='/setting' />
 
-      <Observer ref={ioRef} />
       <Footer />
     </Wrapper>
   );
@@ -150,10 +158,6 @@ const UploadButton = memo(styled.button<IUploadButton>`
     bottom: 40px;
   }
 `);
-
-const Observer = styled.div`
-  height: 1px;
-`;
 
 const MidWrapper = memo(styled.div`
   max-width: ${({ theme }) => theme.container.maxWidth};

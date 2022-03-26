@@ -10,9 +10,10 @@ interface IProps {
   post: ProductPostType;
   onClick: (id: string) => void;
   hideNickname?: boolean;
+  lastElemRef: any;
 }
 
-const ProductCard = ({ post, onClick, hideNickname }: IProps) => {
+const ProductCard = ({ post, onClick, hideNickname, lastElemRef }: IProps) => {
   const {
     id,
     category,
@@ -30,7 +31,7 @@ const ProductCard = ({ post, onClick, hideNickname }: IProps) => {
   } = post;
 
   return (
-    <S.PostCard key={id} onClick={() => onClick(id!!)}>
+    <S.PostCard key={id} onClick={() => onClick(id!!)} ref={lastElemRef}>
       <S.Head>
         <S.Title>{title}</S.Title>
         <S.Category size='sm' isClicked={true} color={categoryColor(category)}>

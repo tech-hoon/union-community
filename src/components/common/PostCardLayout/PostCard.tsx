@@ -7,9 +7,10 @@ interface IProps {
   post: PostType;
   onClick: (id: string) => void;
   hideNickname?: boolean;
+  lastElemRef: any;
 }
 
-const PostCard = ({ post, onClick, hideNickname }: IProps) => {
+const PostCard = ({ post, onClick, hideNickname, lastElemRef }: IProps) => {
   const {
     id,
     category,
@@ -24,7 +25,7 @@ const PostCard = ({ post, onClick, hideNickname }: IProps) => {
   } = post;
 
   return (
-    <S.PostCard key={id} onClick={() => onClick(id!!)}>
+    <S.PostCard key={id} onClick={() => onClick(id!!)} ref={lastElemRef}>
       <S.Head>
         <S.Title>{title}</S.Title>
         {!!attachment_url.length && <S.ImageIcon size='24px' />}

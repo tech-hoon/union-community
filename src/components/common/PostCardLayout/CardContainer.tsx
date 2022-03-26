@@ -9,9 +9,10 @@ import ProductCard from './ProductCard';
 interface Props {
   posts: (PostType | ProductPostType)[] | [];
   hideNickname?: boolean;
+  lastElemRef?: (node: any) => void;
 }
 
-const CardContainer = ({ posts, hideNickname = false }: Props) => {
+const CardContainer = ({ posts, hideNickname = false, lastElemRef }: Props) => {
   const history = useHistory();
 
   const handleClick = (id: string) => {
@@ -28,6 +29,7 @@ const CardContainer = ({ posts, hideNickname = false }: Props) => {
                 post={post as ProductPostType}
                 onClick={handleClick}
                 key={key}
+                lastElemRef={posts.length === key + 1 ? lastElemRef : null}
                 hideNickname={hideNickname}
               />
             ) : (
@@ -35,6 +37,7 @@ const CardContainer = ({ posts, hideNickname = false }: Props) => {
                 post={post as PostType}
                 onClick={handleClick}
                 key={key}
+                lastElemRef={posts.length === key + 1 ? lastElemRef : null}
                 hideNickname={hideNickname}
               />
             )
