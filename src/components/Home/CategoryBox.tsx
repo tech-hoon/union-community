@@ -39,6 +39,7 @@ const CategoryBox = (props: Props) => {
           color={categoryColor(kor)}
         >
           {kor}
+          {kor === '대학교' && <NewBadge isClicked={category === '대학교'} />}
         </Category>
       ))}
     </Wrapper>
@@ -47,13 +48,13 @@ const CategoryBox = (props: Props) => {
 
 const Wrapper = styled.div`
   max-width: ${({ theme }) => theme.container.maxWidth};
-  padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
+  padding: ${({ theme }) => `12.5px ${theme.container.paddingLeftRight} 0px`};
 
   display: flex;
   justify-content: space-between;
-  margin: 12.5px auto 0;
   gap: 10px;
   user-select: none;
+  margin: 0 auto;
 
   &::-webkit-scrollbar {
     display: none;
@@ -65,14 +66,13 @@ const Wrapper = styled.div`
 
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 1em;
-    padding: 0;
-    overflow-x: auto;
-    /* margin: 12.5px 0px 0px 20px; */
-    margin: 12.5px 0px 0px 0px;
+    padding: 12.5px 0 0;
   }
 `;
 
 const Category = styled(CategoryLabel)`
+  position: relative;
+
   @media ${({ theme }) => theme.size.mobile} {
     font-size: 13px;
     padding: 10px 20px;
@@ -87,6 +87,18 @@ const Category = styled(CategoryLabel)`
       transition: 0.3s;
     }
   }
+`;
+
+const NewBadge = styled.div<{ isClicked: boolean }>`
+  display: ${({ isClicked }) => (isClicked ? 'none' : '')};
+  position: absolute;
+
+  background-color: ${({ theme }) => theme.color.main};
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  top: 7px;
+  right: 14px;
 `;
 
 export default memo(CategoryBox);

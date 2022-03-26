@@ -52,6 +52,34 @@ export const Layouts = {
       font-size: 25px;
     }
   `,
+
+  UnivWrapper: styled.div`
+    position: relative;
+  `,
+
+  UnivInput: styled.input`
+    width: 300px;
+    font-size: 0.8rem;
+  `,
+
+  UnivPreviewList: styled.ul`
+    width: 150px;
+    position: absolute;
+    top: 25px;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  `,
+
+  UnivPreviewItem: styled.li`
+    text-align: center;
+    width: 100%;
+  `,
+
   HR: styled.hr`
     margin: 12px 0;
   `,
