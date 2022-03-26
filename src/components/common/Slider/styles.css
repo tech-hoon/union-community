@@ -1,3 +1,19 @@
+.swiper-container {
+  height: 352px;
+}
+
+@media (max-width: 1680px) {
+  .swiper-container {
+    height: 21vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .swiper-container {
+    height: 40.5vw;
+  }
+}
+
 div.swiper-button-prev {
   left: 10%;
 }
@@ -25,6 +41,7 @@ div.swiper-button-next::after {
 
 .swiper-slide {
   display: flex;
+  height: auto;
   align-items: center;
   justify-content: center;
 }

@@ -16,6 +16,7 @@ import 'swiper/components/navigation/navigation.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 import './styles.css';
 import { useHistory } from 'react-router-dom';
+import React from 'react';
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
@@ -67,7 +68,7 @@ const MainBannerSlider = () => {
 };
 
 const Picture = styled.picture`
-  & > *:not(div) {
+  & > * {
     width: 100%;
     max-width: 1680px;
     margin: 0 auto;
@@ -77,16 +78,16 @@ const Picture = styled.picture`
   }
 `;
 
-const Text = styled.div`
-  font-size: 20px;
-  font-weight: 500;
+// const Text = styled.div`
+//   font-size: 20px;
+//   font-weight: 500;
 
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: auto;
-  color: ${({ theme }) => theme.color.main};
-`;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   margin: auto;
+//   color: ${({ theme }) => theme.color.main};
+// `;
 
 export default MainBannerSlider;

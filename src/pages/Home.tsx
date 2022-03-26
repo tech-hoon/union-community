@@ -48,7 +48,7 @@ const Home = () => {
   const [uploadButtonOpened, setUploadButtonOpened] = useState(false);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
 
-  const ioRef = useRef<HTMLDivElement | null>(null);
+  const ioRef = useRef<HTMLDivElement>(null);
   const entry = useIntersectionObserver(ioRef, isLastPost, {});
   const history = useHistory();
   const historyState = history.location.state;
@@ -84,10 +84,10 @@ const Home = () => {
 
   // IO 감지시 게시물 추가 fetch
   useEffect(() => {
-    if (entry?.isIntersecting && !isFetchingMore) {
+    if (entry?.isIntersecting && !isFetching && !isFetchingMore) {
       fetchMorePosts();
     }
-  }, [lastVisiblePost, entry, isFetchingMore]);
+  }, [entry]);
 
   useEffect(() => {
     if (!isFetching && refreshButtonClicked) {
@@ -121,8 +121,8 @@ const Home = () => {
 
       <Popup imgSrc={NEW_AVATAR_POPUP_IMG_SRC} url='/setting' />
 
-      <Footer />
       <Observer ref={ioRef} />
+      <Footer />
     </Wrapper>
   );
 };
@@ -152,8 +152,7 @@ const UploadButton = memo(styled.button<IUploadButton>`
 `);
 
 const Observer = styled.div`
-  bottom: 0;
-  height: 20px;
+  height: 1px;
 `;
 
 const MidWrapper = memo(styled.div`
