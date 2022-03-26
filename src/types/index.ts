@@ -47,6 +47,7 @@ export interface PostType {
   visitor_list: string[];
   comment_count: number;
   is_edited: boolean;
+  is_secret?: boolean;
 }
 
 export interface ProductPostType extends PostType {

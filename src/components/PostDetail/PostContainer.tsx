@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { PostType } from 'types';
 import Avatar from 'components/common/Avatar';
@@ -28,7 +27,7 @@ const PostContainer = ({
   onUpdatePostClick,
 }: IProps) => {
   const { category, title, creator, created_at, attachment_url } = post;
-  const isSecret = post?.category === '비밀';
+  const isSecret = post.category === '비밀' || post?.is_secret || false;
 
   return (
     post && (

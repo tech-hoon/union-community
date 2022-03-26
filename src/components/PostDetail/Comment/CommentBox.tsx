@@ -11,9 +11,10 @@ interface Props {
   fetchComments: () => void;
   category: string;
   postCreatorId: string;
+  isSecret: boolean;
 }
 
-const CommentBox = ({ postId, commentList, fetchComments, category, postCreatorId }: Props) => {
+const CommentBox = ({ postId, commentList, fetchComments, isSecret, postCreatorId }: Props) => {
   const loginUser = useRecoilValue(loginUserState) as LoginUserType;
 
   return (
@@ -23,7 +24,7 @@ const CommentBox = ({ postId, commentList, fetchComments, category, postCreatorI
           <Comment
             comment={comment}
             postId={postId}
-            category={category}
+            isSecret={isSecret}
             loginUserId={loginUser.uid}
             callback={fetchComments}
             postCreatorId={postCreatorId}
@@ -33,7 +34,7 @@ const CommentBox = ({ postId, commentList, fetchComments, category, postCreatorI
           <ReplyComment
             comment={comment}
             postId={postId}
-            category={category}
+            isSecret={isSecret}
             loginUserId={loginUser.uid}
             callback={fetchComments}
             postCreatorId={postCreatorId}

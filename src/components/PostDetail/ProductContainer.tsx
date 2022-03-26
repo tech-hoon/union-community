@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { PostType, ProductPostType } from 'types';
+import { ProductPostType } from 'types';
 import Avatar from 'components/common/Avatar';
 import { toDateStringByFormating } from 'utils/date';
 import CategoryLabel from 'components/common/PillLabel/CategoryLabel';
@@ -27,7 +26,10 @@ const ProductContainer = ({
   onOpenImageSlider,
   onUpdateProductClick,
 }: IProps) => {
-  const { category, title, creator, created_at, attachment_url, status, type, price } = post;
+  const { category, title, creator, created_at, attachment_url, status, type, price, is_secret } =
+    post;
+
+  const isSecret = post?.is_secret || false;
 
   return (
     <Wrapper>
@@ -45,8 +47,8 @@ const ProductContainer = ({
       </ROW_1>
       <ROW_2>
         <ProfileBox onClick={onOpenUserMenu}>
-          <Avatar avatarId={creator.avatar_id} />
-          <Creator>{creator.nickname}</Creator>
+          <Avatar avatarId={isSecret ? -1 : creator.avatar_id} />
+          <Creator isSecret={isSecret}>{isSecret ? '익명' : creator.nickname}</Creator>
         </ProfileBox>
         <CreatedAt>{toDateStringByFormating(created_at, false, '.')}</CreatedAt>
 
@@ -132,7 +134,11 @@ const ProfileBox = styled.div`
   cursor: pointer;
 `;
 
-const Creator = styled.span`
+interface ICreator {
+  isSecret: boolean;
+}
+
+const Creator = styled.span<ICreator>`
   font-weight: bold;
   font-size: 1.2em;
   margin-bottom: 1.2px;

@@ -48,7 +48,7 @@ const PostDetail = () => {
 
   const [comments, setComments] = useRecoilState(commentState);
   const commentRef = useRef<any>(null);
-  const isSecret = post?.category === '비밀';
+  const isSecret = post?.category === '비밀' || post?.is_secret || false;
 
   const myLikesCacheRefresher = useRecoilCacheRefresh(myLikesState);
   const myPostsCacheRefresher = useRecoilCacheRefresh(myPostsState);
@@ -215,6 +215,7 @@ const PostDetail = () => {
               commentList={comments}
               fetchComments={fetchComments}
               category={post.category}
+              isSecret={isSecret}
               postCreatorId={post.creator.uid}
             />
 

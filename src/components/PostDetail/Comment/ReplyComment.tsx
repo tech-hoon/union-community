@@ -20,7 +20,7 @@ interface Props {
   comment: CommentType;
   postId: string;
   loginUserId: string;
-  category: string;
+  isSecret: boolean;
   callback: () => void;
   postCreatorId: string;
 }
@@ -29,12 +29,11 @@ const ReplyComment = ({
   comment,
   postId,
   loginUserId,
-  category,
+  isSecret,
   callback,
   postCreatorId,
 }: Props) => {
   const replyInputRef = useRef<any>(null);
-  const isSecret = category === '비밀';
   const [deleteId, setDeleteId] = useState<string>('');
   const { modalOpened, onOpenModal, onCloseModal } = useModal();
   const commentList = useRecoilValue(commentState);
@@ -101,7 +100,7 @@ const ReplyComment = ({
                   flag={likeOrUnlike(liker_list, loginUserId)}
                   onClick={debounce(() => onLikeComment(liker_list, loginUserId, id, postId), 500)}
                 />
-                <S.IsEdited>{is_edited ? '수정됨' : ''}</S.IsEdited>
+                {/* <S.IsEdited>{is_edited ? '수정됨' : ''}</S.IsEdited> */}
               </S.COL3>
             )}
             {uid === loginUserId && !is_deleted && (
