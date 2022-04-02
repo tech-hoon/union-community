@@ -78,8 +78,8 @@ const NewBadge = styled.div`
   border-radius: 50%;
   width: 5px;
   height: 5px;
-  top: -4px;
-  right: -2.5px;
+  top: 0px;
+  right: 0px;
 `;
 
 export default memo(Aside);

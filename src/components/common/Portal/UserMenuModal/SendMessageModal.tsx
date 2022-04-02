@@ -37,10 +37,10 @@ const SendMessageModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Pro
         보내기
       </S.Title>
       <TextareaWrapper>
-        <S.Textarea onChange={onChange} />
+        <Textarea onChange={onChange} />
       </TextareaWrapper>
       <S.ButtonBox>
-        <S.CancelButton onClick={onCloseModal}>취소</S.CancelButton>
+        <S.CancelButton onClick={onCloseModal}>취소하기</S.CancelButton>
         <S.OkayButton id='done' onClick={onClickOkayButton} disabled={!value}>
           메시지 보내기
         </S.OkayButton>
@@ -50,11 +50,17 @@ const SendMessageModal = ({ reciever, onCloseModal, onClickMenu, isSecret }: Pro
 };
 
 const Wrapper = styled(S.Wrapper)`
-  gap: 12px;
+  gap: 8px;
+  height: 300px;
+  padding: 20px;
 `;
 
 const TextareaWrapper = styled.div`
   width: 100%;
+`;
+
+const Textarea = styled(S.Textarea)`
+  height: 120px;
 `;
 
 export default SendMessageModal;

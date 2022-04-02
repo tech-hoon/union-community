@@ -48,8 +48,6 @@ export const Layouts = {
     display: flex;
     flex-direction: column;
 
-    transition: 0.3s;
-
     @media (hover: hover) and (pointer: fine) {
       &:hover {
         transform: scale(104%);
