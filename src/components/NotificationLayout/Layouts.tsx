@@ -20,7 +20,6 @@ const Layouts = {
 
     @media ${({ theme }) => theme.size.mobile} {
       padding: 4px;
-      margin: 10px auto;
     }
   `,
 
