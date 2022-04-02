@@ -233,6 +233,7 @@ const PostDetail = () => {
           <AlertModal
             title='글을 삭제하시겠습니까?'
             twoButton={true}
+            buttonLabels={['취소', '삭제하기']}
             callback={() => onDeletePost(id)}
             onCloseModal={onCloseModal}
           />
