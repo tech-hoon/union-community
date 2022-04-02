@@ -13,9 +13,10 @@ const Layouts = {
     border-radius: 16px;
     position: relative;
     cursor: pointer;
-    &:hover {
-      transform: scale(102%);
-    }
+    user-select: none;
+
+    word-break: break-all;
+    white-space: pre-line;
 
     @media ${({ theme }) => theme.size.mobile} {
       padding: 4px;
@@ -23,16 +24,11 @@ const Layouts = {
     }
   `,
 
-  DeleteButton: styled.button`
-    padding: 0;
-    margin: 0;
-    top: 6px;
-    right: 12px;
-    position: absolute;
-
-    ::after {
-      content: '❌';
-    }
+  DeleteBtn: styled.button`
+    font-size: 14px;
+    font-weight: 400;
+    color: black;
+    padding: 12px 14px;
   `,
 
   DeleteAllButton: styled.button`
@@ -78,6 +74,7 @@ const Layouts = {
   Title: styled.h2`
     font-weight: bold;
     font-size: 1.1rem;
+    margin-right: auto;
 
     @media ${({ theme }) => theme.size.mobile} {
       font-size: 0.85rem;
@@ -101,7 +98,8 @@ const Layouts = {
   `,
 
   Content: styled.div`
-    font-weight: 500;
+    font-weight: 400;
+    line-height: 1.2;
     color: gray;
 
     word-break: break-all;
