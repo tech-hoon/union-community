@@ -7,6 +7,10 @@ import S from 'components/NotificationLayout/Layouts';
 import useReceivedMessage from 'hooks/message/useReceivedMessage';
 import styled from 'styled-components';
 import { urlParsingRegex } from 'utils/regex';
+import PortalContainer from 'components/common/Portal/PortalContainer';
+import AlertModal from 'components/common/Portal/AlertModal';
+import useModal from 'hooks/common/useModal';
+import KebabMenu from 'components/common/KebabMenu';
 
 interface Props {
   onClickModal: (user: UserType, isSecret: boolean) => void;
@@ -14,11 +18,12 @@ interface Props {
 
 const ReceivedMessage = ({ onClickModal }: Props) => {
   const { messages, onDeleteMessage, onDeleteAllMessages } = useReceivedMessage();
+  const { modalOpened, onOpenModal, onCloseModal } = useModal();
 
   return (
     <>
       {!!messages.length && (
-        <S.DeleteAllButton onClick={onDeleteAllMessages}>모두 지우기</S.DeleteAllButton>
+        <S.DeleteAllButton onClick={onOpenModal}>모두 지우기</S.DeleteAllButton>
       )}
       <S.Wrapper>
         {messages.length ? (
@@ -31,16 +36,19 @@ const ReceivedMessage = ({ onClickModal }: Props) => {
               is_secret,
               id,
             }: any) => (
-              <S.Message key={id} onClick={() => onClickModal(user, is_secret)}>
+              <S.Message key={id}>
                 <S.Row1>
-                  <S.DeleteButton id={id} onClick={(e) => onDeleteMessage(e, uid)} />
-                  <S.IconWrapper>
-                    <Envelope size='20px' />
-                  </S.IconWrapper>
-                  <S.Title>
+                  <S.Title onClick={() => onClickModal(user, is_secret)}>
                     <small>{is_secret ? `익명${uid.slice(-2)}` : nickname}</small>
                     님의 메시지가 도착했습니다.
                   </S.Title>
+                  <KebabMenu>
+                    {[
+                      <S.DeleteBtn key={id} id={id} onClick={(e) => onDeleteMessage(e, uid)}>
+                        삭제하기
+                      </S.DeleteBtn>,
+                    ]}
+                  </KebabMenu>
                 </S.Row1>
                 <S.Row2>
                   <ContentWrapper>
@@ -60,6 +68,19 @@ const ReceivedMessage = ({ onClickModal }: Props) => {
           <S.Text>받은 메시지가 없습니다.</S.Text>
         )}
       </S.Wrapper>
+
+      {/* 삭제 경고 모달 */}
+      {modalOpened && (
+        <PortalContainer onClose={onCloseModal}>
+          <AlertModal
+            title='메시지를 모두 삭제하시겠습니까?'
+            twoButton={true}
+            buttonLabels={['취소하기', '삭제하기']}
+            callback={onDeleteAllMessages}
+            onCloseModal={onCloseModal}
+          />
+        </PortalContainer>
+      )}
     </>
   );
 };
@@ -72,6 +93,7 @@ const ContentWrapper = styled.div`
 
 const AvatarWrapper = styled.div`
   flex: 1;
+  align-self: flex-start;
 `;
 
 export default ReceivedMessage;

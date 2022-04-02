@@ -1,19 +1,18 @@
 import S from 'components/NotificationLayout/Layouts';
 import { useHistory } from 'react-router-dom';
-import { NotificationType, UserType } from 'types';
-import { Comment } from '@styled-icons/fa-regular';
 import Avatar from 'components/common/Avatar';
 import { toDateStringByFormating } from 'utils/date';
 import styled from 'styled-components';
 import useNotification from 'hooks/useNotification';
+import KebabMenu from 'components/common/KebabMenu';
 
 const CommentNotification = () => {
   const { notifications, onDeleteNotification, onDeleteAllNotification } = useNotification();
-
   const history = useHistory();
 
-  const onClickVisit = (link: string) => {
-    history.push(link);
+  const onClickHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const link = (e.currentTarget as HTMLElement).dataset.id;
+    link && history.push(link);
   };
 
   return (
@@ -37,17 +36,19 @@ const CommentNotification = () => {
               }: any,
               key
             ) => (
-              <S.Message key={key} onClick={() => onClickVisit(link)}>
-                <S.DeleteButton id={id} onClick={(e) => onDeleteNotification(e, uid)} />
-                <S.Row1>
-                  <S.IconWrapper>
-                    <Comment size='16px' />
-                  </S.IconWrapper>
-                  <S.Title>
-                    <small>{post_title}</small>
-                    게시물에 댓글이 달렸습니다.
-                  </S.Title>
-                </S.Row1>
+              <S.Message key={key} data-id={link} onClick={onClickHandler}>
+                <Title>
+                  <small>{post_title}</small>
+                  <span>게시물에 댓글이 달렸습니다.</span>
+                  <KebabMenu>
+                    {[
+                      <S.DeleteBtn id={id} key={key} onClick={(e) => onDeleteNotification(e, uid)}>
+                        삭제하기
+                      </S.DeleteBtn>,
+                    ]}
+                  </KebabMenu>
+                </Title>
+
                 <S.Row2>
                   <AvatarWrapper>
                     <Avatar avatarId={is_secret ? -1 : avatar_id} size={28} />
@@ -62,7 +63,7 @@ const CommentNotification = () => {
             )
           )
         ) : (
-          <S.Text>소식이 없습니다.</S.Text>
+          <S.Text>알림이 없습니다.</S.Text>
         )}
       </S.Wrapper>
     </>
@@ -73,6 +74,31 @@ const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+`;
+
+const Title = styled(S.Title)`
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+
+  margin: 12px;
+  gap: 2px;
+  line-height: 1.1;
+
+  & small {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+
+    @media ${({ theme }) => theme.size.mobile} {
+      max-width: 30%;
+    }
+  }
+
+  & span {
+    margin-right: auto;
+  }
 `;
 
 export default CommentNotification;
