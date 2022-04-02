@@ -9,7 +9,13 @@ interface Props {
 const KebabMenu = ({ children }: Props) => {
   const [toggleOpened, setToggleOpened] = useState(false);
 
-  const onToggleClick = useCallback(() => setToggleOpened(!toggleOpened), [toggleOpened]);
+  const onToggleClick = useCallback(
+    (e: any) => {
+      e.stopPropagation();
+      setToggleOpened(!toggleOpened);
+    },
+    [toggleOpened]
+  );
 
   useEffect(() => {
     if (toggleOpened) {
@@ -39,7 +45,7 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const KebabIcon = styled.div`
+const KebabIcon = styled.i`
   padding: 8px;
   cursor: pointer;
 `;
