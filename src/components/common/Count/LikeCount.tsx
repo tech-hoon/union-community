@@ -8,7 +8,7 @@ interface Props {
   size?: string;
   count: number;
   color?: string;
-  onClick?: DebouncedFunc<() => Promise<void>>;
+  onClick?: () => void;
   flag?: 'unlike' | 'like';
 }
 

@@ -13,7 +13,6 @@ import { LoginUserType, PostType, ProductPostType } from 'types';
 import { addComment, getComments } from 'api/comment';
 import { likeOrUnlike } from 'utils/likeOrUnlike';
 import { urlParsingRegex } from 'utils/regex';
-import { debounce } from 'lodash';
 
 import CommentCount from 'components/common/Count/CommentCount';
 import ViewCount from 'components/common/Count/ViewCount';
@@ -204,7 +203,7 @@ const PostDetail = () => {
                 size='16px'
                 count={post.liker_list?.length}
                 flag={likeOrUnlike(post.liker_list, loginUser.uid)}
-                onClick={debounce(() => onLikePost(post.liker_list, loginUser.uid!!), 1000)}
+                onClick={() => onLikePost(post.liker_list, loginUser.uid!!)}
               />
             </CountBox>
 
