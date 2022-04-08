@@ -97,7 +97,7 @@ const Layouts = {
   `,
 
   Content: styled.div`
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.2;
     color: gray;
 
@@ -109,14 +109,14 @@ const Layouts = {
   `,
 
   CreatedAt: styled.p`
-    font-weight: bold;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
     color: gray;
 
     margin-left: auto;
 
     @media ${({ theme }) => theme.size.mobile} {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
     }
   `,
 

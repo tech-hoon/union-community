@@ -42,13 +42,13 @@ const ReceivedMessage = ({ onClickModal }: Props) => {
                     <small>{is_secret ? `익명${uid.slice(-2)}` : nickname}</small>
                     님의 메시지가 도착했습니다.
                   </S.Title>
-                  <KebabMenu>
+                  {/* <KebabMenu>
                     {[
                       <S.DeleteBtn key={id} id={id} onClick={(e) => onDeleteMessage(e, uid)}>
                         삭제하기
                       </S.DeleteBtn>,
                     ]}
-                  </KebabMenu>
+                  </KebabMenu> */}
                 </S.Row1>
                 <S.Row2>
                   <ContentWrapper>
