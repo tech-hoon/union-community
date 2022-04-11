@@ -88,11 +88,7 @@ export const commentCreated = functions
 
     // 부모 댓글의 자식 댓글 작성자들
     if (snapshot.data().receiver_list?.length) {
-      functions.logger.log('receiver_list: ', snapshot.data().receiver_list);
-      functions.logger.log('senderId: ', senderId);
-      functions.logger.log('notification: ', notification);
-
-      const receiverList = snapshot.data().receiver_list;
+      const receiverList = [...new Set(snapshot.data().receiver_list)] as string[];
       receiverList.forEach((receiverId: string) => {
         if (receiverId !== senderId) {
           firestore.doc(`users/${receiverId}`).update({
