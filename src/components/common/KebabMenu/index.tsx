@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 `;
 
 const KebabIcon = styled.i`
-  padding: 8px;
+  padding: 6px;
   cursor: pointer;
 `;
 const DropdownMenuList = styled.ul`
@@ -54,8 +54,8 @@ const DropdownMenuList = styled.ul`
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  top: 40px;
-  right: 5px;
+  top: 24px;
+  right: 6px;
 `;
 
 const MenuItem = styled.li`

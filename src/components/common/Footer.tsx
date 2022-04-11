@@ -14,10 +14,10 @@ const Footer = (props: Props) => {
         문의사항
       </OpenKakao>
       <GithubIcon href='https://github.com/tech-hoon' target='_blank' rel='noreferrer'>
-        <Github size='14px' />
+        <Github size='12px' />
       </GithubIcon>
       <EmailIcon href='mailto:nth9708@naver.com' target='_blank' rel='noreferrer'>
-        <Email size='16px' />
+        <Email size='14px' />
       </EmailIcon>
     </Wrapper>
   );
@@ -25,12 +25,13 @@ const Footer = (props: Props) => {
 
 const Wrapper = styled.footer`
   width: 100%;
-  padding: 60px 0 40px;
+  padding: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
   position: absolute;
+  font-size: 12px;
 `;
 
 const OpenKakao = styled.a`

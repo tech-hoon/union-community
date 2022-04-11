@@ -46,6 +46,8 @@ const CommentBox = ({ postId, commentList, fetchComments, isSecret, postCreatorI
   );
 };
 
-const List = styled.ul``;
+const List = styled.ul`
+  padding-bottom: 12px;
+`;
 
 export default CommentBox;

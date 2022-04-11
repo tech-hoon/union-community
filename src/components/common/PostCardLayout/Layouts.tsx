@@ -17,7 +17,7 @@ export const Layouts = {
   `,
   Container: styled.ul`
     max-width: ${({ theme }) => theme.container.maxWidth};
-    padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
+    padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight} 30px`};
     transition: 0.3s;
     user-select: none;
 
@@ -34,14 +34,16 @@ export const Layouts = {
     @media ${({ theme }) => theme.size.mobile} {
       grid-template-columns: repeat(1, minmax(0, 1fr));
       width: 100%;
-      padding: 0 20px;
+      padding: 0 20px 30px;
     }
   `,
 
-  PostCard: styled.li`
+  PostCard: styled.li<{ isLast?: boolean }>`
     height: 240px;
     padding: 24px;
     background: #ffffff;
+    background: ${({ isLast }) => (isLast ? 'skyblue' : '#fff')};
+
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
     cursor: pointer;

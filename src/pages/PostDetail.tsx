@@ -286,6 +286,7 @@ const CountBox = styled.div`
 
 const Divider = styled.hr`
   border: 0.8px solid #eee;
+  margin-top: 12px;
 `;
 
 export default PostDetail;
