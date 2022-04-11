@@ -72,7 +72,6 @@ const S = {
   `,
 
   ReplyBtn: styled.span`
-    margin-left: 7px;
     font-weight: 400;
     font-size: 12px;
     color: #5c5c5c80;
@@ -127,9 +126,9 @@ const S = {
     line-height: 1.5;
     word-break: break-all;
     white-space: pre-line;
-
     font-style: ${({ is_deleted }) => is_deleted && 'italic'};
     color: ${({ is_deleted }) => is_deleted && `#666`};
+    margin-right: 7px;
   `,
 
   ROW3: styled.div`

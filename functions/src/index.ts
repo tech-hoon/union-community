@@ -54,8 +54,8 @@ export const commentCreated = functions
     const post: any = await firestore.doc(`posts/${postId}`).get();
 
     const postData = post.data();
-    const recieverData = await postData.creator.get();
-    const recieverId = recieverData.data().uid;
+    const receiverData = await postData.creator.get();
+    const receiverId = receiverData.data().uid;
 
     const { content, creator, parent_comment_id, parent_comment_uid } = snapshot.data();
     const senderData = await creator.get();
@@ -72,15 +72,33 @@ export const commentCreated = functions
       is_secret: postData.category === '비밀',
     };
 
-    if (senderId !== recieverId) {
-      firestore.doc(`users/${recieverId}`).update({
+    // 글쓴이
+    if (senderId !== receiverId) {
+      firestore.doc(`users/${receiverId}`).update({
         notification_list: admin.firestore.FieldValue.arrayUnion(notification),
       });
     }
 
+    // 부모 댓글
     if (parent_comment_id && senderId !== parent_comment_uid) {
       firestore.doc(`users/${parent_comment_uid}`).update({
         notification_list: admin.firestore.FieldValue.arrayUnion(notification),
+      });
+    }
+
+    // 부모 댓글의 자식 댓글 작성자들
+    if (snapshot.data().receiver_list?.length) {
+      functions.logger.log('receiver_list: ', snapshot.data().receiver_list);
+      functions.logger.log('senderId: ', senderId);
+      functions.logger.log('notification: ', notification);
+
+      const receiverList = snapshot.data().receiver_list;
+      receiverList.forEach((receiverId: string) => {
+        if (receiverId !== senderId) {
+          firestore.doc(`users/${receiverId}`).update({
+            notification_list: admin.firestore.FieldValue.arrayUnion(notification),
+          });
+        }
       });
     }
   });

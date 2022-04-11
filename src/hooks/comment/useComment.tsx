@@ -32,7 +32,8 @@ const useComment = (callback: () => void) => {
     content: string,
     uid: string,
     parentId: string,
-    parentUid: string
+    parentUid: string,
+    receiverList: string[] | []
   ) => {
     if (content) {
       await addComment({
@@ -41,6 +42,7 @@ const useComment = (callback: () => void) => {
         content: content,
         parent_comment_id: parentId,
         parent_comment_uid: parentUid,
+        receiver_list: receiverList,
       });
       callback();
       setReplyingComment(null);

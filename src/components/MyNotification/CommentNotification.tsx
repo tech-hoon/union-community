@@ -40,13 +40,13 @@ const CommentNotification = () => {
                 <Title>
                   <small>{post_title}</small>
                   <span>게시물에 댓글이 달렸습니다.</span>
-                  <KebabMenu>
+                  {/* <KebabMenu>
                     {[
                       <S.DeleteBtn id={id} key={key} onClick={(e) => onDeleteNotification(e, uid)}>
                         삭제하기
                       </S.DeleteBtn>,
                     ]}
-                  </KebabMenu>
+                  </KebabMenu> */}
                 </Title>
 
                 <S.Row2>

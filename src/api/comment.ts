@@ -14,6 +14,7 @@ interface ICommentAdd {
   content: string;
   parent_comment_id?: string | null;
   parent_comment_uid?: string | null;
+  receiver_list?: string[] | [];
 }
 
 export const addComment = async ({
@@ -22,6 +23,7 @@ export const addComment = async ({
   uid,
   parent_comment_id = null,
   parent_comment_uid = null,
+  receiver_list = [],
 }: ICommentAdd) => {
   try {
     const res = await dbService
@@ -34,6 +36,7 @@ export const addComment = async ({
         liker_list: [],
         parent_comment_id,
         parent_comment_uid,
+        receiver_list,
       });
     return res.id;
   } catch (error) {

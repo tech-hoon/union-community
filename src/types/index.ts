@@ -10,6 +10,7 @@ export interface CommentType {
   is_deleted: boolean;
   parent_comment_id: string | null;
   parent_comment_uid?: string | null;
+  receiver_list?: string[] | [];
 }
 
 export type RegisterDataType = {

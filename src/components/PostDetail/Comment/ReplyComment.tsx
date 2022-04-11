@@ -15,6 +15,7 @@ import KebabMenu from 'components/common/KebabMenu';
 import { useRecoilValue } from 'recoil';
 import { commentState } from 'store/comment';
 import { convertNickname } from 'utils/comment';
+import { urlParsingRegex } from 'utils/regex';
 
 interface Props {
   comment: CommentType;
@@ -23,6 +24,7 @@ interface Props {
   isSecret: boolean;
   callback: () => void;
   postCreatorId: string;
+  receiverList: string[] | [];
 }
 
 const ReplyComment = ({
@@ -32,6 +34,7 @@ const ReplyComment = ({
   isSecret,
   callback,
   postCreatorId,
+  receiverList,
 }: Props) => {
   const replyInputRef = useRef<any>(null);
   const [deleteId, setDeleteId] = useState<string>('');
@@ -60,12 +63,15 @@ const ReplyComment = ({
 
   const {
     onCancel,
-    onDelete,
-    onUpdateComment,
-    editingComment,
-    onEdit,
-    onLikeComment,
     onDeleteReplyComment,
+    onUpdateComment,
+    onReplyComment,
+    editingComment,
+    replyingComment,
+    onEdit,
+    onReplyOpen,
+    onReplyCancle,
+    onLikeComment,
   } = useComment(callback);
 
   const {
@@ -121,6 +127,8 @@ const ReplyComment = ({
               </S.COL5>
             )}
           </S.ROW1>
+
+          {/* 수정 Input */}
           <S.ROW2>
             {uid === loginUserId && editingComment === id ? (
               <S.EditContent>
@@ -133,11 +141,43 @@ const ReplyComment = ({
                 </S.EditSubmitBtn>
               </S.EditContent>
             ) : (
-              <S.Content is_deleted={is_deleted}>
-                {is_deleted ? '삭제된 댓글입니다' : content}
-              </S.Content>
+              <>
+                <S.Content
+                  is_deleted={is_deleted}
+                  dangerouslySetInnerHTML={{
+                    __html: is_deleted ? '삭제된 댓글입니다.' : urlParsingRegex(content),
+                  }}
+                />
+                {!is_deleted && <S.ReplyBtn onClick={() => onReplyOpen(id)}>답글</S.ReplyBtn>}
+              </>
             )}
           </S.ROW2>
+
+          {/* 답글 Input */}
+          {replyingComment === id && (
+            <S.ROW3>
+              <S.CustomTextarea
+                autoFocus
+                ref={replyInputRef}
+                placeholder={`${convertedNickname}에게 답글 달기`}
+              />
+              <S.ReplyCancleBtn onClick={onReplyCancle}>취소하기</S.ReplyCancleBtn>
+              <S.ReplySubmitBtn
+                onClick={() =>
+                  onReplyComment(
+                    postId,
+                    replyInputRef.current.value,
+                    loginUserId,
+                    comment.parent_comment_id as string,
+                    comment.parent_comment_uid as string,
+                    receiverList
+                  )
+                }
+              >
+                등록하기
+              </S.ReplySubmitBtn>
+            </S.ROW3>
+          )}
         </S.ReplyContainer>
       </S.ReplyWrapper>
 

@@ -25,6 +25,7 @@ const CommentBox = ({ postId, commentList, fetchComments, isSecret, postCreatorI
             comment={comment}
             postId={postId}
             isSecret={isSecret}
+            receiverList={[]}
             loginUserId={loginUser.uid}
             callback={fetchComments}
             postCreatorId={postCreatorId}
@@ -35,6 +36,9 @@ const CommentBox = ({ postId, commentList, fetchComments, isSecret, postCreatorI
             comment={comment}
             postId={postId}
             isSecret={isSecret}
+            receiverList={commentList
+              .filter((target) => comment.parent_comment_id === target.parent_comment_id)
+              .map((target) => target.creator.uid)}
             loginUserId={loginUser.uid}
             callback={fetchComments}
             postCreatorId={postCreatorId}

@@ -23,9 +23,18 @@ interface Props {
   isSecret: boolean;
   callback: () => void;
   postCreatorId: string;
+  receiverList: string[] | [];
 }
 
-const Comment = ({ comment, postId, loginUserId, isSecret, callback, postCreatorId }: Props) => {
+const Comment = ({
+  comment,
+  postId,
+  loginUserId,
+  isSecret,
+  callback,
+  postCreatorId,
+  receiverList,
+}: Props) => {
   const inputRef = useRef<any>(null);
   const replyInputRef = useRef<any>(null);
   const [deleteId, setDeleteId] = useState<string>('');
@@ -154,7 +163,14 @@ const Comment = ({ comment, postId, loginUserId, isSecret, callback, postCreator
             <S.ReplyCancleBtn onClick={onReplyCancle}>취소하기</S.ReplyCancleBtn>
             <S.ReplySubmitBtn
               onClick={() =>
-                onReplyComment(postId, replyInputRef.current.value, loginUserId, id, uid)
+                onReplyComment(
+                  postId,
+                  replyInputRef.current.value,
+                  loginUserId,
+                  id,
+                  uid,
+                  receiverList
+                )
               }
             >
               등록하기
