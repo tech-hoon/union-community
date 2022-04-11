@@ -40,6 +40,7 @@ const S = {
 
   ROW2: styled.div`
     margin: 12px 0 20px;
+    word-break: keep-all;
   `,
 
   COL1: styled.div`
