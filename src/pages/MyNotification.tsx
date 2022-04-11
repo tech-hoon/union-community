@@ -2,8 +2,13 @@ import styled from 'styled-components';
 import { Layouts as S } from 'pages/MyPage/Layouts';
 import CommentNotification from 'components/MyNotification/CommentNotification';
 import Bell from 'assets/icons/Bell';
+import { useEffect } from 'react';
 
 const MyNotification = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
   return (
     <S.Wrapper>
       <S.Navbar />

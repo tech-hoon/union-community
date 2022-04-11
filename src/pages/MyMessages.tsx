@@ -2,7 +2,7 @@ import ReceivedMessage from 'components/MyMessages/messages/ReceivedMessage';
 import SentMessage from 'components/MyMessages/messages/SentMessage';
 import styled from 'styled-components';
 import { Layouts as S } from 'pages/MyPage/Layouts';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Messenger from 'assets/icons/Messenger';
 
 import { UserType } from 'types';
@@ -18,7 +18,6 @@ const MyMessages = () => {
   } = useModal();
 
   const [menuId, setMenuId] = useState<string>('received');
-
   const [receiver, setReceiver] = useState<UserType>();
   const [isSecret, setIsSecret] = useState<boolean>(false);
 
@@ -32,6 +31,10 @@ const MyMessages = () => {
     setIsSecret(isSecret);
     onOpenUserMenu();
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   return (
     <S.Wrapper>
