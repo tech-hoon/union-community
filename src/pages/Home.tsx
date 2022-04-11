@@ -5,7 +5,6 @@ import CategoryBox from 'components/Home/CategoryBox';
 import OrderbyBox from 'components/Home/OrderbyBox';
 import Footer from 'components/common/Footer';
 import PostCardSkeleton from 'components/common/Skeletons/PostCardSkeleton';
-import useIntersectionObserver from 'hooks/post/useIntersectionObserver';
 import useSessionStorage from 'hooks/common/useSessionStorage';
 
 import { useState, useRef, useEffect, useLayoutEffect, memo, useCallback } from 'react';
@@ -51,18 +50,20 @@ const Home = () => {
   const history = useHistory();
   const historyState = history.location.state;
 
-  const observer = useRef<any>(null);
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const onIntersect = ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      fetchMorePosts();
+    }
+  };
 
   const lastElemRef = useCallback(
     (node) => {
       if (isFetching || isFetchingMore) return;
       if (isLastPost) observer?.current?.disconnect();
-      observer.current = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) fetchMorePosts();
-        },
-        { threshold: 0.7 }
-      );
+      observer.current = new IntersectionObserver(onIntersect, { threshold: 0.6 });
       if (node) observer.current.observe(node);
     },
     [isFetching, isFetchingMore]
