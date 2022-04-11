@@ -208,7 +208,6 @@ const PostDetail = () => {
             </CountBox>
 
             <CommentTextarea onSubmitComment={onSubmitComment} ref={commentRef} />
-
             <CommentBox
               postId={id}
               commentList={comments}
@@ -217,6 +216,7 @@ const PostDetail = () => {
               isSecret={isSecret}
               postCreatorId={post.creator.uid}
             />
+            <Divider />
 
             {/* <BottomBanner /> */}
           </Container>
@@ -269,11 +269,11 @@ const Container = styled.section`
   max-width: ${({ theme }) => theme.container.maxWidth};
   padding: ${({ theme }) => `0 ${theme.container.paddingLeftRight}`};
 
-  margin: 3% auto;
+  margin: 3% auto 0;
 
   @media ${({ theme }) => theme.size.mobile} {
     width: 100%;
-    margin: 6% auto;
+    margin: 6% auto 0;
     padding: 0 20px;
   }
 `;
@@ -282,6 +282,10 @@ const CountBox = styled.div`
   display: flex;
   align-items: center;
   gap: 2.6px;
+`;
+
+const Divider = styled.hr`
+  border: 0.8px solid #eee;
 `;
 
 export default PostDetail;
