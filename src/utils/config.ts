@@ -1,8 +1,12 @@
+import { isMobile } from './mobileCheck';
+
 export const SITE_URL = 'https://uni-on.me';
 
 export const ERROR_MESSAGE = 'Failed to fetch data, please check your API or internet connection';
 export const PAGE_START = 1;
-export const CARD_LIMIT = 6;
+export const CARD_LIMIT = (function () {
+  return isMobile() && window.screen.availWidth < 1024 ? 6 : 12;
+})();
 
 export const CATEGORY_LIST = [
   { eng: 'all', kor: '전체', color: '#18A0FB' },
