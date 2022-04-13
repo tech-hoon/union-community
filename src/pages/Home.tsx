@@ -63,7 +63,7 @@ const Home = () => {
     (node) => {
       if (isFetching || isFetchingMore) return;
       if (isLastPost) observer?.current?.disconnect();
-      observer.current = new IntersectionObserver(onIntersect, { threshold: 0.6 });
+      observer.current = new IntersectionObserver(onIntersect, { threshold: 0.2 });
       if (node) observer.current.observe(node);
     },
     [isFetching, isFetchingMore]
