@@ -175,7 +175,7 @@ const MobileLogoWrapper = styled.div`
   display: none;
   margin: 0 auto;
   width: clamp(130px, 20vw, 150px);
-  margin-top: 24px;
+  margin-top: 30px;
   @media ${({ theme }) => theme.size.mobile} {
     display: inline;
   }
