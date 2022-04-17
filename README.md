@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-  <img src="public/og-image.png" alt="Union Image" width="300px"/>
+  <img src="public/og-image.png" alt="Union Image" width="500px"/>
   <h1 style="margin:24px">유니온 | 대학생 연합생활관 커뮤니티</h1>
   <br />
 </div>
