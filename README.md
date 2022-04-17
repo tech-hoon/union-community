@@ -12,8 +12,7 @@
 1. [**주요 기능**](#3)
 1. [**프로젝트 구성도**](#4)
 1. [**프로젝트 데모**](#5)
-1. [**개발 기간**](#6)
-1. [**실행 방법**](#7)
+1. [**실행 방법**](#6)
 
 <br />
 
@@ -23,22 +22,33 @@
 
 <image src="./readme_assets/union_iphone_mockup.png" width="1000px">
 
-**유니온(UNION)** 은 대학생 연합생활관에 거주하는 학생들을 위한 온라인 커뮤니티입니다.
+### 개요
 
-일상, 스터디, 익명 게시판 등 다양한 게시판에서 자유로운 주제로 글을 작성할 수 있고, 좋아요와 댓글을 남길 수 있습니다. <br/>
-장터 게시판에서 기숙사생끼리 편리하게 물건을 판매하거나 무료 나눔을 할 수 있습니다.<br/>
-사용자에게 개인적으로 대화를 하고 싶다면, 메시지 보내기를 통해 사용자에게 메시지를 보낼 수 있습니다.<br/>
-PWA로 빌드된 앱을 통해, iOS와 android 등 모바일 환경에서 편리하게 앱으로 접속할 수 있습니다.
+**유니온(UNION)** 은 [대학생연합기숙사](https://www.kosaf.go.kr/ko/domitory.do?pg=PTHB_Domitory_01_01)에 거주하는 학생들을 위한 커뮤니티 웹앱입니다.
+
+✏️ **일상, 스터디, 익명 등 다양한 게시판**에서 자유롭게 글을 작성할 수 있고, 좋아요와 댓글을 남길 수 있습니다. <br/>
+
+🛍 **장터 게시판**에서 기숙사생끼리 편리하게 **물건을 판매**하거나 **무료 나눔**을 할 수 있습니다.<br/>
+
+💬 사용자에게 개인적으로 대화를 하고 싶다면, **메시지 보내기**를 통해 사용자에게 메시지를 보낼 수 있습니다.<br/>
+
+📱 **PWA**로 빌드된 앱을 통해, **iOS와 android** 등 모바일 환경에서 편리하게 **앱으로 접속**할 수 있습니다. <br/><br/>
 
 [**🔗 배포된 웹 서비스로 바로가기**](https://uni-on.me/)
 
-[**🔗 서비스 소개 영상 바로가기**](https://youtu.be/0q4h3c69dXg)
+[**🔗 서비스 소개 영상 바로가기**](https://www.youtube.com/watch?v=H-KY6aBvlJk)
 
-[**🔗 깃허브 저장소 바로가기**](https://github.com/union-community)<br/><br/>
+[**🔗 깃허브 저장소 바로가기**](https://github.com/tech-hoon/union-community)<br/><br/>
 
-> 새 창 열기 방법 : CTRL+click (on Windows and Linux) | CMD+click (on MacOS)
+> 💡 새 창에서 열기 : Ctrl+Click (CMD+Click)
 
 <br />
+
+### 프로젝트 기간 및 인원
+
+1인 프로젝트
+
+2021.09 ~ 운영 관리 중
 
 <div id="2"></div>
 
@@ -50,15 +60,15 @@ PWA로 빌드된 앱을 통해, iOS와 android 등 모바일 환경에서 편리
 | :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: |
 |                                                             HTML5                                                              |                                                             CSS3                                                             |                                                           TypeScript                                                            |
 
-| <img src="https://profilinator.rishav.dev/skills-assets/react-original-wordmark.svg" alt="React.js" width="50px" height="50px" /> | <img src="https://miro.medium.com/max/1400/1*kmm4E29iST5X569ItIEaKQ.png" alt="Recoil" width="50px"/> | <img src="https://www.styled-components.com/atom.png" alt="styled-component" width="50px"  /> |     |
-| :-------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-- |
+| <img src="https://profilinator.rishav.dev/skills-assets/react-original-wordmark.svg" alt="React.js" width="50px" height="50px" /> | <img src="https://miro.medium.com/max/1400/1*kmm4E29iST5X569ItIEaKQ.png" alt="Recoil" width="50px"/> | <img src="https://www.styled-components.com/atom.png" alt="styled-component" width="50px"  /> |
+| :-------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
 |                                                               React                                                               |                                                Recoil                                                |                                       styled-component                                        |
 
 ### **Backend**
 
-| <img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566913958/noticon/uoqjdixts4lwsgtsa1pd.png" alt="Firebase" width="50px" height="50px" /> | <img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1607786761/noticon/dfwzjgowyq7ccpko3x1g.png" alt="google" width="50px" height="50px" /> |     |     |     |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------: | :-: | :-: | :-: |
-|                                                                            Firebase                                                                            |                                                                         Google Cloud                                                                         |     |
+| <img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566913958/noticon/uoqjdixts4lwsgtsa1pd.png" alt="Firebase" width="50px" height="50px" /> | <img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1607786761/noticon/dfwzjgowyq7ccpko3x1g.png" alt="google" width="50px" height="50px" /> |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                            Firebase                                                                            |                                                                         Google Cloud                                                                         |
 
 <br />
 
@@ -92,19 +102,11 @@ PWA로 빌드된 앱을 통해, iOS와 android 등 모바일 환경에서 편리
 
 [**🔗 서비스 소개 영상 바로가기**](https://www.youtube.com/watch?v=H-KY6aBvlJk) 👈
 
-> 💡 새 창 열기 : Ctrl+click (CMD+click)
+> 💡 새 창에서 열기 : Ctrl+Click (CMD+Click)
 
 <br />
 
-<div id="6"></div>
-
-## 개발 기간
-
-2021.09 ~ 운영 관리 중
-
-<br />
-
-<div id='7'></div>
+<div id='6'></div>
 
 ## 실행 방법
 
