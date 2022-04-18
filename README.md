@@ -2,17 +2,23 @@
   <br />
   <img src="public/og-image.png" alt="Union Image" width="500px"/>
   <h1 style="margin:24px">유니온 | 대학생 연합생활관 커뮤니티</h1>
-  <br />
 </div>
+  
+  <p style="margin:4px 20px; font-weight:bold">✓ 기숙사 커뮤니티 웹앱</p>
+  <p style="margin:4px 20px; font-weight:bold">✓ 2021.09 ~ 운영 관리 중</p>
+  <p style="margin:4px 20px; font-weight:bold">✓ 1인 프로젝트</p>
+  <p style="margin:4px 20px; font-weight:bold">✓ https://uni-on.me</p>
+
+<br/>
 
 ## 목차
 
-1. [**웹 서비스 소개**](#1)
-1. [**기술 스택**](#2)
-1. [**주요 기능**](#3)
-1. [**프로젝트 구성도**](#4)
-1. [**프로젝트 데모**](#5)
-1. [**실행 방법**](#6)
+1. [웹 서비스 소개](#1)
+1. [기술 스택](#2)
+1. [주요 기능](#3)
+1. [프로젝트 구성도](#4)
+1. [프로젝트 데모](#5)
+1. [실행 방법](#6)
 
 <br />
 
@@ -22,9 +28,7 @@
 
 <image src="./readme_assets/union_iphone_mockup.png" width="1000px">
 
-### 개요
-
-**유니온(UNION)** 은 [대학생연합기숙사](https://www.kosaf.go.kr/ko/domitory.do?pg=PTHB_Domitory_01_01)에 거주하는 학생들을 위한 커뮤니티 웹앱입니다.
+👋 **유니온(UNION)** 은 [대학생연합기숙사](http://naver.me/5uxi2FKd)에 거주하는 학생들을 위한 커뮤니티 웹앱입니다.
 
 ✏️ **일상, 스터디, 익명 등 다양한 게시판**에서 자유롭게 글을 작성할 수 있고, 좋아요와 댓글을 남길 수 있습니다. <br/>
 
@@ -36,7 +40,7 @@
 
 [**🔗 배포된 웹 서비스로 바로가기**](https://uni-on.me/)
 
-[**🔗 서비스 소개 영상 바로가기**](https://www.youtube.com/watch?v=H-KY6aBvlJk)
+[**🔗 서비스 소개 영상 바로가기**](https://youtu.be/4xeM7bOH1UE)
 
 [**🔗 깃허브 저장소 바로가기**](https://github.com/tech-hoon/union-community)<br/><br/>
 
@@ -44,25 +48,19 @@
 
 <br />
 
-### 프로젝트 기간 및 인원
-
-1인 프로젝트
-
-2021.09 ~ 운영 관리 중
-
 <div id="2"></div>
 
 ## 기술 스택
 
 ### **Frontend**
 
-| <img src="https://profilinator.rishav.dev/skills-assets/html5-original-wordmark.svg" alt="HTML5" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/css3-original-wordmark.svg" alt="CSS3" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/typescript-original.svg" alt="TypeScript" width="50px" height="50px" /> |
-| :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: |
-|                                                             HTML5                                                              |                                                             CSS3                                                             |                                                           TypeScript                                                            |
+| <img src="https://profilinator.rishav.dev/skills-assets/html5-original-wordmark.svg" alt="HTML5" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/css3-original-wordmark.svg" alt="CSS3" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/javascript-original.svg" alt="JavaScript" width='50px' height='50px'/> | <img src="https://profilinator.rishav.dev/skills-assets/typescript-original.svg" alt="TypeScript" width="50px" height="50px" /> |
+| :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: |
+|                                                             HTML5                                                              |                                                             CSS3                                                             |                                                        JavaScript(ES6+)                                                        |                                                           TypeScript                                                            |
 
-| <img src="https://profilinator.rishav.dev/skills-assets/react-original-wordmark.svg" alt="React.js" width="50px" height="50px" /> | <img src="https://miro.medium.com/max/1400/1*kmm4E29iST5X569ItIEaKQ.png" alt="Recoil" width="50px"/> | <img src="https://www.styled-components.com/atom.png" alt="styled-component" width="50px"  /> |
-| :-------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
-|                                                               React                                                               |                                                Recoil                                                |                                       styled-component                                        |
+| <img src="https://profilinator.rishav.dev/skills-assets/react-original-wordmark.svg" alt="React.js" width="50px" height="50px" /> | <img src="https://miro.medium.com/max/1400/1*kmm4E29iST5X569ItIEaKQ.png" alt="Recoil" width="50px"/> | <img src="https://www.styled-components.com/atom.png" alt="styled-component" width="50px"  /> | <img src="https://raw.githubusercontent.com/webmaxru/progressive-web-apps-logo/c43088c1809fbf5c45c04904db95d195ad7dc893/pwalogo.svg" width="60px" height="50px" alt="pwa"/> |
+| :-------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                            React(v17)                                                             |                                                Recoil                                                |                                       styled-component                                        |                                                                                     PWA                                                                                     |
 
 ### **Backend**
 
@@ -100,7 +98,7 @@
 
 ## 프로젝트 데모
 
-[**🔗 서비스 소개 영상 바로가기**](https://www.youtube.com/watch?v=H-KY6aBvlJk) 👈
+[**🔗 서비스 소개 영상 바로가기**](https://youtu.be/4xeM7bOH1UE)
 
 > 💡 새 창에서 열기 : Ctrl+Click (CMD+Click)
 
@@ -110,25 +108,25 @@
 
 ## 실행 방법
 
-### 1. 원격 저장소 복제
+**1. 원격 저장소 복제**
 
 ```bash
 $ git clone https://github.com/tech-hoon/union-community.git
 ```
 
-### 2. 프로젝트 폴더로 이동
+**2. 프로젝트 폴더로 이동**
 
 ```bash
 $ cd union-community
 ```
 
-### 3. 필요한 node_modules 설치
+**3. 필요한 node_modules 설치**
 
 ```bash
 $ npm install
 ```
 
-### 4. 프로젝트 실행을 위한 env 파일 작성
+**4. 프로젝트 실행을 위한 env 파일 작성**
 
 `firebase`에서 프로젝트를 추가하고, 아래처럼 얻은 api key를 토대로 다음과 같이 `.env`파일에 작성
 
@@ -146,7 +144,7 @@ REACT_APP_VAPID_KEY=[YOUR_VAPID_KEY]
 REACT_APP_COMMIT_REF=[YOUR_COMMIT_REF]
 ```
 
-### 5. 개발 서버 실행
+**5. 개발 서버 실행**
 
 ```bash
 # start on localhost:3000
