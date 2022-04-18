@@ -4,10 +4,10 @@
   <h1 style="margin:24px">유니온 | 대학생 연합생활관 커뮤니티</h1>
 </div>
   
-  <p style="margin:4px 20px; font-weight:bold">✓ 기숙사 커뮤니티 웹앱</p>
-  <p style="margin:4px 20px; font-weight:bold">✓ 2021.09 ~ 운영 관리 중</p>
-  <p style="margin:4px 20px; font-weight:bold">✓ 1인 프로젝트</p>
-  <p style="margin:4px 20px; font-weight:bold">✓ https://uni-on.me</p>
+  <p style="margin:4px 20px; font-weight:bold">✔️ 기숙사 커뮤니티 웹앱</p>
+  <p style="margin:4px 20px; font-weight:bold">✔️ 2021.09 ~ 운영 관리 중</p>
+  <p style="margin:4px 20px; font-weight:bold">✔️ 1인 프로젝트</p>
+  <p style="margin:4px 20px; font-weight:bold">✔️ https://uni-on.me</p>
 
 <br/>
 
@@ -38,13 +38,13 @@
 
 📱 **PWA**로 빌드된 앱을 통해, **iOS와 android** 등 모바일 환경에서 편리하게 **앱으로 접속**할 수 있습니다. <br/><br/>
 
-[**🔗 배포된 웹 서비스로 바로가기**](https://uni-on.me/)
+[**🔗 웹 사이트**](https://uni-on.me/)
 
-[**🔗 서비스 소개 영상 바로가기**](https://youtu.be/4xeM7bOH1UE)
+[**🔗 Demo**](https://youtu.be/4xeM7bOH1UE)
 
-[**🔗 깃허브 저장소 바로가기**](https://github.com/tech-hoon/union-community)<br/><br/>
+[**🔗 Github**](https://github.com/tech-hoon/union-community)<br/><br/>
 
-> 💡 새 창에서 열기 : Ctrl+Click (CMD+Click)
+> 💡 새 창에서 열기 : Ctrl+click (CMD+click)
 
 <br />
 
@@ -98,9 +98,9 @@
 
 ## 프로젝트 데모
 
-[**🔗 서비스 소개 영상 바로가기**](https://youtu.be/4xeM7bOH1UE)
+[**🔗 서비스 데모 영상**](https://youtu.be/4xeM7bOH1UE)
 
-> 💡 새 창에서 열기 : Ctrl+Click (CMD+Click)
+> 💡 새 창에서 열기 : Ctrl+click (CMD+click)
 
 <br />
 
