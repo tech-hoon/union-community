@@ -8,6 +8,8 @@
   <p style="margin:4px 20px; font-weight:bold">✔️ 2021.09 ~ 운영 관리 중</p>
   <p style="margin:4px 20px; font-weight:bold">✔️ 1인 프로젝트</p>
   <p style="margin:4px 20px; font-weight:bold">✔️ https://uni-on.me</p>
+  <p style="margin:4px 20px; font-weight:bold">✔ 인증 완료한 가입자 수 178명 (2022.04.18 기준)</p>
+  
 
 <br/>
 
