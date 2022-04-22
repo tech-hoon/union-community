@@ -27,7 +27,7 @@
 
 ## 웹 서비스 소개
 
-<image src="./readme_assets/union_iphone_mockup.png" width="1000px">
+<image src="https://user-images.githubusercontent.com/19265753/164651173-32091a1f-79d3-4701-9387-9382f23522ea.png" width="1000px">
 
 👋 **유니온(UNION)** 은 [대학생연합기숙사](http://naver.me/5uxi2FKd)에 거주하는 학생들을 위한 커뮤니티 웹앱입니다.
 
@@ -89,9 +89,9 @@
 
 ## 프로젝트 구성도
 
-|                                       아키텍처(Architecture)                                       |
-| :------------------------------------------------------------------------------------------------: |
-| <img src="./readme_assets/architecture_diagram.png" alt="아키텍처(Architecture)" width="1000px" /> |
+|                                                       아키텍처(Architecture)                                                       |
+| :--------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://user-images.githubusercontent.com/19265753/164651159-a92740dc-2c65-420b-8d5e-4f8b7fdf74c4.png" width="1000px" /> |
 
 <br />
 
@@ -161,7 +161,7 @@ $ npm install
 
 `firebase`에서 프로젝트를 추가하고, 아래처럼 얻은 api key를 토대로 다음과 같이 `.env`파일에 작성
 
-<img src='./readme_assets/firebase_api_key.png' width='500px'>
+<img src='https://user-images.githubusercontent.com/19265753/164651170-9cbd82c2-8254-44ba-ae5d-c6f83306ea64.png' width='500px'>
 
 ```c
 // .env
