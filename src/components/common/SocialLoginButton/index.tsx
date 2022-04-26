@@ -22,8 +22,6 @@ const SocialLoginButton = ({ name, handleErrorInfo }: SocialLoginProps) => {
       const code = error.code;
       console.error(code);
 
-      handleErrorInfo(code);
-
       let msg;
 
       switch (code) {
