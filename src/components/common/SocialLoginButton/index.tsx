@@ -20,8 +20,12 @@ const SocialLoginButton = ({ name, handleErrorInfo }: SocialLoginProps) => {
       await authService.signInWithPopup(provider);
     } catch (error: any) {
       const code = error.code;
+      console.error(code);
+
+      handleErrorInfo(code);
 
       let msg;
+
       switch (code) {
         case 'auth/account-exists-with-different-credential':
           msg = '*이미 가입된 소셜계정이 있습니다.';
