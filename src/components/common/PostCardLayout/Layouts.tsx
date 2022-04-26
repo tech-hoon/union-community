@@ -141,7 +141,13 @@ export const Layouts = {
     color: ${({ theme, isSecret }) => (isSecret ? '#000' : theme.color.main)};
     font-size: 16px;
 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 68px;
+
     @media ${({ theme }) => theme.size.mobile} {
+      max-width: 100%;
       font-size: 14px;
     }
   `,
