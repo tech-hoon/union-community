@@ -160,9 +160,6 @@ const Main = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const NavbarWrapper = styled.div`

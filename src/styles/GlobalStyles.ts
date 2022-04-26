@@ -8,6 +8,13 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-size:62.5%;
     -webkit-tap-highlight-color:transparent;
+
+    &::-webkit-scrollbar {
+    display: none;
+    }
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 
 
