@@ -8,7 +8,7 @@
   <p style="margin:4px 20px;">✔️ 기숙사 커뮤니티 웹앱</p>
   <p style="margin:4px 20px;">✔️ 2021.09 ~ 운영 관리 중</p>
   <p style="margin:4px 20px;">✔️ 1인 프로젝트</p>
-  <p style="margin:4px 20px;">✔ 인증 완료한 가입자 수 <b>178명</b> (2022.04.18 기준)</p>
+  <p style="margin:4px 20px;">✔ 인증 완료한 가입자 수 <b>202명</b> (2022.05.24 기준)</p>
 
 <br/>
 
